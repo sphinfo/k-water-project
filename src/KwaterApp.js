@@ -5,10 +5,11 @@ import { OlProvider } from "./ConText";
 import OLMapView from "./components/map/OLmapView";
 import MapControl from "./components/map/MapControl";
 import Menubars from "./components/menu";
+import WidgetContainer from "./common/eventbus/manager/widget/container/WidgetContainer";
 //import Yelp from "../../util/Yelp";
 
 
-class App extends React.Component {
+class KwaterApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +29,7 @@ class App extends React.Component {
       <div>
         <OLMapView />
         <MapControl/>
+        <WidgetContainer />
         <Menubars/>
       </div>
     )
@@ -42,4 +44,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default KwaterApp;
