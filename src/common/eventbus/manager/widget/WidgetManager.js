@@ -3,24 +3,19 @@ import WidgetConfig from "./config/WidgetConfig";
 import { v4 as uuid } from "uuid";
 
 class WidgetManager {
+    _ref = {}
     _instances = []
-    
+
     constructor() {
- 
         makeObservable(this, {
             _instances: observable,
-            add: action
+            add: action,
+            changeParam: action,
         });
 
-    }
-
-
-    set reference(ref) {
-        this._ref = ref;
-    }
-
-    get reference() {
-        return this._ref;
+        window.addEventListener('beforeunload', (event) => {
+            delete event['returnValue'];
+        });
     }
 
     _hasInstance(widgetId) {
@@ -30,24 +25,34 @@ class WidgetManager {
         return widget;
     }
 
-    /* widget 확인 */
+
     _isWidget(widgetId) {
         return WidgetConfig.hasOwnProperty(widgetId);
     }
 
-    /* widget idx */
-    _getInstanceIndex(widgetId) {
-        let index = 0;
-        this._instances.some((itme, idx) => {
-            if (itme.id === widgetId) {
-                index = idx;
-                return true;
-            }
-            return false;
-        });
-        return index;
+    _widgetMessage(widgetId, msg) {
+        console.warn(`${msg} : ${widgetId}`);
     }
 
+    set reference(ref) {
+        this._ref = ref;
+    }
+
+    get reference() {
+        return this._ref;
+    }
+
+    getInstance(index = 0) {
+        return this._instances[index];
+    }
+
+    hasInstance(widgetId) {
+        return this._hasInstance(widgetId);
+    }
+
+    
+
+    /* 위젯 추가 */
     add(widgetId, props = {}, config = {}, widgetInfo) {
         if (this._isWidget(widgetId)) {
 
@@ -55,7 +60,6 @@ class WidgetManager {
             if (havingInstance) {
                 return;
             }
-
             const instance = {
                 ...WidgetConfig[widgetId], config, ...config,
                 id: widgetId,
@@ -63,19 +67,26 @@ class WidgetManager {
                 props,
                 zIndex: this._zIndex
             };
-
             this._instances.push(instance);
+            this._widgetMessage(widgetId, "sdf");
 
+        } else {
+            this._widgetMessage(widgetId, "fff");
         }
     }
+
 
     changeParam(widgetId, props = {}) {
         const instance = this._hasInstance(widgetId);
         if (instance) {
             const idx = this._getInstanceIndex(widgetId);
             this._instances[idx] = {...instance, props};
+        } else {
+            this._widgetMessage(widgetId, "sdf");
         }
     }
 
 }
-export default new WidgetManager();
+
+const MainWidgetManager = new WidgetManager();
+export default MainWidgetManager;

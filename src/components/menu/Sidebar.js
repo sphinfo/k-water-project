@@ -9,6 +9,7 @@ import TimeSeries from '../biz/time-series/TimeSeries';
 import SafetyDiagnsis from '../biz/safety-diagnsis/SafetyDiagnsis';
 import SuspendedSolids from '../biz/suspended-solids/SuspendedSolids';
 
+import { v4 as uuid } from "uuid";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -16,11 +17,6 @@ function TabPanel(props) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    //남기고 싶을시
-    // if (!visible && value === index) {
-    //     setVisible(true);
-    // }
-    // component 새로 그릴시
     if (value === index) {
       setVisible(true);
     }else{
@@ -30,7 +26,7 @@ function TabPanel(props) {
   }, [value, index]);
 
   return (
-      <div hidden={value !== index} {...other} >
+      <div hidden={value !== index || value === -1} {...other} >
           {visible && (
             <>
               {children}
@@ -57,30 +53,33 @@ export default function Sidebar () {
   const INDEX_5 = useMemo(() => 5, []); //부유물탐지
   const INDEX_6 = useMemo(() => 6, []); //시계열 변위 모니터링
   const INDEX_7 = useMemo(() => 7, []); //안전진단지수
-  const INDEX_99 = useMemo(() => 99, []); //
+  const NONE_INDEX = useMemo(() => 8, []); //안전진단지수
 
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(NONE_INDEX);
 
   const handleChange = useCallback((event, newValue) => {
     if (value === newValue) {
-      setValue(null)
+      setValue(NONE_INDEX)
     } else {
       setValue(newValue)
     }
   }, [value]);
-  
+
   return (
     <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100%' }} >
-      <Tabs value={value} onChange={handleChange} orientation="vertical"variant="scrollable" aria-label="Vertical tabs example" sx={{ borderRight: 1, borderColor: 'divider' }} >
-        <Tab label="수체탐지" {...a11yProps(0)}/>
-        <Tab label="수위탐지" {...a11yProps(1)}/>
-        <Tab label="토양수분" {...a11yProps(2)}/>
-        <Tab label="가뭄지수" {...a11yProps(3)}/>
-        <Tab label="수변피복탐지" {...a11yProps(4)}/>
-        <Tab label="부유물탐지" {...a11yProps(5)}/>
-        <Tab label="시계열 변위 모니터링" {...a11yProps(6)}/>
-        <Tab label="안전진단지수" {...a11yProps(7)}/>
+      <Tabs value={value} onChange={handleChange}  orientation="vertical"variant="scrollable" aria-label="Vertical tabs example" sx={{ borderRight: 1, borderColor: 'divider' }} >
+        <Tab label="수체탐지" {...a11yProps(INDEX_0)}/>
+        <Tab label="수위탐지" {...a11yProps(INDEX_1)}/>
+        <Tab label="토양수분" {...a11yProps(INDEX_2)}/>
+        <Tab label="가뭄지수" {...a11yProps(INDEX_3)}/>
+        <Tab label="수변피복탐지" {...a11yProps(INDEX_4)}/>
+        <Tab label="부유물탐지" {...a11yProps(INDEX_5)}/>
+        <Tab label="시계열 변위 모니터링" {...a11yProps(INDEX_6)}/>
+        <Tab label="안전진단지수" {...a11yProps(INDEX_7)}/>
+        <Tab style={{ display: 'none' }}{...a11yProps(NONE_INDEX)} />
       </Tabs>
+
+      <TabPanel display={"none"} value={value} index={NONE_INDEX}/>
 
       <Drawer
         variant={'persistent'}
@@ -88,7 +87,7 @@ export default function Sidebar () {
         open={value === INDEX_0}
         PaperProps={{ style: { marginLeft: 170} }}
         >
-        <TabPanel value={value} index={INDEX_0}>
+        <TabPanel value={value} index={INDEX_0} >
           <WaterDetection />
         </TabPanel>
       </Drawer>

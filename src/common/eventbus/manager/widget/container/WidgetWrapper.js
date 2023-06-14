@@ -1,49 +1,12 @@
-import React, {createContext, Suspense, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-
-const WrapperContext = createContext({});
-const WrapperProvider = WrapperContext.Provider;
-const WrapperConsumer = WrapperContext.Consumer;
-
-const setSize = (option = {}) => {
-    return {
-        width: Math.min(option.width, window.innerWidth),
-        height: Math.min(option.height, window.innerHeight)
-    }
-}
-
-const setXY = (option = {}) => {
-    let pos = {
-        x: parseInt( option.x ),
-        y: parseInt( option.y )
-    };
-
-    return pos;
-};
-
-const initWidgetOption = (option = {}) => {
-    return {
-        size: setSize(option),
-        position: setXY(option)
-    };
-};
+import React, {Suspense, useCallback} from 'react';
 
 const WidgetWrapper = (props) => {
-    
-    const {zIndex, isResizing = true, isControl = true, ...other} = props;
-
-    const initOptions = useMemo(()=>({
-        ...initWidgetOption({...other})
-    }),[]);
-
-    let [widgetOptions, setWidgetOptions] = useState({
-        ...initOptions
-    });
 
     const writeChildren = useCallback(() => {
         const childrenWithProps = React.Children.map(props.children, child => {
             if (React.isValidElement(child)) {
                 return React.cloneElement(child, {
-                    size: widgetOptions.size,
+                    //child 노드 param
                     wid: props.wid
                 });
             }
@@ -53,14 +16,16 @@ const WidgetWrapper = (props) => {
 
     }, [props.children]);
 
+
     return (
-        <>
-            <div style={{position:'absolute'}}>
-                {
-                    writeChildren()
-                }
+            <div style={{position:'absolute'}} key={props.wid}>
+                {/* 리소스가 준비될 때까지 렌더링을 일시 중지 */}
+                <Suspense> 
+                    {
+                        writeChildren()
+                    }
+                </Suspense>
             </div>
-        </>
     )
 }
 
