@@ -53,7 +53,7 @@ export default function Sidebar () {
   const INDEX_5 = useMemo(() => 5, []); //부유물탐지
   const INDEX_6 = useMemo(() => 6, []); //시계열 변위 모니터링
   const INDEX_7 = useMemo(() => 7, []); //안전진단지수
-  const NONE_INDEX = useMemo(() => 8, []); //안전진단지수
+  const NONE_INDEX = useMemo(() => 99, []); //안전진단지수
 
   const [value, setValue] = useState(NONE_INDEX);
 
@@ -64,6 +64,10 @@ export default function Sidebar () {
       setValue(newValue)
     }
   }, [value]);
+
+  const handleClose = () => {
+      setValue(NONE_INDEX);
+  };
 
   return (
     <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100%' }} >
@@ -79,8 +83,6 @@ export default function Sidebar () {
         <Tab style={{ display: 'none' }}{...a11yProps(NONE_INDEX)} />
       </Tabs>
 
-      <TabPanel display={"none"} value={value} index={NONE_INDEX}/>
-
       <Drawer
         variant={'persistent'}
         anchor={'left'}
@@ -88,6 +90,7 @@ export default function Sidebar () {
         PaperProps={{ style: { marginLeft: 170} }}
         >
         <TabPanel value={value} index={INDEX_0} >
+          <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
           <WaterDetection />
         </TabPanel>
       </Drawer>
@@ -99,6 +102,7 @@ export default function Sidebar () {
         PaperProps={{ style: { marginLeft: 170} }}
         >
         <TabPanel value={value} index={INDEX_1}>
+          <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
           <WaterLevel />
         </TabPanel>
       </Drawer>
@@ -110,6 +114,7 @@ export default function Sidebar () {
         PaperProps={{ style: { marginLeft: 170} }}
         >
         <TabPanel value={value} index={INDEX_2}>
+          <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
           <SoilMoisture />
         </TabPanel>
       </Drawer>
@@ -121,6 +126,7 @@ export default function Sidebar () {
         PaperProps={{ style: { marginLeft: 170} }}
         >
         <TabPanel value={value} index={INDEX_3}>
+          <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
           <DroughtIndex />
         </TabPanel>
       </Drawer>
@@ -132,6 +138,7 @@ export default function Sidebar () {
         PaperProps={{ style: { marginLeft: 170} }}
         >
         <TabPanel value={value} index={INDEX_4}>
+          <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
           <WatersideCover />
         </TabPanel>
       </Drawer>
@@ -143,6 +150,7 @@ export default function Sidebar () {
         PaperProps={{ style: { marginLeft: 170} }}
         >
         <TabPanel value={value} index={INDEX_5}>
+          <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
           <SuspendedSolids />
         </TabPanel>
       </Drawer>
@@ -154,6 +162,7 @@ export default function Sidebar () {
         PaperProps={{ style: { marginLeft: 170} }}
         >
         <TabPanel value={value} index={INDEX_6}>
+          <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
           <TimeSeries />
         </TabPanel>
       </Drawer>
@@ -165,6 +174,7 @@ export default function Sidebar () {
         PaperProps={{ style: { marginLeft: 170} }}
         >
         <TabPanel value={value} index={INDEX_7}>
+          <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
           <SafetyDiagnsis />
         </TabPanel>
       </Drawer>

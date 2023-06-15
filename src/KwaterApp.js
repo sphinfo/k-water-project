@@ -18,14 +18,8 @@ class KwaterApp extends React.Component {
   }
 
   render() {
-
-    console.info("render")
     let render;
     render = (
-      // <OlProvider>
-      //   <OLMapView />
-      //   <MapControl/>
-      // </OlProvider>
       <>
         <OLMapView />
         <MapControl/>

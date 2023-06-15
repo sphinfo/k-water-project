@@ -1,6 +1,27 @@
-import React, {Suspense, useCallback} from 'react';
+import React, {Suspense, useCallback, useMemo} from 'react';
+
+
+
+const widgetOption = (option = {}) => {
+    return {
+        width: option.width,
+        height: option.height,
+        top: option.height,
+        left: option.height,
+        ...option
+    };
+};
 
 const WidgetWrapper = (props) => {
+
+    const {wid, ...other} = props;
+
+    const defaultOption = useMemo(()=>({
+        ...widgetOption({...other})
+    }),[]);
+
+    console.info(defaultOption)
+
 
     const writeChildren = useCallback(() => {
         const childrenWithProps = React.Children.map(props.children, child => {
@@ -18,7 +39,7 @@ const WidgetWrapper = (props) => {
 
 
     return (
-            <div style={{position:'absolute'}} key={props.wid}>
+            <div style={defaultOption} key={wid}>
                 {/* 리소스가 준비될 때까지 렌더링을 일시 중지 */}
                 <Suspense> 
                     {

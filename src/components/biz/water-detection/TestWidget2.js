@@ -21,8 +21,6 @@ const TestWidget2 = (props) => {
     return (
         <>
             <div>
-                <button>{props.param}</button>
-                <button>{props.param2}</button>
                 TestWidget2
             </div>
             

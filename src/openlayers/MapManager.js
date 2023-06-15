@@ -7,7 +7,8 @@ import proj, {fromLonLat} from 'ol/proj';
 import LayerManager from "./LayerManager";
 
 import DoubleClickZoom from "ol/interaction/DoubleClickZoom"
-import Select from "ol/interaction/Select"
+import { defaults as defaultControls, Zoom } from 'ol/control';
+
 
 class MapManager {
     _map = null
@@ -61,11 +62,15 @@ class MapManager {
     removeDoubleClickZoom(){
         let me = this
         this._map.getInteractions().forEach(function(interaction) {
+            console.info(interaction)
+
            if (interaction instanceof DoubleClickZoom) {
             me._map.removeInteraction(interaction);
            }
         });
     }
+
+    
 
 
     // Map 를 생성하여 반환한다.
@@ -77,6 +82,11 @@ class MapManager {
             view: new OlView({
                 center: this._initCenter,
                 zoom: this._initZoom
+            }),
+            /* 기본 컨트롤러 제거 */
+            controls: defaultControls({
+                zoom: false,
+                rotate: false
             })
         })
 
