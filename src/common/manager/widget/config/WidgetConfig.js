@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 const widgets = {
-    TestWidget: lazy(() => import('../../../../../components/biz/water-detection/TestWidget')),
-    TestWidget2: lazy(() => import('../../../../../components/biz/water-detection/TestWidget2'))
+    TestWidget: lazy(() => import('../../../../components/biz/water-detection/TestWidget')),
+    TestWidget2: lazy(() => import('../../../../components/biz/water-detection/TestWidget2'))
 };
 
 const WidgetConfig = {

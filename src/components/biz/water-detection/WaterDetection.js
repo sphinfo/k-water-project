@@ -1,5 +1,5 @@
 import React, { startTransition, useEffect } from "react";
-import WidgetManager from "../../../common/eventbus/manager/widget/WidgetManager";
+import WidgetManager from "../../../common/manager/widget/WidgetManager";
 
 const WaterDetection = () => {
 

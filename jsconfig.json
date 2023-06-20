@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "include" : ["src"],
+    "paths": {
+      "@/*": ["src/*"],
+      "@com/*": ["common/*"],
+      "@cmp/*": ["component/*"],
+      "@gis/*": ["openlayers/*"]
+    }
+  }
+}

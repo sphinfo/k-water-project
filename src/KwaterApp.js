@@ -5,7 +5,7 @@ import { KwaterProvider } from "./ConText";
 import OLMapView from "./components/map/OLmapView";
 import MapControl from "./components/map/MapControl";
 import Menubars from "./components/menu";
-import WidgetContainer from "./common/eventbus/manager/widget/container/WidgetContainer";
+import WidgetContainer from "./common/manager/widget/container/WidgetContainer";
 //import Yelp from "../../util/Yelp";
 
 

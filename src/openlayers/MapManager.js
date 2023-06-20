@@ -62,8 +62,6 @@ class MapManager {
     removeDoubleClickZoom(){
         let me = this
         this._map.getInteractions().forEach(function(interaction) {
-            console.info(interaction)
-
            if (interaction instanceof DoubleClickZoom) {
             me._map.removeInteraction(interaction);
            }
