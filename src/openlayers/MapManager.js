@@ -1,13 +1,12 @@
 import OlMap from "ol/Map";
 import OlView from "ol/View";
-
-import proj, {fromLonLat} from 'ol/proj';
+import {fromLonLat} from 'ol/proj';
 
 
 import LayerManager from "./LayerManager";
 
 import DoubleClickZoom from "ol/interaction/DoubleClickZoom"
-import { defaults as defaultControls, Zoom } from 'ol/control';
+import { defaults as defaultControls } from 'ol/control';
 
 
 class MapManager {
@@ -79,7 +78,8 @@ class MapManager {
             layers: [],
             view: new OlView({
                 center: this._initCenter,
-                zoom: this._initZoom
+                zoom: this._initZoom,
+                projection: 'EPSG:3857'
             }),
             /* 기본 컨트롤러 제거 */
             controls: defaultControls({
@@ -109,25 +109,22 @@ class MapManager {
 
     //레이어 추가
     addLayer(layer) {
+        /*레이어 추가전에 instance 추가*/
+        this.l_manager.addLayerInstance(layer.get('name'), layer)
+        /* 레이어 추가 */
         this._map.addLayer(layer)
     }
 
     //레이어 제거
     removeLayer(item){
-
         //레이어 id만 넘어올경우
         if(typeof item === 'string'){
-
             let layer = this.l_manager.getFindLayerInstance(item)
-
             this.l_manager.removeLayer(layer)
             this._map.removeLayer(layer)
-
         } else if (typeof item === 'object'){ //레이어 형태로 넘어올경우
-            
             this.l_manager.removeLayer(item)
             this._map.removeLayer(item)
-
         }
         
     }

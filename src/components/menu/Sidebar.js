@@ -1,15 +1,14 @@
-import { Box, Drawer, Tab, Tabs } from '@mui/material';
+import { Drawer, Tab, Tabs } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import WaterDetection from '../biz/water-detection/WaterDetection';
-import WaterLevel from '../biz/water-level/WaterLevel';
-import SoilMoisture from '../biz/soil-moisture/SoilMoisture';
-import DroughtIndex from '../biz/droughth-index/DroughtIndex';
-import WatersideCover from '../biz/waterside-cover/WatersideCover';
-import TimeSeries from '../biz/time-series/TimeSeries';
-import SafetyDiagnsis from '../biz/safety-diagnsis/SafetyDiagnsis';
-import SuspendedSolids from '../biz/suspended-solids/SuspendedSolids';
 
-import { v4 as uuid } from "uuid";
+import WaterDetection from '@cmp/biz/water-detection/WaterDetection'
+import WaterLevel from '@cmp/biz/water-level/WaterLevel';
+import SoilMoisture from '@cmp/biz/soil-moisture/SoilMoisture';
+import DroughtIndex from '@cmp/biz/droughth-index/DroughtIndex';
+import WatersideCover from '@cmp/biz/waterside-cover/WatersideCover';
+import TimeSeries from '@cmp/biz/time-series/TimeSeries';
+import SafetyDiagnsis from '@cmp/biz/safety-diagnsis/SafetyDiagnsis';
+import SuspendedSolids from '@cmp/biz/suspended-solids/SuspendedSolids';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,7 +52,8 @@ export default function Sidebar () {
   const INDEX_5 = useMemo(() => 5, []); //부유물탐지
   const INDEX_6 = useMemo(() => 6, []); //시계열 변위 모니터링
   const INDEX_7 = useMemo(() => 7, []); //안전진단지수
-  const NONE_INDEX = useMemo(() => 99, []); //안전진단지수
+  
+  const NONE_INDEX = useMemo(() => -1, []); //none
 
   const [value, setValue] = useState(NONE_INDEX);
 
@@ -70,8 +70,8 @@ export default function Sidebar () {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100%' }} >
-      <Tabs value={value} onChange={handleChange}  orientation="vertical"variant="scrollable" aria-label="Vertical tabs example" sx={{ borderRight: 1, borderColor: 'divider' }} >
+    <div style={{display: 'flex'}}>
+      <Tabs value={value === NONE_INDEX ? false : value} onChange={handleChange}  orientation="vertical"variant="scrollable" aria-label="Vertical tabs example" sx={{ borderRight: 1, borderColor: 'divider' }} >
         <Tab label="수체탐지" {...a11yProps(INDEX_0)}/>
         <Tab label="수위탐지" {...a11yProps(INDEX_1)}/>
         <Tab label="토양수분" {...a11yProps(INDEX_2)}/>
@@ -80,14 +80,13 @@ export default function Sidebar () {
         <Tab label="부유물탐지" {...a11yProps(INDEX_5)}/>
         <Tab label="시계열 변위 모니터링" {...a11yProps(INDEX_6)}/>
         <Tab label="안전진단지수" {...a11yProps(INDEX_7)}/>
-        <Tab style={{ display: 'none' }}{...a11yProps(NONE_INDEX)} />
       </Tabs>
 
       <Drawer
         variant={'persistent'}
         anchor={'left'}
         open={value === INDEX_0}
-        PaperProps={{ style: { marginLeft: 170} }}
+        PaperProps={{ style: { marginLeft: 153} }}
         >
         <TabPanel value={value} index={INDEX_0} >
           <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
@@ -179,6 +178,6 @@ export default function Sidebar () {
         </TabPanel>
       </Drawer>
 
-    </Box>
+    </div>
   );
 };

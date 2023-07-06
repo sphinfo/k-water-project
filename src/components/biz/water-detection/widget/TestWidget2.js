@@ -1,27 +1,28 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 
-const TestWidget = (props) => {
+const TestWidget2 = (props) => {
 
     useEffect(()=>{
-        console.info('TestWidget')
-
         return()=>{
             console.info('bye')
         }
     },[])
 
     useEffect(()=>{
+    },[props.params])
+
+    useEffect(()=>{
         console.info(props)
-    },[props.param])
+    },[])
 
     return (
         <>
             <div>
-                <button>TestWidget</button>
+                TestWidget2
             </div>
             
         </>
     )
 }
 
-export default React.memo(TestWidget);
+export default memo(TestWidget2);

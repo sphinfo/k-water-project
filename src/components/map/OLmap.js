@@ -48,11 +48,15 @@ export default class OlMap {
 
         //일반맵
         let mapBaseLayer = LayerManager.createLayer('VWORLD_MAP')
-        
+        mapBaseLayer.setVisible(false)
+
         //위성맵
         let mapSateLayer = LayerManager.createLayer('VWORLD_MAP_SATE')
         mapSateLayer.setVisible(false)
         
+        let testMap = LayerManager.createLayer('TEST_MAP')
+        this.baseMapLayers.push(testMap)
+        G$addLayer(testMap)
 
         this.baseMapLayers.push(mapBaseLayer)
         this.baseMapLayers.push(mapSateLayer)
@@ -88,6 +92,7 @@ export default class OlMap {
 
         //
         this.map.on('click', function(event) {
+            console.info(event.target)
             event.preventDefault();
             EventBus.dispatch(new CustomEvent(MapEvents.mapViewClicked, {
                     detail: event

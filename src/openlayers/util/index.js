@@ -2,21 +2,38 @@ import MapManager from "../MapManager";
 import {transform} from "ol/proj"
 
 
+/* 레이어 추가 */
 const G$addLayer = (l) =>{
-    console.info(l.get('name'))
+    //지도상에 레이어가 있는지 확인
     let layer = MapManager.getLayerForName(l.get('name'))
+    
+    //레이어가 없으면 레이어 추가
     if(layer === null){
         return MapManager.addLayer(l)
     }
     return null
 }
 
+/* 레이어 추가 */
+const G$removeLayer = (l) =>{
+
+    //레이어 있는지 확인
+    let layer = MapManager.getLayerForName(l.get('name'))
+    
+    //레이어가 지도에 있으면 레이어 삭제
+    if(layer){
+        return MapManager.removeLayer(layer)
+    }
+
+}
+
+/* 오버레이 추가 */
 const G$addOverlay = (o)=>{
     return MapManager.map.addOverlay(o)
 }
 
+/* 오버레이 삭제 */
 const G$RemveOverlays = (id) =>{
-
     if(MapManager.map.getOverlays().getArray().length > 0){
         MapManager.map.getOverlays().getArray().map((obj)=>{
           if(obj.id){
@@ -24,18 +41,20 @@ const G$RemveOverlays = (id) =>{
                 MapManager.map.removeOverlay(obj)
             }
           }
-          
         })
       }
 
 }
 
-const G$getGeometryLength = (g) =>{
+/* geometry to length text */
+const G$getGeometryLength = (g, m=true) =>{
     var length = Math.round(g.getLength() * 100) / 100
+    
     var output = `${G$ZeroCnt((Math.round(length * 100) / 100))} m`
     return output
 }
 
+/* geometry to area text */
 const G$getGeometryArea = (g) =>{
     let area = g.getArea();
     let output = `${G$ZeroCnt((Math.round(area * 100) / 100))} m<sup>2</sup>`;
@@ -123,6 +142,7 @@ const G$SetZoomToPoint=(zoom=6, point=[])=>{
 
 export {
     G$addLayer,
+    G$removeLayer,
     G$addOverlay,
     G$RemveOverlays,
     G$getGeometryLength,

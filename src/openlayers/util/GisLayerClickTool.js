@@ -125,7 +125,6 @@ class GisLayerClickTool {
 		for (const key of Object.keys(this._bizs)) {
             this._bizs[key] = key === biz ? true : false
         }
-		//this.map.addInteraction(this.selectInteraction);
 	  }
 	}
   

@@ -12,11 +12,11 @@ module.exports = function (app) {
 	);
 
 	app.use(
-		createProxyMiddleware('/ceGeo',{
-			target: 'http://112.218.1.244:38000/geoserver',
+		createProxyMiddleware('/starGeo',{
+			target: 'http://221.147.56.177:58080//geoserver',
 			changeOrigin: true,
             pathRewrite: {
-                '^/ceGeo': ''
+                '^/starGeo': ''
             }
 		})
 	);

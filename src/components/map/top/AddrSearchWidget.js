@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import VWorldAddressSearch from '../../../vworld/VWorldAddressSearch ';
-import TextInput from '../../util/TextInput';
+import VWorldAddressSearch from '@/vworld/VWorldAddressSearch ';
+import TextInput from '@cmp/util/TextInput';
 import AddrSearchResult from './AddrSearchResult';
 
 const AddrSearchWidget = () => {

@@ -1,6 +1,6 @@
 import {Tile as TileLayer } from "ol/layer";
 import VectorLayer from "ol/layer/Vector";
-import {TileWMS , XYZ, TileJSON, Vector as sourceVector} from "ol/source";
+import {TileWMS , XYZ, TileJSON, Vector as sourceVector, Stamen} from "ol/source";
 
 
 import GisLayerInstance from "../util/layer/GisLayerInstance";
@@ -20,6 +20,11 @@ const LayerConfig = {
 	DRAW_LAYER : { 
 		id:'DRAW_LAYER', 
 		instance: new VectorLayer({name:'DRAW_LAYER',source: new sourceVector({wrapX: false})})
+	},
+
+	TEST_MAP	: { 
+		id:'TEST_MAP',
+		instance: new TileLayer({name:'TEST_MAP', source: new Stamen({layer: 'terrain'})})
 	},
 
 	VWORLD_MAP	: { 

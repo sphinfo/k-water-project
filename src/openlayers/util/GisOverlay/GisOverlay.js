@@ -16,7 +16,7 @@ class GisOverlay {
 		this._overlay = new Overlay({
 			id: overlayId,
 			element: this.elemnet,
-			offset: [0,0],
+			offset: [0,-10],
 			positioning: 'bottom-center',
 			... props
 		});

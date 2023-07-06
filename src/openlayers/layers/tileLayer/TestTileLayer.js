@@ -1,18 +1,15 @@
-import {Image as ImageLayer } from "ol/layer";
-import {ImageWMS, ImageStatic} from "ol/source";
+import {Tile as TileLayer } from "ol/layer";
+import { TileWMS } from "ol/source";
 
-import MapManager from "../../MapManager";
-import { G$addLayer } from "../../util";
-
-class TestTileLayer extends ImageLayer {
+class TestTileLayer extends TileLayer {
 
 	name = 'image'
 
 	constructor(opt) {
-		const source = new ImageWMS({
-			url: '/ceGeo/ETRI/wms?',
+		const source = new TileWMS({
+			url: '/starGeo/sckmpp/wms?',
 			params: {
-				'LAYERS': 'ETRI:R033006B002_2020_04_28_2_150_4_chla',
+				'LAYERS': 'sckmpp:SGG_SKT_VPOP_TOT',
 				'FORMAT': 'image/png',
 				'VERSION': '1.3.0',
 				'urlType': 'geoServer'
@@ -22,12 +19,12 @@ class TestTileLayer extends ImageLayer {
 		})	
 		
 		const layerOptions = {
-			source: source
-			
+			source: source,
+			name: 'image'
 		}
 
-		
 		super(layerOptions)
+
 	}
 
 	

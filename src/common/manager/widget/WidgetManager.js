@@ -1,4 +1,5 @@
-import { action, makeObservable, observable } from "mobx";
+//import { action, makeAutoObservable, makeObservable, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 import WidgetConfig from "./config/WidgetConfig";
 import { v4 as uuid } from "uuid";
 
@@ -11,11 +12,12 @@ class WidgetManager {
     _instances = []
 
     constructor() {
-        makeObservable(this, {
+        makeAutoObservable(this);
+        /*makeObservable(this, {
             _instances: observable,
             add: action,
             changeParam: action,
-        });
+        });*/
 
         window.addEventListener('beforeunload', (event) => {
             delete event['returnValue'];

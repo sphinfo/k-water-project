@@ -1,11 +1,3 @@
-import EventBus from "../eventbus/EventBus";
-import MapEvents from "../eventbus/MapEvents";
-import MapManager from "../MapManager";
-import {E$addLayer, E$getLayer, E$getLevel, E$removeLayer, E$getLayerInfo} from "@gis/util";
-import {connect} from "@gis/loaders/dojos";
-import { makeObservable } from "mobx";
-
-
 class Test2Layer {
 
 	_layer = null;

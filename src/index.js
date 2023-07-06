@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'react-data-grid/lib/styles.css';
 import KwaterApp from './KwaterApp';
 import reportWebVitals from './reportWebVitals';
 

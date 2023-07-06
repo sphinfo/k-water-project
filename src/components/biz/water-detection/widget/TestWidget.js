@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 
-const TestWidget2 = (props) => {
+const TestWidget = (props) => {
 
     useEffect(()=>{
-        console.info('TestWidget2')
+        console.info('TestWidget')
 
         return()=>{
             console.info('bye')
@@ -15,17 +15,17 @@ const TestWidget2 = (props) => {
     },[props.param])
 
     useEffect(()=>{
-        console.info(props)
-    },[])
+        console.info("change")
+    })
 
     return (
         <>
             <div>
-                TestWidget2
+                <button>TestWidget</button>
             </div>
             
         </>
     )
 }
 
-export default React.memo(TestWidget2);
+export default React.memo(TestWidget);

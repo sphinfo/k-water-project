@@ -23,6 +23,7 @@ const WidgetConatiner = (props) => {
                     return (
                         // 공통 widget wrapper ( 사이즈 및 스타일 설정을 위한 warpper )
                         <WidgetWrapper
+                            key={widget.guid}
                             wid={widget.id}
                             {...{
                                 title,

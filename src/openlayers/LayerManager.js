@@ -31,10 +31,13 @@ class LayerManager {
     //레이어 instance 추가
     addLayerInstance(id, instance){
 
-        if(!this._getLayer(id)){
+        //레이어 instance 없으면 추가
+        if(!this._getLayerInstance(id)){
             this._layerInstance[id] = instance
+            console.info(this._layerInstance)
         }
 
+        
     }
 
     // 생성된 레이어 객체가 있으면 해당 레이어 객체를 반환한다.
@@ -57,10 +60,10 @@ class LayerManager {
         }else{
             //config에 레이어가 있는지 확인
             if(this._layerConfig(id)){
-                console.info(id)
                 //레이어 config 확인
                 const item = LayerConfig[id];
-                this._layerInstance[id] = item.instance
+                this.addLayerInstance(id, item.instance)
+                //this._layerInstance[id] = item.instance
                 return item.instance
             }else{   
                 if(instance){
@@ -112,11 +115,9 @@ class LayerManager {
 
     // 레이어 확인
     removeLayer(instance) {
-
         if (instance.get('name')) {
             this.removeLayerById(instance.get('name'));
         }
-
     }
 
 

@@ -20,8 +20,6 @@ const WidgetWrapper = (props) => {
         ...widgetOption({...other})
     }),[]);
 
-    console.info(defaultOption)
-
 
     const writeChildren = useCallback(() => {
         const childrenWithProps = React.Children.map(props.children, child => {

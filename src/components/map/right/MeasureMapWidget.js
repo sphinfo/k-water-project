@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import MapManager from '../../../openlayers/MapManager';
+import React, { useEffect, useImperativeHandle, useRef } from 'react';
+import MapManager from '@gis/MapManager'
 
-import GisDrawTool from '../../../openlayers/util/draw/GisDrawTool';
-import LayerManager from '../../../openlayers/LayerManager';
-import GisLayerClickTool from '../../../openlayers/util/GisLayerClickTool';
+import GisDrawTool from '@gis/util/draw/GisDrawTool';
+//import LayerManager from '../../../openlayers/LayerManager';
+import GisLayerClickTool from '@gis/util/GisLayerClickTool';
 
 const layer = 'MEASURE_LAYER'
 
@@ -34,15 +34,11 @@ const MeasureMapWidget = () => {
 
     },[MapManager.map])
 
-    
-
     const getFeature = ()=>{
 
         GisLayerClickTool.enable('TEST')
 
     }
-
-    
 
     const drawController = (type) =>{
         GisDrawTool.activate(layer, type)
@@ -57,9 +53,9 @@ const MeasureMapWidget = () => {
         <ul style={{ display: 'flex', position: 'relative', left: 0 }}>
             <button onClick={()=>{drawController('LineString')}}>거리</button>
             <button onClick={()=>{drawController('Polygon')}}>면적</button>
-            <button onClick={()=>{drawController('Circle')}}>반지름</button>
+            {/* <button onClick={()=>{drawController('Circle')}}>반지름</button> */}
             <button onClick={()=>{removeDraw()}}>초기화</button>
-            <button onClick={()=>{getFeature()}}>FeatureClick</button>
+            {/* <button onClick={()=>{getFeature()}}>FeatureClick</button> */}
         </ul>
     )
 }
