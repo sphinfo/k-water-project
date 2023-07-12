@@ -6,6 +6,7 @@ import { ToggleButton, ToggleButtonGroup, Button } from "@mui/material";
 import BaseGrid from "@com/grid/BaseGrid";
 import TestTileLayer from "@gis/layers/tileLayer/TestTileLayer";
 import { G$addLayer, G$removeLayer } from "@gis/util";
+import dayjs from 'dayjs';
 
 
 const WaterDetection = () => {
@@ -19,11 +20,13 @@ const WaterDetection = () => {
         {accessor: 'user_cnt', Header: '사용자수', width: 120, align: 'center'},
     ]
     /*const columns = useMemo(()=>{ return [ { key: 'id', name: '일시' }, { key: 'name', name: '수위' },  { key: 'custom', name: '저수량' } ] },[]);*/
-    const rows = useMemo(()=>{ return [ { mday: '2013.01.01', lv2_svc_nm: '12', avg: 'Custom Value 1' }, { mday: '2013.01.02', lv2_svc_nm: '15', avg: 'Custom Value 2' } ] },[])
+    const rows = useMemo(()=>{ return [  ] },[])
     const provider = useMemo(()=>{  return [{name:"연구대상지역", code:"a"},{name:"연구대상지역2", code:"b"}] },[])
 
     const dateStartPickerRef = useRef({})
     const dateEndPickerRef = useRef({})
+    const [startDate, setStartDate] = useState(dayjs().format('YYYY-MM-DD'))
+    const [endDate, setEndDate] = useState(dayjs().format('YYYY-MM-DD'))
     const gridRef = useRef({})
     const comboRef = useRef({})
 
@@ -49,33 +52,36 @@ const WaterDetection = () => {
     },[])
 
     const handleButtonClick = () =>{
-
         comboRef.current.provider = [{name:"123a", code:"123"},{name:"321b", code:"321"}]
-
         gridRef.current.provider = [{ mday: '123', lv2_svc_nm: '4421', avg: '24323 Value 1' }, { mday: '1234.01.02', lv2_svc_nm: '232', avg: '4545 Value 2' } ]
-
-
     }
 
     const onCellClick = (value, origin, ref) =>{
+        console.info(value)
+        console.info(origin)
+        console.info(ref)
 
     }
 
     const addLayer = () =>{
-
         testLayerRef.current = new TestTileLayer()
         G$addLayer(testLayerRef.current)
-
     }
 
     const removeLayer = () =>{
-
         if(testLayerRef.current){
             G$removeLayer(testLayerRef.current)
         }
-        
     }
 
+
+    const changeStartDate = (date) =>{
+        setStartDate(date)
+    }
+
+    const changeEndDate = (date) =>{
+        setEndDate(date)
+    }
 
     return (
         <div style={{width: 400}}>
@@ -87,8 +93,8 @@ const WaterDetection = () => {
                     <BaseCombo ref={comboRef} label={'연구지역을 선택하세요'} provider={provider} />
                 </div>
                 <div>
-                    <BaseDatePicker ref={dateStartPickerRef} maxDate={'2025-12-31'}/>
-                    <BaseDatePicker ref={dateEndPickerRef} maxDate={'2030-12-31'} />
+                    <BaseDatePicker ref={dateStartPickerRef} maxDate={endDate} onchangeFromat={changeStartDate}/>
+                    <BaseDatePicker ref={dateEndPickerRef} minDate={'2010-01-01'} onchangeFromat={changeEndDate}/>
                 </div>
                 <div>
                     <ToggleButtonGroup value={formats} onChange={handleFormat}>

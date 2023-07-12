@@ -1,52 +1,45 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { G$SetZoomToPoint, G$Transfrom } from '../../../openlayers/util';
-import EmptyMessage from '@com/grid/table/EmptyMessage';
+import React, { memo, useEffect, useRef, useState } from 'react';
+import AddrSearchResultComponent from './component/AddrSearchResultComponent';
 //import Pagination from '@cmp/util/Pagination';
 
-const AddrSearchResult = ({result}) => {
+const AddrSearchResult = ({result, addrSearchText}) => {
 
-    const [addrResult, setAddrResult] = useState([])
+    // 선택된 탭의 인덱스를 저장하는 state
+    const [selectedTab, setSelectedTab] = useState(0); 
+
+    const addrRef = useRef({type:'addr'})
+    const roadRef = useRef({type:'addr'})
 
     useEffect(()=>{
-        setAddrResult(result)
+      addrRef.current.provider = result.addr
+      roadRef.current.provider = result.road
     },[result])
 
-
-    const addrComponent = (obj, i) => {
-      const handleClick = () => {
-        goToPlace(obj.point);
-      };
-  
-      return (
-        <div key={i} onClick={handleClick}>
-          {obj.address.parcel}
-        </div>
-      );
+    const changeTab = (tabIndex) => {
+      setSelectedTab(tabIndex);
     };
-
-    const goToPlace = (point) =>{
-        //G$Transfrom = (point, to, from)=>{
-        let p = G$Transfrom([point.x, point.y], 4326, 3857)
-        G$SetZoomToPoint(18, [p[0], p[1]])
-    }
 
     return (
         <>
-            <div>
-                {(addrResult.length > 0 && addrResult.map((obj, i)=>{
-                    return addrComponent(obj, i)
-                }))}
-                {
-                  addrResult.length === 0 && <EmptyMessage message={'데이터가 존재하지 않습니다.'}/>
-                }
-            </div>
-            {/* <Pagination 
-              total={10}
-              limit={5}
-              page={0}
-            /> */}
+          <div style={{ display: !result.addr && !result.road ? 'block' : 'none' }}>
+            {/* 탭 버튼 */}
+            <button onClick={() => changeTab(0)}>주소</button>
+            <button onClick={() => changeTab(1)}>도로명</button>
+          </div>
+          
+          {/* 주소 */}
+          <div style={{ display: selectedTab === 0 ? 'block' : 'none' }}>
+            <AddrSearchResultComponent ref={addrRef} type={'addr'} addrSearchText={addrSearchText}/>
+          </div>
+          
+          {/* 도로명 */}
+          <div style={{ display: selectedTab === 1 ? 'block' : 'none' }}>
+            <AddrSearchResultComponent ref={roadRef} type={'road'} addrSearchText={addrSearchText}/>
+          </div>
+          
+          
         </>
     )
 }
 
-export default React.memo(AddrSearchResult);
+export default memo(AddrSearchResult);

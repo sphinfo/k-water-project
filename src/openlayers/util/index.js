@@ -17,12 +17,14 @@ const G$addLayer = (l) =>{
 /* 레이어 추가 */
 const G$removeLayer = (l) =>{
 
-    //레이어 있는지 확인
-    let layer = MapManager.getLayerForName(l.get('name'))
-    
-    //레이어가 지도에 있으면 레이어 삭제
-    if(layer){
-        return MapManager.removeLayer(layer)
+    if(l){
+        //레이어 있는지 확인
+        let layer = MapManager.getLayerForName(l.get('name'))
+        
+        //레이어가 지도에 있으면 레이어 삭제
+        if(layer){
+            return MapManager.removeLayer(layer)
+        }
     }
 
 }

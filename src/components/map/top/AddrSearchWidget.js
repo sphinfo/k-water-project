@@ -1,25 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
-import VWorldAddressSearch from '@/vworld/VWorldAddressSearch ';
+import VWorldAddressSearch from '@/vworld/VWorldAddressSearch';
 import TextInput from '@cmp/util/TextInput';
 import AddrSearchResult from './AddrSearchResult';
 
 const AddrSearchWidget = () => {
 
-    const addr = useRef(new VWorldAddressSearch())
-    
+    const searchAddr = useRef(new VWorldAddressSearch())
 
     const [addrList, setAddrList] = useState([])
     const [addrSearchText, setAddrSearchText] = useState('')
 
     const addrSearch = async () =>{
-        console.info(addrSearchText)
-        addr.current.searchAddress(addrSearchText).then((result)=>{
+        
+        searchAddr.current.searchAddress(addrSearchText).then((result)=>{
+            console.info(result)
             if(result){
-                if(result.items.length > 0){
-                    setAddrList(result.items)
-                }else{
-                    setAddrList([])    
-                }
+                setAddrList(result)
             }else{
                 setAddrList([])
             }
@@ -44,6 +40,7 @@ const AddrSearchWidget = () => {
             <ul style={{  position: 'relative', left: 0 }}>
                 <AddrSearchResult
                     result={addrList}
+                    addrSearchText={addrSearchText}
                 />
             </ul>
         </>

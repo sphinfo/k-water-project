@@ -23,7 +23,7 @@ const BaseDatePicker = (props, ref) => {
 
   // interval : 현재 날짜 간격 조정 [ number ]
   // onChange : Parent Combo Change Event Function
-  const { dateFormat, minDate, maxDate, interval, onChange, ...other } = props;
+  const { dateFormat, minDate, maxDate, interval, onChange, onchangeFromat, ...other } = props;
 
   const [selectedDate, setSelectdDate] = useState(props.date || dayjs().add(interval || -1, 'day'));
 
@@ -35,6 +35,7 @@ const BaseDatePicker = (props, ref) => {
     }
 
     (onChange && onChange(d));
+    (onchangeFromat && onchangeFromat(d.format('YYYY-MM-DD')));
   });
 
   const max = useMemo(()=>{
@@ -42,7 +43,7 @@ const BaseDatePicker = (props, ref) => {
   }, [maxDate])
 
   const min = useMemo(()=>{
-    return dayjs(minDate)
+    return minDate ? dayjs(minDate) : dayjs('2010-01-01')
   }, [minDate])
 
   // 날짜 형식
