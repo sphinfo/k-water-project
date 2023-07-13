@@ -70,16 +70,16 @@ export default function Sidebar () {
   };
 
   return (
-    <div style={{display: 'flex'}}>
+    <div style={{display: 'flex', height: '100%'}}>
       <Tabs value={value === NONE_INDEX ? false : value} onChange={handleChange}  orientation="vertical"variant="scrollable" aria-label="Vertical tabs example" sx={{ borderRight: 1, borderColor: 'divider' }} >
-        <Tab label="수체탐지" {...a11yProps(INDEX_0)}/>
-        <Tab label="수위탐지" {...a11yProps(INDEX_1)}/>
-        <Tab label="토양수분" {...a11yProps(INDEX_2)}/>
-        <Tab label="가뭄지수" {...a11yProps(INDEX_3)}/>
-        <Tab label="수변피복탐지" {...a11yProps(INDEX_4)}/>
-        <Tab label="부유물탐지" {...a11yProps(INDEX_5)}/>
-        <Tab label="시계열 변위 모니터링" {...a11yProps(INDEX_6)}/>
-        <Tab label="안전진단지수" {...a11yProps(INDEX_7)}/>
+        <Tab label="수체탐지" {...a11yProps(INDEX_0)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="수위탐지" {...a11yProps(INDEX_1)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="토양수분" {...a11yProps(INDEX_2)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="가뭄지수" {...a11yProps(INDEX_3)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="수변피복탐지" {...a11yProps(INDEX_4)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="부유물탐지" {...a11yProps(INDEX_5)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="시계열 변위 모니터링" {...a11yProps(INDEX_6)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="안전진단지수" {...a11yProps(INDEX_7)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
       </Tabs>
 
       <Drawer

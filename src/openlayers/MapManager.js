@@ -1,7 +1,7 @@
 import OlMap from "ol/Map";
 import OlView from "ol/View";
-import {fromLonLat} from 'ol/proj';
 
+import {fromLonLat} from 'ol/proj';
 
 import LayerManager from "./LayerManager";
 
@@ -72,6 +72,7 @@ class MapManager {
 
     // Map 를 생성하여 반환한다.
     createMap(target, options = {}) {
+
 
         this._map = new OlMap({
             target: target,

@@ -1,5 +1,5 @@
-import {Tile as TileLayer } from "ol/layer";
-import { TileWMS } from "ol/source";
+import {Tile as TileLayer, Image } from "ol/layer";
+import { TileWMS, ImageWMS } from "ol/source";
 
 class TestTileLayer extends TileLayer {
 

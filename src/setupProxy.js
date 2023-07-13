@@ -31,4 +31,14 @@ module.exports = function (app) {
 		})
 	);
 
+	app.use(
+		createProxyMiddleware('/waterGeo',{
+			target: 'http://221.147.56.177:58080/geoserver',
+			changeOrigin: true,
+            pathRewrite: {
+                '^/waterGeo': ''
+            }
+		})
+	);
+
 };

@@ -1,5 +1,6 @@
 {
   "name": "k-water-v1",
+  "homepage": "/k-water",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

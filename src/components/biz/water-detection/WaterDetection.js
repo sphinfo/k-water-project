@@ -107,9 +107,7 @@ const WaterDetection = () => {
                             {'침수'}
                         </ToggleButton>
                     </ToggleButtonGroup>
-                    <Button onClick={handleButtonClick}>{'검색'}</Button>
-                    <Button onClick={addLayer}>{'add'}</Button>
-                    <Button onClick={removeLayer}>{'remove'}</Button>
+                    <button onClick={handleButtonClick}>{'검색'}</button>
                 </div>
             </div>
             <div>

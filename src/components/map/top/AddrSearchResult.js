@@ -21,7 +21,7 @@ const AddrSearchResult = ({result, addrSearchText}) => {
 
     return (
         <>
-          <div style={{ display: !result.addr && !result.road ? 'block' : 'none' }}>
+          <div style={{ display: result.addr && result.road ? 'block' : 'none' }}>
             {/* 탭 버튼 */}
             <button onClick={() => changeTab(0)}>주소</button>
             <button onClick={() => changeTab(1)}>도로명</button>
