@@ -1,12 +1,17 @@
-import BaseGrid from "@com/grid/BaseGrid";
+import React, { useEffect, useRef, useState , useMemo} from "react";
+import WidgetManager from "@com/manager/widget/WidgetManager";
 import BaseCombo from "@com/manager/combo/BaseCombo";
 import BaseDatePicker from "@com/manager/datepicker/BaseDatePicker";
-import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import dayjs from "dayjs";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { ToggleButton, ToggleButtonGroup, Button } from "@mui/material";
+import BaseGrid from "@com/grid/BaseGrid";
+import TestTileLayer from "@gis/layers/tileLayer/TestTileLayer";
+import { G$addLayer, G$removeLayer } from "@gis/util";
+import dayjs from 'dayjs';
 
-const SuspendedSolids = () => {
 
+const WaterBody = () => {
+
+    /* sample */
     const columns = [
         {accessor: 'mday', Header: '기준일자', width: 120, align: 'center', visible: false},
         {accessor: 'lv2_svc_nm', Header: '서비스', width: 200, align: 'center'},
@@ -16,31 +21,39 @@ const SuspendedSolids = () => {
     ]
     /*const columns = useMemo(()=>{ return [ { key: 'id', name: '일시' }, { key: 'name', name: '수위' },  { key: 'custom', name: '저수량' } ] },[]);*/
     const rows = useMemo(()=>{ return [  ] },[])
-    
-
-    const provider = useMemo(()=>{  return [{name:"연구대상지역 1", code:"a"},{name:"연구대상지역 2", code:"b"}] },[])
-    const comboRef = useRef({})
-    const selectRef = useRef({})
-    const gridRef = useRef({})
+    const provider = useMemo(()=>{  return [{name:"연구대상지역", code:"a"},{name:"연구대상지역2", code:"b"}] },[])
 
     const dateStartPickerRef = useRef({})
     const dateEndPickerRef = useRef({})
-
     const [startDate, setStartDate] = useState(dayjs().format('YYYY-MM-DD'))
     const [endDate, setEndDate] = useState(dayjs().format('YYYY-MM-DD'))
+    const gridRef = useRef({})
+    const comboRef = useRef({})
 
-    const [formats, setFormats] = useState('a');
+    const testLayerRef = useRef()
+
+    const [formats, setFormats] = useState('b');
     const handleFormat = (event, newFormats) => {
         setFormats([event.target.value]);
     };
-
     useEffect(()=>{
-        console.info('SuspendedSolids')
+
+        // WidgetManager.add('TestWidget2', {
+        //     params: 'testParam'
+        // });
+
+        return()=>{
+            WidgetManager.remove('TestWidget2', {
+                params: 'testParam'
+            });
+
+            G$removeLayer(testLayerRef.current)
+        }        
     },[])
 
-
     const handleButtonClick = () =>{
-        alert(selectRef.current.textContent + "로 검색")
+        comboRef.current.provider = [{name:"123a", code:"123"},{name:"321b", code:"321"}]
+        gridRef.current.provider = [{ mday: '123', lv2_svc_nm: '4421', avg: '24323 Value 1' }, { mday: '1234.01.02', lv2_svc_nm: '232', avg: '4545 Value 2' } ]
     }
 
     const onCellClick = (value, origin, ref) =>{
@@ -49,6 +62,18 @@ const SuspendedSolids = () => {
         console.info(ref)
 
     }
+
+    const addLayer = () =>{
+        testLayerRef.current = new TestTileLayer()
+        G$addLayer(testLayerRef.current)
+    }
+
+    const removeLayer = () =>{
+        if(testLayerRef.current){
+            G$removeLayer(testLayerRef.current)
+        }
+    }
+
 
     const changeStartDate = (date) =>{
         setStartDate(date)
@@ -62,7 +87,7 @@ const SuspendedSolids = () => {
         <div style={{width: 400}}>
             <div>
                 <div>
-                    <h1>부유물 탐지</h1>
+                    <h1>수체 탐지</h1>
                 </div>
                 <div>
                     <BaseCombo ref={comboRef} label={'연구지역을 선택하세요'} provider={provider} />
@@ -73,16 +98,16 @@ const SuspendedSolids = () => {
                 </div>
                 <div>
                     <ToggleButtonGroup value={formats} onChange={handleFormat}>
-                        <ToggleButton value="a" ref={selectRef}>
-                            {'SS'}
+                        <ToggleButton value="a">
+                            {'수치'}
                         </ToggleButton>
                     </ToggleButtonGroup>
                     <ToggleButtonGroup value={formats} onChange={handleFormat}>
-                        <ToggleButton value="b" ref={selectRef}>
-                            {'Chl-a'}
+                        <ToggleButton value="b">
+                            {'침수'}
                         </ToggleButton>
                     </ToggleButtonGroup>
-                    <Button onClick={handleButtonClick}>{'검색'}</Button>
+                    <button onClick={handleButtonClick}>{'검색'}</button>
                 </div>
             </div>
             <div>
@@ -92,8 +117,9 @@ const SuspendedSolids = () => {
                     <BaseGrid ref={gridRef} columns={columns} provider={rows} onCellClick={onCellClick}/>
                 </div>
             </div>
+            
         </div>
     )
 }
 
-export default React.memo(SuspendedSolids);
+export default React.memo(WaterBody);

@@ -1,14 +1,14 @@
 import { Drawer, Tab, Tabs } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import WaterDetection from '@cmp/biz/water-detection/WaterDetection'
 import WaterLevel from '@cmp/biz/water-level/WaterLevel';
 import SoilMoisture from '@cmp/biz/soil-moisture/SoilMoisture';
 import DroughtIndex from '@cmp/biz/droughth-index/DroughtIndex';
-import WatersideCover from '@cmp/biz/waterside-cover/WatersideCover';
 import TimeSeries from '@cmp/biz/time-series/TimeSeries';
 import SafetyDiagnsis from '@cmp/biz/safety-diagnsis/SafetyDiagnsis';
-import SuspendedSolids from '@cmp/biz/suspended-solids/SuspendedSolids';
+import GArbage from '@cmp/biz/gArbage/GArbage';
+import LandCover from '@cmp/biz/landCover/LandCover';
+import WaterBody from '@cmp/biz/water-body/WaterBody';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -90,7 +90,8 @@ export default function Sidebar () {
         >
         <TabPanel value={value} index={INDEX_0} >
           <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
-          <WaterDetection />
+          {/* WaterBody */}
+          <WaterBody />
         </TabPanel>
       </Drawer>
 
@@ -138,7 +139,8 @@ export default function Sidebar () {
         >
         <TabPanel value={value} index={INDEX_4}>
           <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
-          <WatersideCover />
+          {/* LandCover */}
+          <LandCover />
         </TabPanel>
       </Drawer>
 
@@ -150,7 +152,8 @@ export default function Sidebar () {
         >
         <TabPanel value={value} index={INDEX_5}>
           <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
-          <SuspendedSolids />
+          {/* GArbage */}
+          <GArbage />
         </TabPanel>
       </Drawer>
 
