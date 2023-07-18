@@ -2,6 +2,7 @@ import {Vector as VectorLayer, Tile as TileLayer } from "ol/layer";
 import {Vector as sourceVector, TileWMS as TWMS} from "ol/source";
 
 import LayerConfig from "./config/LayerConfig";
+import { G$RemveOverlays } from "./util";
 
 /* 단순 주제도 레이어 wms 관리 */
 class LayerManager {
@@ -117,6 +118,7 @@ class LayerManager {
     removeLayer(instance) {
         if (instance.get('name')) {
             this.removeLayerById(instance.get('name'));
+            G$RemveOverlays(instance.get('name'))
         }
     }
 

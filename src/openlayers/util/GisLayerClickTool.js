@@ -71,8 +71,6 @@ class GisLayerClickTool {
 			features.push(feature)
 		})
 
-		console.info(wmsSources)
-
 		//get wms feature 
 		const requests = wmsSources.map((source)=>{
 			const url = source.getFeatureInfoUrl( coordinate, viewResolution, viewProjection, { 'INFO_FORMAT': 'application/json' } )
@@ -81,8 +79,6 @@ class GisLayerClickTool {
 
 		//get wms feature request ( *** data 단으로 들어가 feature 리스형태로 보여줘야할지는 프로젝트 진행후 변경 ***)
 		featureInfo.getFeaturesInfo(requests).then(response =>{
-
-			console.info(response)
 
 			if(response.length > 0){
 				response.map((responseObj)=>{
@@ -93,14 +89,14 @@ class GisLayerClickTool {
 			if (callback.hasOwnProperty('current')) {
 				//ref return
 				if (callback.current.getFeatures) {
-					callback.current.getFeatures(features);
+					callback.current.getFeatures(features, coordinate);
 				}
 			} else if (G$TypeOf(callback, 'object')) {
 				if (callback.getFeatures) {
-					callback.getFeatures(features);
+					callback.getFeatures(features, coordinate);
 				}
-			} else if (G$TypeOf(callback, 'function')) {
-				callback(features);
+			} else if (G$TypeOf(callback, 'function') || G$TypeOf(callback, 'AsyncFunction'))  {
+				callback(features, coordinate);
 			} else {
 				console.info('please check callback process!');
 			}

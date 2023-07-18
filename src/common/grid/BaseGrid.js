@@ -4,7 +4,7 @@ import BodyRow from "./table/BodyRow";
 import EmptyMessage from "./table/EmptyMessage";
 
 
-const BaseGrid = ({ columns, provider = [], ...props }, ref) => {
+const BaseGrid = ({ columns, provider = [], className='', ...props }, ref) => {
 
 	const selectedCell = useRef();
 	const selectedRow = useRef();

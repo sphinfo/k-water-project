@@ -35,7 +35,7 @@ const BaseChart = (props, ref) => {
 
 	const chartRef = useRef(null)
 
-	const { width, height, title, chartType='Line', ...other } = props;
+	const { width, height, title, chartType='Line', className='', ...other } = props;
 
 	const ChartComponent = useMemo(() => {
 		return chartType === 'Line' ? Line : Bar;
@@ -81,7 +81,7 @@ const BaseChart = (props, ref) => {
   
 
   return (
-	<div style={{width: wid, height: hei}}>
+	<div style={{width: wid, height: hei}} className={className}>
 		<ChartComponent ref={chartRef} options={defaultOption} data={data}/>
 	</div>
 	

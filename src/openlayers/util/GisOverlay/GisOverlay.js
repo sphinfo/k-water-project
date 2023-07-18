@@ -23,12 +23,8 @@ class GisOverlay {
 		
 	}
 
-	setTest(){
-		return ''
-	}
-
-	setElement(value){
-		this.elemnet.innerHTML = value
+	setElement(element){
+		this.elemnet.innerHTML = element
 	}
 
 	setPosition(coord){

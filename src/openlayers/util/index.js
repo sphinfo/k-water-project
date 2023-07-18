@@ -36,15 +36,24 @@ const G$addOverlay = (o)=>{
 
 /* 오버레이 삭제 */
 const G$RemveOverlays = (id) =>{
-    if(MapManager.map.getOverlays().getArray().length > 0){
-        MapManager.map.getOverlays().getArray().map((obj)=>{
-          if(obj.id){
-            if(obj.id.indexOf(id) > -1){
-                MapManager.map.removeOverlay(obj)
-            }
-          }
-        })
-      }
+
+    // 전체 오버레이 가지고 오기 *깔끔하게 지워지지 않는 현상때문에
+    const overlays = MapManager.map.getOverlays().getArray();
+    if (overlays.length > 0) {
+        
+        // id와 일치하지 않는 오버레이만 필터링
+        const filteredOverlays = overlays.filter((obj) => {
+            return obj.id && obj.id.indexOf(id) === -1; 
+        });
+
+        // 기존의 오버레이 모두 제거
+        MapManager.map.getOverlays().clear(); 
+        
+        // 필터링된 오버레이들을 다시 추가
+        filteredOverlays.map((overlay) => {
+            MapManager.map.addOverlay(overlay); 
+        });
+    }
 
 }
 

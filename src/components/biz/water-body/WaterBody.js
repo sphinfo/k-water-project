@@ -64,19 +64,19 @@ const WaterBody = () => {
     }
 
 
-    const selectRef = useRef();
+    /*const selectRef = useRef();
     useImperativeHandle(selectRef, ()=>({
         getFeatures(f){
             console.info(f)
         }
-    }));
+    }));*/
 
     const addLayer = () =>{
         testLayerRef.current = new TestTileLayer()
         G$addLayer(testLayerRef.current)
 
-        GisLayerClickTool.addBiz('TEST', selectRef, ['image'])
-        GisLayerClickTool.enable('TEST')
+        /*GisLayerClickTool.addBiz('TEST', selectRef, ['image'])
+        GisLayerClickTool.enable('TEST')*/
         
     }
 
@@ -133,11 +133,10 @@ const WaterBody = () => {
                 </div>
             </div>
             <div>
-                <div>
+                {/* <div>
                     <h2>수체지도 목록</h2>
-                    {/**<BaseGrid ref={gridRef} columns={columns} rows={rows} className={'testGrid'}/> */}
-                    <BaseGrid ref={gridRef} columns={columns} provider={rows} onCellClick={onCellClick}/>
-                </div>
+                    <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'testGrid'} onCellClick={onCellClick}/>
+                </div>*/}
             </div>
             
         </div>
