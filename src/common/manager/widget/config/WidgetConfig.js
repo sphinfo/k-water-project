@@ -12,7 +12,7 @@ const WidgetConfig = {
     },
     'TestWidget2': {
         title: '테스트용 위젯2',
-        style: { top: 70, left: 350, width: 1000, height: 550, position:'absolute', backgroundColor: 'white'},
+        style: { top: 70, left: 650, width: 1000, height: 550, position:'absolute', backgroundColor: 'white'},
         instance: widgets.TestWidget2
     }
 };

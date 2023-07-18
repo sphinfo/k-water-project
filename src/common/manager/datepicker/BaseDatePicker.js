@@ -39,7 +39,7 @@ const BaseDatePicker = (props, ref) => {
   });
 
   const max = useMemo(()=>{
-    return dayjs(maxDate)
+    return maxDate ? dayjs(maxDate) : dayjs('2030-12-31')
   }, [maxDate])
 
   const min = useMemo(()=>{

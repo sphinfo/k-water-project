@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState , useMemo} from "react";
+import React, { useEffect, useRef, useState , useMemo, useImperativeHandle} from "react";
 import WidgetManager from "@com/manager/widget/WidgetManager";
 import BaseCombo from "@com/manager/combo/BaseCombo";
 import BaseDatePicker from "@com/manager/datepicker/BaseDatePicker";
@@ -7,6 +7,7 @@ import BaseGrid from "@com/grid/BaseGrid";
 import TestTileLayer from "@gis/layers/tileLayer/TestTileLayer";
 import { G$addLayer, G$removeLayer } from "@gis/util";
 import dayjs from 'dayjs';
+import GisLayerClickTool from "@gis/util/GisLayerClickTool";
 
 
 const WaterBody = () => {
@@ -43,11 +44,10 @@ const WaterBody = () => {
         // });
 
         return()=>{
-            WidgetManager.remove('TestWidget2', {
-                params: 'testParam'
-            });
+            WidgetManager.remove('TestWidget2');
 
             G$removeLayer(testLayerRef.current)
+            GisLayerClickTool.disable('TEST')
         }        
     },[])
 
@@ -63,9 +63,21 @@ const WaterBody = () => {
 
     }
 
+
+    const selectRef = useRef();
+    useImperativeHandle(selectRef, ()=>({
+        getFeatures(f){
+            console.info(f)
+        }
+    }));
+
     const addLayer = () =>{
         testLayerRef.current = new TestTileLayer()
         G$addLayer(testLayerRef.current)
+
+        GisLayerClickTool.addBiz('TEST', selectRef, ['image'])
+        GisLayerClickTool.enable('TEST')
+        
     }
 
     const removeLayer = () =>{
@@ -83,6 +95,12 @@ const WaterBody = () => {
         setEndDate(date)
     }
 
+    const chartWidgetOpn = () =>{
+        WidgetManager.add('TestWidget2', {
+            params: 'testParam'
+        });
+    }
+
     return (
         <div style={{width: 400}}>
             <div>
@@ -94,7 +112,7 @@ const WaterBody = () => {
                 </div>
                 <div>
                     <BaseDatePicker ref={dateStartPickerRef} maxDate={endDate} onchangeFromat={changeStartDate}/>
-                    <BaseDatePicker ref={dateEndPickerRef} minDate={'2010-01-01'} onchangeFromat={changeEndDate}/>
+                    <BaseDatePicker ref={dateEndPickerRef} minDate={startDate} onchangeFromat={changeEndDate}/>
                 </div>
                 <div>
                     <ToggleButtonGroup value={formats} onChange={handleFormat}>
@@ -108,6 +126,10 @@ const WaterBody = () => {
                         </ToggleButton>
                     </ToggleButtonGroup>
                     <button onClick={handleButtonClick}>{'검색'}</button>
+                    <button onClick={chartWidgetOpn}>{'chart'}</button>
+                    <button onClick={addLayer}>{'ADD'}</button>
+                    <button onClick={removeLayer}>{'REMOVE'}</button>
+                    
                 </div>
             </div>
             <div>

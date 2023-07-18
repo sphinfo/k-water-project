@@ -37,7 +37,7 @@ const WidgetWrapper = (props) => {
 
 
     return (
-            <div style={defaultOption} key={wid}>
+            <div style={defaultOption} key={wid} className={wid}>
                 {/* 리소스가 준비될 때까지 렌더링을 일시 중지 */}
                 <Suspense> 
                     {

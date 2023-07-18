@@ -65,21 +65,28 @@ export default function Sidebar () {
     }
   }, [value]);
 
+  //같은 탭을 선택시 닫기
+  const handleClick = useCallback((newValue) =>{
+    if (value === newValue) {
+      setValue(NONE_INDEX)
+    }
+  }, [value])
+
   const handleClose = () => {
       setValue(NONE_INDEX);
   };
 
   return (
     <div style={{display: 'flex', height: '100%'}}>
-      <Tabs value={value === NONE_INDEX ? false : value} onChange={handleChange}  orientation="vertical"variant="scrollable" aria-label="Vertical tabs example" sx={{ borderRight: 1, borderColor: 'divider' }} >
-        <Tab label="수체탐지" {...a11yProps(INDEX_0)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
-        <Tab label="수위탐지" {...a11yProps(INDEX_1)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
-        <Tab label="토양수분" {...a11yProps(INDEX_2)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
-        <Tab label="가뭄지수" {...a11yProps(INDEX_3)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
-        <Tab label="수변피복탐지" {...a11yProps(INDEX_4)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
-        <Tab label="부유물탐지" {...a11yProps(INDEX_5)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
-        <Tab label="시계열 변위 모니터링" {...a11yProps(INDEX_6)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
-        <Tab label="안전진단지수" {...a11yProps(INDEX_7)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+      <Tabs value={value === NONE_INDEX ? false : value} onChange={handleChange} onClick={handleClick}  orientation="vertical"variant="scrollable" aria-label="Vertical tabs example" sx={{ borderRight: 1, borderColor: 'divider' }} >
+        <Tab label="수체탐지" onClick={()=>{handleClick(INDEX_0)}} {...a11yProps(INDEX_0)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="수위탐지" onClick={()=>{handleClick(INDEX_1)}} {...a11yProps(INDEX_1)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="토양수분" onClick={()=>{handleClick(INDEX_2)}} {...a11yProps(INDEX_2)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="가뭄지수" onClick={()=>{handleClick(INDEX_3)}} {...a11yProps(INDEX_3)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="수변피복탐지" onClick={()=>{handleClick(INDEX_4)}} {...a11yProps(INDEX_4)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="부유물탐지" onClick={()=>{handleClick(INDEX_5)}} {...a11yProps(INDEX_5)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="시계열 변위 모니터링" onClick={()=>{handleClick(INDEX_6)}} {...a11yProps(INDEX_6)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="안전진단지수" onClick={()=>{handleClick(INDEX_7)}} {...a11yProps(INDEX_7)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
       </Tabs>
 
       <Drawer

@@ -17,7 +17,8 @@ const BaseCombo = (
 		const basicLabelFiled = useMemo(() => (labelField || 'name'), [labelField]);
 
 		useEffect(() => {
-			setComboData(provider);
+			const placeholderData = { [basicFiled]: '', [basicLabelFiled]: label || '선택' };
+			setComboData([placeholderData, ...provider]);
 		}, [provider]);
 
 		//props로 onchange 받을때
@@ -52,7 +53,8 @@ const BaseCombo = (
 			set provider(data) {
 				if (Array.isArray(data)) {
 					const filters = data;
-					setComboData([...filters]);
+					const placeholderData = { [basicFiled]: '', [basicLabelFiled]: label || '선택' };
+					setComboData([placeholderData, ...filters]);
 				} else {
 					console.log('set provider error!');
 				}
@@ -65,6 +67,7 @@ const BaseCombo = (
 			}
 
 		}));
+		
 
 	return (
 		<FormControl style={{...style}}>
