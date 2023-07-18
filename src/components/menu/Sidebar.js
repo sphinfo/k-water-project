@@ -89,6 +89,19 @@ export default function Sidebar () {
         <Tab label="안전진단지수" onClick={()=>{handleClick(INDEX_7)}} {...a11yProps(INDEX_7)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
       </Tabs>
 
+      {/*  material 빼냈을시 example ui
+        <div style={{ borderRight: '1px solid #000', display: 'flex', flexDirection: 'column' }} >
+          <div className="tab" onClick={() => { handleClick(INDEX_0) }} style={{ backgroundColor: value === INDEX_0 ? 'rgba(255, 255, 255, 0.85)' : '' }} > 수체탐지 </div>
+        </div>
+
+        <div>
+          <TabPanel value={value} index={INDEX_0} >
+            <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
+            <WaterBody />
+          </TabPanel>
+        </div>
+      */}
+
       <Drawer
         variant={'persistent'}
         anchor={'left'}
