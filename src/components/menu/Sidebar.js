@@ -9,6 +9,7 @@ import SafetyDiagnsis from '@cmp/biz/safety-diagnsis/SafetyDiagnsis';
 import GArbage from '@cmp/biz/gArbage/GArbage';
 import LandCover from '@cmp/biz/landCover/LandCover';
 import WaterBody from '@cmp/biz/water-body/WaterBody';
+import WaterBodyCopy from '@cmp/biz/water-body/WaterBody copy';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -111,7 +112,7 @@ export default function Sidebar () {
         <TabPanel value={value} index={INDEX_0} >
           <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
           {/* WaterBody */}
-          <WaterBody />
+          <WaterBodyCopy />
         </TabPanel>
       </Drawer>
 

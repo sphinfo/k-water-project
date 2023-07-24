@@ -7,7 +7,7 @@ const BaseCombo = (
 	//label = COMBOBOX 기본 LABEL
 	//labelField	key
 	//field 		value
-	{provider=[], label='', field, labelField, onChange, style}, ref) => {
+	{provider=[], label='', field, labelField, onChange, style, dispatch, actions}, ref) => {
 
 		const [comboData, setComboData] = useState([]);
 		const [selected, setSelected] = useState({value: '', item: null, index:-1}); 

@@ -4,10 +4,10 @@ import GisOverlay from "@gis/util/GisOverlay/GisOverlay";
 import {Tile as TileLayer, Image } from "ol/layer";
 import { TileWMS, ImageWMS } from "ol/source";
 
+
+const name = 'TestTileLayer'
 class TestTileLayer extends TileLayer {
-
-	name = 'TestTileLayer'
-
+	name = name
 	constructor(opt) {
 		const source = new TileWMS({
 			url: '/starGeo/sckmpp/wms?',
@@ -23,7 +23,7 @@ class TestTileLayer extends TileLayer {
 		
 		const layerOptions = {
 			source: source,
-			name: 'TestTileLayer'
+			name: name
 		}
 
 		super(layerOptions)
@@ -34,8 +34,8 @@ class TestTileLayer extends TileLayer {
 
 	/* add callback event */
 	_addClickEvent(){
-		GisLayerClickTool.addBiz('TestTileLayer', this._getFeatures.bind(this), ['TestTileLayer'])
-		GisLayerClickTool.enable('TestTileLayer')
+		GisLayerClickTool.addBiz(name, this._getFeatures.bind(this), [name])
+		GisLayerClickTool.enable(name)
 	}
 
 	/* callback feature */

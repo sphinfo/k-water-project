@@ -8,6 +8,7 @@ const WidgetConatiner = (props) => {
 
     const container = useRef();
     useEffect(() => {
+        console.info(WidgetManager.reference)
         WidgetManager.reference = container;
     }, []);
 
