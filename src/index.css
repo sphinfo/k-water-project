@@ -78,13 +78,13 @@ code {
 .view-satellite{
   color: #fff;
   background-color: unset;
-  background-image: url("./resource/images/map-satellite-bg.png");
+  background-image: url("src/resources/images/map-satellite-bg.png");
   background-repeat: no-repeat;
   background-position: center;
 }
 .view-basic{
   background-color: unset;
-  background-image: url("./resource/images/map-basic-bg.png");
+  background-image: url("src/resources/images/map-basic-bg.png");
   background-repeat: no-repeat;
   background-position: center;
 }
