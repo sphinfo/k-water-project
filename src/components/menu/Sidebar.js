@@ -111,7 +111,7 @@ export default function Sidebar () {
         >
         <TabPanel value={value} index={INDEX_0} >
           <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
-          {/* WaterBody */}
+          <WaterBody />
           <WaterBodyCopy />
         </TabPanel>
       </Drawer>

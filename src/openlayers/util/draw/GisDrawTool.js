@@ -190,6 +190,10 @@ class GisDrawTool {
                             callback.current.getFeautre(feature);
                         }
 
+                        if (callback.current.drawEnd) {
+                            callback.current.drawEnd();
+                        }
+
                     } else if (G$TypeOf(callback, 'object')) {
 
                         if (callback.getGeometry) {
@@ -198,11 +202,18 @@ class GisDrawTool {
                         if (callback.getFeature) {
                             callback.getFeature(feature);
                         }
+
+                        if (callback.drawEnd) {
+                            callback.drawEnd();
+                        }
+
                     } else if (G$TypeOf(callback, 'function')) {
                         callback(geometry, feature);
                     } else {
                         console.log('please check callback process!');
                     }
+
+
                 }
 
                 if (biz in this._listeners) {

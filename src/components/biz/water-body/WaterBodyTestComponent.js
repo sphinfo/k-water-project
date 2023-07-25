@@ -17,8 +17,8 @@ const WaterBodyTestComponent = ({dispatch, actions, state}) => {
     return (
         <>
             <div>
-                    <BaseDatePicker maxDate={state.endDate} onchangeFromat={changeStartDate}/>
-                    <BaseDatePicker minDate={state.startDate} onchangeFromat={changeEndDate}/>
+                <BaseDatePicker maxDate={state.endDate} onchangeFromat={changeStartDate}/>
+                <BaseDatePicker minDate={state.startDate} onchangeFromat={changeEndDate}/>
             </div>
            <div>
                 {memoizedState.combo && memoizedState.combo.name}

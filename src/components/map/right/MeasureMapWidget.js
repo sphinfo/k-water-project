@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useRef } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import MapManager from '@gis/MapManager'
 
 import GisDrawTool from '@gis/util/draw/GisDrawTool';
@@ -9,10 +9,16 @@ const layer = 'MEASURE_LAYER'
 
 const MeasureMapWidget = () => {
 
+    const [activeType, setActiveType] = useState('')
+
     const drawRef = useRef();
     useImperativeHandle(drawRef, ()=>({
-        getGeometry(geometry){
+        getGeometry(geometry) {
             console.info(geometry)
+        },
+
+        drawEnd() {
+            setActiveType('')
         }
     }));
 
@@ -42,16 +48,18 @@ const MeasureMapWidget = () => {
 
     const drawController = (type) =>{
         GisDrawTool.activate(layer, type)
+        setActiveType(type)
     }
 
     const removeDraw = () =>{
         GisDrawTool.clearLayer(layer)
+        setActiveType('')
     }
 
     
     return (
         <ul className="map-widget-vertical-block">
-            <button className="map-right-bt" onClick={()=>{drawController('LineString')}}>
+            <button className={`map-right-bt ${activeType === 'LineString' ? 'active' : ''}`} onClick={()=>{drawController('LineString')}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14" fill="none">
                     <g clip-path="url(#clip0_505_23595)">
                         <path d="M1.55566 1.58331H18.4446" stroke="#3D3D3D" stroke-width="1.5" stroke-linecap="round"/>
@@ -64,7 +72,7 @@ const MeasureMapWidget = () => {
                     </defs>
                 </svg>
             </button>
-            <button className="map-right-bt" onClick={()=>{drawController('Polygon')}}>
+            <button className={`map-right-bt ${activeType === 'Polygon' ? 'active' : ''}`} onClick={()=>{drawController('Polygon')}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="14" viewBox="0 0 18 14" fill="none">
                     <rect x="2.38892" y="2.23334" width="13.2222" height="9.53333" stroke="#3D3D3D" stroke-width="1.5"/>
                     <rect x="0.5" y="0.5" width="3.77778" height="3.46667" rx="1" fill="#3D3D3D"/>

@@ -6,6 +6,7 @@ import { useCallback } from "react";
 import WaterBodyTestComponent from "./WaterBodyTestComponent";
 import { useState } from "react";
 import BaseDatePicker from "@com/manager/datepicker/BaseDatePicker";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 const actions = {
     INIT_DATA: 'INIT_DATA',
@@ -24,8 +25,10 @@ const reducer = (state, {type, ...data}) => {
 	if (type === actions.INIT_DATA) {
         return {...state, ...data};
     } else if(type === actions.SET_COMBO){
-            state.combo = data.e
-        return {...state}
+        return {
+            ...state,
+            combo: data.combo
+        }
     } else if(type === actions.SET_START_DATE) {
             state.startDate = data.date
         return {...state}
@@ -42,6 +45,11 @@ const WaterBody = () => {
 
     const provider = useMemo(()=>{  return [{name:"연구대상지역", code:"a"},{name:"연구대상지역2", code:"b"}] },[])
 
+    const [formats, setFormats] = useState('b');
+    const handleFormat = (event, newFormats) => {
+        setFormats([event.target.value]);
+    };
+
     return (
         <div style={{width: 400}}>
             <div>
@@ -49,7 +57,19 @@ const WaterBody = () => {
                     <h1>수체 탐지</h1>
                 </div>
                 <div>
-                    <BaseCombo label={'연구지역을 선택하세요'} provider={provider} onChange={(e)=>{dispatch({type: actions.SET_COMBO, e})}}/>
+                    <ToggleButtonGroup value={formats} onChange={handleFormat}>
+                        <ToggleButton value="a">
+                            {'수치'}
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                    <ToggleButtonGroup value={formats} onChange={handleFormat}>
+                        <ToggleButton value="b">
+                            {'침수'}
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+                <div>
+                    <BaseCombo label={'연구지역을 선택하세요'} provider={provider} onChange={(combo)=>{dispatch({type: actions.SET_COMBO, combo})}}/>
                 </div>
                 <WaterBodyTestComponent dispatch={dispatch} actions={actions} state={state}/>
             </div>

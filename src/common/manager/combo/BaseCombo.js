@@ -1,5 +1,5 @@
 import React, {memo, useCallback, useEffect, useImperativeHandle, useMemo, useState} from "react";
-import { FormControl } from "@mui/material";
+
 import WindowedSelect from "react-windowed-select";
 
 const BaseCombo = (
@@ -70,7 +70,7 @@ const BaseCombo = (
 		
 
 	return (
-		<FormControl style={{...style}}>
+		
 			<WindowedSelect 
 				placeholder = {label || '선택'}
 				options={comboData}
@@ -79,7 +79,6 @@ const BaseCombo = (
 				getOptionValue={option => option[basicFiled]}
 				onChange={onChangeHandler}
 			/>
-		</FormControl>
 	);
 };
 

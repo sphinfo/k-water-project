@@ -9,30 +9,31 @@ const AddrSearchWidget = () => {
 
     const [addrList, setAddrList] = useState([])
     const [addrSearchText, setAddrSearchText] = useState('')
+    const addrSearchTextRef = useRef('')
 
     const addrSearch = async () =>{
-        
-        searchAddr.current.searchAddress(addrSearchText).then((result)=>{
-            console.info(result)
-            if(result){
-                setAddrList(result)
-            }else{
-                setAddrList([])
-            }
-        }).catch((error)=>{
-            console.info(error)
-        })
+        if(addrSearchTextRef.current !== ''){
+            searchAddr.current.searchAddress(addrSearchTextRef.current).then((result)=>{
+                if(result){
+                    setAddrList(result)
+                }else{
+                    setAddrList([])
+                }
+            }).catch((error)=>{
+                console.info(error)
+            })
+        }
     }
 
     const handleChange = (event) => {
-        setAddrSearchText(event.target.value);
+        addrSearchTextRef.current = event.target.value
     };
 
     return (
         <>
             <ul className="map-search-input" style={{  position: 'relative', left: 0 }}>
                 <TextInput
-                    value={addrSearchText} 
+                    value={addrSearchTextRef.curent}
                     onChange={handleChange}
                     placeholder="장소, 주소 검색"
                     placeholderTextColor="#ADADAD"
@@ -46,7 +47,7 @@ const AddrSearchWidget = () => {
             <ul style={{  position: 'relative', left: 0 }}>
                 <AddrSearchResult
                     result={addrList}
-                    addrSearchText={addrSearchText}
+                    addrSearchText={addrSearchTextRef.current}
                 />
             </ul>
         </>
