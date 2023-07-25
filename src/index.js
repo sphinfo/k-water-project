@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
+import './resources/scss/index.scss';
 import 'react-data-grid/lib/styles.css';
 import KwaterApp from './KwaterApp';
 import reportWebVitals from './reportWebVitals';
