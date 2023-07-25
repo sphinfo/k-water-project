@@ -1,3 +1,7 @@
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+
+* { font-family: 'Spoqa Han Sans Neo', apple-system, BlinkMacSystemFont, 'noto sans', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; }
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -6,8 +10,135 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+ul{
+  padding: 0;
+  margin: 0;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.map_ctrl_top{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 0;
+  display: flex;
+}
+
+.map_ctrl_right{
+  position: absolute;
+  right: 10px;
+  top: 57px;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 7px;
+}
+.map-search-input{
+  border-radius: 10px;
+  background: #f5f5f5;
+  padding: 4px 8px 4px 12px;
+  display: flex;
+  align-items: center;
+  margin-right: 7px;
+}
+
+
+.map-search-input input, .map-search-bt{
+  border: 0;
+  background: none;
+  height: 26px;
+}
+
+.map-search-bt{
+  display: flex;
+  align-items: center;
+}
+
+.bt-icons.magnify{
+  width: 21px;
+  height: 22px;
+}
+.map-view-tab{
+  display: flex;
+  column-gap: 7px;
+}
+.map-view-tab .view-tab-item{
+  width: 60px;
+  height: 38px;
+  border: 1px solid #fff;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 500;
+  padding-top: 13px;
+  box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.15);
+}
+.view-satellite{
+  color: #fff;
+  background-color: unset;
+  background-image: url("./resource/images/map-satellite-bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.view-basic{
+  background-color: unset;
+  background-image: url("./resource/images/map-basic-bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.map-widget-vertical-block{
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+.map-widget-vertical, .map-widget-vertical-block, .map-search-input{
+  box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+.map-right-bt{
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.map-right-bt.active{
+  background-color: #54A6E7;
+}
+
+.top-info-bt{
+  background-color: #3D3D3D;
+  margin-left: 7px;
+  box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.15);
+}
+
+.map_ctrl_btm{
+  position: absolute;
+  bottom: 10px;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+.map-coord-box{
+  display: flex;
+  gap: 10px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 4px 13px;
+  letter-spacing: -0.1px;
+  box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+}
+
+.text-blue{
+  color: #54A6E7;
+  font-weight: 500;
+  margin-right: 3px;
 }

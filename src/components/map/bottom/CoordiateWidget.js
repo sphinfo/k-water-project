@@ -16,11 +16,11 @@ const CoordiateWidget = () => {
     
 
     return (
-        <ul style={{  position: 'relative', left: 0 }}>
-            <div>x:{coord.x}</div>
-            <div>y:{coord.y}</div>
-            <div>longitude:{coord.lonDms}</div>
-            <div>latitude:{coord.latDms}</div>
+        <ul className="map-coord-box">
+            <div><span className="text-blue">X</span>{coord.x}</div>
+            <div><span className="text-blue">Y</span>{coord.y}</div>
+            <div><span className="text-blue">longitude</span>{coord.lonDms}</div>
+            <div><span className="text-blue">latitude</span>{coord.latDms}</div>
         </ul>
     )
 }

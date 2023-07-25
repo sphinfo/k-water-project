@@ -22,9 +22,9 @@ const BaseMapWidget = () => {
     }, [view]);
 
     return (
-        <ul style={{ display: 'flex', position: 'relative', left: 0 }}>
-            <button onClick={handleChange} name="Satellite">위성</button>
-            <button onClick={handleChange} name="Base">일반</button>
+        <ul className="map-view-tab">
+            <button onClick={handleChange} name="Satellite" className="view-tab-item view-satellite">위성</button>
+            <button onClick={handleChange} name="Base" className="view-tab-item view-basic">일반</button>
         </ul>
     )
 }
