@@ -1,9 +1,11 @@
 import React, { forwardRef, useRef, useState } from 'react';
 import { memo } from 'react';
 import { useImperativeHandle } from 'react';
-import { G$SetZoomToPoint, G$Transfrom } from '@gis/util';
+import { G$SetZoomToPoint, G$Transfrom, G$createFeature, G$getLayerForName } from '@gis/util';
 import Pagination from '@cmp/util/Pagination';
 import VWorldAddressSearch from 'vworld/VWorldAddressSearch';
+import { Point } from 'ol/geom';
+import { Feature } from 'ol';
 
 const AddrSearchResultComponent = ({type, addrSearchText}, ref) => {
 
@@ -37,6 +39,19 @@ const AddrSearchResultComponent = ({type, addrSearchText}, ref) => {
     const goToPlace = (point) =>{
         let p = G$Transfrom([point.xpos, point.ypos], 4326, 3857)
         G$SetZoomToPoint(18, [p[0], p[1]])
+
+        let layer = G$getLayerForName('PIN_LAYER')
+        let features = []
+        if(layer){
+
+          let feature = new Feature({
+            geometry: new Point(p)
+          })
+
+          features.push(feature)
+          layer.getSource().clear()
+          layer.getSource().addFeatures(features)
+        }
     }
 
 

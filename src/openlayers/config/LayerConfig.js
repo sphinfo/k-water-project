@@ -2,7 +2,6 @@ import {Tile as TileLayer } from "ol/layer";
 import VectorLayer from "ol/layer/Vector";
 import {TileWMS , XYZ, TileJSON, Vector as sourceVector, Stamen} from "ol/source";
 
-
 import GisLayerInstance from "../util/layer/GisLayerInstance";
 
 /* 주제도 레이어 사용을 위한 config */
@@ -12,15 +11,22 @@ const vwroldUrl_sate = 'https://xdworld.vworld.kr/2d/Satellite/service/{z}/{x}/{
 const geoserverUrl = `http://221.147.56.177:58080/geoserver/sckmpp/wms??`
 const LayerConfig = {
 
+	//측정
 	MEASURE_LAYER : { 
 		id:'MEASURE_LAYER', 
 		instance: new VectorLayer({name:'MEASURE_LAYER', source: new sourceVector({wrapX: false})})
 	},
 
-	DRAW_LAYER : { 
-		id:'DRAW_LAYER', 
-		instance: new VectorLayer({name:'DRAW_LAYER',source: new sourceVector({wrapX: false})})
+	//위치 PIN
+	PIN_LAYER : {
+		id: 'PIN_LAYER',
+		instance : new VectorLayer({name:'PIN_LAYER', source: new sourceVector({wrapX: false})})
 	},
+
+	// DRAW_LAYER : { 
+	// 	id:'DRAW_LAYER', 
+	// 	instance: new VectorLayer({name:'DRAW_LAYER',source: new sourceVector({wrapX: false})})
+	// },
 
 	TEST_MAP	: { 
 		id:'TEST_MAP',
@@ -62,6 +68,7 @@ const LayerConfig = {
 			}
 		})
 	},
+
 	TL_SCCO_EMD : {
 		id: 'TL_SCCO_EMD', 
 		instance: GisLayerInstance.createInstance({
@@ -75,7 +82,9 @@ const LayerConfig = {
 				}
 			}
 		})
-	}
+	},
+
+	
 
 };
 
