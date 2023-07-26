@@ -3,11 +3,7 @@ import WidgetManager from "@com/manager/widget/WidgetManager";
 import BaseDatePicker from "@com/manager/datepicker/BaseDatePicker";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import dayjs from "dayjs";
-import React from "react";
-import { useReducer } from "react";
-import { useState } from "react";
-import { useMemo } from "react";
-import { useRef } from "react";
+import React, { useMemo, useState, useReducer } from "react";
 
 const actions = {
     INIT_DATA: 'INIT_DATA',
@@ -66,7 +62,7 @@ const WaterLevel = () => {
     }
 
     const handleButtonClick = () =>{
-        debugger
+        
     }
 
     const chartWidgetOpn = () =>{
