@@ -1,3 +1,4 @@
+import { Feature } from "ol";
 import MapManager from "../MapManager";
 import {transform} from "ol/proj"
 
@@ -26,7 +27,20 @@ const G$removeLayer = (l) =>{
             return MapManager.removeLayer(layer)
         }
     }
+}
 
+// 레이어 이름으로 찾기
+const G$getLayerForName = (name=null)=>{
+    let l = null
+    if(name){
+        l = MapManager.getLayerForName(name)
+    }
+    return l
+}
+
+/* create vectore feature */
+const G$createFeature = () => {
+    return new Feature()
 }
 
 /* 오버레이 추가 */
@@ -154,6 +168,8 @@ const G$SetZoomToPoint=(zoom=6, point=[])=>{
 export {
     G$addLayer,
     G$removeLayer,
+    G$getLayerForName,
+    G$createFeature,
     G$addOverlay,
     G$RemveOverlays,
     G$getGeometryLength,
