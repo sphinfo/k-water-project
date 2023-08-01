@@ -2,21 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import VWorldAddressSearch from '@/vworld/VWorldAddressSearch';
 import TextInput from '@cmp/util/TextInput';
 import AddrSearchResult from './AddrSearchResult';
-import { G$addLayer, G$removeLayer } from '@gis/util';
-import LayerManager from '@gis/LayerManager';
 
 const AddrSearchWidget = () => {
 
-    //pin layer ref
-    const pinLayerRef = useRef()
-    useEffect(()=>{
-        //pin layer 생성
-        pinLayerRef.current = LayerManager.createLayer('PIN_LAYER')
-        G$addLayer(pinLayerRef.current)
-    }, [])
-
     const searchAddr = useRef(new VWorldAddressSearch())
+
     const [addrList, setAddrList] = useState([])
+    const [addrSearchText, setAddrSearchText] = useState('')
     const addrSearchTextRef = useRef('')
 
     const addrSearch = async () =>{
@@ -43,9 +35,7 @@ const AddrSearchWidget = () => {
                 <TextInput
                     value={addrSearchTextRef.curent}
                     onChange={handleChange}
-                    onKeyPress={addrSearch}
                     placeholder="장소, 주소 검색"
-                    placeholderTextColor="#ADADAD"
                 />
                 <button onClick={()=>{addrSearch()}} className="map-search-bt">
                     <svg className="bt-icons magnify" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 22" fill="none">
