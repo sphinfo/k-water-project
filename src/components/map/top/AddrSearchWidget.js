@@ -2,8 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import VWorldAddressSearch from '@/vworld/VWorldAddressSearch';
 import TextInput from '@cmp/util/TextInput';
 import AddrSearchResult from './AddrSearchResult';
+import LayerManager from '@gis/LayerManager';
+import { G$addLayer } from '@gis/util';
 
 const AddrSearchWidget = () => {
+
+
+    const pinLayerRef = useRef()
+    useEffect(()=>{
+        //pin layer 생성
+        pinLayerRef.current = LayerManager.createLayer('PIN_LAYER')
+        G$addLayer(pinLayerRef.current)
+    }, [])
 
     const searchAddr = useRef(new VWorldAddressSearch())
 
