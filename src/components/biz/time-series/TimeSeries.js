@@ -1,9 +1,9 @@
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import WidgetManager from "@com/manager/widget/WidgetManager";
 import TimeSeriesLayer from "@gis/layers/time-series/TimeSeries";
 import { G$SetZoomToPoint, G$Transfrom, G$addLayer, G$removeLayer } from "@gis/util";
-import React, { useCallback, useEffect } from "react";
-import { useRef } from "react";
 import TimeBar from "./component/TimeBar";
-import { useState } from "react";
+
 
 const TimeSeries = () => {
 
@@ -15,7 +15,7 @@ const TimeSeries = () => {
     useEffect(()=>{
         
         let p = G$Transfrom([127.920580, 36.32540779], 4326, 3857)
-        G$SetZoomToPoint(5, [-11819701.111425765,4896364.200931263])
+        //G$SetZoomToPoint(5, [-11819701.111425765,4896364.200931263])
 
         timeSeriesTestLayerRef.current = new TimeSeriesLayer()
         G$addLayer(timeSeriesTestLayerRef.current)
@@ -25,7 +25,10 @@ const TimeSeries = () => {
 
         return()=>{
             G$removeLayer(timeSeriesTestLayerRef.current)
-            G$SetZoomToPoint(7, p)
+            //G$SetZoomToPoint(7, p)
+
+            WidgetManager.remove('SoilMoistureChartWidget')
+
         } 
 
     },[])
@@ -36,6 +39,14 @@ const TimeSeries = () => {
             timeSeriesTestLayerRef.current.updateParam(v)
         }
     }))
+
+
+
+    const timeseriesChart = () =>{
+        WidgetManager.add('SoilMoistureChartWidget', {
+            params: 'testParam'
+        });
+    }
 
     return (
         <>
@@ -50,6 +61,10 @@ const TimeSeries = () => {
                 <button onClick={()=>{timeBarRef.current.action = true}}>play</button>
                 <button onClick={()=>{timeBarRef.current.action = false}}>stop</button>
                 <button onClick={()=>{timeBarRef.current.reset()}}>reset</button>
+            </div>
+
+            <div>
+                <button onClick={timeseriesChart}>시계열 토양수분 및 강수량 차트</button>
             </div>
         </>
     )

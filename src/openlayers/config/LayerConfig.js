@@ -54,6 +54,21 @@ const LayerConfig = {
 		})
 	},
 
+	BND_ADM_SIDO : {
+		id: 'BND_ADM_SIDO', 
+		instance: GisLayerInstance.createInstance({
+			layer: new TileLayer({name:'BND_ADM_SIDO'}), 
+			source: new TileWMS(),
+			sourceOpt:{
+				url: geoserverUrl,
+				params:{
+					LAYERS:`sckmpp:BND_ADM_SIDO`,
+					urlType: 'geoServer'
+				}
+			}
+		})
+	},
+
 	TL_SCCO_SIG : {
 		id: 'TL_SCCO_SIG', 
 		instance: GisLayerInstance.createInstance({

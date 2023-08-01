@@ -35,6 +35,7 @@ class GisLayerClickTool {
 					let wmsSources = []
 
 					// biz등록할떄 feature 가져올 레이어 선택하기
+					console.info(this._bizProps[biz].layers)
 					if(this._bizProps[biz].layers.length > 0){
 						this._bizProps[biz].layers.map((layerId)=>{
 							if(LayerManager._layerInstance[layerId]){
@@ -45,7 +46,8 @@ class GisLayerClickTool {
 
 						//등록되어 있지 않으면 전체
 						for (const key of Object.keys(LayerManager._layerInstance)) {
-							wmsSources.push(LayerManager._layerInstance[key])
+							console.info(key)
+							wmsSources.push(LayerManager._layerInstance[key].getSource())
 						}
 					}
 
@@ -73,8 +75,12 @@ class GisLayerClickTool {
 
 		//get wms feature 
 		const requests = wmsSources.map((source)=>{
-			const url = source.getFeatureInfoUrl( coordinate, viewResolution, viewProjection, { 'INFO_FORMAT': 'application/json' } )
-			return featureInfo.getFeatureInfo(url)
+
+			if(source.getFeatureInfoUrl){
+				const url = source.getFeatureInfoUrl( coordinate, viewResolution, viewProjection, { 'INFO_FORMAT': 'application/json' } )
+				return featureInfo.getFeatureInfo(url)
+			}
+			
 		})
 
 		//get wms feature request ( *** data 단으로 들어가 feature 리스형태로 보여줘야할지는 프로젝트 진행후 변경 ***)
@@ -82,7 +88,9 @@ class GisLayerClickTool {
 
 			if(response.length > 0){
 				response.map((responseObj)=>{
-					features = [...features, ...responseObj.features]
+					if(responseObj){
+						features = [...features, ...responseObj.features]
+					}
 				})
 			}
 

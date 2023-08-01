@@ -107,11 +107,9 @@ class LayerManager {
 
     // 레이어 인스턴스 삭제
     removeLayerById(id){
-
         if (this._hasLayerInstance(id)) {
             delete this._layerInstance[id];
         }
-
     }
 
     // 레이어 확인

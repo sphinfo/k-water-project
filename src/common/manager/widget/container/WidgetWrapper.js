@@ -3,13 +3,31 @@ import React, {Suspense, useCallback, useMemo} from 'react';
 
 
 const widgetOption = (option = {}) => {
-    return {
-        width: option.width,
-        height: option.height,
-        top: option.height,
-        left: option.height,
-        ...option
-    };
+    console.info(option)
+
+    let style = {}
+
+    if(!option.legend){
+        style = {
+            width: option.width,
+            height: option.height,
+            top: option.height,
+            left: option.height,
+            ...option
+        }
+    }else{
+        style = {
+            width: option.width,
+            height: option.height,
+            right: '1%',
+            bottom: '1%',
+            ...option
+        }
+    }
+
+
+    
+    return style;
 };
 
 const WidgetWrapper = (props) => {

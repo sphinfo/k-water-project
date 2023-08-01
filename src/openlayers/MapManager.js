@@ -6,6 +6,7 @@ import {fromLonLat} from 'ol/proj';
 import LayerManager from "./LayerManager";
 
 import DoubleClickZoom from "ol/interaction/DoubleClickZoom"
+import Select from "ol/interaction/Select"
 import { defaults as defaultControls } from 'ol/control';
 
 

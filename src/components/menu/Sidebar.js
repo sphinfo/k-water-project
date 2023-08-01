@@ -10,6 +10,8 @@ import GArbage from '@cmp/biz/gArbage/GArbage';
 import LandCover from '@cmp/biz/landCover/LandCover';
 import WaterBody from '@cmp/biz/water-body/WaterBody';
 import WaterBodyCopy from '@cmp/biz/water-body/WaterBody copy';
+import ExampleWidget from '@cmp/exampleWidget/ExampleWidget';
+import TestTreeWidget from '@cmp/exampleWidget/TestTreeWidget';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,6 +55,9 @@ export default function Sidebar () {
   const INDEX_5 = useMemo(() => 5, []); //부유물탐지
   const INDEX_6 = useMemo(() => 6, []); //시계열 변위 모니터링
   const INDEX_7 = useMemo(() => 7, []); //안전진단지수
+
+  const INDEX_8 = useMemo(() => 8, []); //example widget
+  const INDEX_9 = useMemo(() => 9, []); //example widget
   
   const NONE_INDEX = useMemo(() => -1, []); //none
 
@@ -88,6 +93,9 @@ export default function Sidebar () {
         <Tab label="부유물탐지" onClick={()=>{handleClick(INDEX_5)}} {...a11yProps(INDEX_5)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
         <Tab label="시계열 변위 모니터링" onClick={()=>{handleClick(INDEX_6)}} {...a11yProps(INDEX_6)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
         <Tab label="안전진단지수" onClick={()=>{handleClick(INDEX_7)}} {...a11yProps(INDEX_7)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+
+        <Tab label="exampleWidget" onClick={()=>{handleClick(INDEX_8)}} {...a11yProps(INDEX_8)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
+        <Tab label="treeWidget" onClick={()=>{handleClick(INDEX_9)}} {...a11yProps(INDEX_9)} style={{backgroundColor:'rgba(255, 255, 255, 0.85)'}}/>
       </Tabs>
 
       {/*  material 빼냈을시 example ui
@@ -201,6 +209,33 @@ export default function Sidebar () {
           <SafetyDiagnsis />
         </TabPanel>
       </Drawer>
+
+      <Drawer
+        variant={'persistent'}
+        anchor={'left'}
+        open={value === INDEX_8}
+        PaperProps={{ style: { marginLeft: 170} }}
+        >
+        <TabPanel value={value} index={INDEX_8}>
+          <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
+          <ExampleWidget />
+        </TabPanel>
+      </Drawer>
+
+
+      <Drawer
+        variant={'persistent'}
+        anchor={'left'}
+        open={value === INDEX_9}
+        PaperProps={{ style: { marginLeft: 170} }}
+        >
+        <TabPanel value={value} index={INDEX_9}>
+          <button style={{ zIndex: 999 }} onClick={handleClose} >close</button>
+          <TestTreeWidget />
+        </TabPanel>
+      </Drawer>
+
+      
 
     </div>
   );

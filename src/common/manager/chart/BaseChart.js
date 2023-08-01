@@ -1,9 +1,7 @@
-import React, { forwardRef, memo, useMemo } from 'react';
+import React, { forwardRef, memo, useMemo, useRef, useImperativeHandle } from 'react';
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart }            from 'react-chartjs-2'
 import { Line, Bar } from 'react-chartjs-2';
-import { useRef } from 'react';
-import { useImperativeHandle } from 'react';
 
 //초기 옵션
 const defaultOption = {
@@ -43,7 +41,7 @@ const BaseChart = (props, ref) => {
 	
 
 	const tit = useMemo(()=>{
-		return title ? defaultOption.plugins.title.text = title : title.plugins.title.display = false
+		return title ? defaultOption.plugins.title.text = title : defaultOption.plugins.title.display = false
 	}, [title])
 
 	const wid = useMemo(()=>{

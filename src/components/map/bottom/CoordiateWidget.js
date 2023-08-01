@@ -17,10 +17,10 @@ const CoordiateWidget = () => {
 
     return (
         <ul className="map-coord-box">
-            <div><span className="text-blue">X</span>{coord.x}</div>
-            <div><span className="text-blue">Y</span>{coord.y}</div>
-            <div><span className="text-blue">longitude</span>{coord.lonDms}</div>
-            <div><span className="text-blue">latitude</span>{coord.latDms}</div>
+            <div><span className="text-blue">X :</span>{coord.x}</div>
+            <div><span className="text-blue">Y :</span>{coord.y}</div>
+            <div><span className="text-blue">longitude :</span>{coord.lonDms}</div>
+            <div><span className="text-blue">latitude :</span>{coord.latDms}</div>
         </ul>
     )
 }

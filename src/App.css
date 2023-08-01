@@ -10,3 +10,13 @@
     padding: 4px 8px;
     opacity: 0.6;
   }
+
+
+  table {
+    width: 100%;
+    border: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #444444;
+  }

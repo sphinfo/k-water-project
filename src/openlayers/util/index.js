@@ -1,7 +1,11 @@
 import { Feature } from "ol";
 import MapManager from "../MapManager";
 import {transform} from "ol/proj"
-
+import WidgetManager from "@com/manager/widget/WidgetManager";
+import GisLayerInstance from "./layer/GisLayerInstance";
+import TileLayer from "ol/layer/Tile";
+import { TileWMS } from "ol/source";
+import LayerConfig from "@gis/config/LayerConfig";
 
 /* 레이어 추가 */
 const G$addLayer = (l) =>{
@@ -24,6 +28,8 @@ const G$removeLayer = (l) =>{
         
         //레이어가 지도에 있으면 레이어 삭제
         if(layer){
+            //범례값 공통으로 쓸경우 임시230731
+            WidgetManager.remove('LegendWidget')
             return MapManager.removeLayer(layer)
         }
     }
@@ -161,8 +167,49 @@ const G$GetPointToDetail=(x,y)=>{
     
 }
 
+/* point 지점 이동 */
 const G$SetZoomToPoint=(zoom=6, point=[])=>{
     MapManager.setZoomToPoint(zoom, point)
+}
+
+/* 위젯 추가 */
+const G$addWidget = (wId) =>{
+    WidgetManager.add(wId);
+}
+
+/* 위젯 닫기 */
+const G$removeWidget = (wId) =>{
+    WidgetManager.remove(wId);
+}
+
+
+/* 공통된 WMS TILE LAYER instance 만들기 */
+const G$makeWmsTileInstance = (name) =>{
+    let instance = GisLayerInstance.createInstance({
+        layer: new TileLayer({name: name}), 
+        source: new TileWMS(),
+        sourceOpt:{
+            url: '/starGeo/sckmpp/wms?',
+            params:{
+                LAYERS:`sckmpp:${name}`,
+                urlType: 'geoServer',
+				'FORMAT': 'image/png',
+				'VERSION': '1.3.0',
+            },
+			serverType: 'geoserver',
+			crossOrigin: 'anonymous'
+        }
+    })
+    return instance
+
+}
+
+//레이어 Opacity 변경
+const G$setLayerOpacity = (name, val=1) =>{
+    let layer = G$getLayerForName(name)
+    if(layer){
+        layer.setOpacity(val)
+    }
 }
 
 export {
@@ -183,6 +230,11 @@ export {
     G$Transfrom,
     G$GetPointToDetail,
 
-    G$SetZoomToPoint
+    G$SetZoomToPoint,
 
+    G$removeWidget,
+    G$addWidget,
+    
+    G$makeWmsTileInstance,
+    G$setLayerOpacity,
 }

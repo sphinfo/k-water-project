@@ -7,7 +7,7 @@ const TextInput = ({ value, onChange, placeholder='', placeholderTextColor, onKe
       value={value} 
       onChange={onChange}  
       placeholder={placeholder} 
-      placeholderTextColor={placeholderTextColor}
+      placeholdertextcolor={placeholderTextColor}
       onKeyPress={onKeyPress}
     />
   );

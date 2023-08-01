@@ -92,7 +92,7 @@ export default class OlMap {
 
         //
         this.map.on('click', function(event) {
-            console.info(event.target)
+            console.info(event.coordinate)
             event.preventDefault();
             EventBus.dispatch(new CustomEvent(MapEvents.mapViewClicked, {
                     detail: event

@@ -4,6 +4,7 @@ import GisOverlay from "@gis/util/GisOverlay/GisOverlay";
 import {Tile as TileLayer, Image } from "ol/layer";
 import { TileWMS, ImageWMS } from "ol/source";
 
+import WidgetManager from "@com/manager/widget/WidgetManager";
 
 const name = 'TestTileLayer'
 class TestTileLayer extends TileLayer {
@@ -30,6 +31,8 @@ class TestTileLayer extends TileLayer {
 
 		this._addClickEvent()
 
+		WidgetManager.add('LegendWidget', { params: {title:'토양 수분량(%)'} })
+		//WidgetManager.remove('LegendWidget')
 	}
 
 	/* add callback event */
