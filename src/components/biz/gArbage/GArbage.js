@@ -1,61 +1,72 @@
-import BaseGrid from "@com/grid/BaseGrid";
 import BaseCombo from "@com/manager/combo/BaseCombo";
 import BaseDatePicker from "@com/manager/datepicker/BaseDatePicker";
-import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import MainWidgetManager from "@com/manager/widget/WidgetManager";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import dayjs from "dayjs";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState, useReducer } from "react";
 
+const actions = {
+    INIT_DATA: 'INIT_DATA',
+    SET_START_DATE: 'SET_START_DATE',
+    SET_END_DATE: 'SET_END_DATE',
+    SET_COMBO: 'SET_COMBO',
+    SET_CATEGORY: 'SET_CATEGORY'
+}
+
+const INIT_DATA = {
+    combo: null,
+    startDate: dayjs().format('YYYY-MM-DD'),
+    endDate: dayjs().format('YYYY-MM-DD'),
+    category: 'a',
+};
+
+const reducer = (state, {type, ...data}) => {
+	if (type === actions.INIT_DATA) {
+        return {...state, ...data};
+    } else if(type === actions.SET_COMBO){
+            state.combo = data.e
+        return {...state}
+    } else if(type === actions.SET_START_DATE) {
+            state.startDate = data.date
+        return {...state}
+    } else if(type === actions.SET_END_DATE) {
+            state.endDate = data.date
+        return {...state}
+    } else if(type === actions.SET_CATEGORY) {
+            state.category = data.category
+        return {...state}
+    }
+};
 const GArbage = () => {
 
-    const columns = [
-        {accessor: 'mday', Header: '기준일자', width: 120, align: 'center', visible: false},
-        {accessor: 'lv2_svc_nm', Header: '서비스', width: 200, align: 'center'},
-        {accessor: 'avg', Header: '비율(%)', width: 200, align: 'center'},
-        {accessor: 'traffic_gb', Header: '시용량(GB)', width: 200, align: 'center'},
-        {accessor: 'user_cnt', Header: '사용자수', width: 120, align: 'center'},
-    ]
-    /*const columns = useMemo(()=>{ return [ { key: 'id', name: '일시' }, { key: 'name', name: '수위' },  { key: 'custom', name: '저수량' } ] },[]);*/
-    const rows = useMemo(()=>{ return [  ] },[])
-    
-
+    const [state, dispatch] = useReducer(reducer, INIT_DATA);
     const provider = useMemo(()=>{  return [{name:"연구대상지역 1", code:"a"},{name:"연구대상지역 2", code:"b"}] },[])
-    const comboRef = useRef({})
-    const selectRef = useRef({})
-    const gridRef = useRef({})
-
-    const dateStartPickerRef = useRef({})
-    const dateEndPickerRef = useRef({})
-
-    const [startDate, setStartDate] = useState(dayjs().format('YYYY-MM-DD'))
-    const [endDate, setEndDate] = useState(dayjs().format('YYYY-MM-DD'))
-
     const [formats, setFormats] = useState('a');
+
+    const memoizedState = useMemo(() => state, [state]);
+
     const handleFormat = (event, newFormats) => {
         setFormats([event.target.value]);
+        let category = event.target.value
+        dispatch({type: actions.SET_CATEGORY, category})
     };
 
-    useEffect(()=>{
-        console.info('SuspendedSolids')
-    },[])
-
-
-    const handleButtonClick = () =>{
-        alert(selectRef.current.textContent + "로 검색")
-    }
-
-    const onCellClick = (value, origin, ref) =>{
-        console.info(value)
-        console.info(origin)
-        console.info(ref)
-
-    }
-
     const changeStartDate = (date) =>{
-        setStartDate(date)
+        dispatch({type: actions.SET_START_DATE, date})
     }
 
     const changeEndDate = (date) =>{
-        setEndDate(date)
+        dispatch({type: actions.SET_END_DATE, date})
+    }
+
+    const handleButtonClick = () =>{
+       
+    }
+
+    const chartWidgetOpn = () =>{
+        MainWidgetManager.add('TestWidget2', {
+            params: 'testParam'
+        });
     }
 
     return (
@@ -65,31 +76,30 @@ const GArbage = () => {
                     <h1>부유물 탐지</h1>
                 </div>
                 <div>
-                    <BaseCombo ref={comboRef} label={'연구지역을 선택하세요'} provider={provider} />
-                </div>
-                <div>
-                    <BaseDatePicker ref={dateStartPickerRef} maxDate={endDate} onchangeFromat={changeStartDate}/>
-                    <BaseDatePicker ref={dateEndPickerRef} minDate={'2010-01-01'} onchangeFromat={changeEndDate}/>
+                    <BaseCombo label={'연구지역을 선택하세요'} provider={provider} onChange={(e)=>{dispatch({type: actions.SET_COMBO, e})}}/>
                 </div>
                 <div>
                     <ToggleButtonGroup value={formats} onChange={handleFormat}>
-                        <ToggleButton value="a" ref={selectRef}>
+                        <ToggleButton value="a">
                             {'SS'}
                         </ToggleButton>
                     </ToggleButtonGroup>
                     <ToggleButtonGroup value={formats} onChange={handleFormat}>
-                        <ToggleButton value="b" ref={selectRef}>
+                        <ToggleButton value="b">
                             {'Chl-a'}
                         </ToggleButton>
                     </ToggleButtonGroup>
-                    <Button onClick={handleButtonClick}>{'검색'}</Button>
                 </div>
-            </div>
-            <div>
                 <div>
-                    <h2>수체지도 목록</h2>
-                    {/**<BaseGrid ref={gridRef} columns={columns} rows={rows} className={'testGrid'}/> */}
-                    <BaseGrid ref={gridRef} columns={columns} provider={rows} onCellClick={onCellClick}/>
+                    <BaseDatePicker maxDate={state.endDate} onchangeFromat={changeStartDate}/>
+                    <BaseDatePicker minDate={state.startDate} onchangeFromat={changeEndDate}/>
+                </div>
+                <div>
+                    {memoizedState.category}로 {memoizedState.startDate}와 {memoizedState.endDate} 사이의 결과 검색
+                </div>
+                <div>
+                    <button onClick={handleButtonClick}>{'검색'}</button>
+                    <button onClick={chartWidgetOpn}>{'chart'}</button>
                 </div>
             </div>
         </div>

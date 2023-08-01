@@ -1,0 +1,155 @@
+
+.text-blue{
+  color: $primary;
+  font-weight: 500;
+  margin-right: 3px;
+}
+
+
+.map_ctrl_top{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 0;
+  display: flex;
+}
+
+.map_ctrl_right{
+  position: absolute;
+  right: 10px;
+  top: 57px;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 7px;
+}
+.map-search-input{
+  border-radius: 10px;
+  background: $basic;
+  padding: 4px 8px 4px 12px;
+  display: flex;
+  align-items: center;
+  margin-right: 7px;
+  input{
+    width: 180px;
+    &::placeholder{
+      color: $grey-300;
+    }
+  }
+}
+
+
+.map-search-input input, .map-search-bt{
+  border: 0;
+  background: none;
+  height: 26px;
+}
+
+.map-search-bt{
+  display: flex;
+  align-items: center;
+}
+
+.bt-icons{
+  &.magnify {
+    width: 21px;
+    height: 22px;
+  }
+}
+  .map-view-tab{
+    display: flex;
+    column-gap: 7px;
+    .view-tab-item{
+      width: 60px;
+      height: 38px;
+      border: 1px solid $white;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 500;
+      padding-top: 13px;
+      box-shadow: $box-shadow;
+    }
+  }
+  .view-satellite{
+    color: $white;
+    background-color: unset;
+    background-image: url("../images/map-satellite-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .view-basic{
+    background-color: unset;
+    background-image: url("../images/map-basic-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .map-widget-vertical, .map-widget-vertical-block, .map-search-input{
+    box-shadow: $box-shadow;
+    border-radius: 10px;
+  }
+  .map-right-bt{
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $white;
+    transition: all 500ms;
+    &:hover{
+      background-color: $line;
+    }
+    &:active{
+      background-color: $primary;
+    }
+    &.active{
+      background-color: $primary;
+      svg > *{
+        fill: $white;
+      }
+    }
+  }
+
+.map-widget-vertical-block{
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  .map-right-bt{
+    width: 34px;
+    height: 34px;
+  }
+}
+
+  .top-info-bt{
+    background-color: $body-font-color;
+    margin-left: 7px;
+    box-shadow: $box-shadow;
+  }
+
+  .map_ctrl_btm{
+    position: absolute;
+    bottom: 10px;
+    right: 50%;
+    transform: translateX(50%);
+    transition: all 300ms;
+  }
+
+  .map-coord-box{
+    display: flex;
+    gap: 10px;
+    background-color: $white;
+    border-radius: 6px;
+    padding: 5px 12px;
+    letter-spacing: -0.1px;
+    box-shadow: $box-shadow;
+    font-size: 14px;
+    div{
+      transition: width 300ms;
+    }
+  }
+
+
