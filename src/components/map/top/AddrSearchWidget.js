@@ -14,7 +14,7 @@ const AddrSearchWidget = () => {
 
     return (
         <>
-            <ul className="map-search-input" style={{  position: 'relative', left: '-502%' }}>
+            <ul className="map-search-input" style={{  position: 'relative', left: '-402%' }}>
                 <TextInput
                     value={addrSearchTextRef.curent}
                     onChange={handleChange}
