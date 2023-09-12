@@ -64,9 +64,12 @@ class MapManager {
         this.map.screenSpaceEventHandler.removeInputAction(ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
         var animationContainer = document.querySelector('.cesium-viewer-animationContainer');
         var bottomContainer = document.querySelector('.cesium-viewer-bottom');
+        var toolbarContainer = document.querySelector('.cesium-viewer-toolbar');
+        //
 
         if (animationContainer) { animationContainer.parentNode.removeChild(animationContainer) }
         if (bottomContainer) { bottomContainer.parentNode.removeChild(bottomContainer) }
+        if (toolbarContainer) { toolbarContainer.parentNode.removeChild(toolbarContainer) }
 
 
 

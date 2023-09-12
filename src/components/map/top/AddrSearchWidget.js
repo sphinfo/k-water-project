@@ -16,7 +16,7 @@ const AddrSearchWidget = () => {
         <>
             <ul className="map-search-input" style={{  position: 'relative', left: '-402%' }}>
                 <TextInput
-                    value={addrSearchTextRef.curent}
+                    value={addrSearchTextRef.current}
                     onChange={handleChange}
                     placeholder={"장소, 주소 검색"}
                     placeholderTextColor={"#ADADAD"}
