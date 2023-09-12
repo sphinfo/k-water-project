@@ -11,7 +11,7 @@ const G$addLayer = (l) =>{
     }
 }
 
-/* 레이어 추가 */
+/* 레이어 삭제 */
 const G$removeLayer = (id) =>{
     console.info(id)
     let layer = MapManager.getLayerForId(id)

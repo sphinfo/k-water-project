@@ -34,28 +34,31 @@ class BaseEntityCollection extends CustomDataSource {
 		var chartOptions = {
 			responsive: true,
 			cutoutPercentage: 0, // 파이 차트의 중앙 부분을 잘라내지 않음
+			animation: {
+				duration: 0
+			}
 		};
 
 		// 파이 차트를 임시 캔버스에 그립니다.
 		
 		let chart = new Chart(ctx,{ type:"doughnut", data: chartData, options: chartOptions })
 
-		await new Promise(resolve => setTimeout(resolve, 300));
+		await new Promise(resolve => setTimeout(resolve, 100));
 
 		let canvas = ctx.canvas;
 		const dataURL = canvas.toDataURL();
 	
 		const pointEntity = new Entity({
-			position: Cartesian3.fromDegrees(longitude, latitude),
+			position: Cartesian3.fromDegrees(longitude, latitude, 300),
 			clampToGround: true,
 			point: {
 				pixelSize: 10,
-				color: Color.RED,heightReference: HeightReference.RELATIVE_TO_GROUND,
+				color: Color.RED,
 			},
 			billboard: {
 				image: dataURL,
-				width: 50,
-				height: 50,
+				width: 35,
+				height: 35,
 				heightReference: HeightReference.RELATIVE_TO_GROUND,
 				verticalOrigin: VerticalOrigin.BOTTOM
 			},

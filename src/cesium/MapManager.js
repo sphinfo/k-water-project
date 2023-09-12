@@ -91,7 +91,12 @@ class MapManager {
     }
 
     removeLayer(layer){
-        this._map.imageryLayers.remove(layer);
+        if(layer.constructor.name === 'BaseEntityCollection'){
+            this._map.dataSources.remove(layer);
+        }else{
+            this._map.imageryLayers.remove(layer);
+        }
+        
     }
 
 

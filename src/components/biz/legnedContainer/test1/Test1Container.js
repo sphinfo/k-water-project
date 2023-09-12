@@ -1,3 +1,4 @@
+import MapManager from "@gis/MapManager";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import { G$addLayer, G$removeLayer } from "@gis/util";
 import { Chart } from "chart.js";
@@ -23,12 +24,12 @@ const Test1Container = () => {
         G$addLayer(testFeatureLayer.current)
         
 		await testFeatureLayer.current._addFeature(126.9780, 37.5665, "Seoul", [30, 40, 30])
-		await testFeatureLayer.current._addFeature(129.4256, 35.1796, "Busan", [10, 70, 20])
+		await testFeatureLayer.current._addFeature(129.1856, 35.2086, "Busan", [10, 70, 20])
 		await testFeatureLayer.current._addFeature(128.2056, 35.2196, "Busan", [40, 10, 50])
 		await testFeatureLayer.current._addFeature(129.0856, 35.1696, "Busan", [20, 10, 40])
 		await testFeatureLayer.current._addFeature(128.1456, 35.3696, "Busan", [60, 40, 30])
 		await testFeatureLayer.current._addFeature(129.1556, 35.3796, "Busan", [10, 70, 20])
-		await testFeatureLayer.current._addFeature(129.7856, 35.0496, "Busan", [10, 30, 40])
+		await testFeatureLayer.current._addFeature(128.4846, 35.5296, "Busan", [10, 30, 40])
 
     }
 
@@ -40,10 +41,10 @@ const Test1Container = () => {
     }
 
     const removeFeature = () =>{
-        G$removeLayer(testFeatureLayer.current)
+        MapManager.map.dataSources.remove(testFeatureLayer.current)
     }
     const removeFeature2 = () =>{
-        G$removeLayer(testFeatureLayer2.current)
+        MapManager.map.dataSources.remove(testFeatureLayer2.current)
     }
 
     const chartUrl = () =>{
@@ -52,9 +53,9 @@ const Test1Container = () => {
         <>
             <div style={{display: state.lengedPanel.Test1Container ? '' : 'none', width:200, height:200, background:'white'}}>
                 <button onClick={addFeature}>댐</button>
-                <button onClick={removeFeature}>댐d</button>
+                <button onClick={removeFeature}>댐 delete</button>
                 <button onClick={addFeature2}>보</button>
-                <button onClick={removeFeature2}>보d</button>
+                <button onClick={removeFeature2}>보 delete</button>
             </div>
             
         </>

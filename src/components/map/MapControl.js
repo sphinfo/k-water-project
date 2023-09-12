@@ -4,27 +4,32 @@ import CoordiateWidget from "./bottom/CoordiateWidget";
 import MeasureMapWidget from "./right/MeasureMapWidget";
 import SampleEventBox from "./bottom/SampleEventBox";
 import MapPositionWidget from "./top/MapPositionWidget";
+import AddrSearchWidget from "./top/AddrSearchWidget";
+import Sidebar from "./left/Sidebar";
 
 
 export default function MapControl() {
     return (
         <>
             <ul className="map_ctrl_right">
-              {/* <ThematicWidget />
-              <TestEventWidget />
-               */}
                 <MeasureMapWidget />
                 <ZoomMapWidget />
             </ul>
             <ul className="map_ctrl_btm">
                 <CoordiateWidget />
             </ul>
+
+            {/* 스타일 적용되야함 left로 가야할거같음 */}
+            <Sidebar />
             <ul className="map_ctrl_left">
+
+                {/* btm으로 가야함 */}
                 <SampleEventBox />
             </ul>
+
+
             <ul className="map_ctrl_top">
-                {/* <AddrSearchWidget />
-                <BaseMapWidget /> */}
+                <AddrSearchWidget />
                 <MapPositionWidget />
                 <button className="map-right-bt top-info-bt">
                     <svg width="6" height="16" viewBox="0 0 6 16" fill="none" xmlns="http://www.w3.org/2000/svg">
