@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { LEGNED_PANEL } from '@redux/actions';
 import LegendContainer from '@components/biz/legnedContainer/LegendContainer';
-import { G$addWidget } from '@gis/util';
+import { G$addLayer, G$addWidget } from '@gis/util';
 import { Chart } from 'chart.js';
+import BaseWmsGwcLayer from '@gis/layers/BaseWmsGwcLayer';
 
 //샘플 하단 패널
 const SampleEventBox = () => {
@@ -33,23 +34,8 @@ const SampleEventBox = () => {
     }
 
     const test = () =>{
-        
-        var ctx = document.getElementById('pieChartCanvas2').getContext('2d');
-
-		// 파이 차트 데이터 및 옵션을 설정합니다.
-		var data = {
-			labels: ['Label 1', 'Label 2', 'Label 3'],
-			datasets: [{
-				data: [30, 40, 30],
-				backgroundColor: ['red', 'green', 'blue']
-			}]
-		};
-
-		// 파이 차트를 임시 캔버스에 그립니다.
-		var myChart = new Chart(ctx,{
-            type:"pie",
-            data: data
-        });
+        const wmsImageryProvider = new BaseWmsGwcLayer('lv1_1980yr','EGIS', 'egisGeo')
+        G$addLayer(wmsImageryProvider)
     }
 
     return (
@@ -59,10 +45,10 @@ const SampleEventBox = () => {
             </ul>
             <canvas style={{display:'none'}} id="pieChartCanvas2"></canvas>
             <ul style={{display:'flex'}}>
-                <div style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={()=>{widget('Test1Container')}}>TEST</button></div>
-                <div style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={()=>{widget('Test2Container')}}>TEST</button></div>
-                <div style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={()=>{openWidget('TestChartWidget')}}>TEST</button></div>
-                <div style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={test}>TEST</button></div>
+                <div style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={()=>{widget('Test1Container')}}>TEST1</button></div>
+                <div style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={()=>{widget('Test2Container')}}>TEST2</button></div>
+                <div style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={()=>{openWidget('TestChartWidget')}}>TEST3</button></div>
+                <div style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={test}>TEST4</button></div>
             </ul>
             
         </>

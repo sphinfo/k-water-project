@@ -11,7 +11,7 @@ import {
 import { G$getLayerForId, G$removeLayer } from '@gis/util';
   
   const initialState = {
-    mode: 'main',
+    mode: '',
     mainOptions: [],
     layerList: [],
     startDate: dayjs().format('YYYY-MM-DD'),

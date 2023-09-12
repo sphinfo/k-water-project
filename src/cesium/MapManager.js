@@ -58,8 +58,6 @@ class MapManager {
         });
 
 
-
-
         
         this.map.screenSpaceEventHandler.removeInputAction(ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
         var animationContainer = document.querySelector('.cesium-viewer-animationContainer');

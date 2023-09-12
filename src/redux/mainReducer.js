@@ -8,9 +8,11 @@ import {
   REMOVE_MAIN_OPTIONS,
   LEGNED_PANEL
 } from './actions';
+import { useDispatch } from 'react-redux';
+import { G$addLayer } from '@gis/util';
 
 const initialState = {
-  mode: 'main',
+  mode: '',
   mainOptions: [],
   selectOption: null,
   startDate: dayjs().format('YYYY-MM-DD'),
@@ -22,11 +24,10 @@ const initialState = {
 function mainReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_MODE:
-      if(action.mode === 'list'){
-        state.selectOption = action.option
-      }
-      let mode = action.mode
-      return { ...state, mode: mode };
+
+      //G$addLayer('')
+
+      return { ...state, mode: action.mode };
     case SET_START_DATE:
       return { ...state, startDate: action.date };
     case SET_END_DATE:
