@@ -86,7 +86,6 @@ export default function Sidebar () {
         <div className="tab" onClick={() => { handleChange(INDEX_3) }} style={{ backgroundColor: value === INDEX_3 ? 'rgba(255, 255, 255, 0.85)' : '' }} >환경</div>
       </div>
 
-      {value}
       <div>
         <TabPanel value={value} index={INDEX_0} >
           <div>
