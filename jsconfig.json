@@ -1,12 +1,16 @@
 {
-  "compilerOptions": {
-    "baseUrl": "src",
-    "include" : ["src"],
-    "paths": {
-      "@/*": ["src/*"],
-      "@com/*": ["common/*"],
-      "@cmp/*": ["components/*"],
-      "@gis/*": ["openlayers/*"]
-    }
-  }
+	"extends": "./jsconfig.paths.json",
+    "compilerOptions": {
+        "paths": {
+			"@assets/*": ["src/js/assets/*"],
+			"@components/*": ["src/components/*"],
+			"@common/*": ["src/common/*"],
+			"@gis/*": ["src/cesium/*"],
+			"@redux/*": ["src/redux/*"]
+		}
+    },
+    "include": [
+        "src",
+        "craco.config.js"
+	]
 }

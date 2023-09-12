@@ -1,9 +1,33 @@
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 module.exports = function (app) {
+
+	//수자원공사 Geoserver TestServer
+	app.use(
+		createProxyMiddleware('/waterGeo',{
+			target: 'http://221.147.56.180:28080/geoserver',
+			changeOrigin: true,
+            pathRewrite: {
+                '^/waterGeo': ''
+            }
+		})
+	);
+
+	app.use(
+		createProxyMiddleware('/egisGeo',{
+			target: 'https://egisapp.me.go.kr/geoserver',
+			changeOrigin: true,
+            pathRewrite: {
+                '^/egisGeo': ''
+            }
+		})
+	);
+
+	
+
 	app.use(
 		createProxyMiddleware('/vworld',{
-			target: 'http://api.vworld.kr/',
+			target: 'https://api.vworld.kr/',
 			changeOrigin: true,
             pathRewrite: {
                 '^/vworld': ''
@@ -27,16 +51,6 @@ module.exports = function (app) {
 			changeOrigin: true,
             pathRewrite: {
                 '^/starGeo': ''
-            }
-		})
-	);
-
-	app.use(
-		createProxyMiddleware('/waterGeo',{
-			target: 'http://221.147.56.177:58080/geoserver',
-			changeOrigin: true,
-            pathRewrite: {
-                '^/waterGeo': ''
             }
 		})
 	);

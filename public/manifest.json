@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "K Water v1",
+  "short_name": "Cesium Demo",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",

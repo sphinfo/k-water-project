@@ -1,25 +1,14 @@
 import React, { useCallback, useState } from 'react';
-import MapManager from '../../../openlayers/MapManager';
+import MapManager from '../../../cesium/MapManager';
 
 const ZoomMapWidget = () => {
-
-    const [zoom, setZoom] = useState()
-
+    
     const zoomIn = useCallback(() => {
-        const plus = MapManager.getZoom() + 1;
-        if (plus < 14) {
-            setZoom(plus);
-            MapManager.setZoom(plus);
-        }
-
+        MapManager.zoomIn()
     }, []);
 
     const zoomOut = useCallback(() => {
-        const minus = MapManager.getZoom() - 1;
-        if (minus > -1) {
-            setZoom(minus);
-            MapManager.setZoom(minus);
-        }
+        MapManager.zoomOut()
     }, []);
     
     return (

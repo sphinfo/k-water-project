@@ -5,6 +5,8 @@ const MapEvents = {
     removeLayer: 'remove_Layer',
     //지도 위에서 마우스가 움직일때
     mouseMove: 'mouse_move',
+    //지도 이동 end
+    mapMoveEnd: 'map_move_end',
     //지도 스케일이 변경되었을때
     changeMapScale: 'change_map_scale',
     changeMapViewScale: 'change_mapview_scale',

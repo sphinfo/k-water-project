@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Sidebar from "./Sidebar";
+import React from "react";
+import MainSearchPanel from "./MainSearchPanel";
 
 const Menubars = (props) => {
 
@@ -7,7 +7,7 @@ const Menubars = (props) => {
 		<>
 			<div id="header">
 			</div>
-			<Sidebar />  
+			<MainSearchPanel />
 		</>
 	)
 

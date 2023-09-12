@@ -153,3 +153,12 @@
   }
 
 
+
+
+  .map_ctrl_left{
+    position: absolute;
+    bottom: 10px;
+    left: 1%;
+    transform: translateX(50%);
+    transition: all 300ms;
+  }

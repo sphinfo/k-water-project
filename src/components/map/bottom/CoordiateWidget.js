@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import MapManager from '../../../openlayers/MapManager';
-import EventBus from '../../../common/eventbus/EventBus';
-import MapEvents from '../../../common/eventbus/MapEvents';
-import { G$GetPointToDetail, G$Transfrom } from '../../../openlayers/util';
+import EventBus from '@common/eventBus/EventBus';
+import MapEvents from '@common/eventBus/MapEvents';
+import { G$GetPointToDetail } from '@gis/util';
 
 const CoordiateWidget = () => {
     
@@ -10,17 +9,17 @@ const CoordiateWidget = () => {
 
     useEffect(()=>{
         EventBus.addListener(MapEvents.mouseMove, event => {
-            setCoord(G$GetPointToDetail(event.detail.coordinate[0], event.detail.coordinate[1]))
+            setCoord(G$GetPointToDetail(event.detail.longitude, event.detail.latitude))
         })
-    },[MapManager.map])
+    },[])
     
 
     return (
         <ul className="map-coord-box">
-            <div><span className="text-blue">X :</span>{coord.x}</div>
-            <div><span className="text-blue">Y :</span>{coord.y}</div>
-            <div><span className="text-blue">longitude :</span>{coord.lonDms}</div>
-            <div><span className="text-blue">latitude :</span>{coord.latDms}</div>
+            <div><span className="text-blue">X :</span>{coord.x && coord.x.toFixed(3)}</div>
+            <div><span className="text-blue">Y :</span>{coord.y && coord.y.toFixed(3) }</div>
+            <div><span className="text-blue">lon Dms :</span>{coord.lonDms}</div>
+            <div><span className="text-blue">lat Dms :</span>{coord.latDms}</div>
         </ul>
     )
 }
