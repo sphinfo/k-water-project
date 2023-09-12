@@ -1,9 +1,7 @@
 import { Cartographic, Math, ScreenSpaceEventHandler, ScreenSpaceEventType } from "cesium";
-import MapManager from "../../cesium/MapManager";
-import EventBus from "../../common/eventBus/EventBus";
-import MapEvents from "../../common/eventBus/MapEvents";
-import createAxios from "@common/axios/creatAxios";
-import { G$cartesianToLongLat } from "@gis/util";
+import EventBus from "@common/eventBus/EventBus";
+import MapEvents from "@common/eventBus/MapEvents";
+import MapManager from "@gis/MapManager";
 
 export default class CesiumMap {
 
