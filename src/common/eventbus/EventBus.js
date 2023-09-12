@@ -1,4 +1,4 @@
-const EventBus = {
+const EventBus = { 
     listeners: {},
     addListener: function (type, callback) {
         if (!(type in this.listeners)) {

@@ -1,4 +1,4 @@
-const MapEvents = {
+const MapEvents = { 
     //맵에 레이어 추가
     addLayer: 'add_layer',
     //맵에 레이어 삭제
