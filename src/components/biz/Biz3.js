@@ -1,7 +1,6 @@
 import BaseWmsLayer from "@gis/layers/BaseWmsLayer";
 import { G$addLayer, G$removeLayer } from "@gis/util";
 import React, { useEffect, useRef } from "react";
-import React from "react";
 import Switch from '@mui/material/Switch';
 
 const Biz3 = () => {
