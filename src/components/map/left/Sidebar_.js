@@ -15,10 +15,6 @@ const Sidebar = () => {
     dispatch({type: CHANGE_MODE, mode: type})
   }
 
-  const safetyDiagnsisLayer = useRef(new BaseWmsLayer('river_M','DisplacementClass'))
-  const droughtLayer = useRef(new BaseWmsLayer('DR_Konkuk_20170113_M','Drought'))
-  const waterLevelLayer = useRef(new BaseWmsLayer('Juam_SBAS_Path134_Frame476_M','DisplacementClass'))
-  const gArbageLayer = useRef(new BaseWmsLayer('수체_샘플데이터','WaterBody'))
 
   useEffect(()=>{
     //G$removeLayer('WaterBody:수체_샘플데이터')

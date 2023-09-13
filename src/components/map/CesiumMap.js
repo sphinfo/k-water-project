@@ -1,7 +1,8 @@
-import { Cartographic, Math, ScreenSpaceEventHandler, ScreenSpaceEventType } from "cesium";
+import { Cartographic, Math, ScreenSpaceEventHandler, ScreenSpaceEventType, SelectionIndicatorViewModel, defined } from "cesium";
 import EventBus from "@common/eventBus/EventBus";
 import MapEvents from "@common/eventBus/MapEvents";
 import MapManager from "@gis/MapManager";
+import { G$getLayerForId } from "@gis/util";
 
 export default class CesiumMap {
 
@@ -53,25 +54,20 @@ export default class CesiumMap {
         var delayInterval = 50
         var lastMouseMoveTime = 0
 
-        //this.map.infoBox.destroy()
-
+        
+        // move move event
         handler.setInputAction((event)=>{
-
             var currentTime = new Date().getTime();
-
             // 너무 많이 호출되므로 interval 적용
             if (currentTime - lastMouseMoveTime > delayInterval) {
                 lastMouseMoveTime = currentTime
-
                 var cartesian = me.map.camera.pickEllipsoid(event.endPosition, me.map.scene.globe.ellipsoid);
                 if (cartesian) {
                     let cartographic = Cartographic.fromCartesian(cartesian);
                     let longitude = Math.toDegrees(cartographic.longitude);
                     let latitude = Math.toDegrees(cartographic.latitude);
-
                     // event bus 활용
                     EventBus.dispatch(new CustomEvent(MapEvents.mouseMove, { detail: {longitude:longitude, latitude:latitude}}));
-
                 }
             }
             
@@ -79,13 +75,8 @@ export default class CesiumMap {
 
         //map move end
         me.map.camera.moveEnd.addEventListener( async ()=>{
-
             var cameraPositionCartesian = me.map.camera.position;
-
             EventBus.dispatch(new CustomEvent(MapEvents.mapMoveEnd, { detail: cameraPositionCartesian }));
-
-
-            //createAxios
         });
 
 
@@ -95,7 +86,8 @@ export default class CesiumMap {
                 var cartographic = Cartographic.fromCartesian(cartesian);
                 var longitude = Math.toDegrees(cartographic.longitude);
                 var latitude = Math.toDegrees(cartographic.latitude);
-                console.log("마우스 좌표:", longitude, latitude);
+                //console.log("마우스 좌표:", longitude, latitude);
+                //console.info(longitude+','+latitude)
             }
             
         }, ScreenSpaceEventType.LEFT_CLICK);
@@ -103,13 +95,10 @@ export default class CesiumMap {
 
         //
         this.map.selectedEntityChanged.addEventListener(function(selectedEntity) {
-            
-            if (selectedEntity !== undefined) {
-                console.info(selectedEntity)
-            }
+
 
         });
-
+        
 
         //this.map.selectedEntity.destroy(true)
         //this.map.selectionIndicator.isDestroyed()

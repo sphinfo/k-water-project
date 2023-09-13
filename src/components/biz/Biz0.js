@@ -1,6 +1,7 @@
 import BaseWmsLayer from "@gis/layers/BaseWmsLayer";
 import { G$addLayer, G$removeLayer } from "@gis/util";
-import React, { useEffect, useRef } from "react";
+import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
+import React, { useEffect, useImperativeHandle, useRef } from "react";
 
 const Biz0 = () => {
 
@@ -8,11 +9,12 @@ const Biz0 = () => {
 
     useEffect(()=>{
 
-        bizLayer.current = new BaseWmsLayer('river_M','DisplacementClass')
+        bizLayer.current = new BaseWmsLayer('DisplacementClass','river_M')
         G$addLayer(bizLayer.current)
 
+
         return()=>{
-            G$removeLayer('DisplacementClass:river_M')
+            G$removeLayer(bizLayer.current.id)
         }
 
     },[])

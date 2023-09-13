@@ -1,7 +1,24 @@
+import BaseWmsLayer from "@gis/layers/BaseWmsLayer";
+import { G$addLayer, G$removeLayer } from "@gis/util";
+import React, { useEffect, useRef } from "react";
 import React from "react";
 import Switch from '@mui/material/Switch';
 
 const Biz3 = () => {
+
+    const bizLayer = useRef()
+
+    useEffect(()=>{
+
+        bizLayer.current = new BaseWmsLayer('SoilMoisture', '52SCF_20230629_M')
+        G$addLayer(bizLayer.current)
+
+        return()=>{
+            G$removeLayer('SoilMoisture:52SCF_20230629_M')
+        }
+
+    },[])
+
     return (
       <div className="tab-float-box">
           <div className="tab-float-box-button-wrap">

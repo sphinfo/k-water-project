@@ -15,7 +15,7 @@ const MainSearchPanel = () => {
 
     const add = () =>{
         //const wmsImageryProvider = new BaseWmsLayer('수체_샘플데이터','WaterBody')
-        const wmsImageryProvider = new BaseWmsGwcLayer('lv1_1980yr','EGIS', 'egisGeo')
+        const wmsImageryProvider = new BaseWmsGwcLayer('EGIS', 'lv1_1980yr', 'egisGeo')
         G$addLayer(wmsImageryProvider)
     }
     const remove = () =>{

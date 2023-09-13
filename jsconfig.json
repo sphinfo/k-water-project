@@ -6,7 +6,8 @@
 			"@components/*": ["src/components/*"],
 			"@common/*": ["src/common/*"],
 			"@gis/*": ["src/cesium/*"],
-			"@redux/*": ["src/redux/*"]
+			"@redux/*": ["src/redux/*"],
+			"@images/*": ["src/resources/images/*"]
 		}
     },
     "include": [
