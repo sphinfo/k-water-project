@@ -1,4 +1,4 @@
-import { Cartesian3, CesiumTerrainProvider, Credit, Math, ScreenSpaceEventType, Terrain, Viewer, WebMapTileServiceImageryProvider } from "cesium";
+import { Cartesian3, CesiumTerrainProvider, Credit, Math, Rectangle, ScreenSpaceEventType, Terrain, Viewer, WebMapTileServiceImageryProvider } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 
 
@@ -82,39 +82,72 @@ class MapManager {
         return this._map
     }
 
+    //point 이동
+    flyToPoint(point, zoom=850000){
+        this._map.camera.flyTo({
+            destination: Cartesian3.fromDegrees(point[0], point[1], zoom), // 목표 위치의 카메라 높이 (높이 값 조절 가능)
+            orientation: {
+              heading: Math.toRadians(0), // 방위각 (degrees)
+              pitch: Math.toRadians(-90), // 피치각 (degrees)
+              roll: 0, // 롤각 (degrees)
+            },
+            duration: 3, // 애니메이션 지속 시간 (초)
+        })
+    }
+
+    //extent 이동
+    flyToExtent(extent){
+        this._map.camera.flyTo({
+            destination: Rectangle.fromDegrees(
+                extent[0], extent[1], extent[2], extent[3]
+            ),
+            duration: 2.0
+        })
+    }
+
+
     addLayer(layer){
-        if(layer.constructor.name === 'BaseEntityCollection'){
-            this._map.dataSources.add(layer);
+        if(layer.type === 'wms'){
+            this._map.imageryLayers.addImageryProvider(layer)
         }else{
-            this._map.imageryLayers.addImageryProvider(layer);
+            this._map.dataSources.add(layer)
         }
         
     }
 
     removeLayer(layer){
-        if(layer.constructor.name === 'BaseEntityCollection'){
-            this._map.dataSources.remove(layer);
+        if(layer.constructor.name === 'ImageryLayer'){
+            this._map.imageryLayers.remove(layer)
         }else{
-            this._map.imageryLayers.remove(layer);
+            this._map.dataSources.remove(layer)
         }
         
     }
 
 
     getLayerForId(id){
-        let l = undefined
+        let l = null
+
+        // wfs 레이어 검색
         if(id){
-            const allLayers = this._map.imageryLayers._layers;
-            for (const layer of allLayers) {
-                if(layer.imageryProvider){
-                    if (layer.imageryProvider.id === id) {
-                        l = layer
-                        break;
-                    }
-                }
-            }
+            l = this.getDatasourcesById(id)
         }
+
+        // wms 레이어 검색
+        if(!l){
+            l = this.getImageryLayersById(id)
+        }
+
         return l
+    }
+    
+    getDatasourcesById(id){
+        //return this._map.dataSources.get(id)
+        return this._map.dataSources.getByName(id)[0]
+    }
+
+    getImageryLayersById(id){
+        return this._map.imageryLayers._layers.find(layer => layer.imageryProvider.id === id)
     }
 
 

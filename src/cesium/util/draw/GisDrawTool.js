@@ -19,7 +19,6 @@ class GisDrawTool {
     }
 
     activate(mode){
-        console.info(mode)
         drawingMode = mode
         if (!drawHandler) {
             drawHandler = new ScreenSpaceEventHandler(this.map.scene.canvas);

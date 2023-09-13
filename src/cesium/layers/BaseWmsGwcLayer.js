@@ -2,7 +2,7 @@ import { WebMapServiceImageryProvider } from "cesium";
 
 class BaseWmsGwcLayer extends WebMapServiceImageryProvider {
 
-	constructor(layer, store, server) {
+	constructor(store, layer,  server) {
 
 		if (!layer || !store) {
 			throw new Error("'layers' and 'store' parameters are required.");
@@ -27,6 +27,7 @@ class BaseWmsGwcLayer extends WebMapServiceImageryProvider {
 		})
 
 		this.id = `${store}:${layer}`
+		this.type = 'wms'
 		
 	}
 }

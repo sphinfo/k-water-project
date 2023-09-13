@@ -5,6 +5,7 @@ import MainWidgetManager from "@common/widget/WidgetManager";
 /* 레이어 추가 */
 const G$addLayer = (l) =>{
     
+    console.info(l)
     let layer = MapManager.getLayerForId(l.id)
     if(!layer){
         MapManager.addLayer(l)
@@ -99,7 +100,6 @@ const G$cartesianToLongLat = (cartesian) =>{
     let latitude = MathC.toDegrees(cameraPositionCartographic.latitude);
 
     return {longitude: longitude, latitude: latitude}
-    //cameraPositionCartesian
 
 }
 
@@ -163,6 +163,15 @@ const G$GetPointToDetail=(longitude, latitude)=>{
 }
 
 
+const G$flyToExtent= (extent) =>{
+    MapManager.flyToExtent(extent)
+}
+
+const G$flyToPoint= (point) =>{
+    MapManager.flyToPoint(point)
+}
+
+
 /* 위젯 추가 */
 const G$addWidget = (wId) =>{
     MainWidgetManager.add(wId);
@@ -182,6 +191,9 @@ export {
     G$pointsToCenter,
     
     G$cartesianToLongLat,
+
+    G$flyToExtent,
+    G$flyToPoint,
     
     G$ZeroCnt,
     G$TypeOf,
