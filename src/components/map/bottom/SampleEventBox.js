@@ -40,15 +40,15 @@ const SampleEventBox = () => {
 
     return (
         <>
-            <ul>
+            <div>
                 <LegendContainer />
-            </ul>
+            </div>
             <canvas style={{display:'none'}} id="pieChartCanvas2"></canvas>
-            <ul style={{display:'flex'}}>
-                <div style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={()=>{widget('Test1Container')}}>TEST1</button></div>
-                <div style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={()=>{widget('Test2Container')}}>TEST2</button></div>
-                <div style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={()=>{openWidget('TestChartWidget')}}>TEST3</button></div>
-                <div style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={test}>TEST4</button></div>
+            <ul className="map-bottom-btn">
+                <li style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={()=>{widget('Test1Container')}}>TEST1</button></li>
+                <li style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={()=>{widget('Test2Container')}}>TEST2</button></li>
+                <li style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={()=>{openWidget('TestChartWidget')}}>TEST3</button></li>
+                <li style={{display:'inlineBlock', marginRight:'5px'}}><button onClick={test}>TEST4</button></li>
             </ul>
             
         </>
