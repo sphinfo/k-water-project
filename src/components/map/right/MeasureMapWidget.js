@@ -47,7 +47,7 @@ const MeasureMapWidget = () => {
             </button>
             {/* <button onClick={()=>{drawController('Circle')}}>반지름</button> */}
             <button className="map-right-bt" onClick={()=>{removeDraw()}}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" fill="none"><path stroke="#3D3D3D" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 4.527V2m0 0h-2.774M15 2l-4 4M3 11.473V14m0 0h2.774M3 14l4-4M12.473 14H15m0 0v-2.774m0 2.773-4-4M5.527 2H3m0 0v2.774M3 2l4 4"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" fill="none"><path stroke="#3D3D3D" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 4.527V2m0 0h-2.774M15 2l-4 4M3 11.473V14m0 0h2.774M3 14l4-4M12.473 14H15m0 0v-2.774m0 2.773-4-4M5.527 2H3m0 0v2.774M3 2l4 4"/></svg>
             </button>
             {/* <button onClick={()=>{getFeature()}}>FeatureClick</button> */}
         </div>

@@ -93,12 +93,12 @@ export default function Sidebar () {
             <path d="M28.2278 0.455322C21.3055 0.455322 14.7237 2.66822 9.27734 6.75821V7.23168C13.2377 5.09266 17.7625 3.88044 22.5644 3.88044C22.6178 3.88044 22.6712 3.88044 22.7247 3.88044C24.5078 3.53121 26.3478 3.34988 28.2278 3.34988C32.1448 3.34988 35.8781 4.139 39.2875 5.56613V2.45331C35.8414 1.16049 32.1147 0.455322 28.2278 0.455322Z" fill="url(#paint1_linear_796_47228)"/>
             <defs>
               <linearGradient id="paint0_linear_796_47228" x1="8.87893" y1="8.02939" x2="35.9035" y2="8.02939" gradientUnits="userSpaceOnUse">
-                <stop offset="0.4" stop-color="#00B9EF"/>
-                <stop offset="1" stop-color="#4694D1"/>
+                <stop offset="0.4" stopColor="#00B9EF"/>
+                <stop offset="1" stopColor="#4694D1"/>
               </linearGradient>
               <linearGradient id="paint1_linear_796_47228" x1="8.87893" y1="4.56872" x2="39.302" y2="4.56872" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#ED6C00"/>
-                <stop offset="1" stop-color="#FDD000"/>
+                <stop stopColor="#ED6C00"/>
+                <stop offset="1" stopColor="#FDD000"/>
               </linearGradient>
             </defs>
           </svg>
@@ -117,7 +117,7 @@ export default function Sidebar () {
       <div>
         <TabPanel value={value} index={INDEX_0} >
           <div>
-            <button className="close-btn" onClick={handleClose} >close</button>
+            {/* <button className="close-btn" onClick={handleClose} >close</button> */}
             <Biz0 />
           </div>
         </TabPanel>

@@ -23,12 +23,12 @@ class BaseGeoserverAxios {
     }
 
     // get Feature
-    async getFeature( store, layer, cql ) {
+    async getFeature( store, layer, cql='1=1' ) {
         try {
             let url = this.serviceUrl + store +'/ows?';
             let params = {
                 typeName: `${store}:${layer}`,
-                CQL_FILTER: cql,
+                //CQL_FILTER: cql,
                 ...this.params
             }
 

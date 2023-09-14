@@ -36,9 +36,7 @@ export default function MapControl() {
 
             <div className="map_ctrl_top">
                 <MapPositionWidget />
-              <div className="map-address">
-                19℃<span className="text-blue ml-5">☀︎</span>
-              </div>
+                <TimeZoneWidget />
             </div>
             
         </>

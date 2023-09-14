@@ -1,4 +1,4 @@
-import { Cartographic, Math, ScreenSpaceEventHandler, ScreenSpaceEventType, SelectionIndicatorViewModel, defined } from "cesium";
+import { Cartographic, Entity, Math, ScreenSpaceEventHandler, ScreenSpaceEventType, SelectionIndicatorViewModel, defined } from "cesium";
 import EventBus from "@common/eventBus/EventBus";
 import MapEvents from "@common/eventBus/MapEvents";
 import MapManager from "@gis/MapManager";
@@ -91,6 +91,12 @@ export default class CesiumMap {
             }
             
         }, ScreenSpaceEventType.LEFT_CLICK);
+
+        // let selectedEntity = Entity()
+        // me.map.selectedEntity = selectedEntity
+        // selectedEntity.description = ((e)=>{
+        //     console.info(e)
+        // })
         
 
         //

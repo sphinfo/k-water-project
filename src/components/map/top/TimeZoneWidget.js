@@ -34,9 +34,17 @@ const TimeZoneWidget = () => {
     
     
     return (
-        <ul className="map-widget-vertical-block" style={{color:'black'}}>
-            <li>{time}</li>
-        </ul>
+        <>
+            <div className="map-address">
+                {time}
+            </div>
+            <div className="map-address">
+                19℃
+                <span className="text-blue ml-5">
+                    ☀︎
+                </span>
+            </div>
+        </>
     )
 }
 

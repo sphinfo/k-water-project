@@ -30,7 +30,7 @@ const MapPositionWidget = () => {
     
     return (
         <div className="map-address">
-            {addr}<span className="text-grey ml-3">(timezone)</span>
+            {addr}<span className="text-grey ml-3"></span>
         </div>
     )
 }
