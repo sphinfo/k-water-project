@@ -14,7 +14,7 @@ const WidgetConatiner = (props) => {
     return (
         <Observer>
                 {() => (
-                    <div ref={container}>
+                    <div ref={container} className="aaa">
                         {
                             WidgetManager._instances.map(widget => {
                                 let {

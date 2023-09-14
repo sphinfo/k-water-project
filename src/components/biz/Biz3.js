@@ -1,6 +1,6 @@
 import BaseWmsLayer from "@gis/layers/BaseWmsLayer";
 import { G$addLayer, G$removeLayer } from "@gis/util";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Switch from '@mui/material/Switch';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -20,20 +20,19 @@ const Biz3 = () => {
 
     },[])
 
-    const [selected, setselected] = React.useState('1');
+    const [selected, setselected] = useState('gArbage');
 
     const handleSelcted = (event, newSelected) => {
       setselected(newSelected);
     };
-    const [show, setShow] = React.useState(false);
 
     return (
       <div className="tab-float-box">
-          <ToggleButtonGroup className="tab-float-box-button-wrap" value={selected} exclusive onChange={handleSelcted}>
-              <ToggleButton className="tab-float-box-btn" value="1">부유물</ToggleButton>
-              <ToggleButton className="tab-float-box-btn" value="2" onClick={()=>{setShow(!show)}}>수변피복</ToggleButton>
-          </ToggleButtonGroup>
-        <div className="tab-float-box-button-wrap" style={{display: show ? '' : 'none'}}>
+        <ToggleButtonGroup className="tab-float-box-button-wrap" value={selected} exclusive onChange={handleSelcted}>
+            <ToggleButton className="tab-float-box-btn" value={'gArbage'}>부유물</ToggleButton>
+            <ToggleButton className="tab-float-box-btn" value={'landCover'}>수변피복</ToggleButton>
+        </ToggleButtonGroup>
+        <div className="tab-float-box-button-wrap" style={{display: selected === 'landCover' ? '' : 'none'}}>
           <button className="tab-float-box-btn btn-round">
             변화탐지
             <Switch className="float-box-switch"/>

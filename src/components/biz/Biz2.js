@@ -18,42 +18,58 @@ const Biz2 = () => {
     }));
 
     useEffect(()=>{
+
+        bizLayer.current = new BaseWmsLayer('WaterBody', '수체_샘플데이터')
+        G$addLayer(bizLayer.current)
+
         GisLayerClickTool.addBiz('biz2', selectRef, ['waterPoint'])
         GisLayerClickTool.enable('biz2')
-        waterFeatureLayer.current = new BaseEntityCollection({name:'waterPoint'})
-        waterFeatureLayer.current._addFeature(127.28631,35.313264)
-        waterFeatureLayer.current._addFeature(127.25120,35.317408)
-        waterFeatureLayer.current._addFeature(127.30769,35.345615)
-        waterFeatureLayer.current._addFeature(127.31778,35.366161)
-        waterFeatureLayer.current._addFeature(127.34136,35.378983)
-        waterFeatureLayer.current._addFeature(127.21834,35.399125)
-        waterFeatureLayer.current._addFeature(127.19292,35.387827)
-        waterFeatureLayer.current._addFeature(127.19605,35.375238)
-        waterFeatureLayer.current._addFeature(127.16970,35.312817)
-        G$addLayer(waterFeatureLayer.current)
-        G$flyToExtent([127.02595, 35.25252, 127.46909, 35.44838])
+       
         
 
         return()=>{
-            G$removeLayer('SoilMoisture:SM_Sejong20201223_M')
-            G$removeLayer(waterFeatureLayer.current.id)
-            GisLayerClickTool.destroyBiz('biz2')
             G$removeWidget('TestChartWidget')
-        
+            G$removeLayer('WaterBody:수체_샘플데이터')
+            if(waterFeatureLayer.current){
+                G$removeLayer(waterFeatureLayer.current.id)
+            }
+            GisLayerClickTool.destroyBiz('biz2')
         }
 
     },[])
-    const [selected, setselected] = React.useState('1');
-
+    const [selected, setselected] = React.useState('waterBody');
     const handleSelcted = (event, newSelected) => {
         setselected(newSelected);
     };
 
+    useEffect(()=>{
+        if(selected === 'waterLevel'){
+            waterFeatureLayer.current = new BaseEntityCollection({name:'waterPoint'})
+            waterFeatureLayer.current._addFeature(127.28631,35.313264)
+            waterFeatureLayer.current._addFeature(127.25120,35.317408)
+            waterFeatureLayer.current._addFeature(127.30769,35.345615)
+            waterFeatureLayer.current._addFeature(127.31778,35.366161)
+            waterFeatureLayer.current._addFeature(127.34136,35.378983)
+            waterFeatureLayer.current._addFeature(127.21834,35.399125)
+            waterFeatureLayer.current._addFeature(127.19292,35.387827)
+            waterFeatureLayer.current._addFeature(127.19605,35.375238)
+            waterFeatureLayer.current._addFeature(127.16970,35.312817)
+            G$addLayer(waterFeatureLayer.current)
+            G$flyToExtent([127.02595, 35.25252, 127.46909, 35.44838])
+        }else{
+            if(waterFeatureLayer.current){
+                G$removeLayer(waterFeatureLayer.current.id)
+            }
+            
+        }
+
+    },[selected])
+
     return (
         <div className="tab-float-box">
             <ToggleButtonGroup className="tab-float-box-button-wrap" value={selected} exclusive onChange={handleSelcted}>
-                <ToggleButton className="tab-float-box-btn" value="1">수체 탐지</ToggleButton>
-                <ToggleButton className="tab-float-box-btn" value="2">수위 탐지</ToggleButton>
+                <ToggleButton className="tab-float-box-btn" value={"waterBody"}>수체 탐지</ToggleButton>
+                <ToggleButton className="tab-float-box-btn" value={"waterLevel"}>수위 탐지</ToggleButton>
 
             </ToggleButtonGroup>
         </div>

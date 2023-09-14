@@ -26,7 +26,7 @@ const widgetOption = (option = {}) => {
 
 const WidgetWrapper = (props) => {
 
-    const {wid, ...other} = props;
+    const {wid, legend, ...other} = props;
 
     const defaultOption = useMemo(()=>({
         ...widgetOption({...other})
@@ -51,7 +51,7 @@ const WidgetWrapper = (props) => {
     return (
         <>
             <Rnd>
-                <div style={defaultOption} key={wid} className={wid}>
+                <div style={defaultOption} key={wid} className={`${wid} ${legend?'widget-legend':''}`}>
                     {/* 리소스가 준비될 때까지 렌더링을 일시 중지 */}
                     <Suspense> 
                         {

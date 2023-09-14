@@ -14,21 +14,12 @@ const Biz1 = () => {
     const wfsLayer = useRef()
 
     useEffect(()=>{
-
-        bizLayer.current = new BaseWmsLayer('WaterBody', '수체_샘플데이터')
-        G$addLayer(bizLayer.current)
         G$addWidget('LegendWidget', { params: {title:''}})
-        
-
         return()=>{
-            G$removeLayer('WaterBody:수체_샘플데이터')
             G$removeWidget('LegendWidget')
         }
 
     },[])
-
-    
-
 
     const watershedLayer = (type) =>{
         watershed === type ? setWatershed('') : setWatershed(type)
@@ -70,18 +61,10 @@ const Biz1 = () => {
                     <h1 className="tab-float-box-list-head">
                         유역별 통계 보기
                     </h1>
-                    {/* <ul className="tab-float-box-list-main">
-                        <li><button onClick={()=>{watershedLayer('hangang')}} className={watershed === 'hangang' ? "active" : ''}>한강 유역</button></li>
-                        <li><button onClick={()=>{watershedLayer('geumgang')}} className={watershed === 'geumgang' ? "active" : ''}>금강 유역</button></li>
-                        <li><button onClick={()=>{watershedLayer('nakdong')}} className={watershed === 'nakdong' ? "active" : ''}>낙동강 유역</button></li>
-                    </ul> */}
                     <ToggleButtonGroup className="tab-float-box-button-wrap list-main" value={selected} exclusive onChange={handleSelcted}>
-                        <ToggleButton className="tab-float-box-btn list-item" value="0">
-                            한강 유역</ToggleButton>
-                        <ToggleButton className="tab-float-box-btn list-item" value="1">
-                            금강 유역</ToggleButton>
-                        <ToggleButton className="tab-float-box-btn list-item" value="2">
-                            낙동강 유역</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value={"hangang"}>한강 유역</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value={"geumgang"}>금강 유역</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value={"nakdong"}>낙동강 유역</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </div>
