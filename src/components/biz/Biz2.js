@@ -3,6 +3,8 @@ import BaseWmsLayer from "@gis/layers/BaseWmsLayer";
 import { G$addLayer, G$addWidget, G$flyToExtent, G$removeLayer, G$removeWidget } from "@gis/util";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import React, { useEffect, useImperativeHandle, useRef } from "react";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 const Biz2 = () => {
 
@@ -41,14 +43,19 @@ const Biz2 = () => {
         }
 
     },[])
+    const [selected, setselected] = React.useState('1');
+
+    const handleSelcted = (event, newSelected) => {
+        setselected(newSelected);
+    };
 
     return (
         <div className="tab-float-box">
-            <div className="tab-float-box-button-wrap">
-                <button className="tab-float-box-btn active">수체 탐지</button>
-                <button className="tab-float-box-btn">수위 탐지</button>
+            <ToggleButtonGroup className="tab-float-box-button-wrap" value={selected} exclusive onChange={handleSelcted}>
+                <ToggleButton className="tab-float-box-btn" value="1">수체 탐지</ToggleButton>
+                <ToggleButton className="tab-float-box-btn" value="2">수위 탐지</ToggleButton>
 
-            </div>
+            </ToggleButtonGroup>
         </div>
     )
 }

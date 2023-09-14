@@ -3,8 +3,9 @@ import MapManager from "@gis/MapManager";
 import BaseGeoJsonCollection from "@gis/layers/BaseGeoJsonCollection";
 import BaseWmsLayer from "@gis/layers/BaseWmsLayer";
 import { G$addLayer, G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
-import { ArcType, Color, DataSourceCollection, GeoJsonDataSource, PolygonGraphics, defined } from "cesium";
 import React, { useEffect, useRef, useState } from "react";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 const Biz1 = () => {
 
@@ -54,19 +55,34 @@ const Biz1 = () => {
         })
     }
 
+    const [selected, setselected] = React.useState();
+
+    const handleSelcted = (event, newSelected) => {
+        setselected(newSelected);
+    };
+
     return (
         <>
             {/*  */}
             <div className="tab-float-box">
+
                 <div className="tab-float-box-list-wrap">
                     <h1 className="tab-float-box-list-head">
                         유역별 통계 보기
                     </h1>
-                    <ul className="tab-float-box-list-main">
+                    {/* <ul className="tab-float-box-list-main">
                         <li><button onClick={()=>{watershedLayer('hangang')}} className={watershed === 'hangang' ? "active" : ''}>한강 유역</button></li>
                         <li><button onClick={()=>{watershedLayer('geumgang')}} className={watershed === 'geumgang' ? "active" : ''}>금강 유역</button></li>
                         <li><button onClick={()=>{watershedLayer('nakdong')}} className={watershed === 'nakdong' ? "active" : ''}>낙동강 유역</button></li>
-                    </ul>
+                    </ul> */}
+                    <ToggleButtonGroup className="tab-float-box-button-wrap list-main" value={selected} exclusive onChange={handleSelcted}>
+                        <ToggleButton className="tab-float-box-btn list-item" value="0">
+                            한강 유역</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value="1">
+                            금강 유역</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value="2">
+                            낙동강 유역</ToggleButton>
+                    </ToggleButtonGroup>
                 </div>
             </div>
         </>
