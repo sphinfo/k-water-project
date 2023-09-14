@@ -29,7 +29,6 @@ const Biz2 = () => {
         waterFeatureLayer.current._addFeature(127.19605,35.375238)
         waterFeatureLayer.current._addFeature(127.16970,35.312817)
         G$addLayer(waterFeatureLayer.current)
-
         G$flyToExtent([127.02595, 35.25252, 127.46909, 35.44838])
         
 

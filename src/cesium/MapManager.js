@@ -39,6 +39,7 @@ class MapManager {
             fullscreenButton: false,
             selectionIndicator: false,
             trackedEntity : false,
+            infoBox: false,
             //selectedImageryProviderViewModel: false,
             terrain: Terrain.fromWorldTerrain()
         });

@@ -6,6 +6,7 @@ import SampleEventBox from "./bottom/SampleEventBox";
 import MapPositionWidget from "./top/MapPositionWidget";
 import AddrSearchWidget from "./top/AddrSearchWidget";
 import Sidebar from "./left/Sidebar";
+import TimeZoneWidget from "./top/TimeZoneWidget";
 
 
 export default function MapControl() {
