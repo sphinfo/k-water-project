@@ -14,11 +14,11 @@ const AddrSearchWidget = () => {
 
     return (
         <>
-            <ul className="map-search-input" style={{  position: 'relative', left: '-402%' }}>
+            <ul className="map-search-input">
                 <TextInput
                     value={addrSearchTextRef.current}
                     onChange={handleChange}
-                    placeholder={"장소, 주소 검색"}
+                    placeholder={"지역/건물/시설물 조회"}
                     placeholderTextColor={"#ADADAD"}
                 />
                 <button onClick={()=>{}} className="map-search-bt">

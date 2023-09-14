@@ -12,40 +12,34 @@ import TimeZoneWidget from "./top/TimeZoneWidget";
 export default function MapControl() {
     return (
         <>
-            <ul className="map_ctrl_right">
+            <div className="map_ctrl_right">
+              <div className="map-widget-vertical-block">
+                <button className="map-right-bt">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 18C8.78333 18 8.571 17.9627 8.363 17.888C8.15433 17.8127 7.95833 17.7083 7.775 17.575L1.025 12.325C0.758333 12.125 0.629333 11.8623 0.638 11.537C0.646 11.2123 0.783334 10.95 1.05 10.75C1.23333 10.6167 1.43333 10.55 1.65 10.55C1.86667 10.55 2.06667 10.6167 2.25 10.75L9 15.975L15.75 10.75C15.9333 10.6167 16.1333 10.55 16.35 10.55C16.5667 10.55 16.7667 10.6167 16.95 10.75C17.2167 10.95 17.3543 11.2123 17.363 11.537C17.371 11.8623 17.2417 12.125 16.975 12.325L10.225 17.575C10.0417 17.7083 9.846 17.8127 9.638 17.888C9.42933 17.9627 9.21667 18 9 18ZM9 12.95C8.78333 12.95 8.571 12.9127 8.363 12.838C8.15433 12.7627 7.95833 12.6583 7.775 12.525L1.025 7.275C0.891667 7.175 0.791667 7.05433 0.725 6.913C0.658333 6.771 0.625 6.625 0.625 6.475C0.625 6.325 0.658333 6.179 0.725 6.037C0.791667 5.89567 0.891667 5.775 1.025 5.675L7.775 0.425C7.95833 0.291667 8.15433 0.187333 8.363 0.112C8.571 0.0373333 8.78333 0 9 0C9.21667 0 9.42933 0.0373333 9.638 0.112C9.846 0.187333 10.0417 0.291667 10.225 0.425L16.975 5.675C17.1083 5.775 17.2083 5.89567 17.275 6.037C17.3417 6.179 17.375 6.325 17.375 6.475C17.375 6.625 17.3417 6.771 17.275 6.913C17.2083 7.05433 17.1083 7.175 16.975 7.275L10.225 12.525C10.0417 12.6583 9.846 12.7627 9.638 12.838C9.42933 12.9127 9.21667 12.95 9 12.95Z" fill="#3D3D3D"/>
+                  </svg>
+                </button>
+              </div>
                 <MeasureMapWidget />
                 <ZoomMapWidget />
-            </ul>
-            <ul className="map_ctrl_btm">
+            </div>
+            <div className="map_ctrl_btm">
                 <CoordiateWidget />
-            </ul>
+            </div>
 
-            {/* 스타일 적용되야함 left로 가야할거같음 */}
-            <Sidebar />
-            <ul className="map_ctrl_left">
-
-                {/* btm으로 가야함 */}
-                <SampleEventBox />
-            </ul>
+            <div className="map_ctrl_left">
+              <Sidebar />
+              <AddrSearchWidget />
+              <SampleEventBox />
+            </div>
 
 
-            <ul className="map_ctrl_top">
-                <AddrSearchWidget />
+            <div className="map_ctrl_top">
                 <MapPositionWidget />
-                <TimeZoneWidget />
-                <button className="map-right-bt top-info-bt">
-                    <svg width="6" height="16" viewBox="0 0 6 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clipPath="url(#clip0_505_23666)">
-                            <path d="M0.625 13.2572H1.25V8.74284H0.625C0.279813 8.74284 0 8.46303 0 8.11784V6.625C0 6.27981 0.279813 6 0.625 6H4.125C4.47019 6 4.75 6.27981 4.75 6.625V13.2572H5.375C5.72019 13.2572 6 13.537 6 13.8822V15.375C6 15.7202 5.72019 16 5.375 16H0.625C0.279813 16 0 15.7202 0 15.375V13.8822C0 13.537 0.279813 13.2572 0.625 13.2572ZM3 0C1.75734 0 0.75 1.00734 0.75 2.25C0.75 3.49266 1.75734 4.5 3 4.5C4.24266 4.5 5.25 3.49266 5.25 2.25C5.25 1.00734 4.24263 0 3 0Z" fill="white"/>
-                        </g>
-                        <defs>
-                            <clipPath id="clip0_505_23666">
-                            <rect width="6" height="16" fill="white"/>
-                            </clipPath>
-                        </defs>
-                    </svg>
-                </button>
-            </ul>
+              <div className="map-address">
+                19℃<span className="text-blue ml-5">☀︎</span>
+              </div>
+            </div>
             
         </>
     )

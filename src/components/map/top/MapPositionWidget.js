@@ -29,9 +29,9 @@ const MapPositionWidget = () => {
     
     
     return (
-        <ul className="map-widget-vertical-block" style={{color:'black'}}>
-            {addr}
-        </ul>
+        <div className="map-address">
+            {addr}<span className="text-grey ml-3">(timezone)</span>
+        </div>
     )
 }
 
