@@ -6,6 +6,7 @@ import SampleEventBox from "./bottom/SampleEventBox";
 import MapPositionWidget from "./top/MapPositionWidget";
 import AddrSearchWidget from "./top/AddrSearchWidget";
 import Sidebar from "./left/Sidebar";
+import TimeZoneWidget from "./top/TimeZoneWidget";
 
 
 export default function MapControl() {
@@ -31,6 +32,7 @@ export default function MapControl() {
             <ul className="map_ctrl_top">
                 <AddrSearchWidget />
                 <MapPositionWidget />
+                <TimeZoneWidget />
                 <button className="map-right-bt top-info-bt">
                     <svg width="6" height="16" viewBox="0 0 6 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_505_23666)">
