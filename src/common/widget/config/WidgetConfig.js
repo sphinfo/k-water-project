@@ -28,7 +28,7 @@ const LegendWWidgetConfig = {
     'LegendWidget': {
         title: 'LegendWidget',
         legend: true,
-        style: { width: 111, height: 300, left:750, top:50, position:'absolute', backgroundColor: 'white'},
+        style: { left:750, top:50, position:'absolute'},
         instance: widgets.LegendWidget
     }
 }
