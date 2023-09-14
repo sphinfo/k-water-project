@@ -74,11 +74,16 @@ const TestChartWidget = (props) => {
 
     return (
         <>
-            <div>
-                <button onClick={close}>close</button>
+            <div className="map-popup-box">
+                <div className="map-popup-box-header">
+                    <h1 className="map-popup-box-title">날짜별 계측 수위</h1>
+                <button onClick={close} className="popup-close-btn"></button>
+                </div>
+                <div className="map-popup-box-body">
                 <BaseChart width={200} height={250} ref={chartRef} chartType={'Pie'} title={'토성별 토양수 특성'}/>
 
                 <canvas id="pieChartCanvas3"></canvas>
+                </div>
             </div>
             
         </>
