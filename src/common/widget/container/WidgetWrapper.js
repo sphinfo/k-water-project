@@ -7,10 +7,6 @@ const widgetOption = (option = {}) => {
 
     if(!option.legend){
         style = {
-            width: option.width,
-            height: option.height,
-            top: option.height,
-            left: option.height,
             ...option
         }
     }else{

@@ -3,6 +3,9 @@ import { lazy } from 'react';
 const widgets = {
     TestWidget: lazy(() => import('@components/biz/test/TestWidget')),
     TestChartWidget: lazy(() => import('@components/biz/test/TestChartWidget')),
+
+    LegendWidget: lazy(() => import('@components/legend/LegendWidget')),
+    
 };
 
 /* widget */
@@ -22,12 +25,12 @@ const WidgetConfig = {
 
 /* 범례 */
 const LegendWWidgetConfig = {
-    // 'LegendWidget': {
-    //     title: 'LegendWidget',
-    //     legend: true,
-    //     style: { width: 400, height: 100, position:'absolute', backgroundColor: 'white'},
-    //     instance: widgets.LegendWidget
-    // }
+    'LegendWidget': {
+        title: 'LegendWidget',
+        legend: true,
+        style: { width: 111, height: 300, left:750, top:50, position:'absolute', backgroundColor: 'white'},
+        instance: widgets.LegendWidget
+    }
 }
 
 export default {

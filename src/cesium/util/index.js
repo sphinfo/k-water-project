@@ -5,7 +5,6 @@ import MainWidgetManager from "@common/widget/WidgetManager";
 /* 레이어 추가 */
 const G$addLayer = (l) =>{
     
-    console.info(l)
     let layer = MapManager.getLayerForId(l.id)
     if(!layer){
         MapManager.addLayer(l)
@@ -173,8 +172,8 @@ const G$flyToPoint= (point) =>{
 
 
 /* 위젯 추가 */
-const G$addWidget = (wId) =>{
-    MainWidgetManager.add(wId);
+const G$addWidget = (wId,props) =>{
+    MainWidgetManager.add(wId,props);
 }
 
 /* 위젯 닫기 */
