@@ -4,6 +4,8 @@ import BaseWmsLayer from "@gis/layers/BaseWmsLayer";
 import { G$addLayer, G$removeLayer } from "@gis/util";
 import { Color, DataSourceCollection, GeoJsonDataSource, PolygonGraphics } from "cesium";
 import React, { useEffect, useRef } from "react";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 const Biz1 = () => {
 
@@ -51,19 +53,29 @@ const Biz1 = () => {
         
     }
 
+    const [selected, setselected] = React.useState();
+
+    const handleSelcted = (event, newSelected) => {
+        setselected(newSelected);
+    };
+
     return (
         <>
             <button onClick={()=>{sampleFeatureAdd()}}>유역별통계보기</button>
             <div className="tab-float-box">
+
                 <div className="tab-float-box-list-wrap">
                     <h1 className="tab-float-box-list-head">
                         유역별 통계 보기
                     </h1>
-                    <ul className="tab-float-box-list-main">
-                        <li><button>한강 유역</button></li>
-                        <li><button>금강 유역</button></li>
-                        <li><button className="active">낙동강 유역</button></li>
-                    </ul>
+                    <ToggleButtonGroup className="tab-float-box-button-wrap list-main" value={selected} exclusive onChange={handleSelcted}>
+                        <ToggleButton className="tab-float-box-btn list-item" value="0">
+                            한강 유역</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value="1">
+                            금강 유역</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value="2">
+                            낙동강 유역</ToggleButton>
+                    </ToggleButtonGroup>
                 </div>
             </div>
         </>
