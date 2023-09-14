@@ -14,7 +14,7 @@ const WidgetConfig = {
     },
     'TestChartWidget': {
         title: '테스트용 차트 위젯',
-        style: { top: 70, left: 350, width: 220, height: 320, position:'absolute', backgroundColor: 'white'},
+        style: { top: 70, left: 350, position:'absolute'},
         instance: widgets.TestChartWidget
     },
 };
