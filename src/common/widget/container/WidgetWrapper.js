@@ -7,19 +7,11 @@ const widgetOption = (option = {}) => {
 
     if(!option.legend){
         style = {
-            ...option
-        }
-    }else{
-        style = {
             width: option.width,
             height: option.height,
-            right: '1%',
-            bottom: '1%',
             ...option
         }
     }
-
-
     
     return style;
 };
@@ -50,16 +42,18 @@ const WidgetWrapper = (props) => {
 
     return (
         <>
-            <Rnd>
-                <div style={defaultOption} key={wid} className={`${wid} ${legend?'widget-legend':''}`}>
-                    {/* 리소스가 준비될 때까지 렌더링을 일시 중지 */}
-                    <Suspense> 
-                        {
-                            writeChildren()
-                        }
-                    </Suspense>
+         {legend ? (
+                <div style={defaultOption} key={wid} className={`${wid} widget-legend`}>
+                    <Suspense>{writeChildren()}</Suspense>
                 </div>
-            </Rnd>
+            ) : (
+            <Rnd>
+                <div style={defaultOption} key={wid} className={`${wid} widget-legend`}>
+                    {/* 리소스가 준비될 때까지 렌더링을 일시 중지 */}
+                    <Suspense>{writeChildren()}</Suspense>
+                </div>
+                </Rnd>
+            )}
         </>
     )
 }

@@ -10,13 +10,16 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 const Biz1 = () => {
 
     const [watershed, setWatershed] = useState('')
-    const bizLayer = useRef()
+    const droughtLayer = useRef({id:''})
     const wfsLayer = useRef()
 
     useEffect(()=>{
         G$addWidget('LegendWidget', { params: {title:''}})
+        droughtLayer.current = new BaseWmsLayer('Drought','20221226_100_7629')
+        G$addLayer(droughtLayer.current)
         return()=>{
             G$removeWidget('LegendWidget')
+            G$removeLayer(droughtLayer.current.id)
         }
 
     },[])

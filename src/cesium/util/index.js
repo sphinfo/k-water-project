@@ -13,7 +13,6 @@ const G$addLayer = (l) =>{
 
 /* 레이어 삭제 */
 const G$removeLayer = (id) =>{
-    console.info(id)
     let layer = MapManager.getLayerForId(id)
     if(layer){
         MapManager.removeLayer(layer)
@@ -25,6 +24,11 @@ const G$getLayerForId = (id=null)=>{
     return MapManager.getLayerForId(id)
 }
 
+const G$getWmsLayerForId = (id)=>{
+    return MapManager.getImageryLayersById(id)
+}
+
+//getImageryLayersById
 
 /* geometry to length text */
 const G$getPointToPointLength = (cartesian1, cartesian2) =>{
@@ -185,6 +189,7 @@ export {
     G$addLayer,
     G$removeLayer,
     G$getLayerForId,
+    G$getWmsLayerForId,
     G$getPointsToLength,
     G$getPointsToArea,
     G$pointsToCenter,

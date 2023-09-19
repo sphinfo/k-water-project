@@ -13,7 +13,7 @@ const LegendWidget = (props) => {
     return (
         <>
             <dl className="widget-legend-wrap">
-                <dt><h4>(범례 title){title}</h4></dt>
+                <dt><h4>{title}</h4></dt>
                 <dd>
                     <ul>
                         <li><span className="widget-legend-chip legend-test-1"></span>Wet</li>

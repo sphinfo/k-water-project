@@ -16,7 +16,7 @@ class BaseEntityCollection extends CustomDataSource {
 		this.type = 'datasource'
 	}
 
-	async _addFeature(longitude, latitude) {
+	async _addFeature(longitude, latitude, properties) {
 		const pointEntity = new Entity({
 			position: Cartesian3.fromDegrees(longitude, latitude, 300),
 			clampToGround: true,
@@ -27,6 +27,7 @@ class BaseEntityCollection extends CustomDataSource {
 				heightReference: HeightReference.RELATIVE_TO_GROUND,
 				verticalOrigin: VerticalOrigin.BOTTOM
 			},
+			properties: properties,
 			name: this.id
 		});
 

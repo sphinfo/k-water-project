@@ -1,6 +1,7 @@
 import MapManager from "@gis/MapManager";
-import { ScreenSpaceEventHandler, ScreenSpaceEventType, defined } from "cesium";
-import { G$TypeOf, G$getLayerForId } from "..";
+import { Cartographic, Math, ScreenSpaceEventHandler, ScreenSpaceEventType, defined } from "cesium";
+import { G$TypeOf, G$getLayerForId, G$getWmsLayerForId } from "..";
+import BaseGeoserverAxios from "@common/axios/BaseGeoserverAxios";
 
 class GisLayerClickTool {
 	
@@ -9,9 +10,12 @@ class GisLayerClickTool {
     _listeners = {};
 	_clickHandler = null
 
+	_axios = null
+
 	constructor() {
 		//console.info(MapManager.map)
 	  	this.map = null
+		this._axios = new BaseGeoserverAxios()
 	  	
 	}
   
@@ -24,52 +28,74 @@ class GisLayerClickTool {
 	}
   
 	//click callback 
-	handleMapClick(event) {
-
-		console.info(this._bizs)
+	async handleMapClick(event) {
 
 		for (const [biz, isUse] of Object.entries(this._bizs)) {
 			if (isUse) {
 				const bizeProps = this._bizProps[biz];
-				const {callback} = bizeProps;
+				const {callback, layers} = bizeProps;
 
-				if (callback) {
+				//callback function이 존재하고(callback) , 검색레이어가 존재할시(layers)
+				if (callback  && layers.length > 0) {
 
 					let features = []
 
-					//map click entity position properties
+					//map click entity position properties  (WFS)
 					const pickedObject = MapManager.map.scene.pick(event.position);
 					if (defined(pickedObject) && defined(pickedObject.id)) {
 						const pickedEntity = pickedObject.id
-						features.push(pickedEntity.name)
+						features.push({id: pickedEntity.name, properties: pickedEntity.properties.getValue('')})
 					}
 
+					let wmsPromises = []
 
-
-
-
-					if (callback.hasOwnProperty('current')) {
-						//ref return
-						if (callback.current.getFeatures) {
-							callback.current.getFeatures(features);
+					//map click wms position properties  (WMS)
+					bizeProps.layers.map(async(layerId)=>{
+						let layer = G$getWmsLayerForId(layerId)
+						if(layer){
+							let store = layer.imageryProvider.id.split(':')[0]
+							let layerId = layer.imageryProvider.id.split(':')[1]
+							let url = layer.imageryProvider.url
+							try {
+								wmsPromises.push(this._axios.getFeaturePosition(store, layerId, 'cql', url, event.position))
+							} catch(error){
+								console.error('Error fetching GetFeaturePosition:', error)
+							}
 						}
-					} else if (G$TypeOf(callback, 'object')) {
-						if (callback.getFeatures) {
-							callback.getFeatures(features);
+
+					})
+
+					//wms 레이어 GetFeatureInfo 비동기 처리
+					const wmsResults = await Promise.all(wmsPromises);
+					wmsResults.map((wmsObj)=>{
+						wmsObj.data.features.map((featureObj)=>{
+							featureObj.id = wmsObj.config.params.typeName
+							features.push(featureObj)	
+						})
+						
+					})
+
+
+					//결과값이 존재할때만 callback action
+					if(features.length > 0){
+						if (callback.hasOwnProperty('current')) {
+							//ref return
+							if (callback.current.getFeatures) {
+								callback.current.getFeatures(features);
+							}
+						} else if (G$TypeOf(callback, 'object')) {
+							if (callback.getFeatures) {
+								callback.getFeatures(features);
+							}
+						} else if (G$TypeOf(callback, 'function') || G$TypeOf(callback, 'AsyncFunction'))  {
+							callback(features);
 						}
-					} else if (G$TypeOf(callback, 'function') || G$TypeOf(callback, 'AsyncFunction'))  {
-						callback(features);
 					}
 
                 }
 
 			}
 		}
-	}
-
-	//callback return
-	_setFeaturesCallback(event, wmsSources, callback){
-
 	}
 
 	//feature callback 등록

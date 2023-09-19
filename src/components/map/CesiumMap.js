@@ -92,26 +92,6 @@ export default class CesiumMap {
             
         }, ScreenSpaceEventType.LEFT_CLICK);
 
-        // let selectedEntity = Entity()
-        // me.map.selectedEntity = selectedEntity
-        // selectedEntity.description = ((e)=>{
-        //     console.info(e)
-        // })
-        
-
-        //
-        this.map.selectedEntityChanged.addEventListener(function(selectedEntity) {
-
-
-        });
-        
-
-        //this.map.selectedEntity.destroy(true)
-        //this.map.selectionIndicator.isDestroyed()
-        //this.map.selectedEntity.selectionIndicator = false;
-
-        //new SelectionIndicator().destroy()
-
     }
 
     mouseMove = (event) =>{
