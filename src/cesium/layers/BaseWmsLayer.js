@@ -3,18 +3,22 @@ import { WebMapServiceImageryProvider } from "cesium";
 
 class BaseWmsLayer extends WebMapServiceImageryProvider {
 
-	constructor(store, layer ) {
+	constructor(store, layer, cqlFIlter=null ) {
 
 		if (!layer || !store) {
 			throw new Error("'layers' and 'store' parameters are required.");
 		}
 
 		const wmsUrl = `/waterGeo/${store}/wms`;
-        const wmsParameters = {
+        let wmsParameters = {
             layers: layer,
             format: 'image/png',
             transparent: true, //투명도
         };
+
+		if(cqlFIlter){
+			wmsParameters = {...wmsParameters, CQL_FILTER:cqlFIlter}
+		}
 
 		super({
 			url: wmsUrl,

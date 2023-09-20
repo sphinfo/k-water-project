@@ -6,7 +6,7 @@ class BaseGeoserverAxios {
 
     constructor(){
         this.axios = axios.create()
-        this.serviceUrl = '/starGeo/'
+        this.serviceUrl = '/waterGeo/'
         this.params = {
             service: "WFS",
             version: "1.0.0",
@@ -31,7 +31,7 @@ class BaseGeoserverAxios {
             let url = layerUrl ? layerUrl : this.serviceUrl + store +'/ows?';
             let params = {
                 typeName: `${store}:${layer}`,
-                //CQL_FILTER: cql,
+                CQL_FILTER: cql,
                 ...this.params
             }
 

@@ -12,9 +12,10 @@ class BaseGeoJsonCollection extends GeoJsonDataSource {
 	add(res){
 
 		this.load(res, {
-			stroke: Color.HOTPINK,
-			fill: Color.PINK.withAlpha(0.5),
+			stroke: Color.BLACK,
 			strokeWidth: 3,
+			fill: Color.PINK.withAlpha(0.5),
+			clampToGround: true, // 표면에 고정
 		})
 		
 	}

@@ -13,6 +13,8 @@ const Biz1 = () => {
     const droughtLayer = useRef({id:''})
     const wfsLayer = useRef()
 
+    const watershedLayer = useRef({id:''})
+
     useEffect(()=>{
         G$addWidget('LegendWidget', { params: {title:''}})
         droughtLayer.current = new BaseWmsLayer('Drought','20221226_100_7629')
@@ -20,40 +22,33 @@ const Biz1 = () => {
         return()=>{
             G$removeWidget('LegendWidget')
             G$removeLayer(droughtLayer.current.id)
+
+            G$removeLayer(watershedLayer.current.id)
+            
         }
 
     },[])
 
-    const watershedLayer = (type) =>{
+    //수계 그룹 변경
+    const watershedLayerChange = (event, type) =>{
         watershed === type ? setWatershed('') : setWatershed(type)
-        return
         sampleFeatureAdd()
     }
-
-    useEffect(()=>{
-        console.info(watershed)
-    },[watershed])
-
     
 
     const sampleFeatureAdd = async() =>{
         
-        let aa = new BaseGeoserverAxios()
-        aa.getFeature('sckmpp','BND_ADM_SIDO',"").then((res)=>{
-            console.info(res)
 
-            wfsLayer.current = new BaseGeoJsonCollection({name:'sckmpp:BND_ADM_SIDO'})
+        /*watershedLayer.current = new BaseWmsLayer('watershed_map','WKMMBSN',"BBSNCD='10'")
+        G$addLayer(watershedLayer.current)*/
+        
+        /*let aa = new BaseGeoserverAxios()
+        aa.getFeature('watershed_map','WKMMBSN',"BBSNCD='10'").then((res)=>{
+            wfsLayer.current = new BaseGeoJsonCollection({name:'watershed_map:WKMMBSN'})
             wfsLayer.current.add(res)
             G$addLayer(wfsLayer.current)
-
-        })
+        })*/
     }
-
-    const [selected, setselected] = React.useState();
-
-    const handleSelcted = (event, newSelected) => {
-        setselected(newSelected);
-    };
 
     return (
         <>
@@ -64,7 +59,7 @@ const Biz1 = () => {
                     <h1 className="tab-float-box-list-head">
                         유역별 통계 보기
                     </h1>
-                    <ToggleButtonGroup className="tab-float-box-button-wrap list-main" value={selected} exclusive onChange={handleSelcted}>
+                    <ToggleButtonGroup className="tab-float-box-button-wrap list-main" value={watershed} exclusive onChange={watershedLayerChange}>
                         <ToggleButton className="tab-float-box-btn list-item" value={"hangang"}>한강 유역</ToggleButton>
                         <ToggleButton className="tab-float-box-btn list-item" value={"geumgang"}>금강 유역</ToggleButton>
                         <ToggleButton className="tab-float-box-btn list-item" value={"nakdong"}>낙동강 유역</ToggleButton>

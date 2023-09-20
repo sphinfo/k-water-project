@@ -1,4 +1,4 @@
-import { Cartesian3, Cartographic, Math as MathC, Transforms, WebMercatorProjection } from "cesium";
+import { Cartesian3, Cartographic, Math as MathC, PolygonGraphics, PolygonHierarchy, Transforms, WebMercatorProjection } from "cesium";
 import MapManager from "../MapManager";
 import MainWidgetManager from "@common/widget/WidgetManager";
 
@@ -24,11 +24,32 @@ const G$getLayerForId = (id=null)=>{
     return MapManager.getLayerForId(id)
 }
 
+//wms 레이어 이름으로 찾기
 const G$getWmsLayerForId = (id)=>{
     return MapManager.getImageryLayersById(id)
 }
 
-//getImageryLayersById
+//point를 ?x? 격자 생성 (long, lat, 50x50 = 50)
+const G$pointToPolygon = (lon, lat, size)=>{
+    const gridSize = size/2
+    const polygon = new PolygonGraphics({
+        hierarchy: new PolygonHierarchy(
+            Cartesian3.fromDegreesArray([
+                lon - gridSize / 111319.9,
+                lat + gridSize / 111319.9,
+                lon + gridSize / 111319.9,
+                lat + gridSize / 111319.9,
+                lon + gridSize / 111319.9,
+                lat - gridSize / 111319.9,
+                lon - gridSize / 111319.9,
+                lat - gridSize / 111319.9,
+            ])
+        ),
+    })
+
+    return polygon
+
+}
 
 /* geometry to length text */
 const G$getPointToPointLength = (cartesian1, cartesian2) =>{
@@ -190,6 +211,7 @@ export {
     G$removeLayer,
     G$getLayerForId,
     G$getWmsLayerForId,
+    G$pointToPolygon,
     G$getPointsToLength,
     G$getPointsToArea,
     G$pointsToCenter,
