@@ -13,8 +13,8 @@ const ThematicLayerComponent = () => {
             <div >
                 <div style={{width: 350, height: 550, background: 'white'}}>
                     <div>
-                        <ThematicLayerCheckBoxList ref={treeRef} />
-                        {/* <ThematicTreeLayerCheckBoxList ref={treeRef} /> */}
+                        {/* <ThematicLayerCheckBoxList ref={treeRef} /> */}
+                        <ThematicTreeLayerCheckBoxList ref={treeRef} />
                     </div>
                 </div>
             </div>
