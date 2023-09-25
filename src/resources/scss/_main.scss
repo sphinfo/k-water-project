@@ -578,17 +578,14 @@
 }
 
 .thematic-layers-box{
-  //position: absolute;
+  position: absolute;
   //top: 0px; //map_ctrl_right 기준, 화면 기준: 54px
-  //right: 40px;
+  //right: 40px; //화면기준 50px
   background-color: $white;
   border-radius: 10px ;
   padding: 7px;
   width: max-content;
   min-width: 120px;
-  > div{
-    display: flex;
-  }
   .thematic-layers-box-wrap{
     display: flex;
     flex-direction: column;
