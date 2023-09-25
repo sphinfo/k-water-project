@@ -3,6 +3,7 @@ import { TreeItem, TreeView } from "@mui/lab";
 import { Checkbox } from "@mui/material";
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { styled } from '@mui/material/styles';
 
 const bfsSearch = (graph, targetId) => {
     const queue = [...graph];
@@ -114,28 +115,31 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
       <TreeItem
           key={nodes.id}
           nodeId={nodes.id}
-          onClick={(event)=>{event.stopPropagation()}}
+          className={'thematic-layer-item'}
+          onClick={(event)=>{event.stopPropagation();handleNodeSelect(event, nodes.id);}}
           label={
               <>
-                <div style={{color:'black'}}>
+                <div >
                   <Checkbox
                       checked={selectedNodes.indexOf(nodes.id) !== -1}
+                      indeterminate={/*하위아이템이 체크되면 부모아이템에 별도의 표시를 주는 옵션..*/(nodes.id)[-1] !== (nodes.id)[0] == (nodes.id)[-1]}
                       tabIndex={-1}
                       disableRipple
+                      className={'check-box'}
                       onClick={(event) => handleNodeSelect(event, nodes.id)}
                   />
                   {nodes.name}
                   
-                  {!nodes.children ? ( <input 
-                      style={{float: 'right', marginTop: 10, marginRight: 10}} 
-                      type="range"
-                      min={0} 
-                      max={10} 
-                      defaultValue={10}
-                      onClick={(event)=>{event.stopPropagation()}}
-                      onChange={(event)=> changeOpacity(event, nodes)}
-                  /> 
-                  ) : null}
+                  {/*{!nodes.children ? ( <input */}
+                  {/*    style={{float: 'right', marginTop: 10, marginRight: 10}} */}
+                  {/*    type="range"*/}
+                  {/*    min={0} */}
+                  {/*    max={10} */}
+                  {/*    defaultValue={10}*/}
+                  {/*    onClick={(event)=>{event.stopPropagation()}}*/}
+                  {/*    onChange={(event)=> changeOpacity(event, nodes)}*/}
+                  {/*/> */}
+                  {/*) : null}*/}
                 </div>
               </>
           }
@@ -182,6 +186,7 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
                 multiSelect
                 defaultCollapseIcon={<>{'-'}</>}
                 defaultExpandIcon={<>{'>'}</>}
+                className={'thematic-layers-box-wrap'}
             >
                 {state.layerList.map((obj)=> renderTree(obj) )}
             </TreeView >
