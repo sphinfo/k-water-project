@@ -49,6 +49,11 @@ class BaseWmsLayer extends WebMapServiceImageryProvider {
 		});
 		
 	}
+
+	changeParams(other) {
+		this._resource._queryParameters = {...this._resource._queryParameters, ...other}
+		this._reload()
+	}
 }
 
 export default BaseWmsLayer;

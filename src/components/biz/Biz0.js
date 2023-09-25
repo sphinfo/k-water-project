@@ -1,45 +1,54 @@
-import MainWidgetManager from "@common/widget/WidgetManager";
-import BaseWmsLayer from "@gis/layers/BaseWmsLayer";
-import { G$addLayer, G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
-import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
-import React, { useEffect, useImperativeHandle, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { G$addLayer, G$addWidget, G$removeLayerForId, G$removeWidget } from "@gis/util";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 
 const Biz0 = () => {
 
+    const [safetyTab, setSafetyTab] = useState('rating')
+
     const bizLayer1 = useRef()
-    const bizLayer2 = useRef()
-    const bizLayer3 = useRef()
-    const bizLayer4 = useRef()
 
     useEffect(()=>{
 
-        bizLayer1.current = new BaseWmsLayer('Safety','L3TD_A2_YONGDAM_ASC')
-        G$addLayer(bizLayer1.current)
-
-        bizLayer2.current = new BaseWmsLayer('Safety','L3TD_A2_YONGDAM_DSC')
-        //G$addLayer(bizLayer2.current)
-
-        bizLayer3.current = new BaseWmsLayer('Safety','L4TD_YONGDAM_EW')
-        //G$addLayer(bizLayer3.current)
-
-        bizLayer4.current = new BaseWmsLayer('Safety','L4TD_YONGDAM_UD')
-        //G$addLayer(bizLayer4.current)
+        bizLayer1.current = new BaseWmsImageLayer('Safety','L3TD_A2_YONGDAM_ASC')
+        G$addLayer(bizLayer1.current.layer)
 
         G$addWidget('LegendWidget', { params: {title:'토양 수분량(%)'} })
 
         return()=>{
-            G$removeLayer(bizLayer1.current.id)
-            G$removeLayer(bizLayer2.current.id)
-            G$removeLayer(bizLayer3.current.id)
-            G$removeLayer(bizLayer4.current.id)
+            G$removeLayerForId(bizLayer1.current.layer.id)
             G$removeWidget('LegendWidget')
-            
         }
 
     },[])
 
+    const safetyTabChange = (event, value) => {
+        setSafetyTab(value)
+    }
+
+
+    const changeParam = (value) =>{
+        if(bizLayer1.current){
+            bizLayer1.current.changeParameters({layerId:value})
+        }
+    }
+
     return (
         <>
+            <div className="tab-float-box">
+                <ToggleButtonGroup className="tab-float-box-button-wrap list-main" value={safetyTab} exclusive onChange={safetyTabChange}>
+                    <ToggleButton className="tab-float-box-btn list-item" value={"rating"}>변위 등급</ToggleButton>
+                    <ToggleButton className="tab-float-box-btn list-item" value={"ingre"}>변위 성분</ToggleButton>
+                </ToggleButtonGroup>
+
+                <button onClick={()=>{changeParam('L3TD_A2_YONGDAM_ASC')}}>1</button>
+                <button onClick={()=>{changeParam('L3TD_A2_YONGDAM_DSC')}}>2</button>
+                <button onClick={()=>{changeParam('L4TD_YONGDAM_EW')}}>3</button>
+                <button onClick={()=>{changeParam('L4TD_YONGDAM_UD')}}>4</button>
+            </div>
+            
         </>
     )
 }

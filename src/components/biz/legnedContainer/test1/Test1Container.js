@@ -1,6 +1,6 @@
 import MapManager from "@gis/MapManager";
 import BaseEntityChartCollection from "@gis/layers/BaseEntityChartCollection";
-import { G$addLayer, G$removeLayer } from "@gis/util";
+import { G$addLayer, G$removeLayerForId } from "@gis/util";
 import { Chart } from "chart.js";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";

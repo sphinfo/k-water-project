@@ -2,7 +2,7 @@
 import React from 'react';
 
 import BaseWmsLayer from '@gis/layers/BaseWmsLayer';
-import { G$addLayer, G$removeLayer } from '@gis/util';
+import { G$addLayer, G$removeLayerForId } from '@gis/util';
 import MainPanelTabComponent from './searchPanel/MainPanelTabComponent';
 import BaseGeoserverAxios from '@common/axios/BaseGeoserverAxios';
 import MapManager from '@gis/MapManager';
@@ -20,7 +20,7 @@ const MainSearchPanel = () => {
     }
     const remove = () =>{
         let id = 'EGIS:lv1_1980yr'
-        G$removeLayer(id)
+        G$removeLayerForId(id)
     }
 
     const sampleFeatureAdd = async() =>{
@@ -50,8 +50,6 @@ const MainSearchPanel = () => {
             });
 
         })
-
-        
         
     }
 

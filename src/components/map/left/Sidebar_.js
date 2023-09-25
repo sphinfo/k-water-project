@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import BaseWmsLayer from '@gis/layers/BaseWmsLayer';
 import { useDispatch, useSelector } from 'react-redux';
 import { CHANGE_MODE } from '@redux/actions';
-import { G$addLayer, G$removeLayer } from '@gis/util';
+import { G$addLayer, G$removeLayerForId } from '@gis/util';
 
 
 const Sidebar = () => {
@@ -17,7 +16,7 @@ const Sidebar = () => {
 
 
   useEffect(()=>{
-    //G$removeLayer('WaterBody:수체_샘플데이터')
+    //G$removeLayerForId('WaterBody:수체_샘플데이터')
     //G$addLayer(gArbageLayer.current)
     //console.info(mode)
   },[mode])

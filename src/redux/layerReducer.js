@@ -1,13 +1,17 @@
+import ThematicConfig from '@gis/config/ThematicConfig';
+import ThematicTreeConfig from '@gis/config/ThematicTreeConfig';
+
 import {
     SET_LAYER_LIST,
     REMOVE_LAYER_LIST,
     ADD_LAYER,
     REMOVE_LAYER,
   } from './actions';
-import { G$getLayerForId, G$removeLayer } from '@gis/util';
+import { G$getLayerForId, G$removeLayerForId } from '@gis/util';
   
   const initialState = {
-    layerList: [],
+    //layerList: ThematicConfig,
+    layerList: ThematicTreeConfig,
   };
   
   function layerReducer(state = initialState, action) {
@@ -23,7 +27,7 @@ import { G$getLayerForId, G$removeLayer } from '@gis/util';
         return { ...state, layerList: [...state.layerList, action.layerInfo] };
       case REMOVE_LAYER_LIST:
         let layer = G$getLayerForId(action.layerId)
-        if(layer){ G$removeLayer(layer) }
+        if(layer){ G$removeLayerForId(layer) }
         return {
             ...state,
             layerList: state.layerList.filter(obj => obj.id !== action.layerId)

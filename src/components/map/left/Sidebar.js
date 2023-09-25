@@ -103,10 +103,10 @@ export default function Sidebar () {
             </defs>
           </svg>
           </div>
-          <div className={ value === INDEX_0 ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_0) }}><div className="tab-icon i-safety"></div>안전</div>
-          <div className={ value === INDEX_1 ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_1) }} ><div className="tab-icon i-drought"></div>가뭄</div>
-          <div className={ value === INDEX_2 ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_2) }} ><div className="tab-icon i-flood"></div>홍수</div>
-          <div className={ value === INDEX_3 ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_3) }} ><div className="tab-icon i-environment"></div>환경</div>
+          <div className={ value === INDEX_2 ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_2) }} ><div className="tab-icon i-flood"></div>홍수2</div>
+          <div className={ value === INDEX_1 ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_1) }} ><div className="tab-icon i-drought"></div>가뭄1</div>
+          <div className={ value === INDEX_0 ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_0) }}><div className="tab-icon i-safety"></div>안전0</div>
+          <div className={ value === INDEX_3 ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_3) }} ><div className="tab-icon i-environment"></div>환경3</div>
         </div>
         <div className="sidebar-left-footer">
           <div className={ value === INDEX_4 ? "sidebar-tab active" : "sidebar-tab" }><div className="tab-icon i-modify"></div></div>

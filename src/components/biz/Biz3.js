@@ -1,9 +1,9 @@
-import BaseWmsLayer from "@gis/layers/BaseWmsLayer";
-import { G$addLayer, G$removeLayer } from "@gis/util";
+import { G$addLayer, G$getLayerForId, G$removeLayerForId } from "@gis/util";
 import React, { useEffect, useRef, useState } from "react";
 import Switch from '@mui/material/Switch';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 
 const Biz3 = () => {
 
@@ -12,14 +12,22 @@ const Biz3 = () => {
     
 
     useEffect(()=>{
+      
+      //부유물
+      gArbageLayer.current = new BaseWmsImageLayer('Garbage', 'Chlorophyll_Map_2')
+      landCoverLayer.current = new BaseWmsImageLayer('LandCover', '')
 
-        gArbageLayer.current = new BaseWmsLayer('Garbage', 'Chlorophyll_Map_2')
-        G$addLayer(gArbageLayer.current)
+      return()=>{
 
-        return()=>{
-            G$removeLayer(gArbageLayer.current.id)
-            G$removeLayer(landCoverLayer.current.id)
+        if(gArbageLayer.current.layer){
+          G$removeLayerForId(gArbageLayer.current.layer.id)
         }
+          
+        if(landCoverLayer.current.layer){
+          G$removeLayerForId(landCoverLayer.current.layer.id)
+        }
+          
+      }
 
     },[])
 
@@ -39,26 +47,23 @@ const Biz3 = () => {
 
     //레이어탭 change action
     useEffect(()=>{
-
-      if(landCoverLayer.current){
-        G$removeLayer(landCoverLayer.current.id)
-      }
-      if(gArbageLayer.current){
-        G$removeLayer(gArbageLayer.current.id)
-      }
-
+      console.info('changeTab')
+      //부유물
       if(layerTab === 'gArbage'){
-        gArbageLayer.current = new BaseWmsLayer('Garbage', 'Chlorophyll_Map_2')
-        G$addLayer(gArbageLayer.current)
+        gArbageLayer.current.setVisible(true)
+        if(landCoverLayer.current.layer){
+          landCoverLayer.current.layer.show = false //setVisible(false)
+        }
         
-      }else{
+      }else if(layerTab === 'landCover'){
+        gArbageLayer.current.setVisible(false)
+        landCoverLayer.current.setVisible(true)
 
-        let layerId = landCoverSwitch ? 'RF_20220914_clip' : 'RF_20221101_clip'
-        landCoverLayer.current = new BaseWmsLayer('LandCover', layerId)
-        G$addLayer(landCoverLayer.current)
-        
+        landCoverLayer.current.changeParameters({layerId:landCoverSwitch ? 'RF_20220914_clip' : 'RF_20221101_clip'})
       }
     },[layerTab, landCoverSwitch])
+
+
 
     return (
       <div className="tab-float-box">

@@ -44,18 +44,25 @@ class GisLayerClickTool {
 					const pickedObject = MapManager.map.scene.pick(event.position);
 					if (defined(pickedObject) && defined(pickedObject.id)) {
 						const pickedEntity = pickedObject.id
-						features.push({id: pickedEntity.name, properties: pickedEntity.properties.getValue('')})
+
+						//biz에 등록된 레이어 명칭만 callback에 담기
+						layers.map((layerId)=>{
+							if(layerId === pickedEntity.name){
+								features.push({id: pickedEntity.name, properties: pickedEntity.properties.getValue('')})
+							}
+						})
 					}
 
+					// wms promis
 					let wmsPromises = []
 
 					//map click wms position properties  (WMS)
 					bizeProps.layers.map(async(layerId)=>{
 						let layer = G$getWmsLayerForId(layerId)
 						if(layer){
-							let store = layer.imageryProvider.id.split(':')[0]
-							let layerId = layer.imageryProvider.id.split(':')[1]
-							let url = layer.imageryProvider.url
+							let store = layer.id.split(':')[0]
+							let layerId = layer.id.split(':')[1]
+							let url = layer._imageryProvider.url
 							try {
 								wmsPromises.push(this._axios.getFeaturePosition(store, layerId, 'cql', url, event.position))
 							} catch(error){

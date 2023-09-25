@@ -4,19 +4,30 @@ import MainWidgetManager from "@common/widget/WidgetManager";
 
 /* 레이어 추가 */
 const G$addLayer = (l) =>{
-    
     let layer = MapManager.getLayerForId(l.id)
     if(!layer){
         MapManager.addLayer(l)
     }
 }
 
+
 /* 레이어 삭제 */
-const G$removeLayer = (id) =>{
-    let layer = MapManager.getLayerForId(id)
-    if(layer){
-        MapManager.removeLayer(layer)
+const G$removeLayer = (l) =>{
+    if(typeof l !== 'string'){
+        MapManager.removeLayer(l)
+    }else{
+        G$removeLayerForId(l)
     }
+}
+
+/* 레이어 삭제 by id */
+const G$removeLayerForId = (id) =>{
+    if(id){
+        let layer = MapManager.getLayerForId(id)
+        if(layer){
+            MapManager.removeLayer(layer)
+        }
+    }   
 }
 
 // 레이어 이름으로 찾기
@@ -49,6 +60,76 @@ const G$pointToPolygon = (lon, lat, size)=>{
 
     return polygon
 
+}
+
+//geometry to centroid
+const G$polygonToCentroid = (multiPolygon)=>{
+    let totalArea = 0;
+    let weightedSumX = 0;
+    let weightedSumY = 0;
+
+    for (let i = 0; i < multiPolygon[0].length; i++) {
+        const polygon = multiPolygon[0][i];
+        const polygonArea = G$calculatePolygonArea(polygon);
+        const centroid = G$calculatePolygonCentroid(polygon);
+
+        weightedSumX += centroid[0] * polygonArea;
+        weightedSumY += centroid[1] * polygonArea;
+        totalArea += polygonArea;
+    }
+
+    const centroidX = weightedSumX / totalArea;
+    const centroidY = weightedSumY / totalArea;
+
+    return [centroidX, centroidY];
+}
+
+const G$calculatePolygonArea = (polygon) =>{
+    const numPoints = polygon.length;
+    let area = 0;
+
+    for (let i = 0; i < numPoints; i++) {
+        const currentPoint = polygon[i];
+        const nextPoint = polygon[(i + 1) % numPoints];
+
+        const x1 = currentPoint[0];
+        const y1 = currentPoint[1];
+        const x2 = nextPoint[0];
+        const y2 = nextPoint[1];
+
+        area += (x1 * y2 - x2 * y1);
+    }
+
+    area /= 2;
+    return Math.abs(area);
+
+}
+
+const G$calculatePolygonCentroid = (polygon) =>{
+    const numPoints = polygon.length;
+    let centroidX = 0;
+    let centroidY = 0;
+
+    for (let i = 0; i < numPoints; i++) {
+        const currentPoint = polygon[i];
+        const nextPoint = polygon[(i + 1) % numPoints];
+
+        const x1 = currentPoint[0];
+        const y1 = currentPoint[1];
+        const x2 = nextPoint[0];
+        const y2 = nextPoint[1];
+
+        const commonFactor = x1 * y2 - x2 * y1;
+
+        centroidX += (x1 + x2) * commonFactor;
+        centroidY += (y1 + y2) * commonFactor;
+    }
+
+    const area = G$calculatePolygonArea(polygon) * 6; // 면적을 6으로 나누어 가중평균 계산
+    centroidX /= area;
+    centroidY /= area;
+
+    return [centroidX, centroidY];
 }
 
 /* geometry to length text */
@@ -126,7 +207,6 @@ const G$cartesianToLongLat = (cartesian) =>{
     return {longitude: longitude, latitude: latitude}
 
 }
-
 
 
 const G$ZeroCnt = (v=0)=>{
@@ -209,9 +289,15 @@ const G$removeWidget = (wId) =>{
 export {
     G$addLayer,
     G$removeLayer,
+    G$removeLayerForId,
     G$getLayerForId,
     G$getWmsLayerForId,
     G$pointToPolygon,
+    
+    G$polygonToCentroid,
+    G$calculatePolygonArea,
+    G$calculatePolygonCentroid,
+
     G$getPointsToLength,
     G$getPointsToArea,
     G$pointsToCenter,

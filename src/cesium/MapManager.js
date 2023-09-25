@@ -106,16 +106,21 @@ class MapManager {
         })
     }
 
-
+    //레이어 추가
     addLayer(layer){
         if(layer.type === 'wms'){
             this._map.imageryLayers.addImageryProvider(layer)
         }else{
             this._map.dataSources.add(layer)
-        }
-        
+        }   
     }
 
+    //imagelayer 추가
+    addImageLayer(layer){
+        return this._map.imageryLayers.addImageryProvider(layer)
+    }
+
+    //레이어 제거
     removeLayer(layer){
         if(layer.constructor.name === 'ImageryLayer'){
             this._map.imageryLayers.remove(layer)
@@ -148,7 +153,7 @@ class MapManager {
     }
 
     getImageryLayersById(id){
-        return this._map.imageryLayers._layers.find(layer => layer.imageryProvider.id === id)
+        return this._map.imageryLayers._layers.find(layer => layer.id === id)
     }
 
 

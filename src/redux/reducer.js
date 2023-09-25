@@ -8,7 +8,7 @@ import {
     SET_MAIN_OPTIONS,
     REMOVE_MAIN_OPTIONS
   } from './actions';
-import { G$getLayerForId, G$removeLayer } from '@gis/util';
+import { G$getLayerForId, G$removeLayerForId } from '@gis/util';
   
   const initialState = {
     mode: '',
@@ -41,7 +41,7 @@ import { G$getLayerForId, G$removeLayer } from '@gis/util';
         return { ...state, layerList: [...state.layerList, action.layerInfo] };
       case REMOVE_LAYER_LIST:
         let layer = G$getLayerForId(action.layerId)
-        if(layer){ G$removeLayer(layer) }
+        if(layer){ G$removeLayerForId(layer) }
         return {
           ...state,
           layerList: state.layerList.filter(obj => obj.id !== action.layerId)
