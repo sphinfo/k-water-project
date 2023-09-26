@@ -6,6 +6,7 @@ import MapControl from "./components/map/MapControl";
 import Menubars from "@components/menu";
 import { Provider } from 'react-redux'; // useSelector 추가
 import store from '@redux/store';
+import ThematicLayerComponent from "@components/map/right/thematic/ThematicLayerComponent";
 
 class KwaterApp extends React.Component {
   constructor(props) {
@@ -19,6 +20,8 @@ class KwaterApp extends React.Component {
         <CesiumMapView />    {/* map */}
         <WidgetContainer />  {/* widget Popup */}
         <MapControl />
+
+        <ThematicLayerComponent /> {/* 주제도 */}
         <canvas id="pieChartCanvas"></canvas>
         {/* <Menubars /> */}
       </>

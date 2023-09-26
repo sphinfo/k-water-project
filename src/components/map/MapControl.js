@@ -15,6 +15,7 @@ export default function MapControl() {
         <>
             <div className="map_ctrl_right">
                 <ThematicWidget />
+                
                 <MeasureMapWidget />
                 <ZoomMapWidget />
             </div>

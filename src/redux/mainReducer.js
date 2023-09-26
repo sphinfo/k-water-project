@@ -6,27 +6,27 @@ import {
   SET_END_DATE,
   SET_MAIN_OPTIONS,
   REMOVE_MAIN_OPTIONS,
-  LEGNED_PANEL
+  LEGNED_PANEL,
+  THEMATIC_MODE
 } from './actions';
 import { useDispatch } from 'react-redux';
 import { G$addLayer } from '@gis/util';
 
 const initialState = {
   mode: '',
+  thematic: false,
   mainOptions: [],
   selectOption: null,
   startDate: dayjs().format('YYYY-MM-DD'),
   endDate: dayjs().format('YYYY-MM-DD'),
-  lengedPanel: {
-  }
+  lengedPanel: {}
 };
 
 function mainReducer(state = initialState, action) {
   switch (action.type) {
+    case THEMATIC_MODE:
+      return { ...state, thematic: action.thematic }
     case CHANGE_MODE:
-
-      //G$addLayer('')
-
       return { ...state, mode: action.mode };
     case SET_START_DATE:
       return { ...state, startDate: action.date };

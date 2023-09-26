@@ -1,6 +1,10 @@
 //LEFT SIDEBAR TYPE ( 메인 구분 )
 export const CHANGE_MODE = 'CHANGE_MODE';
 
+//주제도 ON / OFF
+export const THEMATIC_MODE = 'THEMATIC_MODE';
+
+
 export const SET_START_DATE = 'SET_START_DATE';
 export const SET_END_DATE = 'SET_END_DATE';
 export const SET_LAYER_LIST = 'SET_LAYER_LIST';
