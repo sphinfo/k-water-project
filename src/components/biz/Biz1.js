@@ -36,12 +36,15 @@ const Biz1 = () => {
             
         }
 
+
     },[])
 
     //수계 그룹 변경
     const watershedLayerChange = (event, type) =>{
         watershed === type ? setWatershed('') : setWatershed(type)
     }
+
+
     
     //유역통계보기 change event
     useEffect(()=>{
@@ -85,15 +88,22 @@ const Biz1 = () => {
 
     },[watershed])
 
+    const [selected, setselected] = React.useState('0');
+
+    const handleSelected = (event, newSelected) => {
+        setselected(newSelected);
+    };
+
     return (
         <>
             {/*  */}
             <div className="tab-float-box">
-
+                    <ToggleButtonGroup className="tab-float-box-button-wrap" value={selected} exclusive onChange={handleSelected}>
+                    <ToggleButton className="tab-float-box-btn" value={'0'}>유역별 통계 보기</ToggleButton>
+                </ToggleButtonGroup>
+            </div>
+            <div className="tab-float-box bottom-left">
                 <div className="tab-float-box-list-wrap">
-                    <h1 className="tab-float-box-list-head">
-                        유역별 통계 보기
-                    </h1>
                     <ToggleButtonGroup className="tab-float-box-button-wrap list-main" value={watershed} exclusive onChange={watershedLayerChange}>
                         <ToggleButton className="tab-float-box-btn list-item" value={"10"}>한강 유역</ToggleButton>
                         <ToggleButton className="tab-float-box-btn list-item" value={"50"}>금강 유역</ToggleButton>
