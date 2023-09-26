@@ -1,4 +1,4 @@
-import { Cartesian3, Cartographic, Math as MathC, PolygonGraphics, PolygonHierarchy, Transforms, WebMercatorProjection } from "cesium";
+import { Cartesian3, Cartographic, Math as MathC, PolygonGraphics, PolygonHierarchy, Rectangle, Transforms, WebMercatorProjection } from "cesium";
 import MapManager from "../MapManager";
 import MainWidgetManager from "@common/widget/WidgetManager";
 
@@ -266,9 +266,33 @@ const G$GetPointToDetail=(longitude, latitude)=>{
     
 }
 
+const G$pointsToExtent = (points = []) =>{
 
-const G$flyToExtent= (extent) =>{
-    MapManager.flyToExtent(extent)
+    let minX = Number.MAX_VALUE;
+    let minY = Number.MAX_VALUE;
+    let maxX = Number.MIN_VALUE;
+    let maxY = Number.MIN_VALUE;
+
+    // Loop through the points to find the minimum and maximum coordinates
+    for (const point of points) {
+        //const cartographic = Cartographic.fromCartesian(point)
+        const longitude = MathC.toDegrees(point.longitude);
+        const latitude = MathC.toDegrees(point.latitude);
+
+        minX = Math.min(minX, longitude);
+        minY = Math.min(minY, latitude);
+        maxX = Math.max(maxX, longitude);
+        maxY = Math.max(maxY, latitude);
+    }
+
+    
+    //return Rectangle.fromDegrees(minX, minY, maxX, maxY)
+    return [minY, minX, maxX, maxY]
+
+}
+
+const G$flyToExtent= (extent, pitch=false) =>{
+    MapManager.flyToExtent(extent, pitch)
 }
 
 const G$flyToPoint= (point) =>{
@@ -304,6 +328,7 @@ export {
     
     G$cartesianToLongLat,
 
+    G$pointsToExtent,
     G$flyToExtent,
     G$flyToPoint,
     

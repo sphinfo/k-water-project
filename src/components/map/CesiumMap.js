@@ -77,6 +77,18 @@ export default class CesiumMap {
         me.map.camera.moveEnd.addEventListener( async ()=>{
             var cameraPositionCartesian = me.map.camera.position;
             EventBus.dispatch(new CustomEvent(MapEvents.mapMoveEnd, { detail: cameraPositionCartesian }));
+
+            var currentExtent = me.map.camera.computeViewRectangle();
+
+            // Extract the extent values
+            var west = Math.toDegrees(currentExtent.west);
+            var south = Math.toDegrees(currentExtent.south);
+            var east = Math.toDegrees(currentExtent.east);
+            var north = Math.toDegrees(currentExtent.north);
+            console.info(west)
+            console.info(south)
+            console.info(east)
+            console.info(north)
         });
 
 

@@ -97,11 +97,17 @@ class MapManager {
     }
 
     //extent 이동
-    flyToExtent(extent){
+    flyToExtent(extent, pitch){
+
         this._map.camera.flyTo({
             destination: Rectangle.fromDegrees(
                 extent[0], extent[1], extent[2], extent[3]
             ),
+            orientation: {
+                heading: Math.toRadians(0),
+                pitch: Math.toRadians(!pitch ? -90 : pitch),
+                roll: 0.0,
+            },
             duration: 2.0
         })
     }

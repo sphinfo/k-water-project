@@ -60,7 +60,7 @@ const Biz2 = () => {
             waterWfsLayer.current._addFeature(127.19292,35.387827, {a:'a5'})
             waterWfsLayer.current._addFeature(127.19605,35.375238, {a:'a6'})
             waterWfsLayer.current._addFeature(127.16970,35.312817, {a:'a4'})
-            G$flyToExtent([127.02595, 35.25252, 127.46909, 35.44838])
+            G$flyToExtent([126.93882919415756, 34.865073600401786, 127.58990862818611, 35.14108393416024], -60)
         }else if(selected === 'landuse'){
             landuseLayer.current.setVisible(true)
         }else if(selected === 'waterBody'){
@@ -75,7 +75,6 @@ const Biz2 = () => {
                 <ToggleButton className="tab-float-box-btn" value={"waterBody"}>수체 탐지</ToggleButton>
                 <ToggleButton className="tab-float-box-btn" value={"waterLevel"}>지점 수위</ToggleButton>
                 <ToggleButton className="tab-float-box-btn" value={"landuse"}>수체 지도</ToggleButton>
-
             </ToggleButtonGroup>
         </div>
     )
