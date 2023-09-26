@@ -1,12 +1,12 @@
 import BaseGeoserverAxios from "@common/axios/BaseGeoserverAxios";
-import { G$addLayer, G$addWidget, G$flyToExtent, G$pointsToCenter, G$pointsToExtent, G$polygonToCentroid, G$removeLayerForId, G$removeWidget } from "@gis/util";
+import { G$addLayer, G$addWidget, G$flyToExtent, G$pointsToCenter, G$pointsToExtent, G$pointsToLowest, G$polygonToCentroid, G$removeLayerForId, G$removeWidget } from "@gis/util";
 import React, { useEffect, useRef, useState } from "react";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import BaseCustomDataSource from "@gis/layers/BaseCustomDataSource";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import WaterShedDataSource from "@gis/layers/WaterShedDataSource";
-import { Cartesian3, HeadingPitchRoll, Math as MathC } from "cesium";
+import { Cartesian3, HeadingPitchRange, HeadingPitchRoll, Math as MathC } from "cesium";
 import MapManager from "@gis/MapManager";
 
 const Biz1 = () => {
@@ -55,34 +55,30 @@ const Biz1 = () => {
         watershedWfsLayer.current.entities.removeAll()
         axios.getFeature('watershed_map','WKMMBSN',`BBSNCD='${watershed}'`).then((res)=>{
 
-            let points = []
-
             res.features.map((featureObj)=>{
-                //console.info(featureObj)
                 let centroid = G$polygonToCentroid(featureObj.geometry.coordinates)
-                watershedWfsLayer.current._addFeature(Math.abs(centroid[0]),Math.abs(centroid[1]), featureObj.properties)
+                watershedWfsLayer.current._addFeature(centroid[0],centroid[1], featureObj.properties)
 
-                //console.info(centroid)
-                points.push({y:Math.abs(centroid[0]), x: Math.abs(centroid[1]), z: 0})
+                console.info(centroid)
                 
             })
 
-            if(points.length > 0){
 
-                let center = G$pointsToCenter(points)
+            const heading = MathC.toRadians(0)
+            const pitch = MathC.toRadians(-40)
+            const roll = 0
+
+            const orientation = new HeadingPitchRoll(heading, pitch, roll);
+            
+            let destination = watershed === '10' ? new Cartesian3(-3236232.55293577, 4165419.80060222, 3807589.6471960233) 
+                : watershed === '50'? new Cartesian3(-3183594.3901995705, 4257740.901124633, 3614567.98057984) 
+                : new Cartesian3(-3352269.5879313736, 4216380.864115685, 3647750.428951055) 
 
 
-                const heading = MathC.toRadians(0); // 방향 (90도, 동쪽을 바라봄)
-                const pitch = MathC.toRadians(-75); // 경사 (-45도, 아래를 바라봄)
-                const roll = 0; // 롤 (0도, 수평)
-
-                const orientation = new HeadingPitchRoll(heading, pitch, roll);
-                
-                MapManager.map.camera.flyTo({
-                    destination : Cartesian3.fromDegrees(center.y, center.x, 195000),
-                    orientation : orientation
-                })
-            }
+            MapManager.map.camera.flyTo({
+                destination : destination,
+                orientation : orientation
+            })
             
         })
 

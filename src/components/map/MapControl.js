@@ -26,7 +26,7 @@ export default function MapControl() {
             <div className="map_ctrl_left">
               <Sidebar />
               <AddrSearchWidget />
-              <SampleEventBox />
+              {/* <SampleEventBox /> */}
             </div>
 
 

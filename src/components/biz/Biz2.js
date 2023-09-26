@@ -8,7 +8,7 @@ import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 
 const Biz2 = () => {
 
-    const bizLayer = useRef()
+    const waterBodyLayer = useRef()
     const waterWfsLayer = useRef()
     const landuseLayer = useRef()
     const selectRef = useRef();
@@ -21,25 +21,25 @@ const Biz2 = () => {
 
     useEffect(()=>{
 
-        bizLayer.current = new BaseWmsImageLayer('WaterBody', '20230723T21water_JL_RGB000102')
+        waterBodyLayer.current = new BaseWmsImageLayer('WaterBody', '20230723T21water_JL_RGB000102')
         landuseLayer.current = new BaseWmsImageLayer('WaterBody', '20230723T21water_JL_landuse_RGB000102')
-
         waterWfsLayer.current = new BaseEntityCollection({name:'waterPoint'})
         G$addLayer(waterWfsLayer.current)
         
-        GisLayerClickTool.addBiz('biz2', selectRef, [bizLayer.current.layer.id])
+        GisLayerClickTool.addBiz('biz2', selectRef, [waterBodyLayer.current.layer.id])
         GisLayerClickTool.enable('biz2')
         
 
         return()=>{
             G$removeWidget('TestChartWidget')
-            G$removeLayer(bizLayer.current.layer)
+            G$removeLayer(waterBodyLayer.current.layer)
             G$removeLayer(landuseLayer.current.layer)
             G$removeLayer(waterWfsLayer.current)
             GisLayerClickTool.destroyBiz('biz2')
         }
 
     },[])
+
     const [selected, setselected] = React.useState('waterBody');
     const handleSelcted = (event, newSelected) => {
         setselected(newSelected);
@@ -47,7 +47,7 @@ const Biz2 = () => {
 
     useEffect(()=>{
         waterWfsLayer.current.entities.removeAll()
-        bizLayer.current.setVisible(false)
+        waterBodyLayer.current.setVisible(false)
         landuseLayer.current.setVisible(false)
 
         if(selected === 'waterLevel'){
@@ -64,7 +64,7 @@ const Biz2 = () => {
         }else if(selected === 'landuse'){
             landuseLayer.current.setVisible(true)
         }else if(selected === 'waterBody'){
-            bizLayer.current.setVisible(true)
+            waterBodyLayer.current.setVisible(true)
         }
 
     },[selected])

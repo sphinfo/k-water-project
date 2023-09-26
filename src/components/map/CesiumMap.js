@@ -85,10 +85,11 @@ export default class CesiumMap {
             var south = Math.toDegrees(currentExtent.south);
             var east = Math.toDegrees(currentExtent.east);
             var north = Math.toDegrees(currentExtent.north);
-            console.info(west)
-            console.info(south)
-            console.info(east)
-            console.info(north)
+            console.info(cameraPositionCartesian)
+            // console.info(west)
+            // console.info(south)
+            // console.info(east)
+            // console.info(north)
         });
 
 
@@ -99,7 +100,7 @@ export default class CesiumMap {
                 var longitude = Math.toDegrees(cartographic.longitude);
                 var latitude = Math.toDegrees(cartographic.latitude);
                 //console.log("마우스 좌표:", longitude, latitude);
-                //console.info(longitude+','+latitude)
+                console.info(longitude+','+latitude)
             }
             
         }, ScreenSpaceEventType.LEFT_CLICK);

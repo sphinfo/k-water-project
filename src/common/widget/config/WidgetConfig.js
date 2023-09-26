@@ -5,6 +5,7 @@ const widgets = {
     TestChartWidget: lazy(() => import('@components/biz/test/TestChartWidget')),
 
     LegendWidget: lazy(() => import('@components/legend/LegendWidget')),
+    BaseLegendWidget: lazy(() => import('@components/legend/BaseLegendWidget')),
     
 };
 
@@ -30,6 +31,12 @@ const LegendWWidgetConfig = {
         legend: true,
         style: {  position:'absolute'},
         instance: widgets.LegendWidget
+    },
+    'BaseLegendWidget': {
+        title: 'BaseLegendWidget',
+        legend: true,
+        style: {  position:'absolute'},
+        instance: widgets.BaseLegendWidget
     }
 }
 
