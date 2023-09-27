@@ -1,4 +1,5 @@
 import { Cartesian3, Cartographic, Color, Math as MathC, PolygonGraphics, PolygonHierarchy, Rectangle, Transforms, WebMercatorProjection } from "cesium";
+import createColormap from "colormap";
 import MapManager from "../MapManager";
 import MainWidgetManager from "@common/widget/WidgetManager";
 
@@ -206,6 +207,7 @@ const G$pointsToCenter = (positions) =>{
     return new Cartesian3(xSum / count, ySum / count, zSum / count);
 }
 
+// point 중 가장 lowsest 에 있는 point
 const G$pointsToLowest = (positions) =>{
     if (!positions || positions.length === 0) {
         return undefined;
@@ -225,16 +227,46 @@ const G$pointsToLowest = (positions) =>{
 
 }
 
+//cartesina -> 경위도
 const G$cartesianToLongLat = (cartesian) =>{
 
     let cameraPositionCartographic = Cartographic.fromCartesian(cartesian);
 
-    // Cartographic 좌표에서 경도와 위도를 가져옵니다.
     let longitude = MathC.toDegrees(cameraPositionCartographic.longitude);
     let latitude = MathC.toDegrees(cameraPositionCartographic.latitude);
 
     return {longitude: longitude, latitude: latitude}
 
+}
+
+//color map을 통한 min max nomalizetion ( colormap 분리필요 ) 230927
+const G$normalizeWithColors = ({value=0, min=-10, max=10, type='jet', nshades=30, format='hex', opacity=1}) =>{
+    
+    let colormap = createColormap({
+        colormap: type,
+        nshades: nshades,
+        format: format,
+        alpha: 1
+    })
+
+    const normalized = (value - min) / (max - min)
+    const index = Math.floor(normalized * colormap.length)
+
+    let hex = colormap[index].replace(/^#/, '')
+    const bigint = parseInt(hex, 16)
+
+    const r = (bigint >> 16) & 255
+    const g = (bigint >> 8) & 255
+    const b = bigint & 255
+
+    const cesiumColor = new Color(
+        r / 255,
+        g / 255,
+        b / 255,
+        opacity 
+    );
+
+    return cesiumColor;
 }
 
 
@@ -264,6 +296,7 @@ const G$Transfrom = (point, to, from)=>{
     return point
 }
 
+//point to dms
 const G$PointToDms = (n) =>{
     const d = parseInt(n);
     const m = parseInt((n - d) * 60);
@@ -295,6 +328,7 @@ const G$GetPointToDetail=(longitude, latitude)=>{
     
 }
 
+
 const G$pointsToExtent = (points = []) =>{
 
     let minX = Number.MAX_VALUE;
@@ -314,8 +348,6 @@ const G$pointsToExtent = (points = []) =>{
         maxY = Math.max(maxY, latitude);
     }
 
-    
-    //return Rectangle.fromDegrees(minX, minY, maxX, maxY)
     return [minY, minX, maxX, maxY]
 
 }
@@ -357,6 +389,7 @@ export {
     G$pointsToLowest,
     G$pointsToCenter,
     
+    G$normalizeWithColors,
     G$cartesianToLongLat,
 
     G$pointsToExtent,

@@ -14,25 +14,23 @@ export default function MapControl() {
     return (
         <>
             <div className="map_ctrl_right">
-                <ThematicWidget />
-                
-                <MeasureMapWidget />
-                <ZoomMapWidget />
+                <ThematicWidget /> {/* 주제도 */}
+                <MeasureMapWidget /> {/* 측정 */}
+                <ZoomMapWidget />  {/* 줌 */} 
             </div>
             <div className="map_ctrl_btm">
-                <CoordiateWidget />
+                <CoordiateWidget />  {/* center 좌표 */}
             </div>
 
             <div className="map_ctrl_left">
-              <Sidebar />
-              <AddrSearchWidget />
+              <Sidebar />  {/* left menu */}
+              <AddrSearchWidget />  {/* 위치 조회 */}
               {/* <SampleEventBox /> */}
             </div>
 
-
             <div className="map_ctrl_top">
-                <MapPositionWidget />
-                <TimeZoneWidget />
+                <MapPositionWidget />  {/* 현재 위치 주소 */}
+                <TimeZoneWidget />   {/* 현재 시간 */}
             </div>
             
         </>

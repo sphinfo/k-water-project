@@ -25,7 +25,9 @@ const Biz1 = () => {
     useEffect(()=>{
         G$addWidget('LegendWidget', { params: {title:''}})
         droughtLayer.current = new BaseWmsImageLayer('Drought','20221226_100_7629')
+        //watershedWfsLayer.current = new WaterShedDataSource({name:'watershedWfs'})
         watershedWfsLayer.current = new WaterShedDataSource({name:'watershedWfs'})
+        //WaterShedChartDataSource
         
         G$addLayer(watershedWfsLayer.current)
         return()=>{
@@ -51,7 +53,7 @@ const Biz1 = () => {
 
         let axios = new BaseGeoserverAxios()
 
-        //수계 중심점 point
+        //권역 중심점 point
         watershedWfsLayer.current.entities.removeAll()
         axios.getFeature('watershed_map','WKMMBSN',`BBSNCD='${watershed}'`).then((res)=>{
 
@@ -84,18 +86,18 @@ const Biz1 = () => {
 
     },[watershed])
 
-    const [selected, setselected] = React.useState('0');
+    const [selected, setselected] = useState(true);
 
-    const handleSelected = (event, newSelected) => {
-        setselected(newSelected);
-    };
+    useEffect(()=>{
+        droughtLayer.current.setVisible(selected ? selected : false)
+    },[selected])
 
     return (
         <>
             {/*  */}
             <div className="tab-float-box">
-                    <ToggleButtonGroup className="tab-float-box-button-wrap" value={selected} exclusive onChange={handleSelected}>
-                    <ToggleButton className="tab-float-box-btn" value={'0'}>유역별 통계 보기</ToggleButton>
+                    <ToggleButtonGroup className="tab-float-box-button-wrap" value={selected} exclusive onChange={(e,newSelected)=>{setselected(newSelected)}}>
+                    <ToggleButton className="tab-float-box-btn" value={true}>유역별 통계 보기</ToggleButton>
                 </ToggleButtonGroup>
             </div>
             <div className="tab-float-box bottom-left">

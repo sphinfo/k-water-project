@@ -33,6 +33,7 @@ const MeasureMapWidget = () => {
     }
 
     
+    
     return (
         <div className="map-widget-vertical-block">
             <button className={`map-right-bt ${activeType === 'LineString' ? 'active' : ''}`} onClick={()=>{drawController('line')}}>

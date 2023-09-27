@@ -55,7 +55,7 @@ class GisDrawTool {
     //마우스 클릭 이벤트
     async _onClick(type, event) {
         const ray = this.map.camera.getPickRay(event.position)
-        const earthPosition = this.map.scene.globe.pick(ray.origin, this.map.scene);
+        const earthPosition = this.map.scene.globe.pick(ray, this.map.scene);
         console.info(earthPosition)
         if (defined(earthPosition)) {
             if (activeShapePoints.length === 0) {
@@ -83,7 +83,6 @@ class GisDrawTool {
     //마우스 이동이벤트
     _mouseMove(event) {
         if (defined(floatingPoint)) {
-            console.info(event.endPosition)
             const ray = this.map.camera.getPickRay(event.endPosition);
             const newPosition = this.map.scene.globe.pick(ray, this.map.scene);
             if (defined(newPosition)) {

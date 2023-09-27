@@ -1,5 +1,7 @@
 import MapManager from "@gis/MapManager";
+import { G$normalizeWithColors } from "@gis/util";
 import {Cartesian2, Cartesian3, Color, CustomDataSource, Entity, EntityCollection, HeightReference, LabelStyle, PropertyBag, VerticalOrigin} from "cesium";
+import createColormap from "colormap";
 
 class SafeLevel2DataSource extends CustomDataSource {
 
@@ -12,15 +14,11 @@ class SafeLevel2DataSource extends CustomDataSource {
 
 	async _addFeature(longitude, latitude, value) {
 
-		
-
-
-		//[127.5053342,	35.9578153]
 		const centerLongitude = longitude
 		const centerLatitude = latitude
 
-		const gridWidthMeters = 20.5; // 가로 길이
-		const gridHeightMeters = 20.5; // 세로 길이
+		const gridWidthMeters = 20.7; // 가로 길이
+		const gridHeightMeters = 20.7; // 세로 길이
 
 		// 경도 및 위도 차이 계산
 		const degreesPerMeterLongitude = 1.0 / (111.32 * 1000); // 경도 1도당 미터로 환산한 값
@@ -29,7 +27,6 @@ class SafeLevel2DataSource extends CustomDataSource {
 		const gridWidthDegrees = gridWidthMeters * degreesPerMeterLongitude;
 		const gridHeightDegrees = gridHeightMeters * degreesPerMeterLatitude;
 
-		//const gridPolygon = MapManager.map.entities.add();
 		const gridPolygon =  new Entity({
 			polygon: {
 			  hierarchy: Cartesian3.fromDegreesArray([
@@ -38,18 +35,10 @@ class SafeLevel2DataSource extends CustomDataSource {
 				centerLongitude + gridWidthDegrees / 2, centerLatitude + gridHeightDegrees / 2,
 				centerLongitude - gridWidthDegrees / 2, centerLatitude + gridHeightDegrees / 2,
 			  ]),
-			  material: this._normalizeWithColors(value)
+			  material: G$normalizeWithColors({value:value, opacity:0.7})
 			},
 		})
 		this.entities.add(gridPolygon);
-	}
-
-	_normalizeWithColors(value, min=-9, max=9) {
-		let color = [Color.RED, Color.ORANGE, Color.YELLOW, Color.GREENYELLOW, Color.GREEN, Color.SKYBLUE, Color.BLUE ]
-		value = Math.min(Math.max(value, min), max)
-		const normalized = (value - min) / (max - min)
-		const index = Math.floor(normalized * color.length)
-		return color[index];
 	}
 	
 }

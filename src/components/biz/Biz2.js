@@ -74,7 +74,7 @@ const Biz2 = () => {
             <ToggleButtonGroup className="tab-float-box-button-wrap" value={selected} exclusive onChange={handleSelcted}>
                 <ToggleButton className="tab-float-box-btn" value={"waterBody"}>수체 탐지</ToggleButton>
                 <ToggleButton className="tab-float-box-btn" value={"waterLevel"}>지점 수위</ToggleButton>
-                <ToggleButton className="tab-float-box-btn" value={"landuse"}>수체 지도</ToggleButton>
+                <ToggleButton className="tab-float-box-btn" value={"landuse"}>침수 지도</ToggleButton>
             </ToggleButtonGroup>
         </div>
     )

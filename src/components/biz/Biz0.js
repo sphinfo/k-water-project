@@ -39,7 +39,10 @@ const Biz0 = () => {
         G$addLayer(safeLevelWfsLayer.current)
 
         return()=>{
-            G$removeLayer(bizLayer1.current)
+            if(bizLayer1.current.layer){
+                G$removeLayer(bizLayer1.current.layer)
+            }
+            
             G$removeLayer(safeLevelWfsLayer.current.id)
             G$removeLayer(bizLayer2WfsLayer.current.id)
             G$removeWidget('BaseLegendWidget')
@@ -115,8 +118,8 @@ const Biz0 = () => {
                 <div className="tab-float-box-list-wrap">
                     <h2 className="tab-float-box-list-head">위성방향</h2>
                     <ToggleButtonGroup className="tab-float-box-button-wrap list-main" value={ingre}>
-                        <ToggleButton className="tab-float-box-btn list-item" value={'L3TD_A2_YONGDAM_ASC'} onClick={()=>{changeParam('L3TD_A2_YONGDAM_ASC')}}>North-South</ToggleButton>
-                        <ToggleButton className="tab-float-box-btn list-item" value={'L3TD_A2_YONGDAM_DSC'} onClick={()=>{changeParam('L3TD_A2_YONGDAM_DSC')}}>North-South</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value={'L3TD_A2_YONGDAM_ASC'} onClick={()=>{changeParam('L3TD_A2_YONGDAM_ASC')}}>Ascending</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value={'L3TD_A2_YONGDAM_DSC'} onClick={()=>{changeParam('L3TD_A2_YONGDAM_DSC')}}>Descending</ToggleButton>
                         <ToggleButton className="tab-float-box-btn list-item" value={'L4TD_YONGDAM_EW'} onClick={()=>{changeParam('L4TD_YONGDAM_EW')}}>East-West</ToggleButton>
                         <ToggleButton className="tab-float-box-btn list-item" value={'L4TD_YONGDAM_UD'} onClick={()=>{changeParam('L4TD_YONGDAM_UD')}}>Up-Down</ToggleButton>
                     </ToggleButtonGroup>
@@ -130,21 +133,16 @@ const Biz0 = () => {
                     </button>
                 </div>
             </div>
-            <div className="widget-legend safety">
+            <div className="widget-legend safety" style={{width: 70, top:safetyTab === 'rating' ? 100 : 265}}>
                 <dl className="widget-legend-wrap">
                     <dt>
-                        <h4>변위 성분</h4>
+                        <h4>변위 {safetyTab === 'rating' ? '등급' : '성분'}</h4>
                     </dt>
                     <dd>
                         <div className="widget-legend-chip e-w-velocity"></div>
                         <ul className="widget-legend-unit">
-                                <li>0.6</li>
-                                <li>0.4</li>
-                                <li>0.2</li>
-                                <li>0</li>
-                                <li>-0.2</li>
-                                <li>-0.4</li>
-                                <li>-0.6</li>
+                                <li>3</li>
+                                <li>1</li>
                         </ul>
                     </dd>
                 </dl>

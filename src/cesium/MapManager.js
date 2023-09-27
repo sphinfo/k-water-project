@@ -46,8 +46,8 @@ class MapManager {
 
         //this._map.imageryLayers.addImageryProvider(vworld)
 
-        const targetLongitude = 126.59894525349623
-        const targetLatitude = 35.772996001653
+        const targetLongitude = 127.61790470489117
+        const targetLatitude = 36.52505158669595
         this._map.camera.flyTo({
             destination: Cartesian3.fromDegrees(targetLongitude, targetLatitude, 850000), // 목표 위치의 카메라 높이 (높이 값 조절 가능)
             orientation: {
