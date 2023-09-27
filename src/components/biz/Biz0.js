@@ -7,7 +7,9 @@ import Switch from "@mui/material/Switch";
 
 const Biz0 = () => {
 
-    const [safetyTab, setSafetyTab] = useState('rating')
+    const [safetyTab, setSafetyTab] = useState('ingre')
+    const [paramTab, setParamTab] = useState('L3TD_A2_YONGDAM_ASC')
+
 
     const bizLayer1 = useRef()
 
@@ -30,10 +32,11 @@ const Biz0 = () => {
     }
 
 
-    const changeParam = (value) =>{
+    const changeParam = (event, value) =>{
         if(bizLayer1.current){
             bizLayer1.current.changeParameters({layerId:value})
         }
+        setParamTab(value);
     }
 
     return (
@@ -47,11 +50,11 @@ const Biz0 = () => {
             <div className="tab-float-box top-left-list">
                 <div className="tab-float-box-list-wrap">
                     <h2 className="tab-float-box-list-head">위성방향</h2>
-                    <ToggleButtonGroup className="tab-float-box-button-wrap list-main">
-                        <ToggleButton className="tab-float-box-btn list-item" onClick={()=>{changeParam('L3TD_A2_YONGDAM_ASC')}}>North-South</ToggleButton>
-                        <ToggleButton className="tab-float-box-btn list-item" onClick={()=>{changeParam('L3TD_A2_YONGDAM_DSC')}}>North-South</ToggleButton>
-                        <ToggleButton className="tab-float-box-btn list-item" onClick={()=>{changeParam('L4TD_YONGDAM_EW')}}>East-West</ToggleButton>
-                        <ToggleButton className="tab-float-box-btn list-item" onClick={()=>{changeParam('L4TD_YONGDAM_UD')}}>Up-Down</ToggleButton>
+                    <ToggleButtonGroup className="tab-float-box-button-wrap list-main" exclusive value={paramTab} onChange={changeParam}>
+                        <ToggleButton className="tab-float-box-btn list-item" value={"L3TD_A2_YONGDAM_ASC"}>North-South</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value={"L3TD_A2_YONGDAM_DSC"}>North-South</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value={"L4TD_YONGDAM_EW"}>East-West</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value={"L4TD_YONGDAM_UD"}>Up-Down</ToggleButton>
                     </ToggleButtonGroup>
                 </div>
             </div>
@@ -62,6 +65,25 @@ const Biz0 = () => {
                         <Switch className="float-box-switch" />
                     </button>
                 </div>
+            </div>
+            <div className="widget-legend safety">
+                <dl className="widget-legend-wrap">
+                    <dt>
+                        <h4>변위 성분</h4>
+                    </dt>
+                    <dd>
+                        <div className="widget-legend-chip e-w-velocity"></div>
+                        <ul className="widget-legend-unit">
+                                <li>0.6</li>
+                                <li>0.4</li>
+                                <li>0.2</li>
+                                <li>0</li>
+                                <li>-0.2</li>
+                                <li>-0.4</li>
+                                <li>-0.6</li>
+                        </ul>
+                    </dd>
+                </dl>
             </div>
         </>
     )
