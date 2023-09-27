@@ -1,4 +1,4 @@
-import { Cartesian3, Cartographic, Math as MathC, PolygonGraphics, PolygonHierarchy, Rectangle, Transforms, WebMercatorProjection } from "cesium";
+import { Cartesian3, Cartographic, Color, Math as MathC, PolygonGraphics, PolygonHierarchy, Rectangle, Transforms, WebMercatorProjection } from "cesium";
 import MapManager from "../MapManager";
 import MainWidgetManager from "@common/widget/WidgetManager";
 
@@ -59,6 +59,13 @@ const G$pointToPolygon = (lon, lat, size)=>{
     })
 
     return polygon
+}
+
+/* point를 grid 로 변환 return extent */
+const G$pointToGrid = (point, grid=50) =>{
+
+   
+    
 
 }
 
@@ -109,6 +116,7 @@ const G$calculatePolygonCentroid = (polygon) =>{
     const numPoints = polygon.length;
     let centroidX = 0;
     let centroidY = 0;
+    let totalArea = 0;
 
     for (let i = 0; i < numPoints; i++) {
         const currentPoint = polygon[i];
@@ -123,11 +131,12 @@ const G$calculatePolygonCentroid = (polygon) =>{
 
         centroidX += (x1 + x2) * commonFactor;
         centroidY += (y1 + y2) * commonFactor;
+        totalArea += commonFactor;
+
     }
 
-    const area = G$calculatePolygonArea(polygon) * 6; // 면적을 6으로 나누어 가중평균 계산
-    centroidX /= area;
-    centroidY /= area;
+    centroidX /= (3 * totalArea);
+    centroidY /= (3 * totalArea);
 
     return [centroidX, centroidY];
 }
@@ -176,6 +185,7 @@ const G$getPointsToArea = (points) =>{
     return area;
 }
 
+//포인트들의 센터점 
 const G$pointsToCenter = (positions) =>{
     let xSum = 0.0;
     let ySum = 0.0;
@@ -194,6 +204,25 @@ const G$pointsToCenter = (positions) =>{
     }
 
     return new Cartesian3(xSum / count, ySum / count, zSum / count);
+}
+
+const G$pointsToLowest = (positions) =>{
+    if (!positions || positions.length === 0) {
+        return undefined;
+    }
+
+    let lowestPoint = positions[0];
+
+    for (let i = 1; i < positions.length; i++) {
+        const currentPoint = positions[i];
+        if (currentPoint.x < lowestPoint.x) {
+            lowestPoint = currentPoint; 
+        }
+    }
+
+    console.info(lowestPoint)
+    return lowestPoint;
+
 }
 
 const G$cartesianToLongLat = (cartesian) =>{
@@ -295,8 +324,8 @@ const G$flyToExtent= (extent, pitch=false) =>{
     MapManager.flyToExtent(extent, pitch)
 }
 
-const G$flyToPoint= (point) =>{
-    MapManager.flyToPoint(point)
+const G$flyToPoint= (point, zoom) =>{
+    MapManager.flyToPoint(point, zoom)
 }
 
 
@@ -317,6 +346,7 @@ export {
     G$getLayerForId,
     G$getWmsLayerForId,
     G$pointToPolygon,
+    G$pointToGrid,
     
     G$polygonToCentroid,
     G$calculatePolygonArea,
@@ -324,6 +354,7 @@ export {
 
     G$getPointsToLength,
     G$getPointsToArea,
+    G$pointsToLowest,
     G$pointsToCenter,
     
     G$cartesianToLongLat,

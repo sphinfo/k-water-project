@@ -3,22 +3,22 @@ const ThematicTreeConfig = [
 
   {
       "id": "1",
-      "name": "유역",
+      "name": "유역도",
       "children": [
           {
               store: 'watershed_map',
               id: 'WKMBBSN',
-              name: '유역(대)',
+              name: '대권역',
               parent: '1'
           },{
               store: 'watershed_map',
               id: 'WKMMBSN',
-              name: '유역(중)',
+              name: '중권역',
               parent: '1'
           },{
               store: 'watershed_map',
               id: 'WKMSBSN',
-              name: '유역(소)',
+              name: '표준유역',
               parent: '1'
           }
       ]
@@ -43,19 +43,28 @@ const ThematicTreeConfig = [
               parent: '2'
           }
       ]
-  },{
-      store: 'river_network',
-      id: 'W_FRST',
-      name: 'W_FRST'
-  },{
-      store: 'river_network',
-      id: 'W_NATL',
-      name: 'W_NATL'
-  },{
-      store: 'river_network',
-      id: 'W_SCND',
-      name: 'W_SCND'
-  }
+    },{
+        "id": "3",
+        "name": "하천망도",
+        "children": [
+            {
+                store: 'river_network',
+                id: 'W_NATL',
+                name: '국가하천',
+                parent: '3'
+            },{
+                store: 'river_network',
+                id: 'W_FRST',
+                name: '구지방1급하천',
+                parent: '3'
+            },{
+                store: 'river_network',
+                id: 'W_SCND',
+                name: '구지방2급하천',
+                parent: '3'
+            }
+        ]
+    }
 ];
 
 

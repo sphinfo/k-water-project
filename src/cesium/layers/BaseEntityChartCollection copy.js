@@ -60,7 +60,7 @@ class BaseEntityChartCollection extends CustomDataSource {
 				color: Color.RED,
 			},
 			billboard: {
-				image: water,
+				image: chart,
 				width: 35,
 				height: 35,
 				heightReference: HeightReference.RELATIVE_TO_GROUND,
