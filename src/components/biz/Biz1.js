@@ -16,6 +16,11 @@ const Biz1 = () => {
     
     //가뭄 wms 레이어
     const droughtLayer = useRef({id:''})
+
+    const droughtLayer1 = useRef({id:''})
+    const droughtLayer2 = useRef({id:''})
+    const droughtLayer3 = useRef({id:''})
+    const droughtLayer4 = useRef({id:''})
     
     //유역 wms 레이어
     const watershedLayer = useRef({id:''})
@@ -24,8 +29,8 @@ const Biz1 = () => {
 
     useEffect(()=>{
         G$addWidget('LegendWidget', { params: {title:''}})
-        droughtLayer.current = new BaseWmsImageLayer('Drought','20221226_100_7629')
-        //watershedWfsLayer.current = new WaterShedDataSource({name:'watershedWfs'})
+        droughtLayer.current = new BaseWmsImageLayer('Drought','Drought Group')
+
         watershedWfsLayer.current = new WaterShedDataSource({name:'watershedWfs'})
         //WaterShedChartDataSource
         
@@ -33,6 +38,7 @@ const Biz1 = () => {
         return()=>{
             G$removeWidget('LegendWidget')
             G$removeLayerForId(droughtLayer.current.layer.id)
+
             //G$removeLayerForId(watershedLayer.current.id)
             G$removeLayerForId(watershedWfsLayer.current.id)
             

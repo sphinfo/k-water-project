@@ -13,9 +13,15 @@ const Biz2 = () => {
     const landuseLayer = useRef()
     const selectRef = useRef();
     useImperativeHandle(selectRef, ()=>({
-        getFeatures(f){
-            console.info(f)
-            G$addWidget('TestChartWidget')
+        getFeatures(features){
+            if(features.length > 0){
+                features.map((featureObj)=>{
+                    if(featureObj.id.indexOf('waterPoint') > -1){
+                        G$addWidget('TestChartWidget')
+                    }
+                })
+            }
+            
         }
     }));
 
@@ -26,7 +32,7 @@ const Biz2 = () => {
         waterWfsLayer.current = new BaseEntityCollection({name:'waterPoint'})
         G$addLayer(waterWfsLayer.current)
         
-        GisLayerClickTool.addBiz('biz2', selectRef, [waterBodyLayer.current.layer.id])
+        GisLayerClickTool.addBiz('biz2', selectRef, [waterBodyLayer.current.layer.id, 'waterPoint'])
         GisLayerClickTool.enable('biz2')
         
 

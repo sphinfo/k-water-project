@@ -1,5 +1,5 @@
 import MapManager from "@gis/MapManager";
-import { Cartographic, Math, ScreenSpaceEventHandler, ScreenSpaceEventType, defined } from "cesium";
+import { Cartesian2, Cartographic, Math, ScreenSpaceEventHandler, ScreenSpaceEventType, defined } from "cesium";
 import { G$TypeOf, G$getLayerForId, G$getWmsLayerForId } from "..";
 import BaseGeoserverAxios from "@common/axios/BaseGeoserverAxios";
 
@@ -29,6 +29,10 @@ class GisLayerClickTool {
   
 	//click callback 
 	async handleMapClick(event) {
+
+		const screenPosition = new Cartesian2(event.clientX, event.clientY);
+		const cartesianPosition = MapManager.map.scene.pickPosition(screenPosition);
+		console.info(cartesianPosition)
 
 		for (const [biz, isUse] of Object.entries(this._bizs)) {
 			if (isUse) {

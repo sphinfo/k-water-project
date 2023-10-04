@@ -1,6 +1,8 @@
 import BaseChart from "@common/chart/BaseChart";
 import { G$removeWidget } from "@gis/util";
 import React, { useEffect, useRef } from "react";
+import chartImg from '../../../resources/images/chart.png'
+
 
 const name = 'TestChartWidget'
 
@@ -80,9 +82,8 @@ const TestChartWidget = (props) => {
                 <button onClick={close} className="popup-close-btn"></button>
                 </div>
                 <div className="map-popup-box-body">
-                <BaseChart width={200} height={250} ref={chartRef} chartType={'Pie'} title={'토성별 토양수 특성'}/>
-
-                <canvas id="pieChartCanvas3"></canvas>
+                    <img src={chartImg} />
+                {/* <BaseChart width={200} height={250} ref={chartRef} chartType={'Pie'} title={'토성별 토양수 특성'}/> */}
                 </div>
             </div>
             

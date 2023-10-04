@@ -9,13 +9,15 @@ const Biz3 = () => {
 
     const gArbageLayer = useRef({id:''})
     const landCoverLayer = useRef({id:''})
+    const landCoverOverLayer = useRef({id:''})
     
 
     useEffect(()=>{
       
       //부유물
       gArbageLayer.current = new BaseWmsImageLayer('Garbage', 'Chlorophyll_Map_2')
-      landCoverLayer.current = new BaseWmsImageLayer('LandCover', '')
+      landCoverLayer.current = new BaseWmsImageLayer('LandCover', 'RF_20220914_clip')
+      landCoverOverLayer.current = new BaseWmsImageLayer('LandCover', 'clipped_cd')
 
       return()=>{
 
@@ -25,6 +27,10 @@ const Biz3 = () => {
           
         if(landCoverLayer.current.layer){
           G$removeLayerForId(landCoverLayer.current.layer.id)
+        }
+
+        if(landCoverOverLayer.current.layer){
+          G$removeLayerForId(landCoverOverLayer.current.layer.id)
         }
           
       }
@@ -58,8 +64,10 @@ const Biz3 = () => {
       }else if(layerTab === 'landCover'){
         gArbageLayer.current.setVisible(false)
         landCoverLayer.current.setVisible(true)
-
-        landCoverLayer.current.changeParameters({layerId:landCoverSwitch ? 'RF_20220914_clip' : 'RF_20221101_clip'})
+        landCoverOverLayer.current.setVisible(landCoverSwitch ? true : false)
+        
+        //landCoverLayer.current.changeParameters({layerId:landCoverSwitch ? 'RF_20220914_clip' : 'RF_20221101_clip'})
+        //landCoverLayer.current.changeParameters({layerId:landCoverSwitch ? 'RF_20220914_clip' : 'RF_20221101_clip'})
       }
     },[layerTab, landCoverSwitch])
 
