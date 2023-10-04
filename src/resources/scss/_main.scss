@@ -501,6 +501,10 @@
     }
     .map-popup-box-body{
       width: max-content;
+      padding: 15px 15px 10px 10px;
+      img{
+        max-width: 380px;
+      }
     }
   }
 }
