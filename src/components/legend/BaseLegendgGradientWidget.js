@@ -24,7 +24,7 @@ const BaseLegendWidget = (props) => {
 
     return (
         <>
-            <dl className="widget-legend-wrap">
+            <dl className="widget-legend-wrap legend-vertical">
                 <dt><h4>{title}</h4></dt>
                 <dd>
                     {datas && datas.length > 3 ? (

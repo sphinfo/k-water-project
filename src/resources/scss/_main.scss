@@ -120,7 +120,7 @@
     box-shadow: $box-shadow;
     border-radius: 10px;
   }
-  .map-right-bt{
+  .mapRightBt{
     width: 30px;
     height: 30px;
     border: 0;
@@ -662,6 +662,16 @@
         width: 17px;
         height: 200px;
         background: linear-gradient(0deg, #EE6969 0%, #FFE34F 25.52%, #8FE99E 52.08%, #89F7F7 77.08%, #5E52EC 100%);
+      }
+    }
+    &.legend-vertical{
+      dd{
+        display: flex;
+        .widget-legend-unit{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
       }
     }
   }
