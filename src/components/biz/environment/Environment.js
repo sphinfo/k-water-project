@@ -1,11 +1,11 @@
-import { G$addLayer, G$getLayerForId, G$removeLayerForId } from "@gis/util";
+import { G$addLayer, G$addWidget, G$cartesianToLongLat, G$flyToPoint, G$getLayerForId, G$removeLayerForId, G$removeWidget } from "@gis/util";
 import React, { useEffect, useRef, useState } from "react";
 import Switch from '@mui/material/Switch';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 
-const Biz3 = () => {
+const Environment = () => {
 
     const gArbageLayer = useRef({id:''})
     const landCoverLayer = useRef({id:''})
@@ -17,7 +17,7 @@ const Biz3 = () => {
       //부유물
       gArbageLayer.current = new BaseWmsImageLayer('Garbage', 'Chlorophyll_Map_2')
       landCoverLayer.current = new BaseWmsImageLayer('LandCover', 'RF_20220914_clip')
-      landCoverOverLayer.current = new BaseWmsImageLayer('LandCover', 'clipped_cd')
+      landCoverOverLayer.current = new BaseWmsImageLayer('LandCover', 'clipped_cd', null, false)
 
       return()=>{
 
@@ -33,6 +33,7 @@ const Biz3 = () => {
           G$removeLayerForId(landCoverOverLayer.current.layer.id)
         }
           
+        G$removeWidget('BaseLegendWidget')
       }
 
     },[])
@@ -46,7 +47,7 @@ const Biz3 = () => {
     };
 
     //변화탐지
-    const [landCoverSwitch, setLandCoverSwitch] = useState(true)
+    const [landCoverSwitch, setLandCoverSwitch] = useState(false)
     const switchChange = (event, value) =>{
       setLandCoverSwitch(value)
     }
@@ -56,20 +57,40 @@ const Biz3 = () => {
       console.info('changeTab')
       //부유물
       if(layerTab === 'gArbage'){
+        G$removeWidget('BaseLegendWidget')
         gArbageLayer.current.setVisible(true)
         if(landCoverLayer.current.layer){
           landCoverLayer.current.layer.show = false //setVisible(false)
         }
         
+        if(landCoverOverLayer.current.layer){
+          landCoverOverLayer.current.layer.show = false
+        }
+
       }else if(layerTab === 'landCover'){
+        G$addWidget('BaseLegendWidget', { params: {title:'수변피복', 
+          datas: [{label:'Water', color:'#0000FF'}
+            ,{label:'Barren', color:'#FFCC00'}
+            ,{label:'Grass', color:'YELLOW'}
+            ,{label:'Forest', color:'#009900'}
+            ,{label:'Builtup', color:'RED'}
+          ]} 
+        })
         gArbageLayer.current.setVisible(false)
         landCoverLayer.current.setVisible(true)
         landCoverOverLayer.current.setVisible(landCoverSwitch ? true : false)
-        
-        //landCoverLayer.current.changeParameters({layerId:landCoverSwitch ? 'RF_20220914_clip' : 'RF_20221101_clip'})
-        //landCoverLayer.current.changeParameters({layerId:landCoverSwitch ? 'RF_20220914_clip' : 'RF_20221101_clip'})
       }
-    },[layerTab, landCoverSwitch])
+    },[layerTab])
+
+    useEffect(()=>{
+      landCoverOverLayer.current.setVisible(landCoverSwitch ? true : false)
+      if(landCoverSwitch){
+        setTimeout(()=>{
+          G$flyToPoint([127.107073977, 36.468267987], 3777)
+        },500)
+        
+      }
+    },[landCoverSwitch])
 
 
 
@@ -89,4 +110,4 @@ const Biz3 = () => {
     )
 }
 
-export default React.memo(Biz3);
+export default React.memo(Environment);

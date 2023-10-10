@@ -1,7 +1,7 @@
-import Biz0 from '@components/biz/Biz0';
-import Biz1 from '@components/biz/Biz1';
-import Biz2 from '@components/biz/Biz2';
-import Biz3 from '@components/biz/Biz3';
+import Safety from '@components/biz/safety/Safety';
+import Drought from '@components/biz/drought/Drought';
+import Flood from '@components/biz/flood/Flood';
+import Environment from '@components/biz/environment/Environment';
 import { Drawer, Tab, Tabs } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -118,22 +118,22 @@ export default function Sidebar () {
         <TabPanel value={value} index={INDEX_0} >
           <div>
             {/* <button className="close-btn" onClick={handleClose} >close</button> */}
-            <Biz0 />
+            <Safety />
           </div>
         </TabPanel>
         <TabPanel value={value} index={INDEX_1} >
           <div>
-            <Biz1 />
+            <Drought />
           </div>
         </TabPanel>
         <TabPanel value={value} index={INDEX_2} >
           <div>
-            <Biz2 />
+            <Flood />
           </div>
         </TabPanel>
         <TabPanel value={value} index={INDEX_3} >
           <div>
-            <Biz3 />
+            <Environment />
           </div>
         </TabPanel>
       </div>      

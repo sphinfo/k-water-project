@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { G$addLayer, G$addWidget, G$flyToPoint, G$pointToGrid, G$removeLayer, G$removeLayerForId, G$removeWidget } from "@gis/util";
+import { G$addLayer, G$addWidget, G$flyToPoint,G$removeLayer, G$removeWidget } from "@gis/util";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
@@ -8,7 +8,7 @@ import SafeLevelDataSource from "@gis/layers/SafeLevelDataSource";
 import SafeLevel2DataSource from "@gis/layers/SafeLevel2DataSource";
 import TestDataConfig from "@gis/config/TestDataConfig";
 
-const Biz0 = () => {
+const Safety = () => {
 
     /* 변위등급 / 변위성분 */
     const [safetyTab, setSafetyTab] = useState('rating')
@@ -151,4 +151,4 @@ const Biz0 = () => {
     )
 }
 
-export default React.memo(Biz0);
+export default React.memo(Safety);

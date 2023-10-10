@@ -6,6 +6,7 @@ const widgets = {
 
     LegendWidget: lazy(() => import('@components/legend/LegendWidget')),
     BaseLegendWidget: lazy(() => import('@components/legend/BaseLegendWidget')),
+    BaseLegendgGradientWidget: lazy(() => import('@components/legend/BaseLegendgGradientWidget')),
     
 };
 
@@ -37,7 +38,13 @@ const LegendWWidgetConfig = {
         legend: true,
         style: {  position:'absolute'},
         instance: widgets.BaseLegendWidget
-    }
+    },
+    'BaseLegendgGradientWidget': {
+        title: 'BaseLegendWidget',
+        legend: true,
+        style: {  position:'absolute'},
+        instance: widgets.BaseLegendgGradientWidget
+    },
 }
 
 export default {

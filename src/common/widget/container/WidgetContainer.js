@@ -17,6 +17,7 @@ const WidgetConatiner = (props) => {
                     <div ref={container} className="aaa">
                         {
                             WidgetManager._instances.map(widget => {
+                                console.info(widget)
                                 let {
                                     title,
                                     style,
@@ -33,6 +34,7 @@ const WidgetConatiner = (props) => {
                                             legend,
                                             ...style
                                         }}
+                                        props={widget.props}
                                     >
                                         {/* widget 실제 instance */}
                                         <widget.instance {...widget.props} />

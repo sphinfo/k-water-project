@@ -1,5 +1,5 @@
 import MapManager from "@gis/MapManager";
-import { G$addLayer } from "@gis/util";
+import { G$RandomId, G$addLayer } from "@gis/util";
 import {Cartesian3, Color, CustomDataSource, Entity, EntityCollection, HeightReference, PropertyBag, VerticalOrigin} from "cesium";
 import { Chart } from "chart.js";
 import { Chart as ChartJS } from 'chart.js/auto'
@@ -16,15 +16,14 @@ class BaseEntityChartCollection extends CustomDataSource {
 		this.type = 'datasource'
 	}
 
-	async _addFeature(longitude, latitude, name='', data=[30, 40, 30], properties={}) {
+	async _addFeature(longitude, latitude, name='', data=[], properties={}) {
 
 		let me = this
 
-		const ctx = document.getElementById('pieChartCanvas2').getContext('2d')
-		var existingChart = Chart.getChart("pieChartCanvas2");
-		if (existingChart) {
-			existingChart.destroy();
-		}
+		let canvas = document.createElement('canvas');
+		const ctx = canvas.getContext('2d');
+		document.body.appendChild(canvas);
+
 
 		// 파이 차트 데이터 및 옵션을 설정합니다.
 		var chartData = {
@@ -44,29 +43,26 @@ class BaseEntityChartCollection extends CustomDataSource {
 
 		// 파이 차트를 임시 캔버스에 그립니다.
 		
-		let chart = new Chart(ctx,{ type:"doughnut", data: chartData, options: chartOptions })
+		new Chart(ctx,{ type:"doughnut", data: chartData, options: chartOptions })
 
-		await new Promise(resolve => setTimeout(resolve, 100));
-
-		let canvas = ctx.canvas;
+		//let canvas = ctx.canvas;
 		const dataURL = canvas.toDataURL();
-		const logoUrl = "../sample.png";
+		canvas.remove()
 	
 		const pointEntity = new Entity({
-			position: Cartesian3.fromDegrees(longitude, latitude, 300),
+			position: Cartesian3.fromDegrees(longitude, latitude),
 			clampToGround: true,
 			point: {
 				pixelSize: 10,
-				color: Color.RED,
+				color: Color.TRANSPARENT,
 			},
 			billboard: {
-				image: water,
+				image: dataURL,
 				width: 35,
 				height: 35,
 				heightReference: HeightReference.RELATIVE_TO_GROUND,
 				verticalOrigin: VerticalOrigin.BOTTOM
 			},
-			name: name
 		});
 		pointEntity.properties = properties
 		me.entities.add(pointEntity);

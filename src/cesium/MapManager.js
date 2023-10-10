@@ -101,12 +101,12 @@ class MapManager {
     }
 
     //point 이동
-    flyToPoint(point, zoom=850000){
+    flyToPoint(point, zoom=850000, pitch=-90){
         this._map.camera.flyTo({
             destination: Cartesian3.fromDegrees(point[0], point[1], zoom), // 목표 위치의 카메라 높이 (높이 값 조절 가능)
             orientation: {
               heading: Math.toRadians(0), // 방위각 (degrees)
-              pitch: Math.toRadians(-90), // 피치각 (degrees)
+              pitch: Math.toRadians(pitch), // 피치각 (degrees)
               roll: 0, // 롤각 (degrees)
             },
             duration: 3, // 애니메이션 지속 시간 (초)

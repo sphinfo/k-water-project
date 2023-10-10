@@ -47,7 +47,12 @@ const WidgetWrapper = (props) => {
                     <Suspense>{writeChildren()}</Suspense>
                 </div>
             ) : (
-            <Rnd>
+            <Rnd
+                default={{
+                x: defaultOption.props.x ? defaultOption.props.x : null,
+                y: defaultOption.props.y ? defaultOption.props.y : null
+              }}
+            >
                 <div style={defaultOption} key={wid} className={`${wid} widget-legend`}>
                     {/* 리소스가 준비될 때까지 렌더링을 일시 중지 */}
                     <Suspense>{writeChildren()}</Suspense>

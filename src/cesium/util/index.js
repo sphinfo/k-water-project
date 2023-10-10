@@ -286,7 +286,7 @@ const G$RandomId = (base='', length=15) =>{
     const charactersLength = characters.length;
     
     for (let i = 0; i < length; i++) {
-        base += characters.charAt(MathC.floor(MathC.random() * charactersLength));
+        base += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return base
 }
@@ -356,8 +356,8 @@ const G$flyToExtent= (extent, pitch=false) =>{
     MapManager.flyToExtent(extent, pitch)
 }
 
-const G$flyToPoint= (point, zoom) =>{
-    MapManager.flyToPoint(point, zoom)
+const G$flyToPoint= (point, zoom, pitch) =>{
+    MapManager.flyToPoint(point, zoom, pitch)
 }
 
 

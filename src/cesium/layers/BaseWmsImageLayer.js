@@ -4,10 +4,9 @@ import { WebMapServiceImageryProvider } from "cesium";
 
 class BaseWmsImageLayer {
 
-	constructor(store, layerId, cqlFIlter=null) {
+	constructor(store, layerId, cqlFIlter=null, fly=true) {
 
-		
-
+		this.fly = fly
 		this.props = {
 			store
 			,layerId
@@ -19,10 +18,11 @@ class BaseWmsImageLayer {
 			}
 		}
 
+		console.info(this.props)
 		//query 있을경우
-		if(cqlFIlter){
-			this.props.wmsParameters = {...this.props.wmsParameters, CQL_FILTER:cqlFIlter}
-		}
+		// if(cqlFIlter){
+		// 	this.props.wmsParameters = {...this.props.wmsParameters, CQL_FILTER:cqlFIlter}
+		// }
 
 		//layerId와 store가 있는지 확인
 		if (!layerId || !store) {
@@ -40,7 +40,13 @@ class BaseWmsImageLayer {
 			G$removeLayerForId(this.layer.id)
 			this.layer=null
 		}
+
+		if(this.props.cqlFilter){
+			this.props.wmsParameters = {...this.props.wmsParameters, CQL_FILTER:this.props.cqlFilter}
+		}
 	  
+		console.info(this.props.wmsParameters)
+		
 		this.layer = MapManager.addImageLayer(
 			new WebMapServiceImageryProvider({
 				url: this.props.wmsUrl,
@@ -52,8 +58,9 @@ class BaseWmsImageLayer {
 		this.layer.id = `${this.props.store}:${this.props.layerId}`
 		
 		
-
-		this._flyToExtent()
+		if(this.fly){
+			this._flyToExtent()
+		}
 
 	}
 
@@ -70,7 +77,9 @@ class BaseWmsImageLayer {
 
 			//다시 켰을시 지점 wms extent 이동
 			if(visible){
-				this._flyToExtent()
+				if(this.fly){
+					this._flyToExtent()
+				}
 			}
 		}
 	}
@@ -85,8 +94,9 @@ class BaseWmsImageLayer {
 	//지점 extent 이동
 	_flyToExtent(){
 
+		//layers: this.props.layerId,
 		//레이어 위치 이동
-		fetch(`${this.props.wmsUrl}?service=wms&version=1.3.0&request=GetCapabilities`).then(response => response.text()).then(data => {
+		fetch(`${this.props.wmsUrl}?service=wms&version=1.3.0&request=GetCapabilities&layers=${this.props.layerId}`).then(response => response.text()).then(data => {
 			// Parse the XML response
 			const parser = new DOMParser();
 			const xmlDoc = parser.parseFromString(data, 'text/xml');

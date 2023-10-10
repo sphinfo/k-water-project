@@ -1,5 +1,6 @@
 import {Cartesian2, Cartesian3, Color, CustomDataSource, Entity, EntityCollection, HeightReference, LabelStyle, PropertyBag, VerticalOrigin} from "cesium";
 import { Chart } from "chart.js";
+import { Chart as ChartJS } from 'chart.js/auto'
 
 
 class WaterShedChartDataSource extends CustomDataSource {
@@ -11,62 +12,71 @@ class WaterShedChartDataSource extends CustomDataSource {
 		this.type = 'datasource'
 	}
 
-	async _addFeature(longitude, latitude, data=[10]) {
+	async _addFeature(longitude, latitude, properties='', data=[]) {
 
 		let me = this
 
-		
+		let canvas = document.createElement('canvas');
+		const ctx = canvas.getContext('2d');
+		document.body.appendChild(canvas);
 
-		const image = await this._createChartImage();
+
+		//임시 RANDOM COLOR 
+		const rand = Math.floor(Math.random() * 5)
+		const color = ['#86E1F4', '#5DD38C', '#FAEB66', '#FFAD33', '#E95757', '#682323']
+
+		// 파이 차트 데이터 및 옵션을 설정합니다.
+		var chartData = {
+			datasets: [{
+				data: [1],
+				backgroundColor: [color[rand]]
+			}]
+		};
+
+		var chartOptions = {
+			responsive: true,
+			cutoutPercentage: 0, // 파이 차트의 중앙 부분을 잘라내지 않음
+			animation: {
+				duration: 0
+			}
+		};
+
+		// 파이 차트를 임시 캔버스에 그립니다.
+		
+		new Chart(ctx,{ type:"pie", data: chartData, options: chartOptions })
+
+		//let canvas = ctx.canvas;
+		const dataURL = canvas.toDataURL();
+		canvas.remove()
 
 		const pointEntity = new Entity({
-			position: Cartesian3.fromDegrees(longitude, latitude, 1000),
+			position: Cartesian3.fromDegrees(longitude, latitude),
 			clampToGround: true,
 			point: {
-				pixelSize: 10,
-				color: Color.RED,
+				pixelSize: 30,
+				color: Color.TRANSPARENT,
+			},
+			label: {
+				text: properties.MBSNNM,
+				font: "14px sans-serif", // 폰트 및 크기 설정
+				fillColor: Color.BLACK, // 텍스트 색상
+				outlineColor: Color.BLACK, // 텍스트 외곽선 색상
+				outlineWidth: 2, // 텍스트 외곽선 두께
+				style: LabelStyle.FILL_AND_OUTLINE, // 텍스트 스타일
+				verticalOrigin: VerticalOrigin.BOTTOM, // 세로 정렬 위치
+				pixelOffset: new Cartesian2(0, -40), // 텍스트 픽셀 오프셋
 			},
 			billboard: {
-				image: image,
+				image: dataURL,
 				width: 35,
 				height: 35,
 				heightReference: HeightReference.RELATIVE_TO_GROUND,
 				verticalOrigin: VerticalOrigin.BOTTOM
 			},
-			name: this.id
 		});
-		//pointEntity.properties = properties
+		pointEntity.properties = properties
 		me.entities.add(pointEntity);
 
-	}
-
-	_createChartImage() {
-		return new Promise((resolve) => {
-			const canvas = document.createElement("canvas");
-			const ctx = canvas.getContext("2d");
-		
-			// 파이 차트 데이터 및 옵션을 설정합니다.
-			const chartData = [10, 20, 30];
-			const chartOptions = {
-				responsive: true,
-				cutoutPercentage: 0, // 파이 차트의 중앙 부분을 잘라내지 않음
-				animation: {
-				duration: 0,
-				},
-			};
-		
-			// 파이 차트를 임시 캔버스에 그립니다.
-			new Chart(ctx, { type: "doughnut", data: chartData, options: chartOptions });
-		
-			// 이미지가 준비되면 콜백 함수 호출
-			canvas.toBlob((blob) => {
-				const reader = new FileReader();
-				reader.onloadend = () => {
-					resolve(reader.result);
-				};
-				reader.readAsDataURL(blob);
-			});
-		});
 	}
 	
 }

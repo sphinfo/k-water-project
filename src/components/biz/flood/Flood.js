@@ -1,12 +1,12 @@
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
-import { G$addLayer, G$addWidget, G$flyToExtent, G$removeLayer, G$removeLayerForId, G$removeWidget } from "@gis/util";
+import { G$addLayer, G$addWidget, G$cartesianToLongLat, G$flyToExtent, G$flyToPoint, G$removeLayer, G$removeLayerForId, G$removeWidget } from "@gis/util";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import React, { useEffect, useImperativeHandle, useRef } from "react";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 
-const Biz2 = () => {
+const Flood = () => {
 
     const waterBodyLayer = useRef()
     const waterWfsLayer = useRef()
@@ -17,7 +17,7 @@ const Biz2 = () => {
             if(features.length > 0){
                 features.map((featureObj)=>{
                     if(featureObj.id.indexOf('waterPoint') > -1){
-                        G$addWidget('TestChartWidget')
+                        G$addWidget('TestChartWidget', {x:featureObj.clickPosition.x-340, y:featureObj.clickPosition.y-50})
                     }
                 })
             }
@@ -27,8 +27,10 @@ const Biz2 = () => {
 
     useEffect(()=>{
 
-        waterBodyLayer.current = new BaseWmsImageLayer('WaterBody', '20230723T21water_JL_RGB000102')
-        landuseLayer.current = new BaseWmsImageLayer('WaterBody', '20230723T21water_JL_landuse_RGB000102')
+        waterBodyLayer.current = new BaseWmsImageLayer('WaterBody', '20230723T21water_JL_RGB000102', null, false)
+        waterBodyLayer.current.setOpacity(0.5)
+        landuseLayer.current = new BaseWmsImageLayer('WaterBody', '20230723T21water_JL_landuse_RGB000102', null, false)
+        landuseLayer.current.setOpacity(0.5)
         waterWfsLayer.current = new BaseEntityCollection({name:'waterPoint'})
         G$addLayer(waterWfsLayer.current)
         
@@ -38,6 +40,7 @@ const Biz2 = () => {
 
         return()=>{
             G$removeWidget('TestChartWidget')
+            G$removeWidget('BaseLegendWidget')
             G$removeLayer(waterBodyLayer.current.layer)
             G$removeLayer(landuseLayer.current.layer)
             G$removeLayer(waterWfsLayer.current)
@@ -56,6 +59,11 @@ const Biz2 = () => {
         waterBodyLayer.current.setVisible(false)
         landuseLayer.current.setVisible(false)
 
+        //범례닫기
+        G$removeWidget('BaseLegendWidget')
+
+        console.info(G$cartesianToLongLat({x: -3315459.674748404, y: 4414704.731029669, z: 3874381.406170914}))
+
         if(selected === 'waterLevel'){
             waterWfsLayer.current._addFeature(127.28631,35.313264, {a:'a'})
             waterWfsLayer.current._addFeature(127.25120,35.317408, {b:'b'})
@@ -69,8 +77,12 @@ const Biz2 = () => {
             G$flyToExtent([126.93882919415756, 34.865073600401786, 127.58990862818611, 35.14108393416024], -60)
         }else if(selected === 'landuse'){
             landuseLayer.current.setVisible(true)
+            G$flyToPoint([126.9066856176106, 35.23029710708011], 356000)
+            G$addWidget('BaseLegendWidget', { params: {title:'피해분석', datas: [{label:'Building', color:'#FF33FF'},{label:'Barren', color:'#FFCC00'},{label:'Forest', color:'#009900'},{label:'Water', color:'#0000FF'},{label:'grass', color:'#33FF99'}]} })
         }else if(selected === 'waterBody'){
             waterBodyLayer.current.setVisible(true)
+            G$flyToPoint([126.9066856176106, 35.23029710708011], 356000)
+
         }
 
     },[selected])
@@ -86,4 +98,4 @@ const Biz2 = () => {
     )
 }
 
-export default React.memo(Biz2);
+export default React.memo(Flood);

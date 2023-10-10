@@ -30,10 +30,6 @@ class GisLayerClickTool {
 	//click callback 
 	async handleMapClick(event) {
 
-		const screenPosition = new Cartesian2(event.clientX, event.clientY);
-		const cartesianPosition = MapManager.map.scene.pickPosition(screenPosition);
-		console.info(cartesianPosition)
-
 		for (const [biz, isUse] of Object.entries(this._bizs)) {
 			if (isUse) {
 				const bizeProps = this._bizProps[biz];
@@ -52,7 +48,7 @@ class GisLayerClickTool {
 						//biz에 등록된 레이어 명칭만 callback에 담기
 						layers.map((layerId)=>{
 							if(layerId === pickedEntity.name){
-								features.push({id: pickedEntity.name, properties: pickedEntity.properties.getValue('')})
+								features.push({id: pickedEntity.name, properties: pickedEntity.properties.getValue(''), clickPosition: event.position})
 							}
 						})
 					}
@@ -81,7 +77,8 @@ class GisLayerClickTool {
 					wmsResults.map((wmsObj)=>{
 						wmsObj.data.features.map((featureObj)=>{
 							featureObj.id = wmsObj.config.params.typeName
-							features.push(featureObj)	
+							featureObj.clickPosition = event
+							features.push(featureObj)
 						})
 						
 					})
