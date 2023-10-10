@@ -74,7 +74,7 @@ const Flood = () => {
             waterWfsLayer.current._addFeature(127.19292,35.387827, {a:'a5'})
             waterWfsLayer.current._addFeature(127.19605,35.375238, {a:'a6'})
             waterWfsLayer.current._addFeature(127.16970,35.312817, {a:'a4'})
-            G$flyToExtent([126.93882919415756, 34.865073600401786, 127.58990862818611, 35.14108393416024], -60)
+            G$flyToPoint([127.26936353524, 35.09237629035124], 46000, -60)
         }else if(selected === 'landuse'){
             landuseLayer.current.setVisible(true)
             G$flyToPoint([126.9066856176106, 35.23029710708011], 356000)

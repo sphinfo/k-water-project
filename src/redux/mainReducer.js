@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 
 import {
+  LOADING,
   CHANGE_MODE,
   SET_START_DATE,
   SET_END_DATE,
@@ -14,7 +15,8 @@ import { G$addLayer } from '@gis/util';
 
 const initialState = {
   mode: '',
-  thematic: false,
+  loading: false, //맵로딩
+  thematic: false, //주제도
   mainOptions: [],
   selectOption: null,
   startDate: dayjs().format('YYYY-MM-DD'),
@@ -24,6 +26,8 @@ const initialState = {
 
 function mainReducer(state = initialState, action) {
   switch (action.type) {
+    case LOADING:
+      return { ...state, loading: action.loading }
     case THEMATIC_MODE:
       return { ...state, thematic: action.thematic }
     case CHANGE_MODE:

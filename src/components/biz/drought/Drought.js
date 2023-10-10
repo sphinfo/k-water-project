@@ -3,15 +3,16 @@ import { G$addLayer, G$addWidget, G$flyToExtent, G$pointsToCenter, G$pointsToExt
 import React, { useEffect, useRef, useState } from "react";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import BaseCustomDataSource from "@gis/layers/BaseCustomDataSource";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
-import WaterShedDataSource from "@gis/layers/WaterShedDataSource";
 import { Cartesian3, HeadingPitchRange, HeadingPitchRoll, Math as MathC } from "cesium";
 import MapManager from "@gis/MapManager";
 import WaterShedChartDataSource from "@gis/layers/WaterShedChartDataSource";
-import BaseEntityChartCollection from "@gis/layers/BaseEntityChartCollection";
+import { useDispatch } from "react-redux";
+import { LOADING } from "@redux/actions";
 
 const Drought = () => {
+
+    const dispatch = useDispatch()
 
     //
     const [watershed, setWatershed] = useState(null)
@@ -25,7 +26,7 @@ const Drought = () => {
     const watershedWfsLayer = useRef({id:''})
 
     useEffect(()=>{
-        G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:10, max: 25, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEEB', '#00BFFF']}})
+        G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:10, max: 25, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
         droughtLayer.current = new BaseWmsImageLayer('Drought','Drought Group') //토양수분레이어
         watershedWfsLayer.current = new WaterShedChartDataSource({name:'watershedWfs'}) //유역통계 레이어
         watershedLayer.current = new BaseWmsImageLayer('watershed_map','WKMMBSN', null, false) //유역 레이어
@@ -36,11 +37,8 @@ const Drought = () => {
             G$removeWidget('BaseLegendgGradientWidget')
             G$removeLayerForId(droughtLayer.current.layer.id)
             G$removeLayerForId(watershedLayer.current.layer.id)
-            G$removeLayerForId(watershedWfsLayer.current.id)
-            
+            G$removeLayerForId(watershedWfsLayer.current.id)            
         }
-
-
     },[])
 
     //수계 그룹 변경
@@ -57,10 +55,13 @@ const Drought = () => {
 
         if(watershed){
 
+            dispatch({type: LOADING, loading: true})
+
             //권역 중심점 point
             watershedWfsLayer.current.entities.removeAll()
             axios.getFeature('watershed_map','WKMMBSN',`BBSNCD='${watershed}'`).then((res)=>{
 
+                dispatch({type: LOADING, loading: false})
 
                 watershedLayer.current.changeParameters({cqlFilter:`BBSNCD='${watershed}'`})
                 watershedLayer.current.setVisible(true)
@@ -93,6 +94,7 @@ const Drought = () => {
 
         }else{
             watershedLayer.current.setVisible(false)
+            watershedWfsLayer.current.entities.removeAll()
         }
 
         

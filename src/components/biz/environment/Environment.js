@@ -17,7 +17,9 @@ const Environment = () => {
       //부유물
       gArbageLayer.current = new BaseWmsImageLayer('Garbage', 'Chlorophyll_Map_2')
       landCoverLayer.current = new BaseWmsImageLayer('LandCover', 'RF_20220914_clip')
-      landCoverOverLayer.current = new BaseWmsImageLayer('LandCover', 'clipped_cd', null, false)
+      //landCoverOverLayer.current = new BaseWmsImageLayer('LandCover', 'clipped_cd', null, false)
+      landCoverOverLayer.current = new BaseWmsImageLayer('LandCover', 'change_detection', null, false)
+      //
 
       return()=>{
 
@@ -84,12 +86,12 @@ const Environment = () => {
 
     useEffect(()=>{
       landCoverOverLayer.current.setVisible(landCoverSwitch ? true : false)
-      if(landCoverSwitch){
-        setTimeout(()=>{
-          G$flyToPoint([127.107073977, 36.468267987], 3777)
-        },500)
+      // if(landCoverSwitch){
+      //   setTimeout(()=>{
+      //     G$flyToPoint([127.107073977, 36.468267987], 3777)
+      //   },500)
         
-      }
+      // }
     },[landCoverSwitch])
 
 

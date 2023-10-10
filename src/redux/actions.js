@@ -4,6 +4,9 @@ export const CHANGE_MODE = 'CHANGE_MODE';
 //주제도 ON / OFF
 export const THEMATIC_MODE = 'THEMATIC_MODE';
 
+//맵 로딩바
+export const LOADING = 'LOADING';
+
 
 export const SET_START_DATE = 'SET_START_DATE';
 export const SET_END_DATE = 'SET_END_DATE';

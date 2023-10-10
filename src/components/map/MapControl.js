@@ -9,15 +9,20 @@ import Sidebar from "./left/Sidebar";
 import TimeZoneWidget from "./top/TimeZoneWidget";
 import ThematicWidget from "./right/ThematicWidget";
 import CircularProgress from '@mui/material/CircularProgress';
+import { useSelector } from "react-redux";
 
 
-export default function MapControl() {
+const MapControl = () =>{
+
+    const loading = useSelector(state => state.main.loading);
+
     return (
         <>
-          <div className="loading" style={{display: 'none'}} >
-            <CircularProgress color="primary" size={50} thickness={4} />
-          </div>
+            <div className="loading" style={{display: loading ? '' : 'none'}} >
+                <CircularProgress color="primary" size={50} thickness={4} />
+            </div>
             <div className="map_ctrl_right">
+                {loading}
                 <ThematicWidget /> {/* 주제도 */}
                 <MeasureMapWidget /> {/* 측정 */}
                 <ZoomMapWidget />  {/* 줌 */} 
@@ -40,3 +45,6 @@ export default function MapControl() {
         </>
     )
 }
+
+
+export default MapControl; 
