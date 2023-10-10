@@ -500,11 +500,59 @@
       }
     }
     .map-popup-box-body{
-      width: max-content;
-      padding: 20px 15px 10px 10px;
-      img{
-        max-width: 380px;
+      width: 610px;
+      padding: 20px 20px 15px;
+      .img-wrap{
+        img{
+          width: 100%;
+        }
       }
+
+      .table-wrap{
+        padding-top: 15px;
+        flex: 1 0 auto;
+        justify-content: stretch;
+        align-items: stretch;
+        align-self: stretch;
+        .popup-table{
+          table-layout: fixed;
+          border-collapse: collapse;
+          font-size: 14px;
+          color: $body-font-color;
+          width: 100%;
+          thead{
+            tr{
+              border-top: 1px solid $primary;
+              > th,td{
+                background-color: $primary-100;
+                padding: 5px 5px;
+                &:not(:last-child){
+                  border-right: 1px solid $line;
+                }
+                .th-unit{
+                  font-size: 12px;
+                  font-weight: 400;
+                }
+              }
+            }
+          }
+          tbody{
+            tr{
+              > th, td{
+                padding: 4px 6px;
+                text-align: right;
+                &:not(:last-child){
+                  border-right: 1px solid $line;
+                }
+              }
+              &:nth-child(even){
+                background-color: $basic;
+              }
+            }
+          }
+        }
+      }
+
     }
   }
 }
@@ -701,3 +749,4 @@
     }
   }
 }
+
