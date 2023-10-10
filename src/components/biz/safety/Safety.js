@@ -134,7 +134,7 @@ const Safety = () => {
                 </div>
             </div>
             <div className="widget-legend safety" style={{width: 70, top:safetyTab === 'rating' ? 100 : 265}}>
-                <dl className="widget-legend-wrap">
+                <dl className="widget-legend-wrap legend-vertical">
                     <dt>
                         <h4>변위 {safetyTab === 'rating' ? '등급' : '성분'}</h4>
                     </dt>

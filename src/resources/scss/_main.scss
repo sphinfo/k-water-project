@@ -582,30 +582,6 @@
     bottom: unset;
     top: 265px;
     //transform: translateY(-50%);
-    .widget-legend-wrap{
-      dd{
-        display: flex;
-        .widget-legend-unit{
-          align-self: stretch;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          li{
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding-right: 0;
-            &:before{
-              content: '';
-              display: block;
-              width: 5px;
-              height: 1px;
-              background-color: $grey-400;
-            }
-          }
-        }
-      }
-    }
   }
 
   dl.widget-legend-wrap{
@@ -659,18 +635,35 @@
         background-color: #682323;
       }
       &.e-w-velocity{
-        width: 17px;
-        height: 200px;
         background: linear-gradient(0deg, #EE6969 0%, #FFE34F 25.52%, #8FE99E 52.08%, #89F7F7 77.08%, #5E52EC 100%);
       }
     }
     &.legend-vertical{
       dd{
         display: flex;
+        .widget-legend-chip{
+          width: 17px;
+          height: 200px;
+          margin-right: 3px;
+        }
         .widget-legend-unit{
+          align-self: stretch;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+          li{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding-right: 0;
+            &:before{
+              content: '';
+              display: block;
+              width: 5px;
+              height: 1px;
+              background-color: $grey-400;
+            }
+          }
         }
       }
     }

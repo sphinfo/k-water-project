@@ -28,7 +28,7 @@ const BaseLegendWidget = (props) => {
                 <dt><h4>{title}</h4></dt>
                 <dd>
                     {datas && datas.length > 3 ? (
-                        <div className="widget-legend-chip e-w-velocity" 
+                        <div className="widget-legend-chip"
                             style={{background: `linear-gradient(0deg, ${datas[0]} 0%, ${datas[1]} 25.52%, ${datas[2]} 52.08%, ${datas[3]} 77.08%, ${datas[4]} 100%)`}}>
                         </div>
                     ) : null}
