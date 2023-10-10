@@ -8,11 +8,15 @@ import AddrSearchWidget from "./top/AddrSearchWidget";
 import Sidebar from "./left/Sidebar";
 import TimeZoneWidget from "./top/TimeZoneWidget";
 import ThematicWidget from "./right/ThematicWidget";
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 export default function MapControl() {
     return (
         <>
+          <div className="loading" style={{display: 'none'}} >
+            <CircularProgress color="primary" size={50} thickness={4} />
+          </div>
             <div className="map_ctrl_right">
                 <ThematicWidget /> {/* 주제도 */}
                 <MeasureMapWidget /> {/* 측정 */}
