@@ -58,8 +58,12 @@ class BaseGeoserverAxios {
         try {
             let longitude, latitude
             var scene = MapManager.map.scene
-            var cartesian = scene.pickPosition(clickPosition)
-            var cartographic = Cartographic.fromCartesian(cartesian)
+            //var cartesian = MapManager.map.scene.pickPosition(clickPosition)
+
+            const ray = MapManager.map.camera.getPickRay(clickPosition)
+            const position = scene.globe.pick(ray, scene);
+
+            var cartographic = Cartographic.fromCartesian(position)
             longitude = MathC.toDegrees(cartographic.longitude)
             latitude = MathC.toDegrees(cartographic.latitude)
 

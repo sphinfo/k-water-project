@@ -97,7 +97,7 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
                 if(layerInfo.instance){
                     layerInfo.instance.setVisible(visible)
                 }else{
-                    layerInfo.instance = new BaseWmsImageLayer(layerInfo.store, layerInfo.id)
+                    layerInfo.instance = new BaseWmsImageLayer(layerInfo.store, layerInfo.id, null, false)
                     //layerInfo.instance.setOpacity(0.4)
                 }
             }

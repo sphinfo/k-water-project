@@ -1,14 +1,14 @@
-import BaseGeoserverAxios from "@common/axios/BaseGeoserverAxios";
-import { G$addLayer, G$addWidget, G$flyToExtent, G$pointsToCenter, G$pointsToExtent, G$pointsToLowest, G$polygonToCentroid, G$removeLayerForId, G$removeWidget } from "@gis/util";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { LOADING } from "@redux/actions";
+import { Cartesian3,  HeadingPitchRoll, Math as MathC } from "cesium";
+import { G$addLayer, G$addWidget, G$polygonToCentroid, G$removeLayerForId, G$removeWidget } from "@gis/util";
+import BaseGeoserverAxios from "@common/axios/BaseGeoserverAxios";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
-import { Cartesian3, HeadingPitchRange, HeadingPitchRoll, Math as MathC } from "cesium";
 import MapManager from "@gis/MapManager";
 import WaterShedChartDataSource from "@gis/layers/WaterShedChartDataSource";
-import { useDispatch } from "react-redux";
-import { LOADING } from "@redux/actions";
 
 const Drought = () => {
 

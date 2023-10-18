@@ -328,6 +328,29 @@ const G$GetPointToDetail=(longitude, latitude)=>{
     
 }
 
+const G$multiPolygonToExtent = (multipolygon=[]) =>{
+    let minX = Number.POSITIVE_INFINITY;
+    let minY = Number.POSITIVE_INFINITY;
+    let maxX = Number.NEGATIVE_INFINITY;
+    let maxY = Number.NEGATIVE_INFINITY;
+
+    // Multipolygon 내의 모든 포인트에 대한 반복
+    for (const polygon of multipolygon) {
+        for (const ring of polygon) {
+            for (const point of ring) {
+                const [x, y] = point;
+                // 최소 및 최대 좌표 업데이트
+                minX = Math.min(minX, x);
+                minY = Math.min(minY, y);
+                maxX = Math.max(maxX, x);
+                maxY = Math.max(maxY, y);
+            }
+        }
+    }
+
+    return [minX, minY,  maxX, maxY]
+}
+
 
 const G$pointsToExtent = (points = []) =>{
 
@@ -392,6 +415,7 @@ export {
     G$normalizeWithColors,
     G$cartesianToLongLat,
 
+    G$multiPolygonToExtent,
     G$pointsToExtent,
     G$flyToExtent,
     G$flyToPoint,

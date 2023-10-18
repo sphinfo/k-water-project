@@ -84,7 +84,7 @@ class WidgetManager {
                 return;
             }
             const instance = {
-                ...WidgetConfig[widgetId], config, ...config,
+                ...WidgetConfig[widgetId], config, ...config, 
                 id: widgetId,
                 guid: uuid(),
                 props,

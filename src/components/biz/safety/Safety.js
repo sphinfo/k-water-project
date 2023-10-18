@@ -7,13 +7,18 @@ import Switch from "@mui/material/Switch";
 import SafeLevelDataSource from "@gis/layers/SafeLevelDataSource";
 import SafeLevel2DataSource from "@gis/layers/SafeLevel2DataSource";
 import TestDataConfig from "@gis/config/TestDataConfig";
+import BaseEntityChartCollection from "@gis/layers/BaseEntityChartCollection";
+import WaterShedChartDataSource from "@gis/layers/WaterShedChartDataSource";
+import SaftyLevelChartDataSource from "@gis/layers/SaftyLevelChartDataSource";
+import MapManager from "@gis/MapManager";
+import { Math } from "cesium";
 
 const Safety = () => {
 
     /* 변위등급 / 변위성분 */
     const [safetyTab, setSafetyTab] = useState('rating')
     /* 변위 성분 - 위성방향 */
-    const [ingre, setIngre] = useState('')
+    const [ingre, setIngre] = useState('L3TD_A2_YONGDAM_ASC')
 
     /* 변위성분 레이어 */
     const bizLayer1 = useRef()
@@ -31,11 +36,13 @@ const Safety = () => {
 
     useEffect(()=>{
 
-        bizLayer1.current = new BaseWmsImageLayer('Safety','')
+        bizLayer1.current = new BaseWmsImageLayer('Safety','L3TD_A2_YONGDAM_ASC')
         bizLayer2WfsLayer.current = new SafeLevel2DataSource({name:'biz2'})
         G$addLayer(bizLayer2WfsLayer.current)
 
-        safeLevelWfsLayer.current = new SafeLevelDataSource({name:'safeLevelWfs'})
+        //safeLevelWfsLayer.current = new SafeLevelDataSource({name:'safeLevelWfs'})
+        safeLevelWfsLayer.current = new SaftyLevelChartDataSource({name:'safeLevelWfs'})
+        
         G$addLayer(safeLevelWfsLayer.current)
 
         return()=>{
@@ -89,16 +96,21 @@ const Safety = () => {
     useEffect(()=>{
 
         let sampleD = [[127.5250673286962,35.944192524501226],
-        [127.53529701571178,35.97097555573311],
-        [127.46753556525508,35.95249077680412],
-        [127.48402275397979,35.93312025326577],
-        [127.57799526943475,35.9944069442441]]
+                        [127.53529701571178,35.97097555573311],
+                        [127.46753556525508,35.95249077680412],
+                        [127.48402275397979,35.93312025326577],
+                        [127.57799526943475,35.9944069442441]]
 
         if(safeLevelSwitch){
             G$addWidget('BaseLegendWidget', { params: {title:'안전 등급', datas: [{label:'안전', color:'BLUE'},{label:'보통', color:'YELLOW'},{label:'위험', color:'RED'}]} })
             sampleD.map((centroid)=>{
-                safeLevelWfsLayer.current._addFeature(centroid[0],centroid[1], 'xx댐')
+                safeLevelWfsLayer.current._addFeature(centroid[0],centroid[1], '')
             })
+
+            
+            G$flyToPoint([127.50843157935425, 35.863467152308926], 13000, -52)
+            
+
         }else{
             safeLevelWfsLayer.current.entities.removeAll()
             G$removeWidget('BaseLegendWidget')

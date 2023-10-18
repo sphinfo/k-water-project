@@ -1,6 +1,15 @@
 import React from 'react';
 
-const TextInput = ({ value, onChange, placeholder='', placeholderTextColor, onKeyPress }) => {
+const TextInput = ({ value, onChange, placeholder='', placeholderTextColor='', onKeyPress }) => {
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      if (onKeyPress) {
+        onKeyPress();
+      }
+    }
+  };
+
   return (
     <input 
       type="text" 
@@ -8,7 +17,7 @@ const TextInput = ({ value, onChange, placeholder='', placeholderTextColor, onKe
       onChange={onChange}  
       placeholder={placeholder} 
       placeholdertextcolor={placeholderTextColor}
-      onKeyPress={onKeyPress}
+      onKeyPress={handleKeyPress}
     />
   );
 };

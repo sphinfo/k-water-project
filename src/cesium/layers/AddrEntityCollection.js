@@ -1,9 +1,8 @@
 import {Cartesian3, Color, CustomDataSource, Entity, EntityCollection, HeightReference, PropertyBag, VerticalOrigin} from "cesium";
-//import water from '../layers/water.png'
-import water from '../../resources/images/map-satellite-icon.svg'
+import icon from '../../resources/images/point-icon.png'
 
 
-class BaseEntityCollection extends CustomDataSource {
+class AddrEntityCollection extends CustomDataSource {
 
 	constructor(props) {
 
@@ -12,11 +11,11 @@ class BaseEntityCollection extends CustomDataSource {
 		this.type = 'datasource'
 	}
 
-	async _addFeature(longitude, latitude, properties) {
+	async _addFeature(longitude, latitude) {
 		const pointEntity = new Entity({
 			position: Cartesian3.fromDegrees(longitude, latitude),
 			billboard: {
-				image: water,
+				image: icon,
 				width: 35,
 				height: 35,
 				clampToGround: true,
@@ -25,7 +24,6 @@ class BaseEntityCollection extends CustomDataSource {
 				scale: 1.0,
 				disableDepthTestDistance: Number.POSITIVE_INFINITY
 			},
-			properties: properties,
 			name: this.id
 		});
 
@@ -34,4 +32,4 @@ class BaseEntityCollection extends CustomDataSource {
 	
 }
 
-export default BaseEntityCollection;
+export default AddrEntityCollection;

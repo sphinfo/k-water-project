@@ -103,6 +103,7 @@ class GisDrawTool {
                         outlineWidth: 2,
                         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                         heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+                        disableDepthTestDistance: Number.POSITIVE_INFINITY
                     }
                 }
             }
@@ -119,6 +120,7 @@ class GisDrawTool {
             outlineWidth: 2,
             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
             heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+            disableDepthTestDistance: Number.POSITIVE_INFINITY
         } : null
 
         //클린 분기점 point
@@ -129,6 +131,7 @@ class GisDrawTool {
             color: Color.BLUE,
             pixelSize: 5,
             heightReference: HeightReference.CLAMP_TO_GROUND,
+            disableDepthTestDistance: Number.POSITIVE_INFINITY
           },
           label: label
         });
@@ -181,6 +184,7 @@ class GisDrawTool {
                 outlineWidth: 2,
                 verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                 heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+				disableDepthTestDistance: Number.POSITIVE_INFINITY
             },
         });
     }

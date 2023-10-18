@@ -8,10 +8,10 @@ import {
   SET_MAIN_OPTIONS,
   REMOVE_MAIN_OPTIONS,
   LEGNED_PANEL,
-  THEMATIC_MODE
+  SEARCH_ADDR,
+  THEMATIC_MODE,
+  SEARCH_RIVER
 } from './actions';
-import { useDispatch } from 'react-redux';
-import { G$addLayer } from '@gis/util';
 
 const initialState = {
   mode: '',
@@ -21,8 +21,11 @@ const initialState = {
   selectOption: null,
   startDate: dayjs().format('YYYY-MM-DD'),
   endDate: dayjs().format('YYYY-MM-DD'),
-  lengedPanel: {}
+  lengedPanel: {},
+  addrResult:{},
+  riverResult:[]
 };
+
 
 function mainReducer(state = initialState, action) {
   switch (action.type) {
@@ -60,6 +63,19 @@ function mainReducer(state = initialState, action) {
         lengedPanel: updatedLengedPanel, 
       }
 
+    //주소검색 
+    case SEARCH_ADDR:
+      return {
+        ...state,
+        addrResult: action.result,
+      }
+
+    //하천 검색
+    case SEARCH_RIVER:
+      return {
+        ...state,
+        riverResult: action.result,
+      }
     default:
       return state;
   }

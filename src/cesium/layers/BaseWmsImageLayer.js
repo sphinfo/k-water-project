@@ -108,6 +108,8 @@ class BaseWmsImageLayer {
 			const southBound = parseFloat(layerExtent.querySelector('southBoundLatitude').textContent);
 			const northBound = parseFloat(layerExtent.querySelector('northBoundLatitude').textContent);
 
+			console.info(westBound)
+			console.info(westBound, southBound, eastBound, northBound)
 			// Create an extent array
 			const extent = [westBound, southBound, eastBound, northBound];
 

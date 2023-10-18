@@ -1,6 +1,7 @@
 import { Cartesian3, CesiumTerrainProvider, Credit, Math, Rectangle, ScreenSpaceEventType, Terrain, Viewer, WebMapTileServiceImageryProvider } from "cesium";
 import * as Cesium from 'cesium';
 import "cesium/Build/Cesium/Widgets/widgets.css";
+import 'cesium-geoserverterrainprovider';
 
 
 class MapManager {
@@ -19,21 +20,20 @@ class MapManager {
                     {layer : 'Hybrid', tileType : 'png'},
                     {layer : 'Satellite', tileType : 'jpeg'} ]
 
-    var selLayer = layers[0];
+        var selLayer = layers[0];
 
-    // let vworld_key = 'B9A40D30-8F5B-3141-839A-DAA04BB600F0'
+        let vworld_key = 'B9A40D30-8F5B-3141-839A-DAA04BB600F0'
 
-    // var vworld = new WebMapTileServiceImageryProvider({
-    //     url : `http://api.vworld.kr/req/wmts/1.0.0/${vworld_key}/${selLayer.layer}/{TileMatrix}/{TileRow}/{TileCol}.${selLayer.tileType}`,
-    //     layer : 'Base',
-    //     style : 'default',
-    //     tileMatrixSetID: 'EPSG:900913',
-    //     maximumLevel: 19,
-    //     credit : new Credit('VWorld Korea')
-    // });
+        var vworld = new WebMapTileServiceImageryProvider({
+            url : `http://api.vworld.kr/req/wmts/1.0.0/${vworld_key}/${selLayer.layer}/{TileMatrix}/{TileRow}/{TileCol}.${selLayer.tileType}`,
+            layer : 'Base',
+            style : 'default',
+            tileMatrixSetID: 'EPSG:900913',
+            maximumLevel: 19,
+            credit : new Credit('VWorld Korea')
+        });
 
-    //     //Terrain
-
+        
         
         Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYTU0NmIyMS1hYTEwLTQyOTctYTE4OC01ZGY1YmRjM2E1NWEiLCJpZCI6MTY5ODQxLCJpYXQiOjE2OTYzODIxNjF9.W5XfR-n6gkphDtD7sUbkTfpBX4A5jbddFk_Ok1BSV6A'
 
@@ -46,22 +46,10 @@ class MapManager {
             selectionIndicator: false,
             trackedEntity : false,
             infoBox: false,
-            terrain: Terrain.fromWorldTerrain()
+            skyAtmosphere : false
         });
 
-        //this._map.TerrainProvider = TerrainProvider
-        //this._map.imageryLayers.addImageryProvider(vworld)
-
-        // var terrainProvider = new Cesium.CesiumTerrainProvider({
-        //     url : '//assets.agi.com/stk-terrain/world'
-        // })
-        // this._map.terrainProvider = terrainProvider
-
-        // var imageryProvider = new Cesium.WebMapServiceImageryProvider({
-        //     url: '/waterGeo/geoserver/wms',
-        //     layers: '전국_5m',
-        // });
-        // this._map.imageryLayers.addImageryProvider(imageryProvider);
+        this._map.imageryLayers.addImageryProvider(vworld)
 
         const targetLongitude = 127.61790470489117
         const targetLatitude = 36.52505158669595
@@ -94,6 +82,17 @@ class MapManager {
 
     get map() {
         return this._map;
+    }
+
+    // test terrain load
+    async terrainLoad() {
+
+        const terrainProvider = await Cesium.GeoserverTerrainProvider({
+            url: '/waterGeo',
+            layerName: "sph_test:pyramid"
+        });
+        this._map.terrainProvider = terrainProvider
+
     }
 
     getMap(){

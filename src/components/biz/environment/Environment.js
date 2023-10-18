@@ -36,6 +36,7 @@ const Environment = () => {
         }
           
         G$removeWidget('BaseLegendWidget')
+        G$removeWidget('BaseLegendgGradientWidget')
       }
 
     },[])
@@ -56,10 +57,13 @@ const Environment = () => {
 
     //레이어탭 change action
     useEffect(()=>{
-      console.info('changeTab')
+      G$removeWidget('BaseLegendWidget')
+      G$removeWidget('BaseLegendgGradientWidget')
+
       //부유물
       if(layerTab === 'gArbage'){
-        G$removeWidget('BaseLegendWidget')
+        G$addWidget('BaseLegendgGradientWidget', { params: {title:'부유물', min:300, max: 0, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+
         gArbageLayer.current.setVisible(true)
         if(landCoverLayer.current.layer){
           landCoverLayer.current.layer.show = false //setVisible(false)

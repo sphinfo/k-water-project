@@ -1,7 +1,6 @@
 const CracoAlias = require("craco-alias");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
 module.exports = {
   plugins: [
     {

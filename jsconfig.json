@@ -4,6 +4,7 @@
         "paths": {
 			"@assets/*": ["src/js/assets/*"],
 			"@components/*": ["src/components/*"],
+			"@biz/*": ["src/biz/*"],
 			"@common/*": ["src/common/*"],
 			"@gis/*": ["src/cesium/*"],
 			"@redux/*": ["src/redux/*"],

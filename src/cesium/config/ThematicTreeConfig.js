@@ -26,22 +26,27 @@ const ThematicTreeConfig = [
       "id": "2",
       "name": "행정구역",
       "children": [
-          {
-              store: 'administrative_district',
-              id: 'ctprvn',
-              name: '시도',
-              parent: '2'
-          },{
-              store: 'administrative_district',
-              id: 'emd',
-              name: '읍면동',
-              parent: '2'
-          },{
-              store: 'administrative_district',
-              id: 'li',
-              name: '동리',
-              parent: '2'
-          }
+            {
+                store: 'administrative_district',
+                id: 'ctprvn',
+                name: '시도',
+                parent: '2'
+            },{
+                store: 'administrative_district',
+                id: 'sig',
+                name: '시군구',
+                parent: '2'
+            },{
+                store: 'administrative_district',
+                id: 'emd',
+                name: '읍면동',
+                parent: '2'
+            },{
+                store: 'administrative_district',
+                id: 'li',
+                name: '동리',
+                parent: '2'
+            }
       ]
     },{
         "id": "3",

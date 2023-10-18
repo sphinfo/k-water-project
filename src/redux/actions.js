@@ -20,3 +20,7 @@ export const REMOVE_LAYER = 'REMOVE_LAYER'
 
 //하단 패널
 export const LEGNED_PANEL = 'LEGNED_PANEL'
+
+//주소 검색 / 하천검색
+export const SEARCH_ADDR = 'SEARCH_ADDR'
+export const SEARCH_RIVER = 'SEARCH_RIVER'

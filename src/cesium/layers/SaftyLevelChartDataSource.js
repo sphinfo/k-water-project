@@ -3,7 +3,7 @@ import { Chart } from "chart.js";
 import { Chart as ChartJS } from 'chart.js/auto'
 
 
-class WaterShedChartDataSource extends CustomDataSource {
+class SaftyLevelChartDataSource extends CustomDataSource {
 
 	constructor(props) {
 
@@ -22,9 +22,10 @@ class WaterShedChartDataSource extends CustomDataSource {
 
 
 		//임시 RANDOM COLOR 
-		const rand = Math.floor(Math.random() * 5)
-		const color = ['#86E1F4', '#5DD38C', '#FAEB66', '#FFAD33', '#E95757', '#682323']
+		const color = ['BLUE', 'YELLOW', 'RED']
+		const rand = Math.floor(Math.random() * color.length)
 
+		console.info(color[rand])
 		// 파이 차트 데이터 및 옵션을 설정합니다.
 		var chartData = {
 			datasets: [{
@@ -83,4 +84,4 @@ class WaterShedChartDataSource extends CustomDataSource {
 	
 }
 
-export default WaterShedChartDataSource;
+export default SaftyLevelChartDataSource;
