@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { memo } from 'react';
 import { useImperativeHandle } from 'react';
-import { G$flyToExtent, G$flyToPoint, G$getWmsLayerForId, G$multiPolygonToExtent, G$pointsToExtent, G$polygonToCentroid } from '@gis/util';
+import { G$flyToExtent, G$multiPolygonToExtent } from '@gis/util';
 import BaseWmsImageLayer from '@gis/layers/BaseWmsImageLayer';
 
 const RiverSearchResultComponent = ({type, addrSearchText}, ref) => {

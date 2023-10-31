@@ -1,11 +1,10 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
 import { memo } from 'react';
 import { useImperativeHandle } from 'react';
 import Pagination from '@common/util/Pagination';
 import { G$flyToPoint } from '@gis/util';
 import VWorldAddressSearch from '@biz/addr/VWorldAddressSearch';
 import EmptyMessage from '@common/util/EmptyMessage';
-import BaseEntityCollection from '@gis/layers/BaseEntityCollection';
 
 const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
 

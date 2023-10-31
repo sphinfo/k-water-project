@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import MapManager from '../../../cesium/MapManager';
+import React, { useEffect, useState } from 'react';
 import EventBus from '@common/eventBus/EventBus';
 import MapEvents from '@common/eventBus/MapEvents';
 import { G$cartesianToLongLat } from '@gis/util';

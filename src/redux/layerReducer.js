@@ -1,4 +1,4 @@
-import ThematicConfig from '@gis/config/ThematicConfig';
+//import ThematicConfig from '@gis/config/ThematicConfig';
 import ThematicTreeConfig from '@gis/config/ThematicTreeConfig';
 
 import {

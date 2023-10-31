@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import ThematicLayerComponent from './thematic/ThematicLayerComponent';
+import React, { useEffect, useState } from 'react';
 import { THEMATIC_MODE } from '@redux/actions';
 import { useDispatch } from 'react-redux';
 

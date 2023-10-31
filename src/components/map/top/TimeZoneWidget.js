@@ -38,12 +38,12 @@ const TimeZoneWidget = () => {
             <div className="map-address">
                 {time}
             </div>
-            <div className="map-address">
+            {/* <div className="map-address">
                 19℃
                 <span className="text-blue ml-5">
                     ☀︎
                 </span>
-            </div>
+            </div> */}
         </>
     )
 }

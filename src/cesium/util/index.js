@@ -41,6 +41,14 @@ const G$getWmsLayerForId = (id)=>{
     return MapManager.getImageryLayersById(id)
 }
 
+const G$changeMapLayer = (type=null) =>{
+    if(type){
+        if(MapManager._baseMapType !== type){
+            MapManager._changeBaseMap(type)
+        }
+    }
+}
+
 //point를 ?x? 격자 생성 (long, lat, 50x50 = 50)
 const G$pointToPolygon = (lon, lat, size)=>{
     const gridSize = size/2
@@ -403,6 +411,8 @@ export {
     G$pointToPolygon,
     G$pointToGrid,
     
+    G$changeMapLayer,
+
     G$polygonToCentroid,
     G$calculatePolygonArea,
     G$calculatePolygonCentroid,

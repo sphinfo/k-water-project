@@ -1,8 +1,7 @@
-import { Cartographic, Entity, Math, ScreenSpaceEventHandler, ScreenSpaceEventType, SelectionIndicatorViewModel, defined } from "cesium";
+import { Cartographic, Math, ScreenSpaceEventHandler, ScreenSpaceEventType } from "cesium";
 import EventBus from "@common/eventBus/EventBus";
 import MapEvents from "@common/eventBus/MapEvents";
 import MapManager from "@gis/MapManager";
-import { G$getLayerForId } from "@gis/util";
 
 export default class CesiumMap {
 
@@ -88,10 +87,10 @@ export default class CesiumMap {
             console.log(camPos.latitude * (180/Math.PI));
 
             // Extract the extent values
-            var west = Math.toDegrees(currentExtent.west);
-            var south = Math.toDegrees(currentExtent.south);
-            var east = Math.toDegrees(currentExtent.east);
-            var north = Math.toDegrees(currentExtent.north);
+            // var west = Math.toDegrees(currentExtent.west);
+            // var south = Math.toDegrees(currentExtent.south);
+            // var east = Math.toDegrees(currentExtent.east);
+            // var north = Math.toDegrees(currentExtent.north);
             console.info(cameraPositionCartesian)
             // console.info(west)
             // console.info(south)

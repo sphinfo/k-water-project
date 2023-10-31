@@ -1,21 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { G$addLayer, G$addWidget, G$flyToPoint,G$removeLayer, G$removeWidget } from "@gis/util";
-
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import Switch from "@mui/material/Switch";
 import SafeLevel2DataSource from "@gis/layers/SafeLevel2DataSource";
 import TestDataConfig from "@gis/config/TestDataConfig";
 import SaftyLevelChartDataSource from "@gis/layers/SaftyLevelChartDataSource";
-import SafetyTab from "./component/SafetyTab";
-import { useSelector } from "react-redux";
-import SafetyOptions from "./component/SafetyOptions";
-import SafetyResult from "./component/SafetyResult";
 
 const Safety = () => {
 
     /* 변위등급 / 변위성분 */
-    //const [safetyTab, setSafetyTab] = useState('rating')
-    const safetyTab = useSelector(state => state.safety.safetyType);
+    const [safetyTab, setSafetyTab] = useState('rating')
     /* 변위 성분 - 위성방향 */
     const [ingre, setIngre] = useState('L3TD_A2_YONGDAM_ASC')
 
@@ -52,18 +48,21 @@ const Safety = () => {
             G$removeLayer(safeLevelWfsLayer.current.id)
             G$removeLayer(bizLayer2WfsLayer.current.id)
             G$removeWidget('BaseLegendWidget')
-            G$removeWidget('SafetyDisplaceSpeedWidget')
 
         }
 
     },[])
+
+    const safetyTabChange = (event, value) => {
+        setSafetyTab(value)
+    }
 
     useEffect(()=>{
 
         bizLayer1.current.setVisible(false)
         bizLayer2WfsLayer.current.entities.removeAll()
 
-        if(safetyTab === 'displace'){
+        if(safetyTab === 'rating'){
             let sampleGrid = TestDataConfig
 
             sampleGrid.map((gridObj)=>{
@@ -114,36 +113,47 @@ const Safety = () => {
 
     },[safeLevelSwitch])
 
-
-
-    const openWidget = (wid) =>{
-        G$addWidget('SafetyDisplaceSpeedWidget')
-    }
-
     return (
         <>
-            {/* 헤더 Tab 영역*/}
             <div className="tab-float-box">
-                <SafetyTab />
+                <ToggleButtonGroup className="tab-float-box-button-wrap list-main" value={safetyTab} exclusive onChange={safetyTabChange}>
+                    <ToggleButton className="tab-float-box-btn list-item" value={"rating"}>변위 등급</ToggleButton>
+                    <ToggleButton className="tab-float-box-btn list-item" value={"ingre"}>변위 성분</ToggleButton>
+                </ToggleButtonGroup>
             </div>
-
-            {/* 검색조건 영역   ex) 공토영역이 될듯 ? ( 검색 TEXT, 기간 설정 등.. )*/}
-            <div className="tab-float-box top-left-list">
-                <SafetyOptions changeParam={changeParam} ingre={ingre}/>
+            <div className="tab-float-box top-left-list" style={{display: safetyTab === 'ingre' ? '' : 'none'}}>
+                <div className="tab-float-box-list-wrap">
+                    <h2 className="tab-float-box-list-head">위성방향</h2>
+                    <ToggleButtonGroup className="tab-float-box-button-wrap list-main" value={ingre}>
+                        <ToggleButton className="tab-float-box-btn list-item" value={'L3TD_A2_YONGDAM_ASC'} onClick={()=>{changeParam('L3TD_A2_YONGDAM_ASC')}}>Ascending</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value={'L3TD_A2_YONGDAM_DSC'} onClick={()=>{changeParam('L3TD_A2_YONGDAM_DSC')}}>Descending</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value={'L4TD_YONGDAM_EW'} onClick={()=>{changeParam('L4TD_YONGDAM_EW')}}>East-West</ToggleButton>
+                        <ToggleButton className="tab-float-box-btn list-item" value={'L4TD_YONGDAM_UD'} onClick={()=>{changeParam('L4TD_YONGDAM_UD')}}>Up-Down</ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
             </div>
-
-
-            {/* 결과결과 영역 */}
-            <div className="tab-float-box top-left-list">
-                <SafetyResult />
+            <div className="tab-float-box bottom-left">
+                <div className="tab-float-box-button-wrap">
+                    <button className="tab-float-box-btn btn-round">
+                        안전등급
+                        <Switch className="float-box-switch" value={safeLevelSwitch} onChange={()=>{setSafeLevelSwitch(!safeLevelSwitch)}}/>
+                    </button>
+                </div>
             </div>
-
-
-            {/* 팝업 샘플 WIDGET ( SafetyDisplaceSpeedWidget.js ) */}
-            <div className="tab-float-box top-left-list">
-                <button onClick={()=>{openWidget('')}}>변위속도 팝업 ON</button>
+            <div className="widget-legend safety" style={{width: 70, top:safetyTab === 'rating' ? 100 : 265}}>
+                <dl className="widget-legend-wrap legend-vertical">
+                    <dt>
+                        <h4>변위 {safetyTab === 'rating' ? '등급' : '성분'}</h4>
+                    </dt>
+                    <dd>
+                        <div className="widget-legend-chip e-w-velocity"></div>
+                        <ul className="widget-legend-unit">
+                                <li>3</li>
+                                <li>1</li>
+                        </ul>
+                    </dd>
+                </dl>
             </div>
-            
         </>
     )
 }

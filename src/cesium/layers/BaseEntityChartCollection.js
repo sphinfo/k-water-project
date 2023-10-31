@@ -1,10 +1,8 @@
-import MapManager from "@gis/MapManager";
-import { G$RandomId, G$addLayer } from "@gis/util";
-import {Cartesian3, Color, CustomDataSource, Entity, EntityCollection, HeightReference, PropertyBag, VerticalOrigin} from "cesium";
+import {Cartesian3, Color, CustomDataSource, Entity, HeightReference, VerticalOrigin} from "cesium";
 import { Chart } from "chart.js";
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Line, Bar, Pie } from 'react-chartjs-2';
-import water from '../layers/water.png'
+//import water from '../layers/water.png'
 
 
 class BaseEntityChartCollection extends CustomDataSource {

@@ -1,7 +1,5 @@
-import MapManager from "@gis/MapManager";
 import { G$normalizeWithColors } from "@gis/util";
-import {Cartesian2, Cartesian3, Color, CustomDataSource, Entity, EntityCollection, HeightReference, LabelStyle, PropertyBag, VerticalOrigin} from "cesium";
-import createColormap from "colormap";
+import {Cartesian3, CustomDataSource, Entity, } from "cesium";
 
 class SafeLevel2DataSource extends CustomDataSource {
 

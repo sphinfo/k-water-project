@@ -4,6 +4,9 @@ const widgets = {
     TestWidget: lazy(() => import('@components/biz/test/TestWidget')),
     TestChartWidget: lazy(() => import('@components/biz/test/TestChartWidget')),
 
+    //안전
+    SafetyDisplaceSpeedWidget: lazy(() => import('@components/biz/safety/widget/SafetyDisplaceSpeedWidget')),
+
     LegendWidget: lazy(() => import('@components/legend/LegendWidget')),
     BaseLegendWidget: lazy(() => import('@components/legend/BaseLegendWidget')),
     BaseLegendgGradientWidget: lazy(() => import('@components/legend/BaseLegendgGradientWidget')),
@@ -21,6 +24,13 @@ const WidgetConfig = {
         title: '테스트용 차트 위젯',
         style: { top: 70, left: 350, position:'absolute'},
         instance: widgets.TestChartWidget
+    },
+
+    
+    'SafetyDisplaceSpeedWidget': {
+        title: '변위 속도 위젯',
+        style: { top: 0, left: 350, position:'absolute'},
+        instance: widgets.SafetyDisplaceSpeedWidget
     },
 };
 

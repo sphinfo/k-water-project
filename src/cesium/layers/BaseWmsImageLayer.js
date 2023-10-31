@@ -17,13 +17,7 @@ class BaseWmsImageLayer {
 				transparent: true, //투명도
 			}
 		}
-
-		console.info(this.props)
-		//query 있을경우
-		// if(cqlFIlter){
-		// 	this.props.wmsParameters = {...this.props.wmsParameters, CQL_FILTER:cqlFIlter}
-		// }
-
+		
 		//layerId와 store가 있는지 확인
 		if (!layerId || !store) {
 			return console.info("'layers' and 'store' parameters are required.")

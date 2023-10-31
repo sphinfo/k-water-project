@@ -1,12 +1,9 @@
 
 import React from 'react';
-
-import BaseWmsLayer from '@gis/layers/BaseWmsLayer';
 import { G$addLayer, G$removeLayerForId } from '@gis/util';
-import MainPanelTabComponent from './searchPanel/MainPanelTabComponent';
 import BaseGeoserverAxios from '@common/axios/BaseGeoserverAxios';
 import MapManager from '@gis/MapManager';
-import { Color, DataSourceCollection, GeoJsonDataSource, NearFarScalar } from 'cesium';
+import { DataSourceCollection, GeoJsonDataSource } from 'cesium';
 import * as Cesium from 'cesium';
 import BaseWmsGwcLayer from '@gis/layers/BaseWmsGwcLayer';
 

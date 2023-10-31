@@ -1,4 +1,4 @@
-import {Cartesian2, Cartesian3, Color, CustomDataSource, Entity, EntityCollection, HeightReference, LabelStyle, PropertyBag, VerticalOrigin} from "cesium";
+import {Cartesian2, Cartesian3, Color, CustomDataSource, Entity, HeightReference, LabelStyle, VerticalOrigin} from "cesium";
 import { Chart } from "chart.js";
 import { Chart as ChartJS } from 'chart.js/auto'
 

@@ -7,7 +7,6 @@ import { Tab, Tabs } from "@mui/material";
 const MainPanelTabComponent = () => {
 
     const dispatch = useDispatch()
-    const state = useSelector(state => state.main)
     const mode = useSelector(state => state.main.mode);
 
     const [tabIdx, setTabIdx] = useState(0); // 초기값을 0으로 설정

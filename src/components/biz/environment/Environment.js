@@ -1,4 +1,4 @@
-import { G$addLayer, G$addWidget, G$cartesianToLongLat, G$flyToPoint, G$getLayerForId, G$removeLayerForId, G$removeWidget } from "@gis/util";
+import { G$addWidget, G$removeLayerForId, G$removeWidget } from "@gis/util";
 import React, { useEffect, useRef, useState } from "react";
 import Switch from '@mui/material/Switch';
 import ToggleButton from '@mui/material/ToggleButton';

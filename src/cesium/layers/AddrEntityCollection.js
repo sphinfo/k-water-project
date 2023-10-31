@@ -1,4 +1,4 @@
-import {Cartesian3, Color, CustomDataSource, Entity, EntityCollection, HeightReference, PropertyBag, VerticalOrigin} from "cesium";
+import {Cartesian3, CustomDataSource, Entity, HeightReference, VerticalOrigin} from "cesium";
 import icon from '../../resources/images/point-icon.png'
 
 

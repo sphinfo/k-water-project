@@ -11,19 +11,7 @@ module.exports = function (app) {
                 '^/waterGeo': ''
             }
 		})
-	);
-
-	app.use(
-		createProxyMiddleware('/egisGeo',{
-			target: 'https://egisapp.me.go.kr/geoserver',
-			changeOrigin: true,
-            pathRewrite: {
-                '^/egisGeo': ''
-            }
-		})
-	);
-
-	
+	)
 
 	app.use(
 		createProxyMiddleware('/vworld',{
@@ -33,7 +21,7 @@ module.exports = function (app) {
                 '^/vworld': ''
             }
 		})
-	);
+	)
 
 	app.use(
 		createProxyMiddleware('/mapVworld',{
@@ -43,7 +31,7 @@ module.exports = function (app) {
                 '^/mapVworld': ''
             }
 		})
-	);
+	)
 
 	app.use(
 		createProxyMiddleware('/starGeo',{
@@ -53,6 +41,6 @@ module.exports = function (app) {
                 '^/starGeo': ''
             }
 		})
-	);
+	)
 
 };

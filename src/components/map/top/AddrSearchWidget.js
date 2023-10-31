@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TextInput from '@common/util/TextInput';
-import AddrSearchResult from './addr/AddrSearchResult';
 import { useDispatch } from 'react-redux';
 import { SEARCH_ADDR, SEARCH_RIVER } from '@redux/actions';
 import MainGeoserverSearch from '@biz/addr/MainGeoserverSearch';
@@ -66,9 +65,9 @@ const AddrSearchWidget = () => {
                     </svg>
                 </button>
             </ul>
-            <ul style={{position: 'absolute', left: 400, height: 500, width: 300,  top: 10, background: 'white'}}>
+            {/* <ul style={{position: 'absolute', left: 400, height: 500, width: 300,  top: 10, background: 'white'}}>
                 
-            </ul>
+            </ul> */}
         </>
     )
 }

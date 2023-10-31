@@ -1,6 +1,6 @@
 import MapManager from "@gis/MapManager";
-import { Cartesian2, Cartographic, Math, ScreenSpaceEventHandler, ScreenSpaceEventType, defined } from "cesium";
-import { G$TypeOf, G$getLayerForId, G$getWmsLayerForId } from "..";
+import { ScreenSpaceEventHandler, ScreenSpaceEventType, defined } from "cesium";
+import { G$TypeOf, G$getWmsLayerForId } from "..";
 import BaseGeoserverAxios from "@common/axios/BaseGeoserverAxios";
 
 class GisLayerClickTool {

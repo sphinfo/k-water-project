@@ -1,9 +1,8 @@
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import { TreeItem, TreeView } from "@mui/lab";
 import { Checkbox } from "@mui/material";
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { useSelector } from "react-redux";
-import { styled } from '@mui/material/styles';
 
 const bfsSearch = (graph, targetId) => {
     const queue = [...graph];

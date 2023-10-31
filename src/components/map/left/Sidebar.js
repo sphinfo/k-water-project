@@ -2,7 +2,6 @@ import Safety from '@components/biz/safety/Safety';
 import Drought from '@components/biz/drought/Drought';
 import Flood from '@components/biz/flood/Flood';
 import Environment from '@components/biz/environment/Environment';
-import { Drawer, Tab, Tabs } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 function TabPanel(props) {
@@ -30,12 +29,12 @@ function TabPanel(props) {
   );
 }
 
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
+// function a11yProps(index) {
+//   return {
+//     id: `vertical-tab-${index}`,
+//     'aria-controls': `vertical-tabpanel-${index}`,
+//   };
+// }
 
 export default function Sidebar () {
 
@@ -47,11 +46,11 @@ export default function Sidebar () {
   
   const INDEX_4 = useMemo(() => 4, []); //수변피복탐지
   const INDEX_5 = useMemo(() => 5, []); //부유물탐지
-  const INDEX_6 = useMemo(() => 6, []); //시계열 변위 모니터링
-  const INDEX_7 = useMemo(() => 7, []); //안전진단지수
-  const INDEX_8 = useMemo(() => 8, []); //example widget
-  const INDEX_9 = useMemo(() => 9, []); //example widget
-  const INDEX_10 = useMemo(() => 10, []); //example widget
+  // const INDEX_6 = useMemo(() => 6, []); //시계열 변위 모니터링
+  // const INDEX_7 = useMemo(() => 7, []); //안전진단지수
+  // const INDEX_8 = useMemo(() => 8, []); //example widget
+  // const INDEX_9 = useMemo(() => 9, []); //example widget
+  // const INDEX_10 = useMemo(() => 10, []); //example widget
   
   const NONE_INDEX = useMemo(() => -1, []); //none
 
@@ -66,15 +65,15 @@ export default function Sidebar () {
   }, [value]);
 
   //같은 탭을 선택시 닫기
-  const handleClick = useCallback((newValue) =>{
-    if (value === newValue) {
-      setValue(NONE_INDEX)
-    }
-  }, [value])
+  // const handleClick = useCallback((newValue) =>{
+  //   if (value === newValue) {
+  //     setValue(NONE_INDEX)
+  //   }
+  // }, [value])
 
-  const handleClose = () => {
-      setValue(NONE_INDEX);
-  };
+  // const handleClose = () => {
+  //     setValue(NONE_INDEX);
+  // };
 
   return (
     <div>

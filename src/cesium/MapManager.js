@@ -1,11 +1,21 @@
-import { Cartesian3, CesiumTerrainProvider, Credit, Math, Rectangle, ScreenSpaceEventType, Terrain, Viewer, WebMapTileServiceImageryProvider } from "cesium";
-import * as Cesium from 'cesium';
+import { Cartesian3, Credit, Math, Rectangle, ScreenSpaceEventType, Terrain, Viewer, WebMapTileServiceImageryProvider } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
-import 'cesium-geoserverterrainprovider';
+import * as Cesium from 'cesium';
+import BaseWmsImageLayer from "./layers/BaseWmsImageLayer";
+//import 'cesium-geoserverterrainprovider';
 
 
 class MapManager {
     _map = null
+    _baseMapLayer = null
+    _baseMapType = 'Satellite'
+    _vworld_key = 'B9A40D30-8F5B-3141-839A-DAA04BB600F0'
+    _vwroldLayer = { Base:{layer : 'Base', tileType : 'png'}, 
+                     gray: {layer : 'gray', tileType : 'png'},
+                     midnight: {layer : 'midnight', tileType : 'png'},
+                     Hybrid : {layer : 'Hybrid', tileType : 'png'},
+                     Satellite: {layer : 'Satellite', tileType : 'jpeg'} 
+                    }
 
     constructor(opt) {
 
@@ -14,28 +24,39 @@ class MapManager {
     // Map 를 생성하여 반환한다.
     createMap(target, options = {}) {
 
-        var layers = [{layer : 'Base', tileType : 'png'}, 
-                    {layer : 'gray', tileType : 'png'},
-                    {layer : 'midnight', tileType : 'png'},
-                    {layer : 'Hybrid', tileType : 'png'},
-                    {layer : 'Satellite', tileType : 'jpeg'} ]
+        var layers ={ Base:{layer : 'Base', tileType : 'png'}, 
+                    gray: {layer : 'gray', tileType : 'png'},
+                    midnight: {layer : 'midnight', tileType : 'png'},
+                    Hybrid : {layer : 'Hybrid', tileType : 'png'},
+                    Satellite: {layer : 'Satellite', tileType : 'jpeg'} }
 
-        var selLayer = layers[0];
+        //var selLayer = layers['Hybrid'];
+        //var selLayer2 = layers['Satellite'];
 
-        let vworld_key = 'B9A40D30-8F5B-3141-839A-DAA04BB600F0'
+        //let vworld_key = 'B9A40D30-8F5B-3141-839A-DAA04BB600F0'
 
-        var vworld = new WebMapTileServiceImageryProvider({
-            url : `http://api.vworld.kr/req/wmts/1.0.0/${vworld_key}/${selLayer.layer}/{TileMatrix}/{TileRow}/{TileCol}.${selLayer.tileType}`,
-            layer : 'Base',
-            style : 'default',
-            tileMatrixSetID: 'EPSG:900913',
-            maximumLevel: 19,
-            credit : new Credit('VWorld Korea')
-        });
+        // var vworld = new WebMapTileServiceImageryProvider({
+        //     url : `http://api.vworld.kr/req/wmts/1.0.0/${vworld_key}/${selLayer.layer}/{TileMatrix}/{TileRow}/{TileCol}.${selLayer.tileType}`,
+        //     layer : 'Base',
+        //     style : 'default',
+        //     tileMatrixSetID: 'EPSG:900913',
+        //     maximumLevel: 19,
+        //     credit : new Credit('VWorld Korea')
+        // });
 
+        // var vworld2 = new WebMapTileServiceImageryProvider({
+        //     url : `http://api.vworld.kr/req/wmts/1.0.0/${vworld_key}/${selLayer2.layer}/{TileMatrix}/{TileRow}/{TileCol}.${selLayer2.tileType}`,
+        //     layer : 'Base',
+        //     style : 'default',
+        //     tileMatrixSetID: 'EPSG:900913',
+        //     maximumLevel: 19,
+        //     credit : new Credit('VWorld Korea')
+        // });
+
+        //let mapLayer = 
         
         
-        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYTU0NmIyMS1hYTEwLTQyOTctYTE4OC01ZGY1YmRjM2E1NWEiLCJpZCI6MTY5ODQxLCJpYXQiOjE2OTYzODIxNjF9.W5XfR-n6gkphDtD7sUbkTfpBX4A5jbddFk_Ok1BSV6A'
+        //Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYTU0NmIyMS1hYTEwLTQyOTctYTE4OC01ZGY1YmRjM2E1NWEiLCJpZCI6MTY5ODQxLCJpYXQiOjE2OTYzODIxNjF9.W5XfR-n6gkphDtD7sUbkTfpBX4A5jbddFk_Ok1BSV6A'
 
         this._map = new Viewer(target, {
             homeButton: false,
@@ -49,7 +70,8 @@ class MapManager {
             skyAtmosphere : false
         });
 
-        this._map.imageryLayers.addImageryProvider(vworld)
+        
+        //this._map.imageryLayers.addImageryProvider(vworld2)
 
         const targetLongitude = 127.61790470489117
         const targetLatitude = 36.52505158669595
@@ -64,6 +86,7 @@ class MapManager {
         });
 
 
+        this._changeBaseMap('Satellite')
         
         this.map.screenSpaceEventHandler.removeInputAction(ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
         var animationContainer = document.querySelector('.cesium-viewer-animationContainer');
@@ -80,6 +103,39 @@ class MapManager {
         return this._map;
     }
 
+    _test(){
+
+        console.info(this._map.imageryLayers._layers)
+
+    }
+
+    _changeBaseMap(type=null) {
+        if(type){
+
+            if(this._baseMapLayer){
+                this.removeLayer(this.getImageryLayersById('baseMap'))
+            }
+            
+            let option = this._vwroldLayer[type]
+
+            this._baseMapLayer = this.addImageLayer(
+                new WebMapTileServiceImageryProvider({
+                    url : `http://api.vworld.kr/req/wmts/1.0.0/${this._vworld_key}/${option.layer}/{TileMatrix}/{TileRow}/{TileCol}.${option.tileType}`,
+                    layer : 'Base',
+                    style : 'default',
+                    tileMatrixSetID: 'EPSG:900913',
+                    maximumLevel: 19,
+                    credit : new Credit('VWorld Korea')
+            }))
+            this._baseMapLayer.id = 'baseMap'
+            this._baseMapType = type
+            //this._map.imageryLayers.addImageryProvider(this._baseMapLayer)
+            return this._baseMapLayer
+        }else{
+            return null
+        }
+    }
+
     get map() {
         return this._map;
     }
@@ -87,11 +143,14 @@ class MapManager {
     // test terrain load
     async terrainLoad() {
 
-        const terrainProvider = await Cesium.GeoserverTerrainProvider({
-            url: '/waterGeo',
-            layerName: "sph_test:pyramid"
-        });
-        this._map.terrainProvider = terrainProvider
+        //let layer = new BaseWmsImageLayer('sph_test', 'pyramid')
+
+        // const terrainProvider = await Cesium.GeoserverTerrainProvider({
+        //     url: '/waterGeo',
+        //     layerName: "sph_test:pyramid",
+        //     proxy: new Cesium.DefaultProxy('http://localhost:3000/')
+        // });
+        // this._map.terrainProvider = terrainProvider
 
     }
 
