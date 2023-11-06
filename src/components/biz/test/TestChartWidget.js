@@ -37,7 +37,7 @@ const TestChartWidget = (props) => {
 
 
         /** example 데이터 생성 */
-        let dataset = [10, 15, 20, 11, 23, 10, 15, 20, 11, 23]
+        let dataset = [10, 13, 17, 18, 23, 20, 18, 17, 21, 23]
         let dataset2 = [20, 12, 10, 22, 21, 10, 15, 20, 11, 23]
         
           
@@ -56,8 +56,8 @@ const TestChartWidget = (props) => {
             //   },
             // ],
             datasets: [{
-                data: [30, 40, 30],
-                backgroundColor: ['red', 'green', 'blue'],
+                data: dataset,
+                tension: 0.1
             }],
         };
 

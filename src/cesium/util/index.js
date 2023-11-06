@@ -402,6 +402,11 @@ const G$removeWidget = (wId) =>{
     MainWidgetManager.remove(wId);
 }
 
+/* 위젯 props 전송 */
+const G$paramWidget = (wId, props) =>{
+    MainWidgetManager.changeParam(wId, props);
+}
+
 export {
     G$addLayer,
     G$removeLayer,
@@ -437,5 +442,6 @@ export {
     G$GetPointToDetail,
 
     G$addWidget,
-    G$removeWidget
+    G$removeWidget,
+    G$paramWidget
 }

@@ -14,7 +14,7 @@ const WidgetConatiner = (props) => {
     return (
         <Observer>
                 {() => (
-                    <div ref={container} className="aaa">
+                    <div ref={container} className="TestChartWidget">
                         {
                             WidgetManager._instances.map(widget => {
                                 console.info(widget)

@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   safetyType: 'displace',
-  text: '',
+  text: [],
   startDate: dayjs().format('YYYY-MM-DD'),
   endDate: dayjs().format('YYYY-MM-DD'),
 };

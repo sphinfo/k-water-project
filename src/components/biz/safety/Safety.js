@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { G$addLayer, G$addWidget, G$flyToPoint,G$removeLayer, G$removeWidget } from "@gis/util";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { G$addLayer, G$addWidget, G$flyToPoint,G$paramWidget,G$removeLayer, G$removeWidget } from "@gis/util";
 
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import Switch from "@mui/material/Switch";
@@ -10,12 +10,14 @@ import SafetyTab from "./component/SafetyTab";
 import { useSelector } from "react-redux";
 import SafetyOptions from "./component/SafetyOptions";
 import SafetyResult from "./component/SafetyResult";
+import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
+import SafetyTopicThematic from "./component/SafetyTopicThematic";
 
 const Safety = () => {
 
     /* 변위등급 / 변위성분 */
-    //const [safetyTab, setSafetyTab] = useState('rating')
     const safetyTab = useSelector(state => state.safety.safetyType);
+    
     /* 변위 성분 - 위성방향 */
     const [ingre, setIngre] = useState('L3TD_A2_YONGDAM_ASC')
 
@@ -33,18 +35,40 @@ const Safety = () => {
 
 
 
+    /* 레이어 선택 Ref */
+    const layerSelectRef = useRef();
+    useImperativeHandle(layerSelectRef, ()=>({
+        getFeatures(features){
+
+            G$addWidget('SafetyDisplaceSpeedWidget')
+            G$paramWidget('SafetyDisplaceSpeedWidget', features[0].properties)
+
+            //changeParam
+            //console.info(features)
+        }
+    }));
+            
+
+
     useEffect(()=>{
 
+        //레이어 클릭 callback 등록
+        GisLayerClickTool.addBiz('safety', layerSelectRef, ['biz2'])
+        //레이어 클릭 callback 활성화
+        GisLayerClickTool.enable('safety')
+
+
+        /* 임시 안전 레이어 정리 필요 */
         bizLayer1.current = new BaseWmsImageLayer('Safety','L3TD_A2_YONGDAM_ASC')
         bizLayer2WfsLayer.current = new SafeLevel2DataSource({name:'biz2'})
         G$addLayer(bizLayer2WfsLayer.current)
-
         //safeLevelWfsLayer.current = new SafeLevelDataSource({name:'safeLevelWfs'})
         safeLevelWfsLayer.current = new SaftyLevelChartDataSource({name:'safeLevelWfs'})
-        
         G$addLayer(safeLevelWfsLayer.current)
 
         return()=>{
+
+            /* 안전레이어 삭제 */
             if(bizLayer1.current.layer){
                 G$removeLayer(bizLayer1.current.layer)
             }
@@ -53,6 +77,9 @@ const Safety = () => {
             G$removeLayer(bizLayer2WfsLayer.current.id)
             G$removeWidget('BaseLegendWidget')
             G$removeWidget('SafetyDisplaceSpeedWidget')
+
+            //레이어 클릭 callback 비활성화
+            GisLayerClickTool.destroyBiz('safety')
 
         }
 
@@ -67,7 +94,7 @@ const Safety = () => {
             let sampleGrid = TestDataConfig
 
             sampleGrid.map((gridObj)=>{
-                bizLayer2WfsLayer.current._addFeature(gridObj[0], gridObj[1], gridObj[2])
+                bizLayer2WfsLayer.current._addFeature(gridObj[0], gridObj[1], gridObj[2], {lon: gridObj[0], lat: gridObj[1], value: gridObj[2]})
             })
 
             G$flyToPoint(sampleGrid[0], 10000)
@@ -122,27 +149,30 @@ const Safety = () => {
 
     return (
         <>
-            {/* 헤더 Tab 영역*/}
-            <div className="tab-float-box">
-                <SafetyTab />
-            </div>
+        <div style={{position: 'absolute', top: 50, left: 80, backgroundColor: 'white', width:300, height: '100%'}}>
 
             {/* 검색조건 영역   ex) 공토영역이 될듯 ? ( 검색 TEXT, 기간 설정 등.. )*/}
-            <div className="tab-float-box top-left-list">
+            <div>
                 <SafetyOptions changeParam={changeParam} ingre={ingre}/>
             </div>
 
-
             {/* 결과결과 영역 */}
-            <div className="tab-float-box top-left-list">
+            <div>
                 <SafetyResult />
             </div>
 
+            
+            {/* <div>
+                <SafetyTopicThematic />
+            </div> */}
 
             {/* 팝업 샘플 WIDGET ( SafetyDisplaceSpeedWidget.js ) */}
-            <div className="tab-float-box top-left-list">
+            {/* <div >
                 <button onClick={()=>{openWidget('')}}>변위속도 팝업 ON</button>
-            </div>
+            </div> */}
+
+        </div>
+            
             
         </>
     )

@@ -10,7 +10,7 @@ class SafeLevel2DataSource extends CustomDataSource {
 		this.type = 'datasource'
 	}	
 
-	async _addFeature(longitude, latitude, value) {
+	async _addFeature(longitude, latitude, value, properties) {
 
 		const centerLongitude = longitude
 		const centerLatitude = latitude
@@ -35,6 +35,8 @@ class SafeLevel2DataSource extends CustomDataSource {
 			  ]),
 			  material: G$normalizeWithColors({value:value, opacity:0.7})
 			},
+			name: this.id,
+			properties: properties
 		})
 		this.entities.add(gridPolygon);
 	}
