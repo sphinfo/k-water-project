@@ -14,7 +14,13 @@ const WidgetConatiner = (props) => {
     return (
         <Observer>
                 {() => (
-                    <div ref={container} className="TestChartWidget">
+                    <div ref={container} className="map_widget map-basic-style temp-position">
+                        <div className="widget-box">
+                            <div className="widget-header">
+                                <h4 className="widget-title">범례</h4>
+                            </div>
+                            <div className="widget-body">max-width: 300px(fluid) <br/> min-width: unset</div>
+                        </div>
                         {
                             WidgetManager._instances.map(widget => {
                                 console.info(widget)
