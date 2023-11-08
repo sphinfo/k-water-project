@@ -512,7 +512,6 @@
   z-index: 10;
   width: auto;
   height: auto;
-  overflow: hidden;
   background-color: $white;
   max-width: 300px;
   &.temp-position{
@@ -520,6 +519,7 @@
     right: 10px;
   }
   .widget-box{
+    overflow: hidden;
     .widget-header{
       padding: 10px;
       border-bottom: 1px solid $line;
@@ -531,6 +531,7 @@
     .widget-body{
       background-color: $basic;
       padding: 15px 10px 10px;
+      border-radius: 0 0 10px 10px;
     }
   }
   .map-popup-box{
