@@ -68,7 +68,8 @@ const BaseDatePicker = (props, ref) => {
         autoFocus
         value={selectedDate}
         format={format}
-        sx={{width:160}}
+        color={"primary"}
+        className={"date-picker"}
         maxDate={max}
         minDate={min}
         onChange={onChangeDate}

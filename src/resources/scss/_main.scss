@@ -1,4 +1,8 @@
 
+:root{
+  --color-primary: $primary;
+}
+
 .text-blue{
   color: $primary;
   font-weight: 500;
@@ -34,7 +38,7 @@
 .map_ctrl_right{
   position: absolute;
   right: 10px;
-  top: 54px;
+  top: 74px;
   z-index: 0;
   display: flex;
   flex-direction: column;
@@ -50,23 +54,42 @@
   transition: all 300ms;
 }
 
-.map-search-input{
-  position: absolute;
-  left: 64px;
-  top: 10px;
-  z-index: 0;
+.input-basic-search{
   display: flex;
   border-radius: 10px;
-  background: $basic;
   padding: 4px 8px 4px 12px;
   display: flex;
   align-items: center;
-  margin-right: 7px;
   input{
-    width: 256px;
-    height: 26px;
     &::placeholder{
       color: $grey-300;
+    }
+    &:focus-visible{
+      outline: 2px solid $primary-200;
+    }
+  }
+  &.map-search-input{
+    position: absolute;
+    right: calc(50% - (310px / 2));
+    top: 10px;
+    z-index: 0;
+    background-color: $basic;
+    input{
+      width: 256px;
+      height: 26px;
+    }
+  }
+  &.panel-input{
+    background-color: $white;
+    flex: 1 1 auto;
+    input{
+      width: 100%;
+      border: 0;
+      height: 26px;
+
+    }
+    &:focus{
+      background-color: $primary-200;
     }
   }
 }
@@ -89,34 +112,38 @@
     height: 22px;
   }
 }
+
+
+
   .map-view-tab{
     display: flex;
     column-gap: 7px;
     .view-tab-item{
-      width: 60px;
-      height: 38px;
-      border: 1px solid $white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       border-radius: 9px;
-      font-size: 14px;
+      padding: 2px;
+      font-size: 13px;
       font-weight: 500;
-      padding-top: 13px;
       box-shadow: $box-shadow;
+      background-color: white;
+      span{
+        display: block;
+        padding: 2px 0;
+      }
+      img{
+        border-radius: 0 0 9px 9px;
+      }
+      &.on{
+        background-color: $primary;
+        color: white;
+        font-weight: 600;
+      }
     }
   }
-  .view-satellite{
-    color: $white;
-    background-color: unset;
-    background-image: url("../images/map-satellite-bg.png");
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  .view-basic{
-    background-color: unset;
-    background-image: url("../images/map-basic-bg.png");
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  .map-widget-vertical, .map-widget-vertical-block, .map-search-input, .map-address{
+  .map-basic-style{
     box-shadow: $box-shadow;
     border-radius: 10px;
   }
@@ -174,13 +201,13 @@
   .map-coord-box{
     display: flex;
     gap: 10px;
-    background-color: $white;
+    background-color: $black-navy;
     border-radius: 6px;
     padding: 5px 12px;
-    letter-spacing: -0.1px;
+    letter-spacing: 0;
     box-shadow: $box-shadow;
-    font-size: 14px;
-    color: $body-font-color;
+    font-size: 12px;
+    color: $white;
     div{
       transition: width 300ms;
     }
@@ -211,6 +238,7 @@
       font-size: 12px;
       font-style: normal;
       font-weight: 300;
+      color: $white;
       cursor: pointer;
       .tab-icon{
         width: 22px;
@@ -268,6 +296,11 @@
     z-index: 10;
     top: 56px;
     left: 64px;
+  }
+  .panel-close-btn{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 18px 18px;
   }
 
   .map-address{
@@ -729,7 +762,7 @@
 .check-box{
   background-repeat: no-repeat;
   background-position: center;
-  &.css-355xbt-MuiButtonBase-root-MuiCheckbox-root{
+  &.MuiCheckbox-root{
     padding: 0;
     .MuiTreeItem-label{
     }
@@ -767,4 +800,193 @@
   .pageLoading{
     display: block;
   }
+}
+
+.panel{
+  position: absolute;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background-color: $basic;
+  box-shadow: $box-shadow;
+  transition: all 300ms;
+  display: flex;
+  flex-direction: column;
+  &.panel_left{
+    left: 54px;
+  }
+  .panel-header{
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $white;
+    .panel-title{
+      font-size: 16px;
+      color: $body-font-color;
+      font-weight: 600;
+    }
+  }
+  .content-block, .content-body{
+    padding-bottom: 15px;
+    border-top: 1px solid $line;
+    height: auto;
+    &.bg-grey{
+      background-color: $grey-200;
+    }
+    &.filled{
+      height: 100%;
+    }
+    .content-row{
+      padding: 10px 10px 0;
+      .content-row-header{
+        padding-bottom: 8px;
+        .content-row-title{
+          font-size: 14px;
+          color: $body-font-color;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  .content-body{
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 15px;
+  }
+}
+
+.search-bed {
+  position: absolute;
+  z-index: 3;
+  top: 127px;
+  width: calc(100% - 20px);
+  background-color: $white;
+  border-radius: 10px;
+  .content-row {
+    margin-bottom: 10px;
+    .content-row-header{
+      padding-left: 10px;
+    }
+  }
+    .search-bed-item-wrap {
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 0;
+    .search-bed-item{
+      background-color: $basic;
+      color: $body-font-color;
+      padding: 12px 10px;
+      .MuiTouchRipple-root{
+      }
+      &.item-on{
+        background: rgba(84, 166, 231, 0.30);
+      }
+    }
+  }
+}
+
+.form-control{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  &.group{
+    justify-content: space-between;
+  }
+  span{
+    color: $body-font-color;
+    font-weight: bold;
+  }
+  .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+     *{
+      border: 0;
+      outline: 0;
+      outline-offset: 0;
+    }
+
+    .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+      border-radius: 8px;
+      background-color: $white;
+      outline: 0;
+      outline-offset: 0;
+      .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+        padding: 6px 0px 6px 10px;
+        font-size: 14px;
+        letter-spacing: -0.2px;
+        color: $grey-400;
+      }
+      .css-i4bv87-MuiSvgIcon-root{
+        font-size: 19px;
+      }
+    }
+  }
+  .date-picker{
+  }
+}
+
+.MuiDayCalendar-weekContainer{
+.css-qa7bje-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+  background-color: $primary;
+}
+  .css-qa7bje-MuiButtonBase-root-MuiPickersDay-root.Mui-selected:hover{
+    background-color: $primary;
+  }
+}
+
+.content-list-wrap{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .content-list{
+    padding-bottom: 0;
+    padding-top: 0;
+    .css-16ac5r2-MuiButtonBase-root-MuiListItemButton-root.Mui-selected:hover{
+      background-color: #DFEEFB;
+    }
+
+    .content-list-item{
+      background-color: $white;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 14px;
+      &.item-on{
+        background-color: $primary;
+        color: $white;
+        .list-title-wrap {
+          .list-sub{
+          color: $white;
+         }
+        }
+      }
+      .list-title-wrap{
+
+        .list-title{
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 8px;
+          line-height: 1;
+        }
+        .list-sub{
+          font-size: 14px;
+          line-height: 1;
+          color: $sub-text;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
+
+::-webkit-scrollbar-thumb {
+  background: $grey-200;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #eee;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }

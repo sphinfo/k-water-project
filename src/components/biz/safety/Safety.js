@@ -12,6 +12,7 @@ import SafetyOptions from "./component/SafetyOptions";
 import SafetyResult from "./component/SafetyResult";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import SafetyTopicThematic from "./component/SafetyTopicThematic";
+import { IconButton } from '@mui/material';
 
 const Safety = () => {
 
@@ -149,15 +150,26 @@ const Safety = () => {
 
     return (
         <>
-        <div style={{position: 'absolute', top: 50, left: 80, backgroundColor: 'white', width:300, height: '100%'}}>
+        <div className={"panel panel_left"}>
+            {/*패널 헤더 영역*/}
+            <div className="panel-header">
+                <h1 className="panel-title">
+                    안전
+                </h1>
+                <IconButton className="panel-close-btn" color={"primary"}>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 17L9 9M9 9L17 17M9 9L17 1M9 9L1 1" stroke="#004478" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </IconButton>
+            </div>
 
             {/* 검색조건 영역   ex) 공토영역이 될듯 ? ( 검색 TEXT, 기간 설정 등.. )*/}
-            <div>
+            <div className={"content-block"}>
                 <SafetyOptions changeParam={changeParam} ingre={ingre}/>
             </div>
 
             {/* 결과결과 영역 */}
-            <div>
+            <div className={"content-body bg-grey filled"}>
                 <SafetyResult />
             </div>
 

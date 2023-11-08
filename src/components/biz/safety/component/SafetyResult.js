@@ -6,6 +6,9 @@ import TextInput from "@common/util/TextInput";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Checkbox } from "@mui/material";
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/List';
 
 const SafetyResult = ({changeParam, ingre}) => {
 
@@ -47,29 +50,47 @@ const SafetyResult = ({changeParam, ingre}) => {
         setExampleList(newList);
     }
 
+
     //결과값 출력
     const renderResult = (obj, i) =>(
-        <div key={i} style={{color:'black'}}>
+      <List className={'content-list'} sx={{
+        overflow: 'auto',
+      }}>
+        <listItem key={i} selected={true}>
+          <ListItemButton
+            className={'content-list-item'}
+            selected={true}
+            disableTouchRipple={true}
+            button={true}
+            color={'primary'}
+            onClick={() => checkboxChange(i)}
+          >
+            <div className="list-title-wrap">
+            <h3 className={'list-title'}>{obj.name}</h3>
+            <p className={'list-sub'}>{obj.sub}</p>
+            </div>
+            <div className="list-check">
             <Checkbox
-                color="primary"
-                checked={obj.checked}
-                onChange={() => checkboxChange(i)}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
+              checked={obj.checked}
+              onChange={() => checkboxChange(i)}
+              className={'check-box'}
             />
-            <span>{obj.name}</span>
-            <span>{obj.sub}</span>
-        </div>
+            </div>
+          </ListItemButton>
+        </listItem>
+      </List>
     )
 
 
     return (
         <>
-            <div className="tab-float-box-list-wrap">
-                <h2 style={{color:'black'}} onClick={()=>{exampleEvent()}}>검색결과 exampleClick</h2>
-            </div>
-            <div>
+            <div className="content-row">
+            <div className={'content-list-wrap'}>
+              <h2 style={{color:'black'}} onClick={()=>{exampleEvent()}}>검색결과 exampleClick</h2>
                 {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
             </div>
+            </div>
+
         </>
     )
 }

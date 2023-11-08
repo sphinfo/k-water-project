@@ -35,7 +35,7 @@ const MeasureMapWidget = () => {
     
     
     return (
-        <div className="map-widget-vertical-block">
+        <div className="map-widget-vertical-block map-basic-style">
             <button className={`mapRightBt ${activeType === 'LineString' ? 'active' : ''}`} onClick={()=>{drawController('line')}}>
                 <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" clipRule="evenodd" d="M1.55566 0.833313C1.14145 0.833313 0.805664 1.1691 0.805664 1.58331C0.805664 1.99753 1.14145 2.33331 1.55566 2.33331H18.4446C18.8588 2.33331 19.1946 1.99753 19.1946 1.58331C19.1946 1.1691 18.8588 0.833313 18.4446 0.833313H1.55566ZM1.55566 4.08331C1.14145 4.08331 0.805664 4.4191 0.805664 4.83331V12.4166C0.805664 12.8309 1.14145 13.1666 1.55566 13.1666H18.4446C18.8588 13.1666 19.1946 12.8309 19.1946 12.4166V4.83331C19.1946 4.4191 18.8588 4.08331 18.4446 4.08331H14.2223H9.47233H5.25011H1.55566ZM2.30566 11.6666V5.58331H4.50011V7.54165C4.50011 7.95586 4.8359 8.29165 5.25011 8.29165C5.66432 8.29165 6.00011 7.95586 6.00011 7.54165V5.58331H8.72233V8.08331C8.72233 8.49753 9.05812 8.83331 9.47233 8.83331C9.88654 8.83331 10.2223 8.49753 10.2223 8.08331V5.58331H13.4723V7.54165C13.4723 7.95586 13.8081 8.29165 14.2223 8.29165C14.6365 8.29165 14.9723 7.95586 14.9723 7.54165V5.58331H17.6946V11.6666H2.30566Z" fill="#3D3D3D"/>
@@ -47,9 +47,6 @@ const MeasureMapWidget = () => {
                 </svg>
             </button>
             {/* <button onClick={()=>{drawController('Circle')}}>반지름</button> */}
-            <button className="mapRightBt" onClick={()=>{removeDraw()}}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" fill="none"><path stroke="#3D3D3D" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 4.527V2m0 0h-2.774M15 2l-4 4M3 11.473V14m0 0h2.774M3 14l4-4M12.473 14H15m0 0v-2.774m0 2.773-4-4M5.527 2H3m0 0v2.774M3 2l4 4"/></svg>
-            </button>
             {/* <button onClick={()=>{getFeature()}}>FeatureClick</button> */}
         </div>
     )

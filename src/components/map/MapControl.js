@@ -34,13 +34,13 @@ const MapControl = () =>{
 
             <div className="map_ctrl_left">
               <Sidebar />  {/* left menu */}
-              <AddrSearchWidget />  {/* 위치 조회 */}
               {/* <SampleEventBox /> */}
             </div>
+          <AddrSearchWidget />  {/* 위치 조회 */}
 
             <div className="map_ctrl_top">
-                <MapPositionWidget />  {/* 현재 위치 주소 */}
-                <TimeZoneWidget />   {/* 현재 시간 */}
+              {/*<MapPositionWidget />  /!* 현재 위치 주소 *!/*/}
+                {/*<TimeZoneWidget />   /!* 현재 시간 *!/*/}
                 <BaseMapWidget />   {/* 배경지도 */}
 
             </div>

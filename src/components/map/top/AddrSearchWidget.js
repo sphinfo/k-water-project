@@ -52,7 +52,7 @@ const AddrSearchWidget = () => {
 
     return (
         <>
-            <ul className="map-search-input">
+            <ul className="input-basic-search map-search-input map-basic-style">
                 <TextInput
                     value={addrSearchText}
                     onChange={handleChange}
