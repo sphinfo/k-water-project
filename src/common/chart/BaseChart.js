@@ -13,7 +13,7 @@ const defaultOption = {
       },
       title: { //차트 제목
         display: true,
-        text: 'Chart.js Line chart example',
+        text: '',
       },
     }
 };

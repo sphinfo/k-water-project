@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { SEARCH_ADDR, SEARCH_RIVER } from '@redux/actions';
 import MainGeoserverSearch from '@biz/addr/MainGeoserverSearch';
 import VWorldAddressSearch from '@biz/addr/VWorldAddressSearch';
+import AddrSearchResult from './addr/AddrSearchResult';
 
 
 const searchList = [{store: 'river_network', layerId: 'W_FRST', column: 'NAME1'}
@@ -65,9 +66,9 @@ const AddrSearchWidget = () => {
                     </svg>
                 </button>
             </ul>
-            {/* <ul style={{position: 'absolute', left: 400, height: 500, width: 300,  top: 10, background: 'white'}}>
-                
-            </ul> */}
+            <ul style={{position: 'absolute', left: 400, height: 500, width: 300,  top: 10, background: 'white', display: 'none'}}>
+                <AddrSearchResult addrSearchText={addrSearchText} />
+            </ul>
         </>
     )
 }

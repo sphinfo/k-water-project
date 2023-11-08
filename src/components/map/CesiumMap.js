@@ -79,19 +79,19 @@ export default class CesiumMap {
 
             var currentExtent = me.map.camera.computeViewRectangle();
 
-            console.info(currentExtent)
+            //console.info(currentExtent)
 
             var camPos = me.map.camera.positionCartographic; 
-            console.info(camPos)
-            console.log(camPos.longitude * (180/Math.PI)); 
-            console.log(camPos.latitude * (180/Math.PI));
+            // console.info(camPos)
+            // console.log(camPos.longitude * (180/Math.PI)); 
+            // console.log(camPos.latitude * (180/Math.PI));
 
             // Extract the extent values
             // var west = Math.toDegrees(currentExtent.west);
             // var south = Math.toDegrees(currentExtent.south);
             // var east = Math.toDegrees(currentExtent.east);
             // var north = Math.toDegrees(currentExtent.north);
-            console.info(cameraPositionCartesian)
+            //console.info(cameraPositionCartesian)
             // console.info(west)
             // console.info(south)
             // console.info(east)
@@ -106,7 +106,7 @@ export default class CesiumMap {
                 var longitude = Math.toDegrees(cartographic.longitude);
                 var latitude = Math.toDegrees(cartographic.latitude);
                 //console.log("마우스 좌표:", longitude, latitude);
-                console.info(longitude+','+latitude)
+                //console.info(longitude+','+latitude)
             }
             
         }, ScreenSpaceEventType.LEFT_CLICK);

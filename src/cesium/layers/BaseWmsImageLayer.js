@@ -1,12 +1,17 @@
 import MapManager from "@gis/MapManager";
 import { G$addLayer, G$flyToExtent, G$removeLayerForId } from "@gis/util";
 import { WebMapServiceImageryProvider } from "cesium";
-
+/**
+ *  공동 WMS 레이어 Class 
+ */
 class BaseWmsImageLayer {
 
 	constructor(store, layerId, cqlFIlter=null, fly=true) {
 
+		//지도이동
 		this.fly = fly
+
+		//레이어 props 설정
 		this.props = {
 			store
 			,layerId
@@ -22,6 +27,7 @@ class BaseWmsImageLayer {
 		if (!layerId || !store) {
 			return console.info("'layers' and 'store' parameters are required.")
 		}
+
 		this._createImageryLayer()
 
 	}
@@ -35,12 +41,12 @@ class BaseWmsImageLayer {
 			this.layer=null
 		}
 
+		//cqlFilter 사용시
 		if(this.props.cqlFilter){
 			this.props.wmsParameters = {...this.props.wmsParameters, CQL_FILTER:this.props.cqlFilter}
 		}
-	  
-		console.info(this.props.wmsParameters)
 		
+		//지도추가
 		this.layer = MapManager.addImageLayer(
 			new WebMapServiceImageryProvider({
 				url: this.props.wmsUrl,
@@ -48,10 +54,10 @@ class BaseWmsImageLayer {
 				parameters: this.props.wmsParameters,
 		}))
 
-		// 변경된 이미지 레이어 설정
+		// 변경된 이미지 레이어 설정 ( Geoserver 사용 store:layer )
 		this.layer.id = `${this.props.store}:${this.props.layerId}`
 		
-		
+		// 이동
 		if(this.fly){
 			this._flyToExtent()
 		}

@@ -203,12 +203,13 @@ class MapManager {
 
     //레이어 제거
     removeLayer(layer){
-        if(layer.constructor.name === 'ImageryLayer'){
-            this._map.imageryLayers.remove(layer)
-        }else{
-            this._map.dataSources.remove(layer)
+        if(layer){
+            if(layer.constructor.name === 'ImageryLayer'){
+                this._map.imageryLayers.remove(layer)
+            }else{
+                this._map.dataSources.remove(layer)
+            }
         }
-        
     }
 
 

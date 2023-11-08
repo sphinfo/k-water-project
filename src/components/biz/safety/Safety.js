@@ -1,22 +1,28 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
-import { G$addLayer, G$addWidget, G$flyToPoint,G$paramWidget,G$removeLayer, G$removeWidget } from "@gis/util";
+import { G$addLayer, G$addWidget, G$flyToPoint,G$removeLayer, G$removeWidget } from "@gis/util";
 
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
-import Switch from "@mui/material/Switch";
 import SafeLevel2DataSource from "@gis/layers/SafeLevel2DataSource";
 import TestDataConfig from "@gis/config/TestDataConfig";
 import SaftyLevelChartDataSource from "@gis/layers/SaftyLevelChartDataSource";
-import SafetyTab from "./component/SafetyTab";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SafetyOptions from "./component/SafetyOptions";
 import SafetyResult from "./component/SafetyResult";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
-import SafetyTopicThematic from "./component/SafetyTopicThematic";
+import SafetyDisplaceLevel from "./component/displaceLevel/SafetyDisplaceLevel";
+import { SAFETY_SELETE_FEATURE, SET_DETAIL_DATAS } from "@redux/actions";
+import BaseEntityChartCollection from "@gis/layers/BaseEntityChartCollection";
+import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
+
+
 
 const Safety = () => {
 
+    const dispatch = useDispatch()
+
     /* 변위등급 / 변위성분 */
-    const safetyTab = useSelector(state => state.safety.safetyType);
+    const safetyTab = useSelector(state => state.safety.safetyType)
+    const selectResult = useSelector(state => state.safety.selectResult);
     
     /* 변위 성분 - 위성방향 */
     const [ingre, setIngre] = useState('L3TD_A2_YONGDAM_ASC')
@@ -33,18 +39,26 @@ const Safety = () => {
     //안전등급 wfs
     const safeLevelWfsLayer = useRef()
 
+    //비교 탭이 활성화 되었을시
+    const detailSearchType = useSelector(state => state.safety.detailSearchType);
 
+
+    // pin 아이콘 
+    const safetyPinLayer = useRef()
 
     /* 레이어 선택 Ref */
     const layerSelectRef = useRef();
     useImperativeHandle(layerSelectRef, ()=>({
         getFeatures(features){
 
-            G$addWidget('SafetyDisplaceSpeedWidget')
-            G$paramWidget('SafetyDisplaceSpeedWidget', features[0].properties)
+            if(detailSearchType){
 
-            //changeParam
-            //console.info(features)
+                console.info(features[0].properties)
+                //dispatch({type: SET_DETAIL_DATAS, detailCompDatas: features[0].properties})
+                dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: features[0].properties})
+                
+            }
+            
         }
     }));
             
@@ -66,6 +80,9 @@ const Safety = () => {
         safeLevelWfsLayer.current = new SaftyLevelChartDataSource({name:'safeLevelWfs'})
         G$addLayer(safeLevelWfsLayer.current)
 
+        // safetyPinLayer.current = new BaseEntityCollection({name:'safetyPinLayer', image: pin})
+        // G$addLayer(safetyPinLayer.current)
+
         return()=>{
 
             /* 안전레이어 삭제 */
@@ -78,6 +95,7 @@ const Safety = () => {
             G$removeWidget('BaseLegendWidget')
             G$removeWidget('SafetyDisplaceSpeedWidget')
 
+            //G$removeLayer(safetyPinLayer.current.id)
             //레이어 클릭 callback 비활성화
             GisLayerClickTool.destroyBiz('safety')
 
@@ -147,6 +165,9 @@ const Safety = () => {
         G$addWidget('SafetyDisplaceSpeedWidget')
     }
 
+
+    const [onResult, setOnResult] = useState(false)
+
     return (
         <>
         <div style={{position: 'absolute', top: 50, left: 80, backgroundColor: 'white', width:300, height: '100%'}}>
@@ -156,15 +177,23 @@ const Safety = () => {
                 <SafetyOptions changeParam={changeParam} ingre={ingre}/>
             </div>
 
+            <button onClick={()=>{setOnResult(!onResult)}}>검색</button>
             {/* 결과결과 영역 */}
-            <div>
-                <SafetyResult />
-            </div>
-
+            {
+                onResult && (
+                    <div>
+                        <SafetyResult />
+                    </div>
+                )
+            }
             
-            {/* <div>
-                <SafetyTopicThematic />
-            </div> */}
+
+            {selectResult && (
+                <div>
+                    <SafetyDisplaceLevel />
+                </div>
+            )}
+            
 
             {/* 팝업 샘플 WIDGET ( SafetyDisplaceSpeedWidget.js ) */}
             {/* <div >
