@@ -63,6 +63,7 @@ const SafetyResult = ({changeParam, ingre}) => {
             disableTouchRipple={true}
             button={true}
             color={'primary'}
+            /*active className 'content-list-item item-on'*/
             onClick={() => checkboxChange(i)}
           >
             <div className="list-title-wrap">
