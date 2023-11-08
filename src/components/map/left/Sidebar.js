@@ -114,7 +114,7 @@ export default function Sidebar () {
       </div>
 
       <div>
-        <TabPanel value={value} index={INDEX_0} >
+        <TabPanel value={value} index={INDEX_0}  >
           <div>
             {/* <button className="close-btn" onClick={handleClose} >close</button> */}
             <Safety />

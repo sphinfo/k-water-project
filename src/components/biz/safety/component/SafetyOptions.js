@@ -34,15 +34,24 @@ const SafetyOptions = ({changeParam, ingre}) => {
 
     return (
         <>
-            <div className="tab-float-box-list-wrap">
-                <h2 className="tab-float-box-list-head">검색</h2>
+            <div className="content-row">
+                <div className="content-row-header">
+                <h2 className="content-row-title">검색</h2>
+                </div>
+                <div className="form-control">
                 <SafetyMultipleSelect options={namesRef.current}/>
+                </div>
             </div>
             
-            <div className="tab-float-box-list-wrap">
-                <h2 className="tab-float-box-list-head">기간 설정</h2>
+            <div className="content-row">
+                <div className="content-row-header">
+                    <h2 className="content-row-title">기간 설정</h2>
+                </div>
+                <div className="form-control group">
                 <BaseDatePicker maxDate={state.endDate} onchangeFromat={(date)=>{dispatch({type: SET_START_DATE_SAFETY, date})}}/>
+                    <span>~</span>
                 <BaseDatePicker minDate={state.startDate} onchangeFromat={(date)=>{dispatch({type: SET_END_DATE_SAFETY, date})}}/>
+                </div>
             </div>
         </>
     )
