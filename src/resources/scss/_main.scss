@@ -507,13 +507,32 @@
 
   }
 
-.TestChartWidget{
+.map_widget{
+  position: absolute;
   z-index: 10;
   width: auto;
   height: auto;
+  overflow: hidden;
   background-color: $white;
-  border-radius: 10px;
-  box-shadow: $box-shadow;
+  max-width: 300px;
+  &.temp-position{
+    bottom: 10px;
+    right: 10px;
+  }
+  .widget-box{
+    .widget-header{
+      padding: 10px;
+      border-bottom: 1px solid $line;
+      .widget-title{
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
+    .widget-body{
+      background-color: $basic;
+      padding: 15px 10px 10px;
+    }
+  }
   .map-popup-box{
     display: flex;
     flex-wrap: wrap;
