@@ -14,6 +14,7 @@ import {
   SAFETY_SELETE_FEATURE,
   SET_SELECT_4_LEVEL,
   SET_SELECT_4_LEVEL_RESET,
+  SET_SELECT_DISPLACE_LEVEL,
 } from './actions';
 import safetyLayers from '@gis/layers/safety/safetyLayers';
 
@@ -23,19 +24,21 @@ const initialState = {
   text: [], //검색 옵션 ( 지점및 검색 텍스트 )
   startDate: dayjs().format('YYYY-MM-DD'), //검색 옵션 ( 기간설정 )
   endDate: dayjs().format('YYYY-MM-DD'),   //검색 옵션 ( 기간설정 )
+
+  /* 비교 탭 선택시 레이어 클릭 이벤트 활성화 */
+  compLayerClick: false, //4레벨 진행시 true ( 해당 플레그 값으로 비교 클릭 이벤트 및 기타 기능 활성화)
   
+  //4레벨 탭 
+  detailSearchTabType: 'datas',
+
   /* 3레벨 선택 검색결과 */
   select3Level: false,
-
-  /* 상세 페이지 */
-  compLayerClick: false, //4레벨 진행시 true ( 해당 플레그 값으로 비교 클릭 이벤트 및 기타 기능 활성화)
-  detailSearchTabType: 'datas',
-  //detailCompDatas: [], //비교 데이터 스토리지
 
   /* 4레벨 선택값 */
   select4Level: false,
 
-  
+  /* 변위등급 레이어 */
+  displaceLevel: false,
 
   //레이어 선택
   selectFeature: null,
@@ -71,52 +74,25 @@ function safetyReducer(state = initialState, action) {
       }
       return { ...state, detailSearchTabType: action.detailSearchTabType, compLayerClick: value }
 
-      //3레벨 선택값
+    //3레벨 선택값
     case SET_SELECT_RESULT:
-
       return { ...state, select3Level: action.select3Level}
 
-    //활용주제도 선택값
+    //4레벨 선택값
     case SET_SELECT_4_LEVEL:
       return { ...state, select4Level: action.select4Level}
 
-    //활용주제도 선택값 초기화
+    //변위 등급 선택값
+    case SET_SELECT_DISPLACE_LEVEL:
+      return { ...state, displaceLevel: action.displaceLevel}
+
+    //4레벨 선택값 초기화
     case SET_SELECT_4_LEVEL_RESET:
       return { ...state, select4Level: false, selectFeature: null}
 
+    //선택 feature 값
     case SAFETY_SELETE_FEATURE:
       return { ...state, selectFeature: action.selectFeature}
-
-    
-    //비교 데이터에 추가
-    // case SET_DETAIL_DATAS:  
-
-    //   const findDatas = state.detailCompDatas.some(item => item.lon === action.detailCompDatas.lon && item.lat === action.detailCompDatas.lat)
-
-    //   //임시 좌표로 설정
-    //   //존재하면 그냥 return
-    //   if (findDatas) {
-    //     return state;
-    //   } else {
-    //     //데이터가 존재 하지 않으면 추가
-    //     return {
-    //       ...state,
-    //       detailCompDatas: [...state.detailCompDatas, action.detailCompDatas]
-    //     };
-    //   }
-    
-    // //선택데이터 삭제
-    // case SET_DETAIL_DATAS_DEL:
-      
-    //   const { delData } = action;
-    //   const updatedDetailCompDatas = state.detailCompDatas.filter(item => {
-    //       return item.lon !== delData.lon || item.lat !== delData.lat;
-    //   });
-
-    //   return {
-    //       ...state,
-    //       detailCompDatas: updatedDetailCompDatas
-    //   };
 
     //초기화
     case SET_DETAIL_RESET:
@@ -126,6 +102,7 @@ function safetyReducer(state = initialState, action) {
         //detailCompDatas: [],       //비교 데이터 스토리지 초기화
         select3Level: false, //3레벨 선택
         select4Level: false, //4레벨 선택
+        displaceLevel: false, //변위등급 레이어
         selectFeature: null,
       }
     default:

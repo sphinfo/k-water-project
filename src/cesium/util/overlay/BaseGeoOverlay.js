@@ -4,7 +4,9 @@ import {Cartesian2, Cartesian3, SceneTransforms, defined} from "cesium"
 /* 공통 html 오버레이  */
 class BaseOverlay {
 
-	async _addOberlay(longitude, latitude, properties) {
+    overlays = []
+
+	async _addOverlay(longitude, latitude, properties) {
 
         //지도
 		let map = MapManager.map
@@ -17,6 +19,10 @@ class BaseOverlay {
         overlay.style.position = 'absolute'
         overlay.style.width = '80px'
         overlay.style.height = '20px'
+
+        //overlay.appendChild(document.createElement('div')
+
+        overlay.innerHTML = `<div>등급 ${properties.GRAY_INDEX}(안전)</div>`
 
         var button = document.createElement('button')
         button.textContent = 'close'
@@ -42,9 +48,23 @@ class BaseOverlay {
                 overlay.style.display = 'none'
             }
         })
+
+
+        this.overlays.push(overlay)
 		
 	}
-	
+
+    //오버레이 전체 삭제
+    removeAll() {
+        let map = MapManager.map
+        if(this.overlays.length > 0){
+            this.overlays.forEach((overlay) => {
+                if (overlay && overlay.parentNode === map.container) {
+                    map.container.removeChild(overlay);
+                }
+            });
+        }
+    }
 }
 
 export default BaseOverlay
