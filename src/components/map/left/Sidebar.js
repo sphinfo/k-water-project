@@ -3,9 +3,11 @@ import Drought from '@components/biz/drought/Drought';
 import Flood from '@components/biz/flood/Flood';
 import Environment from '@components/biz/environment/Environment';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { IconButton } from '@mui/material';
 
+//탭 패널 공통
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, name, close, ...other } = props;
 
   const [visible, setVisible] = useState(false);
 
@@ -22,40 +24,42 @@ function TabPanel(props) {
       <div hidden={value !== index || value === -1} {...other} >
           {visible && (
             <>
-              {children}
+              <div className={"panel panel_left"}>
+                <div className="panel-header">
+                    <h1 className="panel-title">
+                        {name}
+                    </h1>
+                    <IconButton className="panel-close-btn" color={"primary"} onClick={close}>
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 17L9 9M9 9L17 17M9 9L17 1M9 9L1 1" stroke="#004478" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </IconButton>
+                </div>
+                {children}
+              </div>
             </>
           )}
       </div>
   );
 }
 
-// function a11yProps(index) {
-//   return {
-//     id: `vertical-tab-${index}`,
-//     'aria-controls': `vertical-tabpanel-${index}`,
-//   };
-// }
-
 export default function Sidebar () {
 
-  const INDEX_0 = useMemo(() => 0, []); //수체탐지
-  const INDEX_1 = useMemo(() => 1, []); //수위탐지
-  const INDEX_2 = useMemo(() => 2, []); //토양수분
-  const INDEX_3 = useMemo(() => 3, []); //가뭄지수
+  const INDEX_0 = useMemo(() => { return {i:0, name:'홍수'}}, []); 
+  const INDEX_1 = useMemo(() => { return {i:1, name:'가뭄'}}, []); 
+  const INDEX_2 = useMemo(() => { return {i:2, name:'안전'}}, []); 
+  const INDEX_3 = useMemo(() => { return {i:3, name:'환경'}}, []); 
   
   
   const INDEX_4 = useMemo(() => 4, []); //수변피복탐지
   const INDEX_5 = useMemo(() => 5, []); //부유물탐지
-  // const INDEX_6 = useMemo(() => 6, []); //시계열 변위 모니터링
-  // const INDEX_7 = useMemo(() => 7, []); //안전진단지수
-  // const INDEX_8 = useMemo(() => 8, []); //example widget
-  // const INDEX_9 = useMemo(() => 9, []); //example widget
-  // const INDEX_10 = useMemo(() => 10, []); //example widget
+  
   
   const NONE_INDEX = useMemo(() => -1, []); //none
 
   const [value, setValue] = useState(NONE_INDEX);
 
+  //탭 선택
   const handleChange = useCallback((newValue) => {
     if (value === newValue) {
       setValue(NONE_INDEX)
@@ -64,16 +68,10 @@ export default function Sidebar () {
     }
   }, [value]);
 
-  //같은 탭을 선택시 닫기
-  // const handleClick = useCallback((newValue) =>{
-  //   if (value === newValue) {
-  //     setValue(NONE_INDEX)
-  //   }
-  // }, [value])
-
-  // const handleClose = () => {
-  //     setValue(NONE_INDEX);
-  // };
+  //탭 닫기
+  const handleClose = () => {
+      setValue(NONE_INDEX);
+  };
 
   return (
     <div>
@@ -102,10 +100,10 @@ export default function Sidebar () {
             </defs>
           </svg>
           </div>
-          <div className={ value === INDEX_2 ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_2) }} ><div className="tab-icon i-flood"></div>홍수</div>
-          <div className={ value === INDEX_1 ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_1) }} ><div className="tab-icon i-drought"></div>가뭄</div>
-          <div className={ value === INDEX_0 ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_0) }}><div className="tab-icon i-safety"></div>안전</div>
-          <div className={ value === INDEX_3 ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_3) }} ><div className="tab-icon i-environment"></div>환경</div>
+          <div className={ value === INDEX_0.i ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_0.i) }} ><div className="tab-icon i-flood"></div>{INDEX_0.name}</div>
+          <div className={ value === INDEX_1.i ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_1.i) }} ><div className="tab-icon i-drought"></div>{INDEX_1.name}</div>
+          <div className={ value === INDEX_2.i ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_2.i) }}><div className="tab-icon i-safety"></div>{INDEX_2.name}</div>
+          <div className={ value === INDEX_3.i ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_3.i) }} ><div className="tab-icon i-environment"></div>{INDEX_3.name}</div>
         </div>
         <div className="sidebar-left-footer">
           <div className={ value === INDEX_4 ? "sidebar-tab active" : "sidebar-tab" }><div className="tab-icon i-modify"></div></div>
@@ -114,26 +112,17 @@ export default function Sidebar () {
       </div>
 
       <div>
-        <TabPanel value={value} index={INDEX_0}  >
-          <div>
-            {/* <button className="close-btn" onClick={handleClose} >close</button> */}
-            <Safety />
-          </div>
+        <TabPanel value={value} index={INDEX_0.i} name={INDEX_0.name} close={handleClose}>
+          <Flood />
         </TabPanel>
-        <TabPanel value={value} index={INDEX_1} >
-          <div>
-            <Drought />
-          </div>
+        <TabPanel value={value} index={INDEX_1.i} name={INDEX_1.name} close={handleClose}>
+          <Drought />
         </TabPanel>
-        <TabPanel value={value} index={INDEX_2} >
-          <div>
-            <Flood />
-          </div>
+        <TabPanel value={value} index={INDEX_2.i} name={INDEX_2.name} close={handleClose}>
+          <Safety />
         </TabPanel>
-        <TabPanel value={value} index={INDEX_3} >
-          <div>
-            <Environment />
-          </div>
+        <TabPanel value={value} index={INDEX_3.i} name={INDEX_3.name} close={handleClose}>
+          <Environment />
         </TabPanel>
       </div>      
 

@@ -106,7 +106,7 @@ export default class CesiumMap {
                 var longitude = Math.toDegrees(cartographic.longitude);
                 var latitude = Math.toDegrees(cartographic.latitude);
                 //console.log("마우스 좌표:", longitude, latitude);
-                //console.info(longitude+','+latitude)
+                console.info(longitude+','+latitude)
             }
             
         }, ScreenSpaceEventType.LEFT_CLICK);

@@ -1,6 +1,6 @@
 import MapManager from "@gis/MapManager";
-import { ScreenSpaceEventHandler, ScreenSpaceEventType, defined } from "cesium";
-import { G$TypeOf, G$getWmsLayerForId } from "..";
+import { Math, ScreenSpaceEventHandler, ScreenSpaceEventType, defined } from "cesium";
+import { G$TypeOf, G$cartesianToLongLat, G$getWmsLayerForId } from "..";
 import BaseGeoserverAxios from "@common/axios/BaseGeoserverAxios";
 
 class GisLayerClickTool {
@@ -40,18 +40,54 @@ class GisLayerClickTool {
 
 					let features = []
 
-					//map click entity position properties  (WFS)
-					const pickedObject = MapManager.map.scene.pick(event.position);
-					if (defined(pickedObject) && defined(pickedObject.id)) {
-						const pickedEntity = pickedObject.id
+					/* WFS 레이어 GET ENTITY ( ENTITY 하나만 가지고 올수 있도록 *PITCH 이슈* ) */
+					const clickPosition = event.endPosition || event.position;
 
-						//biz에 등록된 레이어 명칭만 callback에 담기
-						layers.map((layerId)=>{
-							if(layerId === pickedEntity.name){
-								features.push({id: pickedEntity.name, properties: pickedEntity.properties.getValue(''), clickPosition: event.position})
+					let ray = null
+					//let cartesianPosition = null
+					let intersection = null
+					let lonlat = null
+
+					// 클릭 이벤트 위치의 화면 좌표가 정상적으로 존재하는지 확인
+					if (defined(clickPosition)) {
+						// 화면 좌표를 지구 표면 좌표로 변환
+						ray = MapManager.map.scene.camera.getPickRay(clickPosition)
+						//lonlat = this.map.scene.globe.pick(ray, this.map.scene)
+						intersection = MapManager.map.scene.globe.pick(ray, MapManager.map.scene)
+
+						// 화면 좌표가 지구 표면과 교차하는지 확인
+						if (defined(intersection)) {
+							//cartesianPosition = MapManager.map.scene.globe.ellipsoid.cartesianToCartographic(intersection)
+							// 클릭된 위치의 지구 좌표를 구한 후, 해당 좌표에서 entity를 찾음
+							const pickedEntities = MapManager.map.scene.drillPick(clickPosition)
+							
+							if(pickedEntities.length > 0){
+								
+								//방위각이 틀어지면 위아래로 entity 여러가지 선택이됨 ??  이유 모르겠음 찾아봐도 
+								// ********* 클린된 위치랑 가장 가까운 entity는 배열 가장 마지막에 담긴다 *********
+								const pickedEntity = pickedEntities[pickedEntities.length-1].id
+
+								layers.map((layerId)=>{
+									if(layerId === pickedEntity.name){
+										features.push({id: pickedEntity.name, properties: pickedEntity.properties.getValue(''), clickPosition: event.position})
+									}
+								})
 							}
-						})
+						}
 					}
+
+					//map click entity position properties  (WFS)
+					// const pickedObject = MapManager.map.scene.pick(event.position);
+					// if (defined(pickedObject) && defined(pickedObject.id)) {
+					// 	const pickedEntity = pickedObject.id
+
+					// 	//biz에 등록된 레이어 명칭만 callback에 담기
+					// 	layers.map((layerId)=>{
+					// 		if(layerId === pickedEntity.name){
+					// 			features.push({id: pickedEntity.name, properties: pickedEntity.properties.getValue(''), clickPosition: event.position})
+					// 		}
+					// 	})
+					// }
 
 					// wms promis
 					let wmsPromises = []
@@ -77,7 +113,8 @@ class GisLayerClickTool {
 					wmsResults.map((wmsObj)=>{
 						wmsObj.data.features.map((featureObj)=>{
 							featureObj.id = wmsObj.config.params.typeName
-							featureObj.clickPosition = event
+							featureObj.clickPosition = G$cartesianToLongLat(intersection)
+							//featureObj.clickPosition = intersection
 							features.push(featureObj)
 						})
 						
@@ -115,6 +152,11 @@ class GisLayerClickTool {
 
 		this._bizs[biz] = true
         this.parseBizProps(biz, callback, layers);
+	}
+
+	//biz layer 초기화
+	resetLayer(biz){
+		this._bizProps[biz].layers = []
 	}
 
 	//biz layer  등록

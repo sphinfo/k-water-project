@@ -60,6 +60,7 @@ const SafetyMultipleSelect = ({ options = [] }) => {
     <>
       <div className="input-basic-search panel-input">
       <input
+        readOnly
         type="text"
         value={selectedItems} // 선택된 항목들의 이름을 나타내도록 설정
         placeholder="연구 대상 지역"

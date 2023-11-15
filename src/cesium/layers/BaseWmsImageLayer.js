@@ -32,6 +32,8 @@ class BaseWmsImageLayer {
 
 	}
 
+	
+
 	//레이어 생성
 	_createImageryLayer() { 
 
@@ -62,6 +64,14 @@ class BaseWmsImageLayer {
 			this._flyToExtent()
 		}
 
+	}
+
+	//레이어 생성
+	remove(){
+		if (this.layer) {
+			G$removeLayerForId(this.layer.id)
+			this.layer=null
+		}
 	}
 
 	//wms 레이어 변경

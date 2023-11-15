@@ -9,9 +9,9 @@ const SafetyOptions = ({changeParam, ingre}) => {
     const namesRef = useRef([
         {
             name:'댐', 
-            code:'a',
+            code:'DAM',
             items: [
-                {name:'소양강댐유역', code:'a1'},
+                {name:'용담댐유역', code:'YONGDAM'},
                 {name:'충주댐유역', code:'a2'},
                 {name:'임하댐유역', code:'a3'},
                 {name:'주암댐유역', code:'a4'}
@@ -19,7 +19,7 @@ const SafetyOptions = ({changeParam, ingre}) => {
         },
         {
             name:'하천', 
-            code: 'b',
+            code: 'RIVER',
             items: [
                 {name:'청계천', code:'b1'},
                 {name:'온천천', code:'b2'},
@@ -43,6 +43,7 @@ const SafetyOptions = ({changeParam, ingre}) => {
                 </div>
             </div>
             
+            {/*
             <div className="content-row">
                 <div className="content-row-header">
                     <h2 className="content-row-title">기간 설정</h2>
@@ -53,6 +54,7 @@ const SafetyOptions = ({changeParam, ingre}) => {
                 <BaseDatePicker minDate={state.startDate} onchangeFromat={(date)=>{dispatch({type: SET_END_DATE_SAFETY, date})}}/>
                 </div>
             </div>
+             */}
         </>
     )
 }
