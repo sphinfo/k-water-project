@@ -4,7 +4,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useDispatch, useSelector } from "react-redux";
 import { SET_DETAIL_SEARCH_TAB_TYPE } from "@redux/actions";
 
-const SafetyDisplaceLevelTab = () => {
+const SafetyL4Tab = () => {
 
     const dispatch = useDispatch()
     const {detailSearchTabType} = useSelector(state => state.safety);
@@ -19,4 +19,4 @@ const SafetyDisplaceLevelTab = () => {
     )
 }
 
-export default React.memo(SafetyDisplaceLevelTab);
+export default React.memo(SafetyL4Tab);

@@ -6,9 +6,9 @@ import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 
 import SafetyOptions from "./component/SafetyOptions";
 import SafetyResult from "./component/SafetyResult";
-import SafetyDisplaceLevel from "./component/displaceLevel/SafetyDisplaceLevel";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import BaseNormalizeGridLayer from "@gis/layers/BaseNormalizeGridLayer";
+import SafetyL4 from "./component/l4Component/SafetyL4";
 
 /**
  *  안전 메인 페이지
@@ -132,7 +132,7 @@ const Safety = () => {
             <SafetyResult />
 
             {select3Level && (
-                <SafetyDisplaceLevel />
+                <SafetyL4 />
             )}
         </>
     )

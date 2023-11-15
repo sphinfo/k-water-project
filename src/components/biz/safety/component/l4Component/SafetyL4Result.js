@@ -38,7 +38,7 @@ const example = [{
     checked: false
 }]
 
-const SafetyDisplaceLevelTemp = () => {
+const SafetyL4Result = () => {
 
     const dispatch = useDispatch()
     const {detailSearchTabType, select3Level} = useSelector(state => state.safety)
@@ -131,4 +131,4 @@ const SafetyDisplaceLevelTemp = () => {
     )
 }
 
-export default React.memo(SafetyDisplaceLevelTemp);
+export default React.memo(SafetyL4Result);

@@ -1,12 +1,12 @@
 import React from "react";
-import SafetyDisplaceLevelTab from "./SafetyDisplaceLevelTab";
-import SafetyDisplaceLevelComp from "./SafetyDisplaceLevelComp";
-import SafetyDisplaceLevelTemp from "./SafetyDisplaceLevelTemp";
+import SafetyL4Comp from "./SafetyL4Comp";
+import SafetyL4Tab from "./SafetyL4Tab";
+import SafetyL4Result from "./SafetyL4Result";
 
 /**
  * 활용주제도
  */
-const SafetyDisplaceLevel = () => {
+const SafetyL4 = () => {
 
     return (
         <>
@@ -15,9 +15,9 @@ const SafetyDisplaceLevel = () => {
                     <h1 style={{fontSize: 20}}>
                         {"활용주제도"}
                     </h1>
-                    <SafetyDisplaceLevelTab />
-                    <SafetyDisplaceLevelTemp />
-                    <SafetyDisplaceLevelComp />
+                    <SafetyL4Tab />
+                    <SafetyL4Result />
+                    <SafetyL4Comp />
 
                     {/* 변위등급 */}
                     {/* <SafetyDisplaceLevel1 /> */}
@@ -29,4 +29,4 @@ const SafetyDisplaceLevel = () => {
     )
 }
 
-export default React.memo(SafetyDisplaceLevel);
+export default React.memo(SafetyL4);

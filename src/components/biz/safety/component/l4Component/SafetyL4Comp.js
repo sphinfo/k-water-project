@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import pin from "@images/point-icon.png"
 import { G$removeLayer } from "@gis/util";
 
-const SafetyDisplaceLevelComp = () => {
+const SafetyL4Comp = () => {
 
     /**
      * detailSearchTabType : 탭 정보
@@ -160,4 +160,4 @@ const SafetyDisplaceLevelComp = () => {
     )
 }
 
-export default React.memo(SafetyDisplaceLevelComp);
+export default React.memo(SafetyL4Comp);
