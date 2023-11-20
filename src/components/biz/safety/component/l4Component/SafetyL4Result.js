@@ -115,7 +115,10 @@ const SafetyL4Result = () => {
               <div className="list-title-wrap">
                 <h3 className={'list-title'}>{obj.name}</h3>
               </div>
-              {/* IMAGE */}
+                <div className="list-body">
+                    <div className="list-shadow"></div>
+                    <div className="img-box">{/*images*/}</div>
+                </div>
             </ListItemButton>
           </ListItem>
         </List>
@@ -123,19 +126,22 @@ const SafetyL4Result = () => {
 
     return (
         <>
-            <div style={{display: detailSearchTabType === 'datas' ? '' : 'none', justifyContent: 'center', margin: 5}}>
-                <h1>변위 성분</h1>
-                <div className={'content-list-wrap'}>
-                    {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
+            <div style={{display: detailSearchTabType === 'datas' ? '' : 'none'}}>
+                <div className="content-row">
+                    <div className="content-row-header">
+                        <h2 className="content-row-title">변위 성분</h2>
+                    </div>
+                    <div className={'content-list-wrap'}>
+                        {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
+                    </div>
+
                 </div>
-                
-                <button style={{backgroundColor: dButton ? 'yellow' : ''}} onClick={()=>{setDButton(!dButton)}}>{displaceLevelData.name}</button>
+                <button  ></button>
                 {/*
                     <ToggleButtonGroup sx={{ flexDirection: 'column', width:'100%' }} exclusive value={select4Level ? select4Level.value : null} onChange={(e,newSelected)=>{selectButton(newSelected)}}>
                         {exampleList.length > 0 && exampleList.map((obj, i)=> renderToggleButton(obj, i))}
                     </ToggleButtonGroup>
                 */}
-                
             </div>
         </>
     )

@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import pin from "@images/point-icon.png"
 import { G$removeLayer } from "@gis/util";
+import IconButton from '@mui/material/IconButton';
 
 const SafetyL4Comp = () => {
 
@@ -133,10 +134,13 @@ const SafetyL4Comp = () => {
 
     const renderPointInfo = (obj, i) =>{
         return (
-            <div style={{color:'black'}} key={i}>
-                <h2>선택 지점명</h2>
-                <div>
-                    <button onClick={()=>{removeData(obj)}}>X</button>
+            <div className={"panel-box point-box point-1"}/* point-1 ~ point-5 개별 색상 클래스*/ style={{color:'black'}} key={i}>
+                <div className="panel-box-header">
+                    <div className="point-icon"></div>
+                    <h2 className={"panel-box-title"}>선택 지점명</h2>
+                    <IconButton onClick={()=>{removeData(obj)}} className={"popup-close-btn"}></IconButton>
+                </div>
+                <div className={"panel-body"}>
                     lat:{obj.clickPosition.latitude} / lon:{obj.clickPosition.longitude}
                 </div>
             </div>
@@ -146,13 +150,21 @@ const SafetyL4Comp = () => {
     return (
         <>
             <div style={{display: detailSearchTabType === 'comp' ? '' : 'none'}}>
-                <div className="img-wrap">
-                    <h2>그래프</h2>
-                    <BaseChart width={290} height={250} ref={chartRef} chartType={'Line'} title={''}/>
+                <div className="content-row">
+                <div className="content-row-header">
+                    <h2 className={"content-row-title"}>그래프</h2>
                 </div>
-                <div>
-                    <h2>Point</h2>
+                <div className="panel-box mb-0">
+                    <BaseChart width={260} height={270} ref={chartRef} chartType={'Line'} title={''}/>
+                </div>
+                </div>
+                <div className={"content-row"}>
+                    <div className="content-row-header">
+                        <h2 className={"content-row-title"}>Point</h2>
+                    </div>
+                    <div className="content-row-body">
                     {compList.map((obj, i)=> renderPointInfo(obj, i) )}
+                    </div>
                 </div>
             </div>
         </>
