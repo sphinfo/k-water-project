@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_DETAIL_RESET, SAFETY_SELECT_RESULT } from "@redux/actions";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
@@ -9,27 +8,21 @@ import { G$BaseSelectBoxArray } from "@gis/util";
 
 //sample 데이터
 const example = [
-  {name:'ASC',  date: '23.11.10~23.11.16', main:'PSI', checked: false, store:'Safety', layer: 'L3TD_A2_YONGDAM_ASC'},
-  {name:'DESC', date: '23.11.10~23.11.16', main:'PSI', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
-  {name:'ASC',  date: '23.11.10~23.11.16', main:'SBAS', checked: false, store:'Safety', layer: 'L3TD_A2_YONGDAM_ASC'},
-  {name:'DESC', date: '23.11.10~23.11.16', main:'SBAS', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
+  {name:'SCENE1',  date: '23.11.10~23.11.16', main:'', checked: false, store:'Drought', layer: 'L3TD_A2_YONGDAM_ASC'},
+  {name:'SCENE2', date: '23.11.10~23.11.16', main:'', checked: false, store:'Drought', layer: 'L3TD_A2_YONGDAM_DSC' },
 ]
 
-const SafetyResult = ({changeParam, ingre}) => {
+const EnvironmentResult = () => {
     
     const dispatch = useDispatch()
 
-    // 안전 검색조건
-    const { text } = useSelector(state => state.safety)
-
+    // 가뭄 검색조건
+    const { text, startDate, endDate } = useSelector(state => state.environment)
 
     const [exampleList, setExampleList] = useState([])
 
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
-
-      dispatch({type:SAFETY_DETAIL_RESET})
-
       if(text !== ''){
         const groupArray = G$BaseSelectBoxArray(example, 'main')
         const resultArray = groupArray.grouped
@@ -37,8 +30,7 @@ const SafetyResult = ({changeParam, ingre}) => {
       }else{
         setExampleList([])
       }
-      
-    },[text])
+    },[text, startDate, endDate])
 
     
 
@@ -49,6 +41,7 @@ const SafetyResult = ({changeParam, ingre}) => {
 
     //체크박스 다시 그리기
     const checkboxChange = (outerIndex, innerIndex) =>{
+
       //exampleList 전체 데이터
       const updatedList = exampleList.map((subArray, i) => {
           if (outerIndex === i) {
@@ -64,18 +57,13 @@ const SafetyResult = ({changeParam, ingre}) => {
       });
       setExampleList(updatedList);
 
-      //이베트 발생 위치 확인후 
+      //이벤트 발생 위치 확인후 
       const selectedItem = updatedList[outerIndex][innerIndex];
-      //선택이 해제되었으면 reset / 선택이 되었으면 select3level reduce 전송
-      if (!selectedItem.checked) {
-          dispatch({ type: SAFETY_DETAIL_RESET });
-      } else {
-          dispatch({ type: SAFETY_SELECT_RESULT, select3Level: selectedItem });
-      }
+
     }
 
 
-    //결과값 출력
+    //결과값 출력 ( 데이터 구성을 2중 배열로 사용하려고 생각중 )
     const renderResult = (obj, i) =>(
       <List className={'content-list'} sx={{
         overflow: 'auto',
@@ -84,9 +72,10 @@ const SafetyResult = ({changeParam, ingre}) => {
       </List>
     )
 
+    //list item 설정
     const renderItem = (obj, i, i2) => (
         <>
-          {i2 === 0 ? obj.main : ''}
+          {/* {i2 === 0 ? obj.main : ''} */}
           <ListItem key={i2} selected={true}>
             <ListItemButton
               className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
@@ -118,4 +107,4 @@ const SafetyResult = ({changeParam, ingre}) => {
     )
 }
 
-export default React.memo(SafetyResult);
+export default React.memo(EnvironmentResult);

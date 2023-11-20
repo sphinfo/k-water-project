@@ -407,6 +407,48 @@ const G$paramWidget = (wId, props) =>{
     MainWidgetManager.changeParam(wId, props);
 }
 
+/* 수자원공사 검색 조건 공통화 작업 */
+const G$BaseSelectBoxArray = (datas, col) =>{
+
+    /**
+     * key 하나를 공통으로 잡은후 그룹형으로 변경
+     * example : [[1그룹],[2그룹]]
+     * 검색결과 동일하게 사용하기 위해 작성
+     */
+    const groupArray = datas.reduce((acc, item, index) => {
+        
+        const key = item[col]
+        if (!acc.order.includes(key)) {
+          acc.order.push(key)
+        }
+        
+        const mainIndex = acc.order.indexOf(key);
+        
+        if (!acc.grouped[mainIndex]) {
+          acc.grouped[mainIndex] = []
+        }
+        
+        acc.grouped[mainIndex].push(item)
+        
+        return acc;
+    }, { grouped: [], order: [] })
+
+    return groupArray
+}
+
+/* 샘플 좌표 */
+const G$randomCoordinates = (length=50)=>{
+    const coordinates = [];
+    for (let i = 0; i < length; i++) {
+      const lon = Math.random() * (129.2 - 126.8) + 126.8 // 경도 범위
+      const lat = Math.random() * (38.0 - 35.0) + 35.0    // 위도 범위
+      const name = `관측소${i + 1}`  // 관측소 이름
+      const code = `code${i + 1}`    // 코드
+      coordinates.push({ lon, lat, name, code })
+    }
+    return coordinates;
+}
+
 export {
     G$addLayer,
     G$removeLayer,
@@ -443,5 +485,9 @@ export {
 
     G$addWidget,
     G$removeWidget,
-    G$paramWidget
+    G$paramWidget,
+
+    G$BaseSelectBoxArray,
+
+    G$randomCoordinates,
 }

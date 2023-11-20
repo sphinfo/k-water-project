@@ -1,6 +1,6 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_SELETE_FEATURE, SET_DETAIL_RESET, SET_SELECT_4_LEVEL_RESET } from "@redux/actions";
+import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET } from "@redux/actions";
 import { G$RandomId, G$addLayer, G$addWidget, G$flyToPoint,G$removeLayer, G$removeWidget } from "@gis/util";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 
@@ -84,7 +84,7 @@ const Safety = () => {
             GisLayerClickTool.destroyBiz(bizName)
 
             //조건 리셋
-            dispatch({type:SET_DETAIL_RESET})
+            dispatch({type:SAFETY_DETAIL_RESET})
 
             overlayRef.current.removeAll()
 
@@ -162,7 +162,7 @@ const Safety = () => {
                 GisLayerClickTool.addLayer(bizName, [safety3LevelLayerRef.current.layer.id])
             }
 
-            dispatch({type:SET_SELECT_4_LEVEL_RESET})
+            dispatch({type:SAFETY_SELECT_4_LEVEL_RESET})
         }
 
     },[select4Level])
@@ -170,38 +170,15 @@ const Safety = () => {
     return (
         <>
             {/* 검색조건 영역   ex) 공토영역이 될듯 ? ( 검색 TEXT, 기간 설정 등.. )*/}
-            <div className={"content-block"}>
-                <SafetyOptions />
-            </div>
+            <SafetyOptions />
 
             {/* 결과결과 영역 */}
             <SafetyResult />
 
-            {select3Level && (
-                <SafetyL4 />
-            )}
+            {/* 4레벨 결과 영역 ( 3레벨이 선택되었을시 4레벨창 open )*/}
+            {select3Level && ( <SafetyL4 /> )}
         </>
     )
 }
 
-export default React.memo(Safety);
-
-
-        //safety4LevelLayerRef.current.entities.removeAll()
-
-        //safety4LevelLayerRef.current = new BaseNormalizeGridLayer({name:'safety4LevelLayer'})
-
-
-            /*
-                let sampleGrid = TestDataConfig
-                const min = 2
-                const max = 6
-                const random = Math.floor(Math.random() * (max - min + 1)) + min
-
-                console.info(random)
-                sampleGrid.map((gridObj)=>{
-                    safety4LevelLayerRef.current._addFeature(gridObj[0], gridObj[1], gridObj[random], {featureId:G$RandomId(), lon:gridObj[0], lat: gridObj[1], value:gridObj[random]})
-                })
-
-                G$flyToPoint(sampleGrid[0], 10000)
-            */
+export default React.memo(Safety)

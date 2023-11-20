@@ -2,19 +2,17 @@ import dayjs from 'dayjs';
 
 import {
   SAFETY_TYPE,
-  SET_START_DATE_SAFETY,
-  SET_END_DATE_SAFETY,
-  SET_TEXT_SAFETY,
-  SET_DETAIL_SEARCH_TYPE,
-  SET_DETAIL_SEARCH_TAB_TYPE,
-  SET_DETAIL_RESET,
-  SET_DETAIL_DATAS,
-  SET_DETAIL_DATAS_DEL,
-  SET_SELECT_RESULT,
+  SAFETY_START_DATE,
+  SAFETY_END_DATE,
+  SAFETY_TEXT_SAFETY,
+  SAFETY_DETAIL_SEARCH_TYPE,
+  SAFETY_DETAIL_SEARCH_TAB_TYPE,
+  SAFETY_DETAIL_RESET,
+  SAFETY_SELECT_RESULT,
   SAFETY_SELETE_FEATURE,
-  SET_SELECT_4_LEVEL,
-  SET_SELECT_4_LEVEL_RESET,
-  SET_SELECT_DISPLACE_LEVEL,
+  SAFETY_SELECT_4_LEVEL,
+  SAFETY_SELECT_4_LEVEL_RESET,
+  SAFETY_SELECT_DISPLACE_LEVEL,
 } from './actions';
 import safetyLayers from '@gis/layers/safety/safetyLayers';
 
@@ -53,19 +51,19 @@ function safetyReducer(state = initialState, action) {
     case SAFETY_TYPE: 
       return { ...state, safetyType: action.safetyType }
 
-    case SET_TEXT_SAFETY:
+    case SAFETY_TEXT_SAFETY:
       return { ...state, text: action.text }
 
-    case SET_START_DATE_SAFETY:
+    case SAFETY_START_DATE:
       return { ...state, startDate: action.date }
 
-    case SET_END_DATE_SAFETY:
+    case SAFETY_END_DATE:
       return { ...state, endDate: action.date }
 
-    case SET_DETAIL_SEARCH_TYPE:
+    case SAFETY_DETAIL_SEARCH_TYPE:
       return { ...state, compLayerClick: action.compLayerClick }
     
-    case SET_DETAIL_SEARCH_TAB_TYPE:
+    case SAFETY_DETAIL_SEARCH_TAB_TYPE:
 
       let value = false
       //비교탭이 선택된 경우 비교 레이어 click 이벤트 활성화
@@ -75,19 +73,19 @@ function safetyReducer(state = initialState, action) {
       return { ...state, detailSearchTabType: action.detailSearchTabType, compLayerClick: value }
 
     //3레벨 선택값
-    case SET_SELECT_RESULT:
+    case SAFETY_SELECT_RESULT:
       return { ...state, select3Level: action.select3Level}
 
     //4레벨 선택값
-    case SET_SELECT_4_LEVEL:
+    case SAFETY_SELECT_4_LEVEL:
       return { ...state, select4Level: action.select4Level}
 
     //변위 등급 선택값
-    case SET_SELECT_DISPLACE_LEVEL:
+    case SAFETY_SELECT_DISPLACE_LEVEL:
       return { ...state, displaceLevel: action.displaceLevel}
 
     //4레벨 선택값 초기화
-    case SET_SELECT_4_LEVEL_RESET:
+    case SAFETY_SELECT_4_LEVEL_RESET:
       return { ...state, select4Level: false, selectFeature: null}
 
     //선택 feature 값
@@ -95,7 +93,7 @@ function safetyReducer(state = initialState, action) {
       return { ...state, selectFeature: action.selectFeature}
 
     //초기화
-    case SET_DETAIL_RESET:
+    case SAFETY_DETAIL_RESET:
       return { ...state, 
         compLayerClick: false,  //4레벨 진행시 true ( 해당 플레그 값으로 비교 클릭 이벤트 및 기타 기능 비 활성화)
         detailSearchTabType: 'datas', 

@@ -1,16 +1,15 @@
 import { TreeItem, TreeView } from "@mui/lab";
 import { SAFETY_TEXT_SAFETY } from "@redux/actions";
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, memo, useEffect, useImperativeHandle, useState } from 'react';
 import { useDispatch } from "react-redux";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
-const SafetyMultipleSelect = ({ options = [] }) => {
+const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
+
   const [selectedItems, setSelectedItems] = useState('')
 
   const [visibleTree, setVisibleTree] = useState(false)
-
-  const dispatch = useDispatch()
 
   const itemClick = (item) => {
     const index = selectedItems.indexOf(item.name)
@@ -25,11 +24,22 @@ const SafetyMultipleSelect = ({ options = [] }) => {
     }
   };
 
+
+  //item 변경되었을시 
   useEffect(()=>{
-
-    dispatch({type: SAFETY_TEXT_SAFETY, text: selectedItems})
-
+    changeItem(selectedItems)
   },[selectedItems])
+
+  // BaseSelectOption 레퍼런스 API
+  useImperativeHandle(ref, () => ({
+    get provider() {
+	    return provider
+    },
+    set provider(datas) {
+      provider = datas
+    }
+  }));
+
   
   const renderComponent = (option) => (
     <div className={"content-row"}>
@@ -45,7 +55,6 @@ const SafetyMultipleSelect = ({ options = [] }) => {
             key={item.code}
             disableTouchRipple={true}
             className={selectedItems.includes(item.name) ? "search-bed-item item-on" : "search-bed-item" }
-            // className={"search-bed-item"}
             onClick={() => itemClick(item)}>
             {item.name}
           </ListItem>
@@ -73,10 +82,10 @@ const SafetyMultipleSelect = ({ options = [] }) => {
         </button>
       </div>
       <div className={"search-bed map-basic-style"} style={{ display: visibleTree ? '' : 'none' }}>
-        {options.map((option) => renderComponent(option))}
+        {provider.map((option) => renderComponent(option))}
       </div>
     </>
   );
 };
 
-export default SafetyMultipleSelect;
+export default memo(forwardRef(BaseSelectOption))

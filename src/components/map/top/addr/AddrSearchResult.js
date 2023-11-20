@@ -21,9 +21,9 @@ const AddrSearchResult = ({ addrSearchText}) => {
     },[])
 
     //지점 포인트 추가
-    const addPlace = (long, lat) =>{
+    const addPlace = (lng, lat) =>{
       addrWfsLayer.current.entities.removeAll()
-      addrWfsLayer.current._addFeature(long, lat)
+      addrWfsLayer.current._addFeature({lng, lat})
     }
 
     // 선택된 탭의 인덱스를 저장하는 state
