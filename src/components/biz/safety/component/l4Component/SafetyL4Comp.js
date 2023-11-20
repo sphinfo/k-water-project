@@ -5,6 +5,9 @@ import { useSelector } from "react-redux";
 import pin from "@images/point-icon.png"
 import { G$removeLayer } from "@gis/util";
 import IconButton from '@mui/material/IconButton';
+import pin1 from "@images/point-icon-1.svg"
+import pin2 from "@images/point-icon-2.svg"
+import { G$RandomId, G$removeLayer } from "@gis/util";
 
 const SafetyL4Comp = () => {
 
@@ -34,7 +37,7 @@ const SafetyL4Comp = () => {
 
     //초기 옵션 추가
     useEffect(()=>{
-        safetyPinLayer.current = new BaseEntityCollection({name:'safetyPinLayer', image: pin})
+        safetyPinLayer.current = new BaseEntityCollection({name:'safetyPinLayer', image: pin1})
         /** example 옵션 생성 */
         chartRef.current.updateOptions = {
             plugins: {
@@ -92,43 +95,75 @@ const SafetyL4Comp = () => {
 
     const addData = () =>{
         //safetyPinLayer.current._addFeature(selectFeature.lon, selectFeature.lat, {id: selectFeature.featureId})
-        const {clickPosition, properties} = selectFeature
+        let {clickPosition, properties} = selectFeature
+
+        //차트에 데이터 Max 2개
+        if(chartInfoRef.current.datasets.length < 2){
+
+            //P1 / P2
+            //let pointNm = `P${chartInfoRef.current.datasets.length+1}`
+            let pointNm = ''
+            //누적데이터가 없을시 P1
+            if(chartInfoRef.current.datasets.length === 0){
+                pointNm = `P1`
+            }else{
+                //두개만 들어가야 해서 하나만 있음
+                pointNm = chartInfoRef.current.datasets[0].label === 'P1' ? 'P2' : 'P1'
+            }
+
+
+            //geoserver 에서 가지고온 데이터 random id 생성
+            properties = {...properties, ...{id:G$RandomId(), pointNm: pointNm}}
+
+            //비교 point layer 등록
+            safetyPinLayer.current._addFeature({
+                lng:clickPosition.longitude,
+                lat:clickPosition.latitude,
+                properties,
+                img:pointNm === `P1` ? pin1 : pin2
+            })
+
+            /* 샘플 데이터 */
+            let dataset = [10, 13, 17, 18, 23, 20, 18, 17, 21, 23]
+            let updatedDataset = dataset.map(value => {
+                let multiplier = Math.random() < 0.5 ? 1 : 5;
+                return value + multiplier;
+            });
+
+            //차트 data push
+            chartInfoRef.current.datasets.push({
+                tension: 0.4,
+                data:updatedDataset,
+                label: pointNm,
+                pointRadius: 0,
+                id: properties.id
+            })
+            chartRef.current.provider = chartInfoRef.current
+
+            //setCompList(prevList => [...prevList, selectFeature])
+            setCompList(prevList => [...prevList, {clickPosition, properties}])
+
+        }
         //safetyPinLayer.current._addFeature(clickPosition.longitude, selectFeature.latitude, {id: selectFeature.featureId})
 
-        safetyPinLayer.current._addFeature(clickPosition.longitude, clickPosition.latitude, properties)
-        console.info(clickPosition)
 
-        /* 샘플 데이터 */
-        let dataset = [10, 13, 17, 18, 23, 20, 18, 17, 21, 23]
-        let updatedDataset = dataset.map(value => {
-            let multiplier = Math.random() < 0.5 ? 1 : 5;
-            return value + multiplier;
-        });
-        chartInfoRef.current.datasets.push({
-            tension: 0.4, 
-            data:updatedDataset, 
-            //label: selectFeature.featureId,
-            label: properties.GRAY_INDEX,
-            pointRadius: 0
-        })
-        chartRef.current.provider = chartInfoRef.current
-
-        //setCompList(prevList => [...prevList, selectFeature])
-        setCompList(prevList => [...prevList, {clickPosition, properties}])
     }
 
     const removeData = (removeObj) =>{
         //하나 이상일때 제거
         if(chartInfoRef.current.datasets.length > 1){
             /* 차트 데이터 제거 */
-            chartInfoRef.current.datasets = chartInfoRef.current.datasets.filter(obj => obj.label !== removeObj.featureId)
+            //chartInfoRef.current.datasets = chartInfoRef.current.datasets.filter(obj => obj.label !== removeObj.featureId)
+            chartInfoRef.current.datasets = chartInfoRef.current.datasets.filter(obj => obj.id !== removeObj.properties.id)
             chartRef.current.provider = chartInfoRef.current
 
-            /* point 데이터 제거 */
-            setCompList(prevList => prevList.filter(item => item.featureId !== removeObj.featureId))
+            /* point text 데이터 제거 */
+            //setCompList(prevList => prevList.filter(item => item.featureId !== removeObj.featureId))
+            setCompList(prevList => prevList.filter(item => item.properties.id !== removeObj.properties.id))
 
             /* point Feature 제거 */
-            safetyPinLayer.current.removeEntityById(removeObj.featureId)
+            safetyPinLayer.current.removeEntityById(removeObj.properties.id)
+            //safetyPinLayer.current.removeEntityById(removeObj.featureId)
         }
     }
 

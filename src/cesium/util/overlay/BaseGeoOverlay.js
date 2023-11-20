@@ -17,11 +17,12 @@ class BaseOverlay {
         overlay.style.display = 'none'
         overlay.style.backgroundColor = 'white'
         overlay.style.position = 'absolute'
-        overlay.style.width = '80px'
+        overlay.style.width = '120px'
         overlay.style.height = '20px'
 
         //overlay.appendChild(document.createElement('div')
 
+        console.info(properties)
         overlay.innerHTML = `<div>등급 ${properties.GRAY_INDEX}(안전)</div>`
 
         var button = document.createElement('button')

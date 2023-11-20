@@ -1,5 +1,5 @@
 import { TreeItem, TreeView } from "@mui/lab";
-import { SET_TEXT_SAFETY } from "@redux/actions";
+import { SAFETY_TEXT_SAFETY } from "@redux/actions";
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
 
@@ -25,7 +25,7 @@ const MultipleSelect = ({ options = [] }) => {
 
   useEffect(()=>{
 
-    dispatch({type: SET_TEXT_SAFETY, text: selectedItems})
+    dispatch({type: SAFETY_TEXT_SAFETY, text: selectedItems})
 
   },[selectedItems])
   

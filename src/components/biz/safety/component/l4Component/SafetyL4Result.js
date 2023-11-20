@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { SET_SELECT_4_LEVEL, SET_SELECT_4_LEVEL_RESET, SET_SELECT_DISPLACE_LEVEL } from "@redux/actions";
+import { SAFETY_SELECT_4_LEVEL, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
@@ -70,7 +70,7 @@ const SafetyL4Result = () => {
 
     //변위등급 레이어 on / off
     useEffect(()=>{
-        dButton ? dispatch({type:SET_SELECT_DISPLACE_LEVEL, displaceLevel: displaceLevelData}) : dispatch({type:SET_SELECT_DISPLACE_LEVEL, displaceLevel: false})
+        dButton ? dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: displaceLevelData}) : dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: false})
     },[dButton])
 
     /**
@@ -95,7 +95,7 @@ const SafetyL4Result = () => {
         });
         setExampleList(newList)
 
-        select4Level ? dispatch({type:SET_SELECT_4_LEVEL, select4Level:select4Level}) : dispatch({type:SET_SELECT_4_LEVEL_RESET})
+        select4Level ? dispatch({type:SAFETY_SELECT_4_LEVEL, select4Level:select4Level}) : dispatch({type:SAFETY_SELECT_4_LEVEL_RESET})
         
     }
 
