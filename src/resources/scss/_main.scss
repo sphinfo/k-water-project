@@ -876,6 +876,9 @@
     &.border-top{
       border-top: 1px solid $grey-200;
     }
+    &.pb-0{
+      padding-bottom: 0;
+    }
     &.bg-grey{
       background-color: $grey-200;
     }
@@ -898,6 +901,9 @@
         border-radius: 10px;
         overflow: hidden;
         margin-bottom: 10px;
+        &.mb-0{
+          margin-bottom: 0;
+        }
         .panel-box-header{
           display: flex;
           justify-content: space-between;
