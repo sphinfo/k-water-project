@@ -522,14 +522,10 @@
 .map_widget{
   position: absolute;
   z-index: 10;
+  max-width: 300px;
   width: auto;
   height: auto;
   background-color: $white;
-  max-width: 300px;
-  &.temp-position{
-    bottom: 10px;
-    right: 10px;
-  }
   .widget-box{
     overflow: hidden;
     .widget-header{
@@ -544,6 +540,12 @@
       background-color: $basic;
       padding: 15px 10px 10px;
       border-radius: 0 0 10px 10px;
+    }
+    &.map-popup-box{
+      .widget-header{
+        display: flex;
+        justify-content: space-between;
+      }
     }
   }
   .map-popup-box{
