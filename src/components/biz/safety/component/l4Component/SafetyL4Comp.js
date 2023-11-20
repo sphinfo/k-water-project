@@ -3,7 +3,6 @@ import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import pin from "@images/point-icon.png"
-import { G$removeLayer } from "@gis/util";
 import IconButton from '@mui/material/IconButton';
 import pin1 from "@images/point-icon-1.svg"
 import pin2 from "@images/point-icon-2.svg"
@@ -172,7 +171,7 @@ const SafetyL4Comp = () => {
             <div className={"panel-box point-box point-1"}/* point-1 ~ point-5 개별 색상 클래스*/ style={{color:'black'}} key={i}>
                 <div className="panel-box-header">
                     <div className="point-icon"></div>
-                    <h2 className={"panel-box-title"}>선택 지점명</h2>
+                    <h2 className={"panel-box-title"}>{obj.properties.pointNm}</h2>
                     <IconButton onClick={()=>{removeData(obj)}} className={"popup-close-btn"}></IconButton>
                 </div>
                 <div className={"panel-body"}>
