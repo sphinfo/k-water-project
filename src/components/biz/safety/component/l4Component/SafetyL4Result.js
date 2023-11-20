@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { SET_SELECT_4_LEVEL, SET_SELECT_4_LEVEL_RESET } from "@redux/actions";
+import { SET_SELECT_4_LEVEL, SET_SELECT_4_LEVEL_RESET, SET_SELECT_DISPLACE_LEVEL } from "@redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
@@ -38,7 +38,11 @@ const example = [{
     checked: false
 }]
 
+const displaceLevelData = {name:'변위등급', store:'Safety', layer: '20231114_SAFETY_YONGDAM'}
+
 const SafetyL4Result = () => {
+
+    const [dButton, setDButton] = useState(false)
 
     const dispatch = useDispatch()
     const {detailSearchTabType, select3Level} = useSelector(state => state.safety)
@@ -62,6 +66,12 @@ const SafetyL4Result = () => {
 
         setExampleList(randomArray)
     },[select3Level])
+
+
+    //변위등급 레이어 on / off
+    useEffect(()=>{
+        dButton ? dispatch({type:SET_SELECT_DISPLACE_LEVEL, displaceLevel: displaceLevelData}) : dispatch({type:SET_SELECT_DISPLACE_LEVEL, displaceLevel: false})
+    },[dButton])
 
     /**
         const renderToggleButton = ({name, value, ...other}) =>{
@@ -119,7 +129,7 @@ const SafetyL4Result = () => {
                     {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
                 </div>
                 
-
+                <button style={{backgroundColor: dButton ? 'yellow' : ''}} onClick={()=>{setDButton(!dButton)}}>{displaceLevelData.name}</button>
                 {/*
                     <ToggleButtonGroup sx={{ flexDirection: 'column', width:'100%' }} exclusive value={select4Level ? select4Level.value : null} onChange={(e,newSelected)=>{selectButton(newSelected)}}>
                         {exampleList.length > 0 && exampleList.map((obj, i)=> renderToggleButton(obj, i))}

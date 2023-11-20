@@ -10,8 +10,8 @@ import List from '@mui/material/List';
 const example = [
   {name:'ASC',  date: '23.11.10~23.11.16', main:'PSI', checked: false, store:'Safety', layer: 'L3TD_A2_YONGDAM_ASC'},
   {name:'DESC', date: '23.11.10~23.11.16', main:'PSI', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
-  {name:'ASC',  date: '23.11.10~23.11.16', main:'SBAS', checked: false, store:'Safety', layer: 'L3TD_A2_YONGDAM_ASC'},
-  {name:'DESC', date: '23.11.10~23.11.16', main:'SBAS', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
+  // {name:'ASC',  date: '23.11.10~23.11.16', main:'SBAS', checked: false, store:'Safety', layer: 'L3TD_A2_YONGDAM_ASC'},
+  // {name:'DESC', date: '23.11.10~23.11.16', main:'SBAS', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
 ]
 
 const SafetyResult = ({changeParam, ingre}) => {
@@ -19,7 +19,7 @@ const SafetyResult = ({changeParam, ingre}) => {
     const dispatch = useDispatch()
 
     // 안전 검색조건
-    const {text, startDate, endDate} = useSelector(state => state.safety)
+    const { text } = useSelector(state => state.safety)
 
 
     const [exampleList, setExampleList] = useState([])
@@ -29,27 +29,31 @@ const SafetyResult = ({changeParam, ingre}) => {
 
       dispatch({type:SET_DETAIL_RESET})
 
-      const groupArray = example.reduce((acc, item, index) => {
+      if(text !== ''){
+        const groupArray = example.reduce((acc, item, index) => {
         
-        const { main } = item
-        if (!acc.order.includes(main)) {
-          acc.order.push(main)
-        }
+          const { main } = item
+          if (!acc.order.includes(main)) {
+            acc.order.push(main)
+          }
+          
+          const mainIndex = acc.order.indexOf(main);
+          
+          if (!acc.grouped[mainIndex]) {
+            acc.grouped[mainIndex] = []
+          }
+          
+          acc.grouped[mainIndex].push(item)
+          
+          return acc;
+        }, { grouped: [], order: [] })
         
-        const mainIndex = acc.order.indexOf(main);
-        
-        if (!acc.grouped[mainIndex]) {
-          acc.grouped[mainIndex] = []
-        }
-        
-        acc.grouped[mainIndex].push(item)
-        
-        return acc;
-      }, { grouped: [], order: [] })
+        const resultArray = groupArray.grouped
+        setExampleList(resultArray)
+      }else{
+        setExampleList([])
+      }
       
-      const resultArray = groupArray.grouped
-      console.log(resultArray)
-      setExampleList(resultArray)
     },[text])
 
     

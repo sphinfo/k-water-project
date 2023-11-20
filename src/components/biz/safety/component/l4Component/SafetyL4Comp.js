@@ -70,7 +70,6 @@ const SafetyL4Comp = () => {
         if(selectFeature){
 
             //properties 의 값으로 CSV값을 가져와야 하는데 매핑되는 지점이 없음
-
             //feature 에서 id가 존재하는지 모르겠음
             // const findData = chartInfoRef.current.datasets.some(item => item.label === selectFeature.featureId)
             // if(!findData){
