@@ -18,12 +18,12 @@ const BaseMapWidget = () => {
     
     return (
         <>
-            <div className="map-view-tab map-basic-style">
-                <button className={mapType === 'Base' ? "view-tab-item on" : "view-tab-item"} onClick={()=>{setMapType('Base')}}>
+            <div className="map-view-tab">
+                <button className={mapType === 'Base' ? "view-tab-item on map-basic-style" : "view-tab-item map-basic-style"} onClick={()=>{setMapType('Base')}}>
                     <span>일반</span>
                     <img src={mapBasic} alt="일반지도"/>
                 </button>
-                <button className={mapType === 'Satellite' ? "view-tab-item on" : "view-tab-item"} onClick={()=>{setMapType('Satellite')}}>
+                <button className={mapType === 'Satellite' ? "view-tab-item on map-basic-style" : "view-tab-item map-basic-style"} onClick={()=>{setMapType('Satellite')}}>
                     <span>위성</span>
                     <img src={mapSatellite} alt="위성지도"/>
                     </button>

@@ -2,6 +2,7 @@ import React, {useEffect, useRef} from "react";
 import WidgetManager from "../WidgetManager";
 import WidgetWrapper from "./WidgetWrapper";
 import { Observer } from "mobx-react";
+import IconButton from "@mui/material/IconButton";
 
 
 const WidgetConatiner = (props) => {
@@ -14,12 +15,26 @@ const WidgetConatiner = (props) => {
     return (
         <Observer>
                 {() => (
-                    <div ref={container} className="map_widget map-basic-style temp-position">
-                        <div className="widget-box">
-                            <div className="widget-header">
-                                <h4 className="widget-title">범례</h4>
+                    <div ref={container}>
+                        {/*레전드*/}
+                        <div className="map_widget map-basic-style" style={{bottom: '10px', right: '10px'}}>
+                            <div className="widget-box">
+                                <div className="widget-header">
+                                    <h4 className="widget-title">범례</h4>
+                                </div>
+                                <div className="widget-body">max-width: 300px(fluid) <br/> min-width: unset</div>
                             </div>
-                            <div className="widget-body">max-width: 300px(fluid) <br/> min-width: unset</div>
+                        </div>
+
+                        {/*지도 팝업*/}
+                        <div className="map_widget map-basic-style" style={{bottom: '120px', right: '10px'}}>
+                            <div className="widget-box map-popup-box">
+                                <div className="widget-header">
+                                    <h4 className="widget-title">지도 팝업</h4>
+                                    <IconButton className="popup-close-btn"></IconButton>
+                                </div>
+                                <div className="widget-body">max-width: 300px(fluid) <br/> min-width: unset</div>
+                            </div>
                         </div>
                         {
                             WidgetManager._instances.map(widget => {
@@ -50,7 +65,6 @@ const WidgetConatiner = (props) => {
                         }
                     </div>
                 )}
-
         </Observer>
     ) 
     ;

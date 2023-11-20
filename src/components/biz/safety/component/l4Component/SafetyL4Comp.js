@@ -3,6 +3,7 @@ import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import pin from "@images/point-icon.png"
+import IconButton from '@mui/material/IconButton';
 import pin1 from "@images/point-icon-1.svg"
 import pin2 from "@images/point-icon-2.svg"
 import { G$RandomId, G$removeLayer } from "@gis/util";
@@ -104,7 +105,7 @@ const SafetyL4Comp = () => {
             //누적데이터가 없을시 P1
             if(chartInfoRef.current.datasets.length === 0){
                 pointNm = `P1`
-            }else{ 
+            }else{
                 //두개만 들어가야 해서 하나만 있음
                 pointNm = chartInfoRef.current.datasets[0].label === 'P1' ? 'P2' : 'P1'
             }
@@ -115,9 +116,9 @@ const SafetyL4Comp = () => {
 
             //비교 point layer 등록
             safetyPinLayer.current._addFeature({
-                lng:clickPosition.longitude, 
-                lat:clickPosition.latitude, 
-                properties, 
+                lng:clickPosition.longitude,
+                lat:clickPosition.latitude,
+                properties,
                 img:pointNm === `P1` ? pin1 : pin2
             })
 
@@ -130,7 +131,7 @@ const SafetyL4Comp = () => {
 
             //차트 data push
             chartInfoRef.current.datasets.push({
-                tension: 0.4, 
+                tension: 0.4,
                 data:updatedDataset,
                 label: pointNm,
                 pointRadius: 0,
@@ -144,7 +145,7 @@ const SafetyL4Comp = () => {
         }
         //safetyPinLayer.current._addFeature(clickPosition.longitude, selectFeature.latitude, {id: selectFeature.featureId})
 
-        
+
     }
 
     const removeData = (removeObj) =>{
@@ -167,10 +168,13 @@ const SafetyL4Comp = () => {
 
     const renderPointInfo = (obj, i) =>{
         return (
-            <div style={{color:'black'}} key={i}>
-                <h2>{obj.properties.pointNm}</h2>
-                <div>
-                    <button onClick={()=>{removeData(obj)}}>X</button>
+            <div className={"panel-box point-box point-1"}/* point-1 ~ point-5 개별 색상 클래스*/ style={{color:'black'}} key={i}>
+                <div className="panel-box-header">
+                    <div className="point-icon"></div>
+                    <h2 className={"panel-box-title"}>{obj.properties.pointNm}</h2>
+                    <IconButton onClick={()=>{removeData(obj)}} className={"popup-close-btn"}></IconButton>
+                </div>
+                <div className={"panel-body"}>
                     lat:{obj.clickPosition.latitude} / lon:{obj.clickPosition.longitude}
                 </div>
             </div>
@@ -180,13 +184,21 @@ const SafetyL4Comp = () => {
     return (
         <>
             <div style={{display: detailSearchTabType === 'comp' ? '' : 'none'}}>
-                <div className="img-wrap">
-                    <h2>그래프</h2>
-                    <BaseChart width={290} height={250} ref={chartRef} chartType={'Line'} title={''}/>
+                <div className="content-row">
+                <div className="content-row-header">
+                    <h2 className={"content-row-title"}>그래프</h2>
                 </div>
-                <div>
-                    <h2>Point</h2>
+                <div className="panel-box mb-0">
+                    <BaseChart width={260} height={270} ref={chartRef} chartType={'Line'} title={''}/>
+                </div>
+                </div>
+                <div className={"content-row"}>
+                    <div className="content-row-header">
+                        <h2 className={"content-row-title"}>Point</h2>
+                    </div>
+                    <div className="content-row-body">
                     {compList.map((obj, i)=> renderPointInfo(obj, i) )}
+                    </div>
                 </div>
             </div>
         </>

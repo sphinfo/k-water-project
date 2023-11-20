@@ -97,7 +97,12 @@ const SafetyResult = ({changeParam, ingre}) => {
               onClick={() => checkboxChange(i, i2)}
             >
               <div className="list-title-wrap">
-                <h3 className={'list-title'}>{obj.name} ---------- {obj.date}</h3>
+                <h3 className={'list-title'}>{obj.name}</h3>
+                <h4 className="list-title-sub">{obj.date}</h4>
+              </div>
+              <div className="list-body">
+                <div className="list-shadow"></div>
+                <div className="img-box">{/*images*/}</div>
               </div>
             </ListItemButton>
           </ListItem>
@@ -109,7 +114,6 @@ const SafetyResult = ({changeParam, ingre}) => {
           <div className={"content-body bg-grey filled"}>
             <div className="content-row">
                 <div className={'content-list-wrap'}>
-                  <h2 style={{color:'black'}} >검색결과</h2>
                     {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
                 </div>
               </div>
