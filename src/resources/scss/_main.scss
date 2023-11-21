@@ -589,6 +589,7 @@
         .widget-legend-chip{
           width: 230px;
           height: 17px;
+          margin-right: 0;
         }
         .widget-legend-unit{
           display: flex;
@@ -600,7 +601,7 @@
             justify-content: space-between;
             gap: 3px;
             font-size: 10px;
-            padding-right: 5px;
+            padding-right: 0;
             &:before{
               //content: '';
               display: block;
