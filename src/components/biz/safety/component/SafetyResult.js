@@ -9,10 +9,10 @@ import { G$BaseSelectBoxArray } from "@gis/util";
 
 //sample 데이터
 const example = [
-  {name:'ASC',  date: '23.11.10~23.11.16', main:'PSI', checked: false, store:'Safety', layer: 'L3TD_A2_YONGDAM_ASC'},
-  {name:'DESC', date: '23.11.10~23.11.16', main:'PSI', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
-  {name:'ASC',  date: '23.11.10~23.11.16', main:'SBAS', checked: false, store:'Safety', layer: 'L3TD_A2_YONGDAM_ASC'},
-  {name:'DESC', date: '23.11.10~23.11.16', main:'SBAS', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
+  {name:'ASC',  date: '23.11.10~23.11.16', main:'PSI', mainName: '(고정산란체)', checked: false, store:'Safety', layer: 'L3TD_A2_YONGDAM_ASC'},
+  {name:'DESC', date: '23.11.10~23.11.16', main:'PSI', mainName: '(고정산란체)', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
+  {name:'ASC',  date: '23.11.10~23.11.16', main:'SBAS', mainName: '(분산산란체)', checked: false, store:'Safety', layer: 'L3TD_A2_YONGDAM_ASC'},
+  {name:'DESC', date: '23.11.10~23.11.16', main:'SBAS', mainName: '(분산산란체)', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
 ]
 
 const SafetyResult = ({changeParam, ingre}) => {
@@ -86,7 +86,7 @@ const SafetyResult = ({changeParam, ingre}) => {
 
     const renderItem = (obj, i, i2) => (
         <>
-          {i2 === 0 ? obj.main : ''}
+          {i2 === 0 ? `${obj.main + obj.mainName}` : ''}
           <ListItem key={i2} selected={true}>
             <ListItemButton
               className={`content-list-item ${obj.checked ? 'item-on' : ''}`}

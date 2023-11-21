@@ -12,27 +12,47 @@ class BaseOverlay {
 		let map = MapManager.map
 
         /* html 생성 */
-		var overlay = document.createElement('div')
+        const overlay = document.createElement('div')
         map.container.appendChild(overlay)
-        overlay.style.display = 'none'
-        overlay.style.backgroundColor = 'white'
-        overlay.style.position = 'absolute'
-        overlay.style.width = '120px'
-        overlay.style.height = '20px'
+        overlay.className = 'map_widget map-basic-style'
+        
 
-        //overlay.appendChild(document.createElement('div')
+        // widget-box div 요소 생성
+        const widgetBox = document.createElement('div')
+        widgetBox.className = 'widget-box map-popup-box'
 
-        console.info(properties)
-        overlay.innerHTML = `<div>등급 ${properties.GRAY_INDEX}(안전)</div>`
+        // widget-header div 요소 생성
+        const widgetHeader = document.createElement('div')
+        widgetHeader.className = 'widget-header'
 
-        var button = document.createElement('button')
-        button.textContent = 'close'
-        button.addEventListener('click', function () {
+        // h4 요소 생성
+        const title = document.createElement('h4')
+        title.className = 'widget-title'
+        title.textContent = '지도 팝업'
+
+        // IconButton 요소 생성
+        const iconButton = document.createElement('IconButton')
+        iconButton.className = 'popup-close-btn';
+        iconButton.addEventListener('click', function () {
             console.log(properties)
             map.container.removeChild(overlay)
         })
 
-        overlay.appendChild(button)
+        // widget-body div 요소 생성
+        const widgetBody = document.createElement('div')
+        widgetBody.className = 'widget-body'
+        widgetBody.textContent = `등급 ${properties.GRAY_INDEX}(안전)`
+
+        // 요소들을 구조에 맞게 조립
+        widgetHeader.appendChild(title);
+        widgetHeader.appendChild(iconButton)
+        widgetBox.appendChild(widgetHeader)
+        widgetBox.appendChild(widgetBody)
+        overlay.appendChild(widgetBox)
+
+        
+
+        
 
         /* 해당좌표로 오버레이 html 위치 지정 */
         var anchor = Cartesian3.fromDegrees(longitude, latitude, 0)

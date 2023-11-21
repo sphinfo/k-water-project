@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import pin1 from "@images/point-icon-1.svg"
 import pin2 from "@images/point-icon-2.svg"
 import { G$RandomId, G$removeLayer } from "@gis/util";
+import useEnhancedEffect from "@mui/material/utils/useEnhancedEffect";
 
 const SafetyL4Comp = () => {
 
@@ -14,8 +15,9 @@ const SafetyL4Comp = () => {
      * detailSearchTabType : 탭 정보
      * selectFeature : feature 선택정보
      * select4Level : 4레벨 선택정보
+     * displaceLevel : 변위성분 
      */
-    const { detailSearchTabType, selectFeature, select4Level } = useSelector(state => state.safety)
+    const { detailSearchTabType, selectFeature, select4Level, displaceLevel } = useSelector(state => state.safety)
 
     //Chart Ref
     const chartRef = useRef({})
@@ -84,13 +86,28 @@ const SafetyL4Comp = () => {
         }
     },[selectFeature])
 
+    useEffect(()=>{
+
+        if(displaceLevel){
+            resetLayer()
+            chartRef.current.provider = chartInfoRef.current.datasets = []
+            setCompList([])
+        }
+
+    },[displaceLevel])
+
 
     //4레벨 레이어 선택이 해제되면 pinLayer remove
     useEffect(()=>{
         if(!select4Level){
-            safetyPinLayer.current.entities.removeAll()
+            resetLayer()
         }
     },[select4Level])
+
+    //pinlayer 해제
+    const resetLayer = () =>{
+        safetyPinLayer.current.entities.removeAll()
+    }
 
     const addData = () =>{
         //safetyPinLayer.current._addFeature(selectFeature.lon, selectFeature.lat, {id: selectFeature.featureId})
@@ -135,7 +152,9 @@ const SafetyL4Comp = () => {
                 data:updatedDataset,
                 label: pointNm,
                 pointRadius: 0,
-                id: properties.id
+                id: properties.id,
+                borderColor: pointNm === 'P1' ? '#54A6E7' : '#FF9933',
+                backgroundColor: pointNm === 'P1' ? '#54A6E7' : '#FF9933',
             })
             chartRef.current.provider = chartInfoRef.current
 
@@ -168,7 +187,7 @@ const SafetyL4Comp = () => {
 
     const renderPointInfo = (obj, i) =>{
         return (
-            <div className={"panel-box point-box point-1"}/* point-1 ~ point-5 개별 색상 클래스*/ style={{color:'black'}} key={i}>
+            <div className={`panel-box point-box ${obj.properties.pointNm === 'P1' ? 'point-1' : 'point-2'}`}/* point-1 ~ point-5 개별 색상 클래스*/ style={{color:'black'}} key={i}>
                 <div className="panel-box-header">
                     <div className="point-icon"></div>
                     <h2 className={"panel-box-title"}>{obj.properties.pointNm}</h2>
@@ -185,19 +204,19 @@ const SafetyL4Comp = () => {
         <>
             <div style={{display: detailSearchTabType === 'comp' ? '' : 'none'}}>
                 <div className="content-row">
-                <div className="content-row-header">
-                    <h2 className={"content-row-title"}>그래프</h2>
-                </div>
-                <div className="panel-box mb-0">
-                    <BaseChart width={260} height={270} ref={chartRef} chartType={'Line'} title={''}/>
-                </div>
+                    <div className="content-row-header">
+                        <h2 className={"content-row-title"}>그래프</h2>
+                    </div>
+                    <div className="panel-box mb-0">
+                        <BaseChart width={260} height={270} ref={chartRef} chartType={'Line'} title={''}/>
+                    </div>
                 </div>
                 <div className={"content-row"}>
                     <div className="content-row-header">
                         <h2 className={"content-row-title"}>Point</h2>
                     </div>
                     <div className="content-row-body">
-                    {compList.map((obj, i)=> renderPointInfo(obj, i) )}
+                        {compList.map((obj, i)=> renderPointInfo(obj, i) )}
                     </div>
                 </div>
             </div>

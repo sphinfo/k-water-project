@@ -2,7 +2,7 @@ import { toJS } from "mobx";
 import React, { useEffect, useState } from "react";
 
 /** 범례 공통으로 사용할경우 param 받아서 범례값 title 변경 예시 230731 */
-const BaseLegendWidget = (props) => {
+const BaseLegendGradientWidget = (props) => {
 
     const {params, ...other} = props
     const [title, setTitle] = useState('')
@@ -43,4 +43,13 @@ const BaseLegendWidget = (props) => {
     )
 }
 
-export default React.memo(BaseLegendWidget);
+export default React.memo(BaseLegendGradientWidget);
+
+{/* <div className="map_widget map-basic-style" style={{bottom: '10px', right: '10px'}}>
+                            <div className="widget-box">
+                                <div className="widget-header">
+                                    <h4 className="widget-title">범례</h4>
+                                </div>
+                                <div className="widget-body">max-width: 300px(fluid) <br/> min-width: unset</div>
+                            </div>
+                        </div> */}

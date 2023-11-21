@@ -50,7 +50,7 @@ const LegendWWidgetConfig = {
         instance: widgets.BaseLegendWidget
     },
     'BaseLegendgGradientWidget': {
-        title: 'BaseLegendWidget',
+        title: 'BaseLegendGradientWidget',
         legend: true,
         style: {  position:'absolute'},
         instance: widgets.BaseLegendgGradientWidget

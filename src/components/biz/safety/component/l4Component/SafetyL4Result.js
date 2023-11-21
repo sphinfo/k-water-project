@@ -38,11 +38,8 @@ const example = [{
     checked: false
 }]
 
-const displaceLevelData = {name:'변위등급', store:'Safety', layer: '20231114_SAFETY_YONGDAM'}
-
 const SafetyL4Result = () => {
 
-    const [dButton, setDButton] = useState(false)
 
     const dispatch = useDispatch()
     const {detailSearchTabType, select3Level} = useSelector(state => state.safety)
@@ -66,18 +63,6 @@ const SafetyL4Result = () => {
 
         setExampleList(randomArray)
     },[select3Level])
-
-
-    //변위등급 레이어 on / off
-    useEffect(()=>{
-        dButton ? dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: displaceLevelData}) : dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: false})
-    },[dButton])
-
-    /**
-        const renderToggleButton = ({name, value, ...other}) =>{
-            return <ToggleButton style={{margin:5, width: '100%'}} value={value}>{name}</ToggleButton>
-        }
-    */
     
 
     /* 데이터 형식이 없어서 example로 개발 */

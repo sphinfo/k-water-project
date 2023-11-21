@@ -17,17 +17,17 @@ const WidgetConatiner = (props) => {
                 {() => (
                     <div ref={container}>
                         {/*레전드*/}
-                        <div className="map_widget map-basic-style" style={{bottom: '10px', right: '10px'}}>
+                        {/* <div className="map_widget map-basic-style" style={{bottom: '10px', right: '10px'}}>
                             <div className="widget-box">
                                 <div className="widget-header">
                                     <h4 className="widget-title">범례</h4>
                                 </div>
                                 <div className="widget-body">max-width: 300px(fluid) <br/> min-width: unset</div>
                             </div>
-                        </div>
+                        </div> */}
 
                         {/*지도 팝업*/}
-                        <div className="map_widget map-basic-style" style={{bottom: '120px', right: '10px'}}>
+                        {/* <div className="map_widget map-basic-style" style={{bottom: '120px', right: '10px'}}>
                             <div className="widget-box map-popup-box">
                                 <div className="widget-header">
                                     <h4 className="widget-title">지도 팝업</h4>
@@ -35,7 +35,7 @@ const WidgetConatiner = (props) => {
                                 </div>
                                 <div className="widget-body">max-width: 300px(fluid) <br/> min-width: unset</div>
                             </div>
-                        </div>
+                        </div> */}
                         {
                             WidgetManager._instances.map(widget => {
                                 console.info(widget)

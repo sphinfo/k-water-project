@@ -1,4 +1,7 @@
+import { TreeItem, TreeView } from "@mui/lab";
+import { SAFETY_TEXT_SAFETY } from "@redux/actions";
 import React, { forwardRef, memo, useEffect, useImperativeHandle, useState } from 'react';
+import { useDispatch } from "react-redux";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
@@ -19,6 +22,8 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
       newItems.splice(index, 1)
       setSelectedItems(newItems)
     }
+
+    setVisibleTree(false)
   };
 
 
@@ -38,8 +43,7 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
   }));
 
   const clickHandler = (item)=>{
-    setVisibleTree(false)
-    itemClick(item)
+
   }
 
   
@@ -57,7 +61,7 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
             key={item.code}
             disableTouchRipple={true}
             className={selectedItems.includes(item.name) ? "search-bed-item item-on" : "search-bed-item" }
-            onClick={(item) => clickHandler(item)}>
+            onClick={() => itemClick(item)}>
             {item.name}
           </ListItem>
       ))}

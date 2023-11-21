@@ -1,6 +1,6 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET } from "@redux/actions";
+import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_DETAIL_SEARCH_TAB_TYPE } from "@redux/actions";
 import { G$RandomId, G$addLayer, G$addWidget, G$flyToPoint,G$removeLayer, G$removeWidget } from "@gis/util";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 
@@ -92,10 +92,17 @@ const Safety = () => {
 
     },[])
 
+
+    /* 변위등급 on / off */
     useEffect(()=>{
 
         GisLayerClickTool.resetLayer(bizName)
         if(displaceLevel){
+
+            legendWidget({visible: true, type:'b'})
+
+            //변위 등급 선택시 비교탭 off 및 비교클릭이벤트 해제
+            dispatch({type:SAFETY_DETAIL_SEARCH_TAB_TYPE, detailSearchTabType:'datas' })
 
             safety3LevelLayerRef.current.setVisible(false)
             safety4LevelLayerRef.current.setVisible(false)
@@ -103,11 +110,20 @@ const Safety = () => {
             const {store, layer} = displaceLevel
             safetyDisplaceLevelLayerRef.current.changeParameters({store:store, layerId:layer})
             GisLayerClickTool.addLayer(bizName, [`${store}:${layer}`])
+
         }else{
+
             safetyDisplaceLevelLayerRef.current.remove()
 
-            safety3LevelLayerRef.current.setVisible(true)
-            safety4LevelLayerRef.current.setVisible(true)
+            legendWidget({visible: false})
+
+
+            //변위등급을 껏을시 4레벨이 선택되어 있으면 4레벨만 켜기  /  4레벨이 꺼져있으면 3레벨 켜기
+            if(select4Level){
+                safety4LevelLayerRef.current.setVisible(true)
+            }else{
+                safety3LevelLayerRef.current.setVisible(true)
+            }
 
             overlayRef.current.removeAll()
         }
@@ -127,10 +143,14 @@ const Safety = () => {
             GisLayerClickTool.addLayer(bizName, [`${store}:${layer}`])
             //console.info(safety3LevelLayerRef.current)
             //3레벨 선택이 되었을시 4레벨 데이터를 가져와야함 2안을 적용했을시 / 1안이 적용되었으면 조건입력후 4레벨 데이터 가져오기 ( SafetyDisplaceLevelTemp )
+            legendWidget({visible: true, type:'g'})
+
 
         }else{
             //3레벨 선택없을시 삭제
             safety3LevelLayerRef.current.remove()
+            legendWidget({visible: false})
+
         }
     },[select3Level])
 
@@ -149,9 +169,13 @@ const Safety = () => {
             safety4LevelLayerRef.current.changeParameters({store:store, layerId:layer})
             GisLayerClickTool.addLayer(bizName, [`${store}:${layer}`])
 
+            legendWidget({visible: true, type:'g'})
+
         }else{
             //4레벨 레이어 지우기
             safety4LevelLayerRef.current.remove()
+
+            legendWidget({visible: false})
 
             //3레벨 레이어 켜기
             safety3LevelLayerRef.current.setVisible(true)
@@ -166,6 +190,42 @@ const Safety = () => {
         }
 
     },[select4Level])
+
+    //범례 widget
+    const legendWidget = (param) =>{
+
+        const {visible=false, type=false} = param
+
+        if(visible){
+            if(type === 'g'){
+                G$addWidget('BaseLegendgGradientWidget', { 
+                    params: {title:'고정산란체 - L3TD-A1', 
+                    min:-0.3, 
+                    max: 3, 
+                    datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}})
+
+            }else if(type === 'b'){
+                G$addWidget('BaseLegendWidget', { 
+                    params: {
+                        title:'변위 등급', 
+                        datas: [{label:'안전', color:'BLUE'}
+                            ,{label:'보통', color:'GREEN'}
+                            ,{label:'위험', color:'RED'}
+                    ]} 
+                })
+            }
+            
+                //
+        }else{
+            G$removeWidget('BaseLegendgGradientWidget')
+            G$removeWidget('BaseLegendWidget')
+        }
+
+        
+        //G$addWidget()
+        // G$removeWidget('BaseLegendWidget')
+        // G$removeWidget('BaseLegendgGradientWidget')
+    }
 
     return (
         <>
