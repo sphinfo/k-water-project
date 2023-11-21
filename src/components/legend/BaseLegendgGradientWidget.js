@@ -24,6 +24,16 @@ const BaseLegendGradientWidget = (props) => {
 
     return (
         <>
+
+        <div className="map_widget map-basic-style" >
+            <div className="widget-box">
+                <div className="widget-header">
+                    <h4 className="widget-title">{title}</h4>
+                </div>
+                <div className="widget-body"></div>
+            </div>
+        </div>
+
             <dl className="widget-legend-wrap legend-vertical">
                 <dt><h4>{title}</h4></dt>
                 <dd>
