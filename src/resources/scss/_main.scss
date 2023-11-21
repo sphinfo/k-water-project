@@ -105,6 +105,9 @@
       width: 256px;
       height: 26px;
     }
+    &.bed-open{
+      border-radius: 10px 10px 0 0;
+    }
   }
   &.panel-input{
     background-color: $white;
@@ -121,6 +124,40 @@
   }
 }
 
+.address-bed-wrap{
+  position: absolute;
+  right: calc(50% - (310px / 2));
+  top: 46px;
+  background: $white;
+  width: 313px;
+  overflow: hidden;
+  &.map-basic-style{
+    border-radius: 0 0 10px 10px;
+  }
+  .address-bed-list{
+    border: 0;
+    height: 360px;
+    overflow-y: auto;
+    .address-bed-list-item{
+      padding: 14px;
+      border-top: 1px solid $line;
+      transition: all 300ms;
+      &:hover{
+        background-color: $basic;
+        border-top: 1px solid $basic;
+      }
+      .address-item-wrap{
+        .address-item-title{
+          font-weight: 600;
+          margin-bottom: 4px;
+        }
+        .address-item-sub{
+          color: #7a7a7a;
+        }
+      }
+    }
+  }
+}
 
 .map-search-input input, .map-search-bt{
   border: 0;

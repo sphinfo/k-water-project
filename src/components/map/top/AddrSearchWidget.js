@@ -53,7 +53,7 @@ const AddrSearchWidget = () => {
 
     return (
         <>
-            <ul className="input-basic-search map-search-input map-basic-style">
+            <ul className="input-basic-search map-search-input map-basic-style bed-open">
                 <TextInput
                     value={addrSearchText}
                     onChange={handleChange}
@@ -66,7 +66,7 @@ const AddrSearchWidget = () => {
                     </svg>
                 </button>
             </ul>
-            <ul style={{position: 'absolute', left: 400, height: 500, width: 300,  top: 10, background: 'white', display: 'none'}}>
+            <ul className={"address-bed-wrap map-basic-style"}>
                 <AddrSearchResult addrSearchText={addrSearchText} />
             </ul>
         </>
