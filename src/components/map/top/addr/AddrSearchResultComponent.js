@@ -33,12 +33,18 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
     };
 
     return (
-      <div key={i} onClick={handleClick} style={{color:'black'}}>
-        <ul style={{border: '1px solid #000', padding: 10, listStyle: 'none'}}>
-          <dt>
+      <div className={"address-bed-list-item"} key={i} onClick={handleClick}>
+        <dl className={"address-item-wrap"}>
+          <dt className={"address-item-title"}>
             {juso} {bldNm ? bldNm : ''}
           </dt>
-        </ul>
+          <dd className={"address-item-sub"}>
+            도로명주소
+          </dd>
+          <dd className={"address-item-sub"}>
+            도로명주소2
+          </dd>
+        </dl>
         
       </div>
     );
@@ -85,8 +91,8 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
 
   return (
       <>
-          <div style={{overflow: 'auto', height: 460}}>
-              { result.length > 0 && <><h3 style={{color:'black'}}>총 : {total}개</h3></> }
+          <div className={"address-bed-list"}>
+              { result.length > 0 && <><h3>총 : {total}개</h3></> }
               
               {(result.length > 0 && result.map((obj, i)=>{
                   return addrComponent(obj, i)
