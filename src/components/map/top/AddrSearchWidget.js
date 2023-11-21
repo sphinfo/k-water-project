@@ -16,7 +16,7 @@ const AddrSearchWidget = () => {
     const dispatch = useDispatch()
 
     const searchAddr = useRef(new VWorldAddressSearch())  //vworld 검색 api
-    const searchGeoserver = useRef(new MainGeoserverSearch()) //Geoserver 검색 api
+    //const searchGeoserver = useRef(new MainGeoserverSearch()) //Geoserver 검색 api
     const [addrSearchText, setAddrSearchText] = useState('') //검색 text
     
 
@@ -36,13 +36,13 @@ const AddrSearchWidget = () => {
                 console.info(error)
             })
 
-            searchGeoserver.current.searchName(searchList, addrSearchText).then((result)=>{
-                if(result){
-                    dispatch({ type: SEARCH_RIVER, result:result })
-                }
-            }).catch((error)=>{
-                console.info(error)
-            })
+            // searchGeoserver.current.searchName(searchList, addrSearchText).then((result)=>{
+            //     if(result){
+            //         dispatch({ type: SEARCH_RIVER, result:result })
+            //     }
+            // }).catch((error)=>{
+            //     console.info(error)
+            // })
 
         }
     }

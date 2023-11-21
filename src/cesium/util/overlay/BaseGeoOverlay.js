@@ -28,7 +28,7 @@ class BaseOverlay {
         // h4 요소 생성
         const title = document.createElement('h4')
         title.className = 'map-popup-box-title'
-        title.textContent = '지도 팝업'
+        title.textContent = '변위 등급'
 
         // IconButton 요소 생성
         const iconButton = document.createElement('div')

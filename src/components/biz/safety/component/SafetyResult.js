@@ -5,7 +5,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
-
+import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
+//Safety-20231114_L4TD_YONGDAM_UD.jpg
 
 //sample 데이터
 const example = [
@@ -65,7 +66,8 @@ const SafetyResult = ({changeParam, ingre}) => {
       setExampleList(updatedList);
 
       //이베트 발생 위치 확인후 
-      const selectedItem = updatedList[outerIndex][innerIndex];
+      const selectedItem = updatedList[outerIndex][innerIndex]
+
       //선택이 해제되었으면 reset / 선택이 되었으면 select3level reduce 전송
       if (!selectedItem.checked) {
           dispatch({ type: SAFETY_DETAIL_RESET });
@@ -102,7 +104,9 @@ const SafetyResult = ({changeParam, ingre}) => {
               </div>
               <div className="list-body">
                 <div className="list-shadow"></div>
-                <div className="img-box">{/*images*/}</div>
+                <div className="img-box">
+                  <img src={img} />
+                </div>
               </div>
             </ListItemButton>
           </ListItem>

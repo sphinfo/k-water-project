@@ -17,43 +17,51 @@ class VWorldAddressSearch{
 	
 	const { request, get } = createAxios();
 	
+
+    // /vworld/req/search?service=search&request=search&version=2.0&size=10&page=${page}&query=${encodeURIComponent(query)}&type=place&format=json&errorformat=json&key=${this.apiKey}
+
+    const url = `/vworld/req/search?service=search&request=search&version=2.0&size=10&page=${page}&query=${encodeURIComponent(query)}&type=place&format=json&errorformat=json&key=${this.apiKey}`
+
     //주소
-    const urlA = `/mapVworld/search.do?category=jibun&q=${encodeURIComponent(query)}${this._size}&output=json&pageIndex=${page}&apiKey=${this.apiKey}`;
+    //const urlA = `/mapVworld/search.do?category=jibun&q=${encodeURIComponent(query)}${this._size}&output=json&pageIndex=${page}&apiKey=${this.apiKey}`;
 
     //도로명
-    const urlR = `/mapVworld/search.do?category=juso&q=${encodeURIComponent(query)}${this._size}&output=json&pageIndex=${page}&apiKey=${this.apiKey}`;
+    //const urlR = `/mapVworld/search.do?category=juso&q=${encodeURIComponent(query)}${this._size}&output=json&pageIndex=${page}&apiKey=${this.apiKey}`;
 
 
     try {
 
-      let responseA
-      let responseR
+      let response
+      //let responseA
+      //let responseR
       
 
-      if(!searchType || searchType === 'addr'){
-        responseA = await request(urlA);
-      }
+      // if(!searchType || searchType === 'addr'){
+      //   responseA = await request(urlA);
+      // }
       
-      if(!searchType || searchType === 'road'){
-        responseR = await request(urlR);
-      }
+      // if(!searchType || searchType === 'road'){
+      //   responseR = await request(urlR);
+      // }
 
-      const dataA = responseA ? responseA.data : null;
-      const statusA = responseA ? responseA.status : null;
-      const dataR = responseR ? responseR.data : null;
-      const statusR = responseR ? responseR.status : null;
+      const data = response ? response.data : null;
+      const status = response ? response.status : null;
+      // const dataA = responseA ? responseA.data : null;
+      // const statusA = responseA ? responseA.status : null;
+      // const dataR = responseR ? responseR.data : null;
+      // const statusR = responseR ? responseR.status : null;
       
       
 
-      if (statusA === 200 || statusR === 200) {
+      //if (statusA === 200 || statusR === 200) {
+      if (status === 200) {
 
-        
-        
+        // const resultDatas = {
+        //   addr: dataA, 
+        //   road: dataR
+        // }
 
-        const resultDatas = {
-          addr: dataA, 
-          road: dataR
-        }
+        const resultDatas = data
 
         console.info(resultDatas)
         return resultDatas

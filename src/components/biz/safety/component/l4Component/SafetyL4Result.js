@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
+import img from "@images/Safety-20231114_L4TD_YONGDAM_UD.jpg"
 
 const example = [{
     name: 'EAST-WEST',
@@ -46,6 +47,10 @@ const SafetyL4Result = () => {
 
     const [exampleList, setExampleList] = useState([])
     useEffect(()=>{
+        
+        //3레벨이 선택되었으면 4레벨 reducer 초기화
+        dispatch({type:SAFETY_SELECT_4_LEVEL_RESET})
+
         /**
          * select3Level : 3레벨값이 바뀌면 4레벨 데이터 LIST 가 변경되어야 한다 API 후 SET LIST
          * 현재는 임의로 버튼 추가
@@ -62,6 +67,7 @@ const SafetyL4Result = () => {
         })
 
         setExampleList(randomArray)
+
     },[select3Level])
     
 
@@ -102,7 +108,9 @@ const SafetyL4Result = () => {
               </div>
                 <div className="list-body">
                     <div className="list-shadow"></div>
-                    <div className="img-box">{/*images*/}</div>
+                    <div className="img-box">
+                        <img src={img} />
+                    </div>
                 </div>
             </ListItemButton>
           </ListItem>

@@ -99,8 +99,6 @@ const Safety = () => {
         GisLayerClickTool.resetLayer(bizName)
         if(displaceLevel){
 
-            legendWidget({visible: true, type:'b'})
-
             //변위 등급 선택시 비교탭 off 및 비교클릭이벤트 해제
             dispatch({type:SAFETY_DETAIL_SEARCH_TAB_TYPE, detailSearchTabType:'datas' })
 
@@ -114,8 +112,6 @@ const Safety = () => {
         }else{
 
             safetyDisplaceLevelLayerRef.current.remove()
-
-            legendWidget({visible: false})
 
 
             //변위등급을 껏을시 4레벨이 선택되어 있으면 4레벨만 켜기  /  4레벨이 꺼져있으면 3레벨 켜기
@@ -143,13 +139,11 @@ const Safety = () => {
             GisLayerClickTool.addLayer(bizName, [`${store}:${layer}`])
             //console.info(safety3LevelLayerRef.current)
             //3레벨 선택이 되었을시 4레벨 데이터를 가져와야함 2안을 적용했을시 / 1안이 적용되었으면 조건입력후 4레벨 데이터 가져오기 ( SafetyDisplaceLevelTemp )
-            legendWidget({visible: true, type:'g'})
 
 
         }else{
             //3레벨 선택없을시 삭제
             safety3LevelLayerRef.current.remove()
-            legendWidget({visible: false})
 
         }
     },[select3Level])
@@ -169,13 +163,9 @@ const Safety = () => {
             safety4LevelLayerRef.current.changeParameters({store:store, layerId:layer})
             GisLayerClickTool.addLayer(bizName, [`${store}:${layer}`])
 
-            legendWidget({visible: true, type:'g'})
-
         }else{
             //4레벨 레이어 지우기
             safety4LevelLayerRef.current.remove()
-
-            legendWidget({visible: false})
 
             //3레벨 레이어 켜기
             safety3LevelLayerRef.current.setVisible(true)
@@ -191,41 +181,64 @@ const Safety = () => {
 
     },[select4Level])
 
-    //범례 widget
-    const legendWidget = (param) =>{
 
-        const {visible=false, type=false} = param
+    //범례 change 이벤트
+    useEffect(()=>{
 
-        if(visible){
-            if(type === 'g'){
+        console.info(select3Level)
+        console.info(select4Level)
+        console.info(displaceLevel)
+        G$removeWidget('BaseLegendWidget')
+        G$removeWidget('BaseLegendgGradientWidget')
+
+
+        //변위등급이 켜져잇는경우 STEP 1
+        if(displaceLevel){
+            //3,4 레벨 범례 off
+
+            //변위등급 범례 on
+            G$addWidget('BaseLegendWidget', { 
+                params: {
+                    title:'L4TD 변위등급', 
+                    datas: [{label:'안전', color:'BLUE'}
+                        ,{label:'보통', color:'GREEN'}
+                        ,{label:'위험', color:'RED'}
+                ]} 
+            })
+        }else{
+            //변위등급 범례 on
+            //3레벨,4레벨 켜져있는경우 ( 4레벨만 on )
+            if(select3Level && select4Level){
+
                 G$addWidget('BaseLegendgGradientWidget', { 
-                    params: {title:'고정산란체 - L3TD-A1', 
-                    min:-0.3, 
-                    max: 3, 
+                    params: {title:'L4TD 시계열변위', 
+                    min:-1, 
+                    max: 1, 
                     datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}})
 
-            }else if(type === 'b'){
-                G$addWidget('BaseLegendWidget', { 
-                    params: {
-                        title:'변위 등급', 
-                        datas: [{label:'안전', color:'BLUE'}
-                            ,{label:'보통', color:'GREEN'}
-                            ,{label:'위험', color:'RED'}
-                    ]} 
-                })
+                
+            }else{
+                //3레벨이 켜져있는경우
+                if(select3Level){
+                    G$addWidget('BaseLegendgGradientWidget', { 
+                        params: {title:select3Level.main === 'PSI' ? '고정산란체 - L3TD-A1' : '분란산란체 - L3TD-A2', 
+                        min:-0.3, 
+                        max: 3, 
+                        datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}})
+
+                }
+                
             }
-            
-                //
-        }else{
+
+        }
+
+        if(!select3Level && !select4Level && !displaceLevel){
             G$removeWidget('BaseLegendgGradientWidget')
             G$removeWidget('BaseLegendWidget')
         }
 
-        
-        //G$addWidget()
-        // G$removeWidget('BaseLegendWidget')
-        // G$removeWidget('BaseLegendgGradientWidget')
-    }
+
+    },[select3Level, select4Level, displaceLevel])
 
     return (
         <>
