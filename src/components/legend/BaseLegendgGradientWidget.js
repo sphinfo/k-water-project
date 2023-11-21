@@ -25,22 +25,14 @@ const BaseLegendGradientWidget = (props) => {
     return (
         <>
 
-        <div className="map_widget map-basic-style" >
-            <div className="widget-box">
-                <div className="widget-header">
-                    <h4 className="widget-title">{title}</h4>
-                </div>
-                <div className="widget-body"></div>
-            </div>
-        </div>
-
-            <dl className="widget-legend-wrap legend-vertical">
-                <dt><h4>{title}</h4></dt>
-                <dd>
+        <div className="map_widget map-basic-style"  >
+            <dl className="widget-box legend-gradient">
+                <dt className="widget-header"><h4 className="widget-title">{title}</h4></dt>
+                <dd className="widget-body">
                     {datas && datas.length > 3 ? (
-                        <div className="widget-legend-chip"
-                            style={{background: `linear-gradient(0deg, ${datas[0]} 0%, ${datas[1]} 25.52%, ${datas[2]} 52.08%, ${datas[3]} 77.08%, ${datas[4]} 100%)`}}>
-                        </div>
+                      <div className="widget-legend-chip"
+                           style={{background: `linear-gradient(90deg, ${datas[0]} 0%, ${datas[1]} 25.52%, ${datas[2]} 52.08%, ${datas[3]} 77.08%, ${datas[4]} 100%)`}}>
+                      </div>
                     ) : null}
                     <ul className="widget-legend-unit">
                         <li>{max}</li>
@@ -48,6 +40,9 @@ const BaseLegendGradientWidget = (props) => {
                     </ul>
                 </dd>
             </dl>
+        </div>
+
+
             
         </>
     )

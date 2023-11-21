@@ -23,27 +23,22 @@ const BaseLegendWidget = (props) => {
         <>
 
             <div className="map_widget map-basic-style">
-                <div className="widget-box">
-                    <div className="widget-header">
-                        <h4 className="widget-title">{title}</h4>
-                    </div>
-                    <div className="widget-body"></div>
-                </div>
+                <dl className="widget-box">
+                    <dt className={"widget-header"}><h4 className={"widget-title"}>{title}</h4></dt>
+                    <dd className={"widget-body"}>
+                        <ul>
+                            {datas.map((data, index) => (
+                              <li key={index}>
+                                  <span className={`widget-legend-chip`} style={{backgroundColor:data.color}}></span>
+                                  {data.label}
+                              </li>
+                            ))}
+                        </ul>
+                    </dd>
+                </dl>
             </div>
 
-            <dl className="widget-legend-wrap">
-                <dt><h4>{title}</h4></dt>
-                <dd>
-                    <ul>
-                        {datas.map((data, index) => (
-                            <li key={index}>
-                                <span className={`widget-legend-chip`} style={{backgroundColor:data.color}}></span>
-                                {data.label}
-                            </li>
-                        ))}
-                    </ul>
-                </dd>
-            </dl>
+
             
         </>
     )

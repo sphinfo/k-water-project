@@ -14,24 +14,24 @@ class BaseOverlay {
         /* html 생성 */
         const overlay = document.createElement('div')
         map.container.appendChild(overlay)
-        overlay.className = 'map_widget map-basic-style'
+        overlay.className = 'map-popup-box'
         
 
         // widget-box div 요소 생성
         const widgetBox = document.createElement('div')
-        widgetBox.className = 'widget-box map-popup-box'
+        widgetBox.className = 'map-popup-box'
 
         // widget-header div 요소 생성
         const widgetHeader = document.createElement('div')
-        widgetHeader.className = 'widget-header'
+        widgetHeader.className = 'map-popup-box-header'
 
         // h4 요소 생성
         const title = document.createElement('h4')
-        title.className = 'widget-title'
+        title.className = 'map-popup-box-title'
         title.textContent = '지도 팝업'
 
         // IconButton 요소 생성
-        const iconButton = document.createElement('IconButton')
+        const iconButton = document.createElement('div')
         iconButton.className = 'popup-close-btn';
         iconButton.addEventListener('click', function () {
             console.log(properties)
@@ -40,7 +40,7 @@ class BaseOverlay {
 
         // widget-body div 요소 생성
         const widgetBody = document.createElement('div')
-        widgetBody.className = 'widget-body'
+        widgetBody.className = 'map-popup-box-body'
         widgetBody.textContent = `등급 ${properties.GRAY_INDEX}(안전)`
 
         // 요소들을 구조에 맞게 조립
