@@ -4,6 +4,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 
 //sample 데이터
@@ -94,7 +96,12 @@ const DroughtResult = () => {
               onClick={() => checkboxChange(i, i2)}
             >
               <div className="list-title-wrap">
-                <h3 className={'list-title'}>{obj.name} ---------- {obj.date}</h3>
+                <h3 className={'list-title'}>{obj.name}</h3>
+                <h4 className="list-title-sub">{obj.date}</h4>
+              </div>
+              <div className="list-body">
+                <div className="list-shadow"></div>
+                <div className="img-box">{/*images*/}</div>
               </div>
             </ListItemButton>
           </ListItem>
@@ -103,10 +110,24 @@ const DroughtResult = () => {
 
     return (
         <>
-          <div className={"content-body bg-grey filled"}>
+          <div className={"content-body border-top filled"}>
+            <div className="content-row">
+              <div className="form-control">
+              <ToggleButtonGroup
+                className={"toggle-btn-wrap"}
+                color={"primary"}
+                exclusive={true}
+                aria-label="toggle group"
+                fullWidth={true}>
+                <ToggleButton selected={true}>물리</ToggleButton>
+                <ToggleButton>강우</ToggleButton>
+                <ToggleButton>토양</ToggleButton>
+                <ToggleButton>유출</ToggleButton>
+              </ToggleButtonGroup>
+              </div>
+            </div>
             <div className="content-row">
                 <div className={'content-list-wrap'}>
-                  <h2 style={{color:'black'}} >검색결과</h2>
                     {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
                 </div>
               </div>
