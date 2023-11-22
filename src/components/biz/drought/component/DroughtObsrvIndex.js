@@ -117,7 +117,7 @@ const DroughtObsrvIndex = () => {
                     </h2>
                 </div>
                 <div className="panel-box">
-                    <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'testGrid'} />
+                    <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'} />
                 </div>
             </div>
         </>
