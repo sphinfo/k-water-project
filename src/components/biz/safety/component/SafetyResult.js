@@ -6,6 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
+import Button from "@mui/material/Button";
 //Safety-20231114_L4TD_YONGDAM_UD.jpg
 
 //sample 데이터
@@ -116,6 +117,12 @@ const SafetyResult = ({changeParam, ingre}) => {
     return (
         <>
           <div className={"content-body border-top filled"}>
+            <div className="content-row empty-wrap">
+              <div className="empty-message">
+                <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
+                <Button className="btn empty-btn">지역검색</Button>
+              </div>
+            </div>
             <div className="content-row">
                 <div className={'content-list-wrap'}>
                     {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}

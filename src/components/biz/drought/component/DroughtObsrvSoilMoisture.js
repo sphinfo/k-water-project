@@ -86,8 +86,12 @@ const DroughtObsrv = () => {
 
     return (
         <>
-            <h1>시계열 토양수분 및 강수량</h1>
-            <BaseChart width={280} height={320} ref={chartRef} chartType={'Line'} title={''}/>
+            <div className="content-row-header">
+                <h2 className="content-row-title">시계열 토양수분 및 강수량</h2>
+            </div>
+            <div className="panel-box">
+            <BaseChart width={260} height={320} ref={chartRef} chartType={'Line'} title={''}/>
+            </div>
         </>
     )
 }

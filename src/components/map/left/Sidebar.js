@@ -37,6 +37,8 @@ function TabPanel(props) {
                 </div>
                 {children}
               </div>
+              <IconButton className="folding-btn">
+              </IconButton>
             </>
           )}
       </div>
