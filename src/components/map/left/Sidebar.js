@@ -3,13 +3,19 @@ import Drought from '@components/biz/drought/Drought';
 import Flood from '@components/biz/flood/Flood';
 import Environment from '@components/biz/environment/Environment';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
 //탭 패널 공통
 function TabPanel(props) {
   const { children, value, index, name, close, ...other } = props;
 
   const [visible, setVisible] = useState(false);
+
+  const [isFolding, setisFolding] = useState(false);
+  const foldingHandler = () => {
+    setisFolding(!isFolding);
+  };
+
 
   useEffect(() => {
     if (value === index) {
@@ -20,11 +26,12 @@ function TabPanel(props) {
 
   }, [value, index]);
 
+
   return (
       <div hidden={value !== index || value === -1} {...other} >
           {visible && (
             <>
-              <div className={"panel panel_left"}>
+              <div className={`panel panel_left ${isFolding ? 'fold' : ''}`}>
                 <div className="panel-header">
                     <h1 className="panel-title">
                         {name}
@@ -36,6 +43,10 @@ function TabPanel(props) {
                     </IconButton>
                 </div>
                 {children}
+              </div>
+              <div  className={`folding-btn-wrap  ${isFolding ? 'folding-off' : ''}`} >
+                <IconButton className="folding-btn map-basic-style" disableRipple={true} onClick={()=>{foldingHandler()}}>
+                </IconButton>
               </div>
             </>
           )}

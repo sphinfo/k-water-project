@@ -30,3 +30,54 @@ button{
   background-color: unset;
 }
 
+
+::-webkit-scrollbar-thumb {
+  background: $grey-200;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  background: $basic;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.text-blue{
+  color: $primary;
+  font-weight: 500;
+  margin-right: 3px;
+}
+
+.text-grey{
+  color: $grey-300;
+}
+
+.ml-5{
+  margin-left: 5px;
+}
+.ml-3{
+  margin-left: 3px;
+}
+
+.pb-0{
+  padding-bottom: 0;
+}
+.mb-0{
+  margin-bottom: 0;
+}
+
+.d-none{
+  display: none;
+}
+
+.btn{
+  &.empty-btn{
+    padding: 12px 15px;
+    font-size: 13px;
+    background-color: #e7e7e7;
+    color: $sub-text;
+    border-radius: 8px;
+    line-height: 1;
+  }
+}

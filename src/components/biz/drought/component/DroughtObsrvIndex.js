@@ -102,11 +102,24 @@ const DroughtObsrvIndex = () => {
 
     return (
         <>
-            <h1>시계열 가뭄지수 및 강수량</h1>
-            <BaseChart width={280} height={320} ref={chartRef} chartType={'Line'} title={''}/>
-            
-            <h1>강우 해갈 데이터</h1>
-            <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'testGrid'} />
+            <div className="content-row">
+                <div className="content-row-header">
+                    <h2 className={"content-row-title"}>시계열 가뭄지수 및 강수량</h2>
+                </div>
+                <div className="panel-box">
+                <BaseChart width={260} height={320} ref={chartRef} chartType={'Line'} title={''}/>
+                </div>
+            </div>
+
+            <div className="content-row">
+                <div className="content-row-header">
+                    <h2 className={"content-row-title"}>강우 해갈 데이터
+                    </h2>
+                </div>
+                <div className="panel-box">
+                    <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'testGrid'} />
+                </div>
+            </div>
         </>
     )
 }

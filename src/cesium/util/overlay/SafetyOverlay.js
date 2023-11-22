@@ -14,7 +14,7 @@ class SafetyOverlay {
         /* html 생성 */
         const overlay = document.createElement('div')
         map.container.appendChild(overlay)
-        overlay.className = 'map-popup-box'
+        overlay.className = 'map-popup-box-wrap box-point'
 
         // widget-box div 요소 생성
         const widgetBox = document.createElement('div')
