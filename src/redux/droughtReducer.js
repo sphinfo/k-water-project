@@ -6,6 +6,7 @@ import {
   DROUGHT_SET_TEXT,
   DROUGHT_SELETE_FEATURE,
   DROUGHT_OBSRV_TAB,
+  DROUGHT_SELETE_LAYER,
 } from './actions';
 
 const initialState = {
@@ -15,6 +16,8 @@ const initialState = {
   endDate: dayjs().format('YYYY-MM-DD'),   //검색 옵션 ( 기간설정 )
   obsrvTab: 'soilMoisture', //활용주제도 Tab
   selectFeature: false,     //관측소 선택 Feature
+
+  selectDroughtLayer: false, //가뭄 레이어 선택값
 
 };
 
@@ -35,6 +38,11 @@ function droughtReducer(state = initialState, action) {
     
     case DROUGHT_SELETE_FEATURE:
       return { ...state, selectFeature: action.selectFeature}
+
+    case DROUGHT_SELETE_LAYER:
+      return { ...state, selectDroughtLayer: action.selectDroughtLayer}
+
+    
 
     default:
       return state;

@@ -65,6 +65,7 @@ class BaseEntityCollection extends CustomDataSource {
                 const pickedObject = MapManager.map.scene.pick(movement.endPosition);
 				if (defined(pickedObject)) {
 					if (!isHovering) {
+						this.overlay.removeAll()
 						isHovering = true
 						let properties = pickedObject.id.properties.getValue('')
 						this.overlay._addOverlay(properties.Lon, properties.Lat, properties)

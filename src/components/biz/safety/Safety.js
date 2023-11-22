@@ -88,6 +88,10 @@ const Safety = () => {
 
             overlayRef.current.removeAll()
 
+            //범례 삭제
+            G$removeWidget('BaseLegendWidget')
+            G$removeWidget('BaseLegendgGradientWidget')
+
         }
 
     },[])

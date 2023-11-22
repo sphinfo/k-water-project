@@ -16,7 +16,7 @@ const example = [
   {name:'DESC', date: '23.11.10~23.11.16', main:'SBAS', mainName: '(분산산란체)', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
 ]
 
-const SafetyResult = ({changeParam, ingre}) => {
+const SafetyResult = () => {
     
     const dispatch = useDispatch()
 

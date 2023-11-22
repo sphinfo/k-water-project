@@ -4,12 +4,14 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
+import { DROUGHT_SELETE_LAYER } from "@redux/actions";
 
 
 //sample 데이터
 const example = [
-  {name:'SCENE1',  date: '23.11.10~23.11.16', main:'', checked: false, store:'Drought', layer: 'L3TD_A2_YONGDAM_ASC'},
-  {name:'SCENE2', date: '23.11.10~23.11.16', main:'', checked: false, store:'Drought', layer: 'L3TD_A2_YONGDAM_DSC' },
+  {name:'SCENE1',  date: '23.11.10~23.11.16', main:'', checked: false, store:'Drought', layer: 'S1A_IW_GRDH_1SDV_20170315T092248_20170315T092317_015701_019D6E_150C'},
+  {name:'SCENE2', date: '23.11.10~23.11.16', main:'', checked: false, store:'Drought', layer: 'S1A_IW_GRDH_1SDV_20170315T092317_20170315T092342_015701_019D6E_4283' },
+  {name:'SCENE3', date: '23.11.10~23.11.16', main:'', checked: false, store:'Drought', layer: 'S1A_IW_GRDH_1SDV_20170315T092342_20170315T092407_015701_019D6E_425F' },
 ]
 
 const DroughtResult = () => {
@@ -60,13 +62,9 @@ const DroughtResult = () => {
       //이벤트 발생 위치 확인후 
       const selectedItem = updatedList[outerIndex][innerIndex];
 
-      console.info(selectedItem)
-      //선택이 해제되었으면 reset / 선택이 되었으면 select3level reduce 전송
-      /*if (!selectedItem.checked) {
-          dispatch({ type: SAFETY_DETAIL_RESET });
-      } else {
-          dispatch({ type: SAFETY_SELECT_RESULT, select3Level: selectedItem });
-      }*/
+      //선택이 되었으면 layerItem 전송 / 선택이 해제되었으면 false
+      let value = !selectedItem.checked ? false : selectedItem
+      dispatch({ type: DROUGHT_SELETE_LAYER, selectDroughtLayer: value });
 
     }
 

@@ -41,9 +41,7 @@ const initialState = {
   //레이어 선택
   selectFeature: null,
 
-  
-
-  safetyLayers: new safetyLayers()
+  //safetyLayers: new safetyLayers()
 };
 
 function safetyReducer(state = initialState, action) {
