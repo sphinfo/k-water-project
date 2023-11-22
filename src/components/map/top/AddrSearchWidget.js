@@ -20,13 +20,12 @@ const AddrSearchWidget = () => {
     const [addrSearchText, setAddrSearchText] = useState('') //검색 text
     
 
-    useEffect(()=>{
-
-
-    }, [])
+    const [visible, setVisible] = useState(false)
 
     const addrSearch = async () =>{
         if(addrSearchText !== ''){
+
+            setVisible(true)
 
             searchAddr.current.searchAddress(addrSearchText).then((result)=>{
                 if(result){
@@ -53,7 +52,7 @@ const AddrSearchWidget = () => {
 
     return (
         <>
-            <ul className="input-basic-search map-search-input map-basic-style bed-open">
+            <ul className={`input-basic-search map-search-input map-basic-style ${visible ? 'bed-open' : ''}`} onClick={()=>{setVisible(!visible)}}>
                 <TextInput
                     value={addrSearchText}
                     onChange={handleChange}
@@ -66,7 +65,7 @@ const AddrSearchWidget = () => {
                     </svg>
                 </button>
             </ul>
-            <ul className={"address-bed-wrap map-basic-style"}>
+            <ul className={"address-bed-wrap map-basic-style"} style={{display: visible? '' : 'none'}}>
                 <AddrSearchResult addrSearchText={addrSearchText} />
             </ul>
         </>

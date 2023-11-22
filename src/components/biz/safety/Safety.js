@@ -9,7 +9,7 @@ import SafetyResult from "./component/SafetyResult";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import BaseNormalizeGridLayer from "@gis/layers/BaseNormalizeGridLayer";
 import SafetyL4 from "./component/l4Component/SafetyL4";
-import BaseOverlay from "@gis/util/overlay/BaseGeoOverlay";
+import SafetyOverlay from "@gis/util/overlay/SafetyOverlay";
 
 /**
  *  안전 메인 페이지
@@ -38,7 +38,7 @@ const Safety = () => {
     //변위등급 레이어 생성
     const safetyDisplaceLevelLayerRef = useRef()
 
-    const overlayRef = useRef(new BaseOverlay())
+    const overlayRef = useRef(new SafetyOverlay())
 
     /* 레이어 선택 callback Ref */
     const layerSelectRef = useRef();
@@ -121,7 +121,12 @@ const Safety = () => {
                 safety3LevelLayerRef.current.setVisible(true)
             }
 
+            //오버레이 삭제
             overlayRef.current.removeAll()
+
+            //범례 삭제
+            G$removeWidget('BaseLegendWidget')
+            G$removeWidget('BaseLegendgGradientWidget')
         }
 
     },[displaceLevel])
@@ -185,9 +190,6 @@ const Safety = () => {
     //범례 change 이벤트
     useEffect(()=>{
 
-        console.info(select3Level)
-        console.info(select4Level)
-        console.info(displaceLevel)
         G$removeWidget('BaseLegendWidget')
         G$removeWidget('BaseLegendgGradientWidget')
 

@@ -8,32 +8,41 @@ import EmptyMessage from '@common/util/EmptyMessage';
 
 const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
 
+  
+
+  const searchAddr = useRef(new VWorldAddressSearch())  
+
   const [result, setResult] = useState([])
   const [total, setTotal] = useState(0)
 
+  const [totalPages, setTotalPages] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1);
+  
+
   /* 주소 컴포넌트 */
   const addrComponent = (obj, i) => {
-    const {road, parcel} = obj.address
-    //let bldNm = obj.BLD_NM
+    console.info(obj)
+    let juso = obj.JUSO
+    let bldNm = obj.BLD_NM
     
 
     //주소이동 click handle
     const handleClick = () => {
-      goToPlace({x:obj.point.x, y:obj.point.y})
-      addPlace(Number(obj.point.x), Number(obj.point.y))
+      goToPlace(obj);
+      addPlace(Number(obj.xpos), Number(obj.ypos))
     };
 
     return (
       <div className={"address-bed-list-item"} key={i} onClick={handleClick}>
         <dl className={"address-item-wrap"}>
           <dt className={"address-item-title"}>
-            {obj.title}
+            {juso} {bldNm ? bldNm : ''}
           </dt>
           <dd className={"address-item-sub"}>
-            {`주소 : ${parcel}`}
+            도로명주소
           </dd>
           <dd className={"address-item-sub"}>
-          {`도로명주소 : ${road}`}
+            도로명주소2
           </dd>
         </dl>
         
@@ -43,7 +52,10 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
 
   //주소 이동
   const goToPlace = (point) =>{
-      G$flyToPoint([Number(point.x), Number(point.y)], 4000)
+
+      G$flyToPoint([Number(point.xpos), Number(point.ypos)], 4000)
+
+
   }
 
 
@@ -52,21 +64,30 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
 
     set provider (datas) {
       if(datas){
-        if(datas)
-          setTotal(datas.response.record.total)
-          if(!datas.response.result){
-            setResult([])
-          }else{
-            setResult(datas.response.result.items)
-          }
-          
+          setTotal(datas.paginationInfo.totalRecordCount)
+          setTotalPages(datas.paginationInfo.totalPageCount)
+          setCurrentPage(datas.paginationInfo.currentPageNo)
+          setResult(datas.LIST)
       }else{
         setTotal(0)
+        setTotalPages(0)
+        setCurrentPage(0)
         setResult([])
       }
     }
 
-  }))
+  }));
+
+  //paging change
+  const handlePageChange = async (page) => {
+    setCurrentPage(page);
+    console.info(addrSearchText)
+    searchAddr.current.searchAddress(addrSearchText, page, type).then((result)=>{
+      setResult(result[type].LIST)
+    }).catch((error)=>{
+        console.info(error)
+    })
+  };
 
   return (
       <>
@@ -76,6 +97,14 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
               {(result.length > 0 && result.map((obj, i)=>{
                   return addrComponent(obj, i)
               }))}
+
+              { totalPages > 1 && (
+                <Pagination
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
+              )}
               
               { result.length === 0 && <EmptyMessage message={'데이터가 존재하지 않습니다.'}/> }
 

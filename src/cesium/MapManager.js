@@ -207,6 +207,8 @@ class MapManager {
             if(layer.constructor.name === 'ImageryLayer'){
                 this._map.imageryLayers.remove(layer)
             }else{
+                //레이어를 지우기전에 entity를 비워주기 ( 가끔 비워지지가 않는 오류 생김 )
+                layer.entities.removeAll()
                 this._map.dataSources.remove(layer)
             }
         }

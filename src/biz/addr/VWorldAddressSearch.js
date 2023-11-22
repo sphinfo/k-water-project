@@ -20,7 +20,7 @@ class VWorldAddressSearch{
 
     // /vworld/req/search?service=search&request=search&version=2.0&size=10&page=${page}&query=${encodeURIComponent(query)}&type=place&format=json&errorformat=json&key=${this.apiKey}
 
-    const url = `/vworld/req/search?service=search&request=search&version=2.0&size=10&page=${page}&query=${encodeURIComponent(query)}&type=place&format=json&errorformat=json&key=${this.apiKey}`
+    const url = `/vworld/req/search?service=search&request=search&version=2.0&size=1000&query=${encodeURIComponent(query)}&type=place&format=json&errorformat=json&key=${this.apiKey}`
 
     //주소
     //const urlA = `/mapVworld/search.do?category=jibun&q=${encodeURIComponent(query)}${this._size}&output=json&pageIndex=${page}&apiKey=${this.apiKey}`;
@@ -31,7 +31,7 @@ class VWorldAddressSearch{
 
     try {
 
-      let response
+      let response = await request(url);
       //let responseA
       //let responseR
       
