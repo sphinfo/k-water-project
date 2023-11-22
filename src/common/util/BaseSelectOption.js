@@ -12,16 +12,19 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
   const [visibleTree, setVisibleTree] = useState(false)
 
   const itemClick = (item) => {
-    const index = selectedItems.indexOf(item.name)
-    if (index === -1) {
-      //추가
-      setSelectedItems([...selectedItems, item.name]) 
-    } else {
-       //제거
-      const newItems = [...selectedItems]
-      newItems.splice(index, 1)
-      setSelectedItems(newItems)
-    }
+
+    setSelectedItems(item.name)
+
+    // const index = selectedItems.indexOf(item.name)
+    // if (index === -1) {
+    //   //추가
+    //   setSelectedItems([...selectedItems, item.name]) 
+    // } else {
+    //    //제거
+    //   const newItems = [...selectedItems]
+    //   newItems.splice(index, 1)
+    //   setSelectedItems(newItems)
+    // }
 
     setVisibleTree(false)
   };
@@ -41,10 +44,6 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
       provider = datas
     }
   }));
-
-  const clickHandler = (item)=>{
-
-  }
 
   
   const renderComponent = (option) => (
@@ -87,7 +86,7 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
           </svg>
         </button>
       </div>
-      <div className={"search-bed map-basic-style"} style={{ display: visibleTree ? '' : 'none' }}>
+      <div className={"search-bed map-basic-style"} style={{ display: visibleTree ? '' : 'none' , height: 500, overflowY: 'auto'}}>
         {provider.map((option) => renderComponent(option))}
       </div>
     </>

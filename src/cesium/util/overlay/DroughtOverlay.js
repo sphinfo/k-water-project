@@ -1,8 +1,8 @@
 import MapManager from "@gis/MapManager"
 import {Cartesian2, Cartesian3, SceneTransforms, defined} from "cesium"
 
-/* 공통 html 오버레이  */
-class BaseOverlay {
+/* 가뭄 html 오버레이  */
+class DroughtOverlay {
 
     overlays = []
 
@@ -28,28 +28,12 @@ class BaseOverlay {
         // h4 요소 생성
         const title = document.createElement('h4')
         title.className = 'map-popup-box-title'
-        title.textContent = '변위 등급'
-
-        // IconButton 요소 생성
-        const iconButton = document.createElement('div')
-        iconButton.className = 'popup-close-btn';
-        iconButton.addEventListener('click', function () {
-            console.log(properties)
-            map.container.removeChild(overlay)
-        })
-
-        // widget-body div 요소 생성
-        const widgetBody = document.createElement('div')
-        widgetBody.className = 'map-popup-box-body'
-        widgetBody.textContent = `등급 ${properties.GRAY_INDEX}(안전)`
+        title.textContent = `${properties.Station}`
 
         // 요소들을 구조에 맞게 조립
-        widgetHeader.appendChild(title);
-        widgetHeader.appendChild(iconButton)
+        widgetHeader.appendChild(title)
         widgetBox.appendChild(widgetHeader)
-        widgetBox.appendChild(widgetBody)
         overlay.appendChild(widgetBox)
-
         
 
         
@@ -63,8 +47,8 @@ class BaseOverlay {
             var result = SceneTransforms.wgs84ToWindowCoordinates(map.scene, anchor, tmp)
             if(defined(result)){
                 overlay.style.display = 'block'
-                overlay.style.top = tmp.y + 'px'
-                overlay.style.left = tmp.x + 'px'
+                overlay.style.top = tmp.y - 63 + 'px'
+                overlay.style.left = tmp.x + 30 + 'px'
             } else {
                 overlay.style.display = 'none'
             }
@@ -88,4 +72,4 @@ class BaseOverlay {
     }
 }
 
-export default BaseOverlay
+export default DroughtOverlay

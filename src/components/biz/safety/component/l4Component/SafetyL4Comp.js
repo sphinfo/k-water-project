@@ -14,10 +14,11 @@ const SafetyL4Comp = () => {
     /**
      * detailSearchTabType : 탭 정보
      * selectFeature : feature 선택정보
+     * select3Level : 3레벨 선택정보
      * select4Level : 4레벨 선택정보
      * displaceLevel : 변위성분 
      */
-    const { detailSearchTabType, selectFeature, select4Level, displaceLevel } = useSelector(state => state.safety)
+    const { detailSearchTabType, selectFeature, select3Level, select4Level, displaceLevel } = useSelector(state => state.safety)
 
     //Chart Ref
     const chartRef = useRef({})
@@ -86,28 +87,23 @@ const SafetyL4Comp = () => {
         }
     },[selectFeature])
 
+    // useEffect(()=>{
+
+    //     if(displaceLevel){
+    //         resetLayer()
+    //         chartRef.current.provider = chartInfoRef.current.datasets = []
+    //         setCompList([])
+    //     }
+
+    // },[displaceLevel])
+
+
+    //다른 레이어가 선택이 되면 비교값 초기화  ( pin layer / point text / chart dadta)
     useEffect(()=>{
-
-        if(displaceLevel){
-            resetLayer()
-            chartRef.current.provider = chartInfoRef.current.datasets = []
-            setCompList([])
-        }
-
-    },[displaceLevel])
-
-
-    //4레벨 레이어 선택이 해제되면 pinLayer remove
-    useEffect(()=>{
-        if(!select4Level){
-            resetLayer()
-        }
-    },[select4Level])
-
-    //pinlayer 해제
-    const resetLayer = () =>{
         safetyPinLayer.current.entities.removeAll()
-    }
+        chartRef.current.provider = chartInfoRef.current.datasets = []
+        setCompList([])
+    },[select4Level, select3Level, displaceLevel])
 
     const addData = () =>{
         //safetyPinLayer.current._addFeature(selectFeature.lon, selectFeature.lat, {id: selectFeature.featureId})

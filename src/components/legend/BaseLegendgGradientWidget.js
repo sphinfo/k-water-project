@@ -35,8 +35,8 @@ const BaseLegendGradientWidget = (props) => {
                       </div>
                     ) : null}
                     <ul className="widget-legend-unit">
-                        <li>{max}</li>
                         <li>{min}</li>
+                        <li>{max}</li>
                     </ul>
                 </dd>
             </dl>

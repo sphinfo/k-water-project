@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import img from "@images/Safety-20231114_L4TD_YONGDAM_UD.jpg"
 
 const displaceLevelData = {name:'변위등급', store:'Safety', layer: '20231114_SAFETY_YONGDAM'}
 
@@ -36,7 +37,9 @@ const SafetyL4Level = () => {
                             </div>
                             <div className="list-body">
                                 <div className="list-shadow"></div>
-                                <div className="img-box"></div>
+                                <div className="img-box">
+                                    <img src={img} />
+                                </div>
                             </div>
                         </div>
                     </div>

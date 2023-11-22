@@ -40,7 +40,8 @@ const DroughtObsrv = () => {
 
                 <div className={"content-body"}>
                     <h1>관측 정보</h1>
-                    {selectFeature.properties.name}
+                    {selectFeature.properties.Station}
+                </div>
                 <div style={{display: obsrvTab === 'soilMoisture' ? '' : 'none'}}>
                     <DroughtObsrvSoilMoisture />
                 </div>

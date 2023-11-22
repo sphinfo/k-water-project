@@ -1,8 +1,8 @@
 import MapManager from "@gis/MapManager"
 import {Cartesian2, Cartesian3, SceneTransforms, defined} from "cesium"
 
-/* 공통 html 오버레이  */
-class BaseOverlay {
+/* 안전 html 오버레이  */
+class SafetyOverlay {
 
     overlays = []
 
@@ -15,7 +15,6 @@ class BaseOverlay {
         const overlay = document.createElement('div')
         map.container.appendChild(overlay)
         overlay.className = 'map-popup-box'
-        
 
         // widget-box div 요소 생성
         const widgetBox = document.createElement('div')
@@ -41,7 +40,7 @@ class BaseOverlay {
         // widget-body div 요소 생성
         const widgetBody = document.createElement('div')
         widgetBody.className = 'map-popup-box-body'
-        widgetBody.textContent = `등급 ${properties.GRAY_INDEX}(안전)`
+        widgetBody.textContent = `등급 ${properties.GRAY_INDEX}(${properties.GRAY_INDEX === 1 ? '1' : properties.GRAY_INDEX === 2 ? '2' : properties.GRAY_INDEX === 3 ? '3' : 'none'} )`
 
         // 요소들을 구조에 맞게 조립
         widgetHeader.appendChild(title);
@@ -49,10 +48,6 @@ class BaseOverlay {
         widgetBox.appendChild(widgetHeader)
         widgetBox.appendChild(widgetBody)
         overlay.appendChild(widgetBox)
-
-        
-
-        
 
         /* 해당좌표로 오버레이 html 위치 지정 */
         var anchor = Cartesian3.fromDegrees(longitude, latitude, 0)
@@ -88,4 +83,4 @@ class BaseOverlay {
     }
 }
 
-export default BaseOverlay
+export default SafetyOverlay

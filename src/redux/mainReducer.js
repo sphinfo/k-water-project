@@ -22,7 +22,7 @@ const initialState = {
   startDate: dayjs().format('YYYY-MM-DD'),
   endDate: dayjs().format('YYYY-MM-DD'),
   lengedPanel: {},
-  addrResult:{},
+  addrResult:false,
   riverResult:[]
 };
 

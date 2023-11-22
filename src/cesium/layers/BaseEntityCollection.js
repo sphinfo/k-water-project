@@ -4,7 +4,6 @@ import water from '../../resources/images/map-satellite-icon.svg'
 import { G$addLayer } from "@gis/util";
 import MapManager from "@gis/MapManager";
 import { debounce } from "@mui/material";
-import BaseOverlay from "@gis/util/overlay/BaseGeoOverlay";
 //point-icon.png
 
 
@@ -17,7 +16,7 @@ class BaseEntityCollection extends CustomDataSource {
 		this.type = 'datasource'
 		this.baseImage = props.image ? props.image : water
 		this.layer = this
-		this.overlay = props.overlay ? new BaseOverlay() : null
+		this.overlay = props.overlay ? props.overlay : null
 		G$addLayer(this)
 	}
 
@@ -60,7 +59,7 @@ class BaseEntityCollection extends CustomDataSource {
 	//mouse이벤트 생성 ( 추후 공통 으로 overlay 작업 필수 )
 	_createHoverHandler() {
         if (!this.hoverHandler) {
-            let isHovering = false;
+            let isHovering = false
 
             const mouseMoveAction = (movement) => {
                 const pickedObject = MapManager.map.scene.pick(movement.endPosition);
@@ -68,7 +67,7 @@ class BaseEntityCollection extends CustomDataSource {
 					if (!isHovering) {
 						isHovering = true
 						let properties = pickedObject.id.properties.getValue('')
-						this.overlay._addOverlay(properties.lon, properties.lat, {GRAY_INDEX:properties.name})
+						this.overlay._addOverlay(properties.Lon, properties.Lat, properties)
 
 					}
 				} else {
@@ -79,8 +78,8 @@ class BaseEntityCollection extends CustomDataSource {
 				}
             };
 
-            this.hoverHandler = new ScreenSpaceEventHandler(MapManager.map.canvas);
-            this.hoverHandler.setInputAction(debounce(mouseMoveAction, 5), ScreenSpaceEventType.MOUSE_MOVE);
+            this.hoverHandler = new ScreenSpaceEventHandler(MapManager.map.canvas)
+            this.hoverHandler.setInputAction(debounce(mouseMoveAction, 5), ScreenSpaceEventType.MOUSE_MOVE)
         }
     }
 
@@ -89,7 +88,7 @@ class BaseEntityCollection extends CustomDataSource {
 		if(id){
 			const entityToRemove = this.entities.getById(id);
 			if (entityToRemove) {
-			this.entities.remove(entityToRemove);
+				this.entities.remove(entityToRemove)
 			}
 		}
 	}

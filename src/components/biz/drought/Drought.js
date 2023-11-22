@@ -4,10 +4,12 @@ import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import DroughtResult from "./DroughtResult";
 import DroughtOptions from "./DroughtOptions";
-import pin from "@images/point-icon.png"
+import pin from "@images/map-icon-dr.svg"
 import { G$randomCoordinates, G$removeLayer } from "@gis/util";
 import { DROUGHT_SELETE_FEATURE } from "@redux/actions";
 import DroughtObsrv from "./component/DroughtObsrv";
+import DroughtOverlay from "@gis/util/overlay/DroughtOverlay";
+import DroughtObsrvConfig from "@gis/config/DroughtObsrvConfig";
 
 const Drought = () => {
 
@@ -32,11 +34,12 @@ const Drought = () => {
     useEffect(()=>{
 
         //가뭄 관측소 레이어 생성
-        droughtObsrvLayer.current = new BaseEntityCollection({name:'droughtObsrvLayer', image: pin, overlay: true})
+        droughtObsrvLayer.current = new BaseEntityCollection({name:'droughtObsrvLayer', image: pin, overlay: new DroughtOverlay()})
 
-        let samplePoint = G$randomCoordinates(100)
-        samplePoint.map((properties)=>{
-            droughtObsrvLayer.current._addFeature({lng:properties.lon, lat:properties.lat, properties, hover: true})
+        //let samplePoint = G$randomCoordinates(100)
+        let obsList = DroughtObsrvConfig
+        obsList.map((properties)=>{
+            droughtObsrvLayer.current._addFeature({lng:properties.Lon, lat:properties.Lat, properties, hover: true})
         })
 
         //레이어 클릭 callback 등록
@@ -49,6 +52,7 @@ const Drought = () => {
             //레이어 클릭 callback 비활성화
             GisLayerClickTool.destroyBiz(bizName)
 
+            
             //관측소 레이어 삭제
             G$removeLayer(droughtObsrvLayer.current.layer)
 

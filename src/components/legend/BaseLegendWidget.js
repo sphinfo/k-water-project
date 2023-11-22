@@ -24,7 +24,9 @@ const BaseLegendWidget = (props) => {
 
             <div className="map_widget map-basic-style">
                 <dl className="widget-box">
-                    <dt className={"widget-header"}><h4 className={"widget-title"}>{title}</h4></dt>
+                    <dt className={"widget-header"}>
+                        <h4 className={"widget-title"}>{title}</h4>
+                    </dt>
                     <dd className={"widget-body"}>
                         <ul>
                             {datas.map((data, index) => (
