@@ -47,8 +47,8 @@ class DroughtOverlay {
             var result = SceneTransforms.wgs84ToWindowCoordinates(map.scene, anchor, tmp)
             if(defined(result)){
                 overlay.style.display = 'block'
-                overlay.style.top = tmp.y - 63 + 'px'
-                overlay.style.left = tmp.x + 30 + 'px'
+                overlay.style.top = tmp.y - 33 + 'px'
+                overlay.style.left = tmp.x + 20 + 'px'
             } else {
                 overlay.style.display = 'none'
             }

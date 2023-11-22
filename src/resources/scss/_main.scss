@@ -666,6 +666,7 @@
   flex-wrap: wrap;
   flex-direction: column;
   min-width: 140px;
+
   .map-popup-box-header{
     border-radius: 10px 10px 0 0;
     padding: 10px;
@@ -933,7 +934,7 @@
     padding-bottom: 15px;
     height: auto;
     &.border-top{
-      border-top: 1px solid $grey-200;
+      border-top: 1px solid $grey-100;
     }
     &.pb-0{
       padding-bottom: 0;
@@ -1105,6 +1106,31 @@
   }
   .date-picker{
   }
+
+  .toggle-btn-wrap{
+    padding: 3px;
+    border-radius: 20px;
+    background-color: $grey-100;
+    .MuiToggleButtonGroup-grouped{
+      border: 0;
+      padding: 9px 12px;
+      border-radius: 20px;
+      line-height: 1;
+      color: $body-font-color;
+      font-weight: 500;
+      &:not(:last-of-type), &:not(:first-of-type){
+        border-top-right-radius: inherit;
+        border-bottom-right-radius: inherit;
+        border-top-left-radius: inherit;
+        border-bottom-left-radius: inherit;
+      }
+      &.Mui-selected{
+        background-color: $primary;
+        color: $white;
+        font-weight: 600;
+      }
+    }
+  }
 }
 
 .MuiDayCalendar-weekContainer{
@@ -1205,6 +1231,7 @@
           }
           .list-title{
             border-radius: 0 0 6px 0;
+            font-weight: 600;
           }
           .list-title-sub{
             border-radius: 0 0 0 6px;

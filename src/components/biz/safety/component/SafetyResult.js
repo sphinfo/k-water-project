@@ -115,7 +115,7 @@ const SafetyResult = () => {
 
     return (
         <>
-          <div className={"content-body bg-grey filled"}>
+          <div className={"content-body border-top filled"}>
             <div className="content-row">
                 <div className={'content-list-wrap'}>
                     {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}

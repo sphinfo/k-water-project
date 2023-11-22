@@ -28,24 +28,26 @@ const DroughtObsrv = () => {
 
     return (
         <>
-            <div style={{position: 'absolute', top: 0, left: 305, backgroundColor: 'white', width:300, height: '100%'}}>    
-                <div style={{margin: 5}}>
-                    <h1 style={{fontSize: 20}}>
+            <div className={"panel side-panel"}>
+                <div className={"panel-header"}>
+                    <h1 className={"panel-title"}>
                         {"활용주제도"}
-                        <DroughtObsrvTab />
                     </h1>
                 </div>
-                <div>
+                <div className="content-block pb-0">
+                    <DroughtObsrvTab />
+                </div>
+
+                <div className={"content-body"}>
                     <h1>관측 정보</h1>
                     {selectFeature.properties.Station}
-                </div>
                 <div style={{display: obsrvTab === 'soilMoisture' ? '' : 'none'}}>
                     <DroughtObsrvSoilMoisture />
                 </div>
                 <div style={{display: obsrvTab === 'index' ? '' : 'none'}}>
                     <DroughtObsrvIndex />
                 </div>
-                
+                </div>
             </div>
         </>
     )
