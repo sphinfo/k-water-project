@@ -86,7 +86,7 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
           </svg>
         </button>
       </div>
-      <div className={"search-bed map-basic-style"} style={{ display: visibleTree ? '' : 'none' , height: 500, overflowY: 'auto'}}>
+      <div className={"search-bed map-basic-style"} style={{ display: visibleTree ? '' : 'none'}}>
         {provider.map((option) => renderComponent(option))}
       </div>
     </>

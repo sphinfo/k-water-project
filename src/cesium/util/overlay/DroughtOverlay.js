@@ -14,7 +14,7 @@ class DroughtOverlay {
         /* html 생성 */
         const overlay = document.createElement('div')
         map.container.appendChild(overlay)
-        overlay.className = 'map-popup-box'
+        overlay.className = 'map-popup-box-wrap'
         
 
         // widget-box div 요소 생성
