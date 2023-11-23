@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useRef } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
@@ -31,11 +31,22 @@ const Drought = () => {
     //관측소 레이어
     const droughtObsrvLayer = useRef()
 
+    const [station, setStation] = useState(false)
+
     /* 레이어 선택 callback Ref */
     const layerSelectRef = useRef();
     useImperativeHandle(layerSelectRef, ()=>({
         getFeatures(features){
-            dispatch({type:DROUGHT_SELETE_FEATURE, selectObs: features[0]})
+
+            if(station === features[0].properties.Station){
+                dispatch({type:DROUGHT_SELETE_FEATURE, selectObs: false})
+                setStation(false)
+            }else{
+                dispatch({type:DROUGHT_SELETE_FEATURE, selectObs: features[0]})
+                setStation(features[0].properties.Station)
+            }
+            
+            
         }
     }));
 

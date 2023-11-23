@@ -4,12 +4,15 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
+import EnvironmentResultTab from "./EnvironmentResultTab";
+import { ENV_SELECT_LAYER } from "@redux/actions";
 
 
 //sample 데이터
 const example = [
-  {name:'SCENE1',  date: '23.11.10~23.11.16', main:'', checked: false, store:'Drought', layer: 'L3TD_A2_YONGDAM_ASC'},
-  {name:'SCENE2', date: '23.11.10~23.11.16', main:'', checked: false, store:'Drought', layer: 'L3TD_A2_YONGDAM_DSC' },
+  {name:'DATA1',  date: '23.11.10~23.11.16', main:'AI 알고리즘', checked: false, store:'LandCover', layer: 'RF_20220914_clip'},
+  {name:'DATA2', date: '23.11.10~23.11.16', main:'광학자료', checked: false, store:'LandCover', layer: 'RF_20221101_clip' },
+  {name:'DATA1', date: '23.11.10~23.11.16', main:'', checked: false, store:'Garbage', layer: 'Chlorophyll_Map_2' },
 ]
 
 const EnvironmentResult = () => {
@@ -17,7 +20,7 @@ const EnvironmentResult = () => {
     const dispatch = useDispatch()
 
     // 가뭄 검색조건
-    const { text, startDate, endDate } = useSelector(state => state.environment)
+    const { text, startDate, endDate, environmentResultTab } = useSelector(state => state.environment)
 
     const [exampleList, setExampleList] = useState([])
 
@@ -44,6 +47,7 @@ const EnvironmentResult = () => {
 
       //exampleList 전체 데이터
       const updatedList = exampleList.map((subArray, i) => {
+
           if (outerIndex === i) {
               const updatedSubArray = subArray.map((item, j) => {
                   if (innerIndex === j) {
@@ -59,6 +63,8 @@ const EnvironmentResult = () => {
 
       //이벤트 발생 위치 확인후 
       const selectedItem = updatedList[outerIndex][innerIndex];
+      let value = !selectedItem.checked ? false : selectedItem
+      dispatch({ type: ENV_SELECT_LAYER, selectEnvironmentLayer: value });
 
     }
 
@@ -75,31 +81,33 @@ const EnvironmentResult = () => {
     //list item 설정
     const renderItem = (obj, i, i2) => (
         <>
-          {/* {i2 === 0 ? obj.main : ''} */}
-          <ListItem key={i2} selected={true}>
-            <ListItemButton
-              className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
-              selected={true}
-              disableTouchRipple={true}
-              button={true}
-              color={'primary'}
-              onClick={() => checkboxChange(i, i2)}
-            >
-              <div className="list-title-wrap">
-                <h3 className={'list-title'}>{obj.name} ---------- {obj.date}</h3>
-              </div>
-            </ListItemButton>
-          </ListItem>
+          <div className="content-list-inner" style={{display: obj.store === environmentResultTab ? '' : 'none'}}>
+            {/* {i2 === 0 ? obj.main : ''} */}
+            <ListItem key={i2} selected={true}>
+              <ListItemButton
+                className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
+                selected={true}
+                disableTouchRipple={true}
+                button={true}
+                color={'primary'}
+                onClick={() => checkboxChange(i, i2)}
+              >
+                <div className="list-title-wrap">
+                  <h3 className={'list-title'}>{obj.name} ---------- {obj.date}</h3>
+                </div>
+              </ListItemButton>
+            </ListItem>
+          </div>
         </>
     )
 
     return (
         <>
           <div className={"content-body border-top filled"}>
+            <EnvironmentResultTab />
             <div className="content-row">
                 <div className={'content-list-wrap'}>
-                  <h2 style={{color:'black'}} >검색결과</h2>
-                    {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
+                  {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
                 </div>
               </div>
           </div>

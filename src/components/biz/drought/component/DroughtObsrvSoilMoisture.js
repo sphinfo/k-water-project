@@ -67,11 +67,11 @@ const DroughtObsrv = () => {
     //DroughtObsrvMoistureConfig
     //지점이 선택되었을시 토양수분 API로 가져온후 차트에 데이터 매핑 ( 현재 API x )
     useEffect(()=>{
-
         
         if(selectObs){
 
             //chartRef.current.provider = chartInfoRef.current
+            chartInfoRef.current.datasets = []
             let dataset = DroughtObsrvMoistureConfig
 
             let label = []  //날짜 x 축

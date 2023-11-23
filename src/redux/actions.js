@@ -62,6 +62,10 @@ export const DROUGHT_SELETE_LAYER = 'DROUGHT_SELETE_LAYER';
 export const ENV_SET_TEXT = 'ENV_SET_TEXT'
 export const ENV_START_DATE = 'ENV_START_DATE';
 export const ENV_END_DATE = 'ENV_END_DATE';
+export const ENV_RESULT_TAB = 'ENV_RESULT_TAB';
+export const ENV_SELECT_LAYER = 'ENV_SELECT_LAYER';
+
+
 
 
 

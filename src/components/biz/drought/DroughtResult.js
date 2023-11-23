@@ -85,25 +85,28 @@ const DroughtResult = () => {
     const renderItem = (obj, i, i2) => (
         <>
           {/* {i2 === 0 ? obj.main : ''} */}
-          <ListItem key={i2} selected={true}>
-            <ListItemButton
-              className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
-              selected={true}
-              disableTouchRipple={true}
-              button={true}
-              color={'primary'}
-              onClick={() => checkboxChange(i, i2)}
-            >
-              <div className="list-title-wrap">
-                <h3 className={'list-title'}>{obj.name}</h3>
-                <h4 className="list-title-sub">{obj.date}</h4>
-              </div>
-              <div className="list-body">
-                <div className="list-shadow"></div>
-                <div className="img-box">{/*images*/}</div>
-              </div>
-            </ListItemButton>
-          </ListItem>
+          <div className="content-list-inner">
+            <ListItem key={i2} selected={true}>
+              <ListItemButton
+                className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
+                selected={true}
+                disableTouchRipple={true}
+                button={true}
+                color={'primary'}
+                onClick={() => checkboxChange(i, i2)}
+              >
+                <div className="list-title-wrap">
+                  <h3 className={'list-title'}>{obj.name}</h3>
+                  <h4 className="list-title-sub">{obj.date}</h4>
+                </div>
+                <div className="list-body">
+                  <div className="list-shadow"></div>
+                  <div className="img-box">{/*images*/}</div>
+                </div>
+              </ListItemButton>
+            </ListItem>
+          </div>
+          
         </>
     )
 

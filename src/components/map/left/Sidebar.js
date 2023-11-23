@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import { SET_PANEL_VISIBLE } from '@redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Admin from '@components/biz/admin/Admin';
 
 //탭 패널 공통
 function TabPanel(props) {
@@ -30,7 +31,6 @@ function TabPanel(props) {
       <div hidden={value !== index || value === -1} {...other} >
           {visible && (
             <>
-            
               <div className={`panel panel_left ${!panelVisible ? 'fold' : ''}`}>
                 <div className="panel-header">
                     <h1 className="panel-title">
@@ -62,8 +62,8 @@ export default function Sidebar () {
   const INDEX_3 = useMemo(() => { return {i:3, name:'환경'}}, []); 
   
   
-  const INDEX_4 = useMemo(() => 4, []); //수변피복탐지
-  const INDEX_5 = useMemo(() => 5, []); //부유물탐지
+  //const INDEX_4 = useMemo(() => 4, []); //수변피복탐지
+  const INDEX_5 = useMemo(() => { return {i:5, name:''}}, []); 
   
   
   const NONE_INDEX = useMemo(() => -1, []); //none
@@ -131,8 +131,9 @@ export default function Sidebar () {
           <div className={ value === INDEX_3.i ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_3.i) }} ><div className="tab-icon i-environment"></div>{INDEX_3.name}</div>
         </div>
         <div className="sidebar-left-footer">
-          <div className={ value === INDEX_4 ? "sidebar-tab active" : "sidebar-tab" }><div className="tab-icon i-modify"></div></div>
-          <div className={ value === INDEX_5 ? "sidebar-tab active" : "sidebar-tab" }><div className="tab-icon i-user"></div></div>
+          {/* <div className={ value === INDEX_4 ? "sidebar-tab active" : "sidebar-tab" }><div className="tab-icon i-modify"></div></div> */}
+          {/* <div className={ value === INDEX_5 ? "sidebar-tab active" : "sidebar-tab" }><div className="tab-icon i-user"></div></div> */}
+          <div className={ value === INDEX_5.i ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_5.i) }} ><div className="tab-icon i-user"></div>{INDEX_5.name}</div>
         </div>
       </div>
 
@@ -148,6 +149,11 @@ export default function Sidebar () {
         </TabPanel>
         <TabPanel value={value} index={INDEX_3.i} name={INDEX_3.name} close={handleClose}>
           <Environment />
+        </TabPanel>
+
+        {/* 관리자 페이지 */}
+        <TabPanel value={value} index={INDEX_5.i} name={INDEX_5.name} close={handleClose}>
+          <Admin />
         </TabPanel>
 
         <div className={`folding-btn-wrap ${panelSide ? 'side-panel-pos' : ''} ${!panelVisible ? 'folding-off' : ''}`} style={{display: value === -1 ? 'none' : ''}}>

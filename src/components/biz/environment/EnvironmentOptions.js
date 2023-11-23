@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DROUGHT_END_DATE, DROUGHT_START_DATE, DROUGHT_SET_TEXT, ENV_SET_TEXT, ENV_START_DATE, ENV_END_DATE } from "@redux/actions";
+import { ENV_SET_TEXT, ENV_START_DATE, ENV_END_DATE } from "@redux/actions";
 import BaseSelectOption from "@common/util/BaseSelectOption";
 import BaseDatePicker from "@common/datepicker/BaseDatePicker";
 
