@@ -11,11 +11,11 @@ function TabPanel(props) {
 
   const [visible, setVisible] = useState(false);
 
-  const [isFolding, setisFolding] = useState(false);
-  const foldingHandler = () => {
-    setisFolding(!isFolding);
-  };
 
+  const [isFolding, setIsFolding] = useState(false);
+  const foldingHandler = () => {
+    setIsFolding(!isFolding);
+  };
 
   useEffect(() => {
     if (value === index) {
@@ -44,10 +44,7 @@ function TabPanel(props) {
                 </div>
                 {children}
               </div>
-              <div  className={`folding-btn-wrap  ${isFolding ? 'folding-off' : ''}`} >
-                <IconButton className="folding-btn map-basic-style" disableRipple={true} onClick={()=>{foldingHandler()}}>
-                </IconButton>
-              </div>
+
             </>
           )}
       </div>
@@ -70,6 +67,7 @@ export default function Sidebar () {
 
   const [value, setValue] = useState(NONE_INDEX);
 
+
   //탭 선택
   const handleChange = useCallback((newValue) => {
     if (value === newValue) {
@@ -82,6 +80,12 @@ export default function Sidebar () {
   //탭 닫기
   const handleClose = () => {
       setValue(NONE_INDEX);
+  };
+
+  //fold btn
+  const [isFolding, setIsFolding] = useState(false);
+  const foldingHandler = () => {
+    setIsFolding(!isFolding);
   };
 
   return (
@@ -135,6 +139,10 @@ export default function Sidebar () {
         <TabPanel value={value} index={INDEX_3.i} name={INDEX_3.name} close={handleClose}>
           <Environment />
         </TabPanel>
+        <div className={`folding-btn-wrap  ${isFolding ? 'folding-off' : ''}`} >
+          <IconButton className="folding-btn map-basic-style" disableRipple={true} onClick={()=>{foldingHandler()}}>
+          </IconButton>
+        </div>
       </div>      
 
     </div>

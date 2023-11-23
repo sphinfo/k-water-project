@@ -1,6 +1,6 @@
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import { TreeItem, TreeView } from "@mui/lab";
-import { Checkbox } from "@mui/material";
+import {Checkbox, SvgIcon} from "@mui/material";
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -21,6 +21,7 @@ const bfsSearch = (graph, targetId) => {
 
     return [];
 };
+
 
 /* tree layer 관리 */
 const ThematicTreeLayerCheckBoxList = ({}, ref) => {
@@ -119,7 +120,6 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
           onClick={(event)=>{event.stopPropagation()}}
           label={
               <>
-                <div >
                   <Checkbox
                       checked={selectedNodes.indexOf(nodes.id) !== -1}
                       indeterminate={/*하위아이템이 체크되면 부모아이템에 별도의 표시를 주는 옵션..*/(nodes.id)[-1] !== (nodes.id)[0] == (nodes.id)[-1]}
@@ -128,7 +128,7 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
                       className={'check-box'}
                       onClick={(event) => handleNodeSelect(event, nodes.id)}
                   />
-                  {nodes.name}
+                  <span>{nodes.name}</span>
                   
                   {/*{!nodes.children ? ( <input */}
                   {/*    style={{float: 'right', marginTop: 10, marginRight: 10}} */}
@@ -140,7 +140,6 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
                   {/*    onChange={(event)=> changeOpacity(event, nodes)}*/}
                   {/*/> */}
                   {/*) : null}*/}
-                </div>
               </>
           }
       >
@@ -184,8 +183,17 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
         <>
             <TreeView
                 multiSelect
-                defaultCollapseIcon={<>{'-'}</>}
-                defaultExpandIcon={<>{'>'}</>}
+                defaultCollapseIcon={<SvgIcon>
+                  <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L5.5 5L10 1" stroke="#004478" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </SvgIcon>}
+                defaultExpandIcon={<SvgIcon>
+                  <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 5L5.5 1L1 5" stroke="#004478" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+
+                </SvgIcon>}
                 className={'thematic-layers-box-wrap'}
             >
                 {state.layerList.map((obj)=> renderTree(obj) )}
