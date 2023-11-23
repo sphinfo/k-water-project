@@ -18,10 +18,10 @@ const Drought = () => {
 
     /**
      * bizName : 메뉴 명 ( 공통으로 reducer에 사용될 예정 )
-     * selectFeature : 선택된 관측소 정보
+     * selectObs : 선택된 관측소 정보
      * selectDroughtLayer : 가뭄 메인 레이어
      */
-    const { bizName, selectFeature, selectDroughtLayer } = useSelector(state => state.drought)
+    const { bizName, selectObs, selectDroughtLayer } = useSelector(state => state.drought)
 
 
     //가뭄 레이어 (  )
@@ -34,7 +34,7 @@ const Drought = () => {
     const layerSelectRef = useRef();
     useImperativeHandle(layerSelectRef, ()=>({
         getFeatures(features){
-            dispatch({type:DROUGHT_SELETE_FEATURE, selectFeature: features[0]})
+            dispatch({type:DROUGHT_SELETE_FEATURE, selectObs: features[0]})
         }
     }));
 
@@ -97,7 +97,7 @@ const Drought = () => {
         <DroughtResult />
 
         {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
-        {selectFeature && ( <DroughtObsrv /> )}
+        {selectObs && ( <DroughtObsrv /> )}
         </>
     )
 }
