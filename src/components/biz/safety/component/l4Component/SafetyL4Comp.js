@@ -190,7 +190,16 @@ const SafetyL4Comp = () => {
                     <IconButton onClick={()=>{removeData(obj)}} className={"popup-close-btn"}></IconButton>
                 </div>
                 <div className={"panel-body"}>
-                    lat:{obj.clickPosition.latitude} / lon:{obj.clickPosition.longitude}
+                    <div className="table-frame-wrap">
+                        <div className="frame-thead">
+                            <div className="frame-th">lat</div>
+                            <div className="frame-th">lon</div>
+                        </div>
+                        <div className="frame-tbody">
+                            <div className="frame-td">{obj.clickPosition.latitude}</div>
+                            <div className="frame-td">{obj.clickPosition.longitude}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )

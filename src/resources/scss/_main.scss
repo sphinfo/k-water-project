@@ -980,7 +980,7 @@
             }
           }
           .panel-body{
-            padding: 10px;
+            padding: 4px;
             font-size: 14px;
           }
           &.point-1{
@@ -1032,6 +1032,39 @@
     overflow-y: auto;
     overflow-x: hidden;
     padding-bottom: 15px;
+  }
+}
+
+.table-frame-wrap{
+  display: flex;
+  .frame-thead{
+    flex: 0 0 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    .frame-th{
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      line-height: 1;
+      color: #787878;
+      font-weight: 600;
+      background-color: $basic;
+      text-align: center;
+    }
+  }
+  .frame-tbody{
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    .frame-td{
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      line-height: 1;
+      letter-spacing: -0.4px;
+    }
   }
 }
 
