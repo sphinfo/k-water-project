@@ -17,7 +17,7 @@ const example = [
   {name:'DESC', date: '23.11.10~23.11.16', main:'SBAS', mainName: '(분산산란체)', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
 ]
 
-const SafetyResult = ({changeParam, ingre}) => {
+const SafetyResult = () => {
     
     const dispatch = useDispatch()
 
@@ -116,13 +116,17 @@ const SafetyResult = ({changeParam, ingre}) => {
 
     return (
         <>
+          
           <div className={"content-body border-top filled"}>
-            <div className="content-row empty-wrap">
-              <div className="empty-message">
-                <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
-                <Button className="btn empty-btn">지역검색</Button>
+            {
+              exampleList.length === 0 &&
+              <div className="content-row empty-wrap">
+                <div className="empty-message">
+                  <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
+                  <Button className="btn empty-btn">지역검색</Button>
+                </div>
               </div>
-            </div>
+            }  
             <div className="content-row">
                 <div className={'content-list-wrap'}>
                     {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}

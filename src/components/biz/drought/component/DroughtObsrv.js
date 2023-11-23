@@ -12,19 +12,19 @@ import DroughtObsrvIndex from "./DroughtObsrvIndex";
 const DroughtObsrv = () => {
 
     const dispatch = useDispatch()
-    const { selectFeature, obsrvTab } = useSelector(state => state.drought)
+    const { selectObs, obsrvTab } = useSelector(state => state.drought)
     
 
     useEffect(()=>{
         return()=>{
             //선택레이어 삭제
-            dispatch({type:DROUGHT_SELETE_FEATURE, selectFeature: false})
+            dispatch({type:DROUGHT_SELETE_FEATURE, selectObs: false})
         }
     },[])
 
     useEffect(()=>{
-        console.info(selectFeature)
-    },[selectFeature])
+        console.info(selectObs)
+    },[selectObs])
 
     return (
         <>
@@ -44,7 +44,7 @@ const DroughtObsrv = () => {
                             <h2 className="content-row-title">관측 정보</h2>
                         </div>
                         <div className="panel-box">
-                            {selectFeature.properties.Station}
+                            {selectObs.properties.Station}
                         </div>
                     </div>
 
