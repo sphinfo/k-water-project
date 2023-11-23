@@ -142,6 +142,7 @@ export default function Sidebar () {
         <div className={`folding-btn-wrap  ${isFolding ? 'folding-off' : ''}`} >
           <IconButton className="folding-btn map-basic-style" disableRipple={true} onClick={()=>{foldingHandler()}}>
           </IconButton>
+
         </div>
       </div>      
 
