@@ -6,7 +6,7 @@ import DroughtResult from "./DroughtResult";
 import DroughtOptions from "./DroughtOptions";
 import pin from "@images/map-icon-dr.svg"
 import { G$randomCoordinates, G$removeLayer } from "@gis/util";
-import { DROUGHT_SELETE_FEATURE } from "@redux/actions";
+import { DROUGHT_SELETE_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
 import DroughtObsrv from "./component/DroughtObsrv";
 import DroughtOverlay from "@gis/util/overlay/DroughtOverlay";
 import DroughtObsrvConfig from "@gis/config/DroughtObsrvConfig";
@@ -22,7 +22,8 @@ const Drought = () => {
      * selectDroughtLayer : 가뭄 메인 레이어
      */
     const { bizName, selectObs, selectDroughtLayer } = useSelector(state => state.drought)
-
+    const { panelVisible } = useSelector(state => state.main)
+//
 
     //가뭄 레이어 (  )
     const droughtLayer = useRef()
@@ -87,6 +88,10 @@ const Drought = () => {
 
     },[selectDroughtLayer])
 
+    //사이드 위치 조정 on
+    useEffect(()=>{
+        selectObs ? dispatch({type: SET_SIDE_PANEL, panelSide: true}) : dispatch({type: SET_SIDE_PANEL, panelSide: false})
+    },[selectObs])
 
     return (
         <>
@@ -97,7 +102,11 @@ const Drought = () => {
         <DroughtResult />
 
         {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
-        {selectObs && ( <DroughtObsrv /> )}
+        {selectObs && ( 
+                <div className={`panel side-panel ${!panelVisible ? 'fold' : ''}` }>
+                    <DroughtObsrv />
+                </div> 
+            )}
         </>
     )
 }

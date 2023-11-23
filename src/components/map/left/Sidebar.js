@@ -4,18 +4,17 @@ import Flood from '@components/biz/flood/Flood';
 import Environment from '@components/biz/environment/Environment';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
+import { SET_PANEL_VISIBLE } from '@redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 //탭 패널 공통
 function TabPanel(props) {
+
+  const { panelVisible } = useSelector(state => state.main)
+
   const { children, value, index, name, close, ...other } = props;
 
   const [visible, setVisible] = useState(false);
-
-  const [isFolding, setisFolding] = useState(false);
-  const foldingHandler = () => {
-    setisFolding(!isFolding);
-  };
-
 
   useEffect(() => {
     if (value === index) {
@@ -31,7 +30,8 @@ function TabPanel(props) {
       <div hidden={value !== index || value === -1} {...other} >
           {visible && (
             <>
-              <div className={`panel panel_left ${isFolding ? 'fold' : ''}`}>
+            
+              <div className={`panel panel_left ${!panelVisible ? 'fold' : ''}`}>
                 <div className="panel-header">
                     <h1 className="panel-title">
                         {name}
@@ -44,10 +44,7 @@ function TabPanel(props) {
                 </div>
                 {children}
               </div>
-              <div  className={`folding-btn-wrap  ${isFolding ? 'folding-off' : ''}`} >
-                <IconButton className="folding-btn map-basic-style" disableRipple={true} onClick={()=>{foldingHandler()}}>
-                </IconButton>
-              </div>
+
             </>
           )}
       </div>
@@ -55,6 +52,9 @@ function TabPanel(props) {
 }
 
 export default function Sidebar () {
+
+  const dispatch = useDispatch()
+  const { panelVisible, panelSide } = useSelector(state => state.main)
 
   const INDEX_0 = useMemo(() => { return {i:0, name:'홍수'}}, []); 
   const INDEX_1 = useMemo(() => { return {i:1, name:'가뭄'}}, []); 
@@ -70,18 +70,32 @@ export default function Sidebar () {
 
   const [value, setValue] = useState(NONE_INDEX);
 
+
   //탭 선택
   const handleChange = useCallback((newValue) => {
+    
     if (value === newValue) {
+      dispatch({type: SET_PANEL_VISIBLE, panelVisible: false})
       setValue(NONE_INDEX)
     } else {
+      dispatch({type: SET_PANEL_VISIBLE, panelVisible: true})
       setValue(newValue)
     }
   }, [value]);
 
+  useEffect(()=>{
+    //console.info(value)
+
+  },[value])
+
   //탭 닫기
   const handleClose = () => {
       setValue(NONE_INDEX);
+  };
+
+  //fold btn
+  const foldingHandler = () => {
+    dispatch({type: SET_PANEL_VISIBLE, panelVisible: !panelVisible})
   };
 
   return (
@@ -135,6 +149,10 @@ export default function Sidebar () {
         <TabPanel value={value} index={INDEX_3.i} name={INDEX_3.name} close={handleClose}>
           <Environment />
         </TabPanel>
+
+        <div className={`folding-btn-wrap ${panelSide ? 'side-panel-pos' : ''} ${!panelVisible ? 'folding-off' : ''}`} style={{display: value === -1 ? 'none' : ''}}>
+          <IconButton className="folding-btn map-basic-style " disableRipple={true} onClick={()=>{foldingHandler()}} />
+        </div>
       </div>      
 
     </div>

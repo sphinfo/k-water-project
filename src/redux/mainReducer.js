@@ -10,7 +10,9 @@ import {
   LEGNED_PANEL,
   SEARCH_ADDR,
   THEMATIC_MODE,
-  SEARCH_RIVER
+  SEARCH_RIVER,
+  SET_PANEL_VISIBLE,
+  SET_SIDE_PANEL
 } from './actions';
 
 const initialState = {
@@ -23,7 +25,14 @@ const initialState = {
   endDate: dayjs().format('YYYY-MM-DD'),
   lengedPanel: {},
   addrResult:false,
-  riverResult:[]
+  riverResult:[],
+
+  //탭 열기 / 닫기
+  panelVisible: false,
+
+  //두번째 패널 on / off
+  panelSide: false,
+
 };
 
 
@@ -39,6 +48,10 @@ function mainReducer(state = initialState, action) {
       return { ...state, startDate: action.date };
     case SET_END_DATE:
       return { ...state, endDate: action.date };
+    case SET_PANEL_VISIBLE:
+      return { ...state, panelVisible: action.panelVisible };
+    case SET_SIDE_PANEL:
+      return { ...state, panelSide: action.panelSide };
     case SET_MAIN_OPTIONS:
       return { ...state, mainOptions: [...state.mainOptions, action.value] };
     case REMOVE_MAIN_OPTIONS:

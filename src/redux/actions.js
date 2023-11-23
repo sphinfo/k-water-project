@@ -10,6 +10,8 @@ export const LOADING = 'LOADING';
 
 export const SET_START_DATE = 'SET_START_DATE';
 export const SET_END_DATE = 'SET_END_DATE';
+export const SET_PANEL_VISIBLE = 'SET_PANEL_VISIBLE';
+export const SET_SIDE_PANEL = 'SET_SIDE_PANEL';
 export const SET_LAYER_LIST = 'SET_LAYER_LIST';
 export const REMOVE_LAYER_LIST = 'REMOVE_LAYER_LIST';
 export const SET_MAIN_OPTIONS = 'SET_MAIN_OPTIONS';

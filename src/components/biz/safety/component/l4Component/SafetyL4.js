@@ -12,27 +12,25 @@ const SafetyL4 = () => {
 
     return (
         <>
-            <div className={"panel side-panel"}>
-                <div className={"panel-header"}>
-                    <h1 className={"panel-title"}>
-                        {"활용주제도"}
-                    </h1>
-                </div>
-                <div className="content-block pb-0">
-                    <SafetyL4Tab />
-                </div>
-                <div className="content-body">
-                    <SafetyL4Result />
-                    <SafetyL4Comp />
-                </div>
-                
-                <div className="content-block border-top">
-                    {/*변위 등급*/}
-                    <SafetyL4Level />
+            <div className={"panel-header"}>
+                <h1 className={"panel-title"}>
+                    {"활용주제도"}
+                </h1>
+            </div>
+            <div className="content-block pb-0">
+                <SafetyL4Tab />
+            </div>
+            <div className="content-body">
+                <SafetyL4Result />
+                <SafetyL4Comp />
+            </div>
+            
+            <div className="content-block border-top">
+                {/*변위 등급*/}
+                <SafetyL4Level />
 
-                    {/*데이터 원천*/}
-                    {/* <SafetyL4Org /> */}
-                </div>
+                {/*데이터 원천*/}
+                {/* <SafetyL4Org /> */}
             </div>
         </>
     )

@@ -1,7 +1,7 @@
-import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_DETAIL_SEARCH_TAB_TYPE } from "@redux/actions";
-import { G$RandomId, G$addLayer, G$addWidget, G$flyToPoint,G$removeLayer, G$removeWidget } from "@gis/util";
+import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_DETAIL_SEARCH_TAB_TYPE, SET_SIDE_PANEL } from "@redux/actions";
+import { G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 
 import SafetyOptions from "./component/SafetyOptions";
@@ -27,6 +27,7 @@ const Safety = () => {
      * displaceLevel : 변위등릅 레이어 선택
      */
     const {bizName, select3Level, select4Level, displaceLevel, compLayerClick} = useSelector(state => state.safety)
+    const { panelSide, panelVisible } = useSelector(state => state.main)
 
     {/** 안전3레벨 / 안전4레벨 / 변위등급 ( 데이터가 있는한 정적인 레이어 ) */}
     //안전 3레벨 레이어 생성
@@ -246,6 +247,11 @@ const Safety = () => {
 
     },[select3Level, select4Level, displaceLevel])
 
+    //사이드 위치 조정 on
+    useEffect(()=>{
+        select3Level ? dispatch({type: SET_SIDE_PANEL, panelSide: true}) : dispatch({type: SET_SIDE_PANEL, panelSide: false})
+    },[select3Level])
+
     return (
         <>
             {/* 검색조건 영역   ex) 공토영역이 될듯 ? ( 검색 TEXT, 기간 설정 등.. )*/}
@@ -255,7 +261,11 @@ const Safety = () => {
             <SafetyResult />
 
             {/* 4레벨 결과 영역 ( 3레벨이 선택되었을시 4레벨창 open )*/}
-            {select3Level && ( <SafetyL4 /> )}
+            {select3Level && ( 
+                <div className={`panel side-panel ${!panelVisible ? 'fold' : ''}` }>
+                    <SafetyL4 /> 
+                </div>
+            )}
         </>
     )
 }
