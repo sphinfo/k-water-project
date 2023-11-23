@@ -1127,14 +1127,14 @@
     }
   }
   &.folding-off{
-    left: 60px;
+    left: 60px !important;
     .folding-btn{
       background-image: url("data:image/svg+xml,%3Csvg width='9' height='16' viewBox='0 0 9 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 2L6.46651 7.35982C6.77555 7.73066 6.77555 8.26934 6.46651 8.64018L2 14' stroke='%2354A6E7' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E%0A");
     }
   }
 
   &.side-panel-pos{
-    left: 605px;
+    left: 659px;
   }
 }
 
