@@ -1,6 +1,7 @@
 import { Switch } from "@mui/material";
+import { ENV_LANDCOVER_DETECTION } from "@redux/actions";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 /**
@@ -9,14 +10,18 @@ import { useDispatch } from "react-redux";
 const EnvironmentLandCover = () => {
 
     const dispatch = useDispatch()
-    //const { selectObs, obsrvTab } = useSelector(state => state.drought)
+    const { selectEnvironmentLayer } = useSelector(state => state.environment)
     
-    const [detailLandCover, setDetailLandCover] = useState('on')
+    const [detailLandCover, setDetailLandCover] = useState(false)
 
     useEffect(()=>{
-        return()=>{
-        }
-    },[])
+        dispatch({type:ENV_LANDCOVER_DETECTION, landCoverDetection: detailLandCover})
+    },[detailLandCover])
+
+    //레이어 변경시 reset
+    useEffect(()=>{
+        setDetailLandCover(false)
+    },[selectEnvironmentLayer])
 
     return (
         <>

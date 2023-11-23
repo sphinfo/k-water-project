@@ -113,9 +113,12 @@ class BaseWmsImageLayer {
 			const xmlDoc = parser.parseFromString(data, 'text/xml');
 
 			const layers = xmlDoc.querySelectorAll('Layer > Name');
+
+			
+
 			let targetLayer;
 			for (let i = 0; i < layers.length; i++) {
-				if (layers[i].textContent === this.props.layerId) {
+				if (layers[i].textContent === this.props.layerId || layers[i].textContent === `${this.props.store}:${this.props.layerId}`) {
 					targetLayer = layers[i].parentNode;
 					break;
 				}

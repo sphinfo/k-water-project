@@ -103,7 +103,7 @@ const EnvironmentResult = () => {
 
     return (
         <>
-          <div className={"content-body border-top filled"}>
+          <div className={"content-body border-top filled"} style={{display: exampleList.length > 0 ? '': 'none'}}>
             <EnvironmentResultTab />
             <div className="content-row">
                 <div className={'content-list-wrap'}>
