@@ -90,6 +90,7 @@ const SafetyResult = () => {
     const renderItem = (obj, i, i2) => (
         <>
           {i2 === 0 ? `${obj.main + obj.mainName}` : ''}
+          <div className="content-list-inner">
           <ListItem key={i2} selected={true}>
             <ListItemButton
               className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
@@ -111,6 +112,7 @@ const SafetyResult = () => {
               </div>
             </ListItemButton>
           </ListItem>
+          </div>
         </>
     )
 
