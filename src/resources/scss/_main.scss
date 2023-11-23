@@ -790,16 +790,26 @@
         padding: 0;
         background: $basic;
         border-radius: 8px;
+        display: flex;
+        min-width: 160px;
         .MuiTreeItem-iconContainer{
-          display: none;
+          //display: none;
+          order: 2;
+          transform: scale(0.7);
+          margin-right: 10px;
+          width: auto;
         }
         &.Mui-selected{
           background: rgba(84, 166, 231, 0.20);
         }
         .MuiTreeItem-label{
+          order: 1;
           padding: 6px 10px;
-          color: $body-font-color;
-          font-size: 14px;
+          span{
+            color: $body-font-color;
+            font-size: 14px;
+            line-height: 1;
+          }
         }
       }
       .MuiTreeItem-group{
