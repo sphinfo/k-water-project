@@ -79,23 +79,26 @@ export default class CesiumMap {
 
             var currentExtent = me.map.camera.computeViewRectangle();
 
-            //console.info(currentExtent)
+            console.info(currentExtent)
 
             var camPos = me.map.camera.positionCartographic; 
             // console.info(camPos)
             // console.log(camPos.longitude * (180/Math.PI)); 
             // console.log(camPos.latitude * (180/Math.PI));
 
-            // Extract the extent values
-            // var west = Math.toDegrees(currentExtent.west);
-            // var south = Math.toDegrees(currentExtent.south);
-            // var east = Math.toDegrees(currentExtent.east);
-            // var north = Math.toDegrees(currentExtent.north);
-            //console.info(cameraPositionCartesian)
-            // console.info(west)
-            // console.info(south)
-            // console.info(east)
-            // console.info(north)
+            //Extract the extent values
+            var west = Math.toDegrees(currentExtent.west);
+            var south = Math.toDegrees(currentExtent.south);
+            var east = Math.toDegrees(currentExtent.east);
+            var north = Math.toDegrees(currentExtent.north);
+            console.info(cameraPositionCartesian)
+            console.info(west)
+            console.info(south)
+            console.info(east)
+            console.info(north)
+
+            console.info(`bbox : xmin: ${west}, ymin: ${south}, xmax: ${east}, ymax: ${north}`)
+
         });
 
 

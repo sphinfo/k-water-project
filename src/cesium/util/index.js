@@ -449,6 +449,16 @@ const G$randomCoordinates = (length=50)=>{
     return coordinates;
 }
 
+//array objet 정렬
+const G$sortArrayObject = (data, sortItems, sort) => {
+    let sortResult = data.sort((a, b) => {
+        let x = a[sortItems]
+        let y = b[sortItems]
+        return sort ? y - x : x - y
+    })
+    return sortResult
+}
+
 export {
     G$addLayer,
     G$removeLayer,
@@ -490,4 +500,6 @@ export {
     G$BaseSelectBoxArray,
 
     G$randomCoordinates,
+
+    G$sortArrayObject,
 }

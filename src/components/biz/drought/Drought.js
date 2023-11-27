@@ -5,6 +5,7 @@ import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import DroughtResult from "./DroughtResult";
 import DroughtOptions from "./DroughtOptions";
 import pin from "@images/map-icon-dr.svg"
+import pin2 from "@images//point-icon-1.svg"
 import { G$randomCoordinates, G$removeLayer } from "@gis/util";
 import { DROUGHT_SELETE_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
 import DroughtObsrv from "./component/DroughtObsrv";
@@ -38,10 +39,19 @@ const Drought = () => {
     useImperativeHandle(layerSelectRef, ()=>({
         getFeatures(features){
 
+            //기존에 선택된 레이어가 있으면 이미지 변경
+            if(selectObs){
+                selectObs.entity.billboard.image = pin
+            }
+
             if(station === features[0].properties.Station){
                 dispatch({type:DROUGHT_SELETE_FEATURE, selectObs: false})
                 setStation(false)
             }else{
+
+                
+                features[0].entity.billboard.image = pin2
+
                 dispatch({type:DROUGHT_SELETE_FEATURE, selectObs: features[0]})
                 setStation(features[0].properties.Station)
             }

@@ -39,7 +39,14 @@ const DroughtObsrv = () => {
                     position: 'left',
                     grid: {
                         display: false //격자 제거
-                    }
+                    },
+                    title: {
+                        display: true,
+                        text: "토양 수분",
+                        font: {
+                          size: 10,
+                        },
+                    },
                     
                 },
                 'y2': {
@@ -47,7 +54,14 @@ const DroughtObsrv = () => {
                     position: 'right',
                     grid: {
                         display: false//격자 제거
-                    }
+                    },
+                    title: {
+                        display: true,
+                        text: "강우량(mm)",
+                        font: {
+                          size: 10,
+                        },
+                    },
                 },
                 x: {
                     grid: {

@@ -66,10 +66,11 @@ class GisLayerClickTool {
 								//방위각이 틀어지면 위아래로 entity 여러가지 선택이됨 ??  이유 모르겠음 찾아봐도 
 								// ********* 클린된 위치랑 가장 가까운 entity는 배열 가장 마지막에 담긴다 *********
 								const pickedEntity = pickedEntities[pickedEntities.length-1].id
+								console.info(pickedEntities[pickedEntities.length-1])
 
 								layers.map((layerId)=>{
 									if(layerId === pickedEntity.name){
-										features.push({id: pickedEntity.name, properties: pickedEntity.properties.getValue(''), clickPosition: event.position})
+										features.push({id: pickedEntity.name, properties: pickedEntity.properties.getValue(''), clickPosition: event.position, entity: pickedEntity})
 									}
 								})
 							}

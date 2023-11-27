@@ -20,7 +20,7 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
     //주소이동 click handle
     const handleClick = () => {
       goToPlace({x:obj.point.x, y:obj.point.y})
-      addPlace(Number(obj.point.x), Number(obj.point.y))
+      //addPlace(Number(obj.point.x), Number(obj.point.y))
     };
 
     return (
@@ -71,8 +71,6 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
   return (
       <>
           <div className={"address-bed-list"}>
-              { result.length > 0 && <><h3>총 : {total}개</h3></> }
-              
               {(result.length > 0 && result.map((obj, i)=>{
                   return addrComponent(obj, i)
               }))}

@@ -13,18 +13,11 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
 
   const itemClick = (item) => {
 
-    setSelectedItems(item.name)
-
-    // const index = selectedItems.indexOf(item.name)
-    // if (index === -1) {
-    //   //추가
-    //   setSelectedItems([...selectedItems, item.name]) 
-    // } else {
-    //    //제거
-    //   const newItems = [...selectedItems]
-    //   newItems.splice(index, 1)
-    //   setSelectedItems(newItems)
-    // }
+    if(selectedItems === item.name){
+      setSelectedItems('')
+    }else{
+      setSelectedItems(item.name)
+    }
 
     setVisibleTree(false)
   };
@@ -42,6 +35,10 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
     },
     set provider(datas) {
       provider = datas
+    },
+
+    set visibleTree(v){
+      setVisibleTree(v)
     }
   }));
 

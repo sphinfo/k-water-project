@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { SAFETY_TEXT_SAFETY } from "@redux/actions";
 import BaseSelectOption from "@common/util/BaseSelectOption";
 
@@ -14,12 +14,12 @@ const SafetyOptions = () => {
                 {name:'황강댐', code:'a2'},
                 {name:'임남댐', code:'a3'},
                 {name:'대청댐', code:'a4'},
-                {name:'안동댐', code:'a4'},
-                {name:'운문댐', code:'a4'},
-                {name:'영천댐', code:'a4'},
-                {name:'사연댐', code:'a4'},
-                {name:'주암댐', code:'a4'},
-                {name:'소양강댐', code:'a4'}
+                {name:'안동댐', code:'a5'},
+                {name:'운문댐', code:'a6'},
+                {name:'영천댐', code:'a7'},
+                {name:'사연댐', code:'a8'},
+                {name:'주암댐', code:'a9'},
+                {name:'소양강댐', code:'a10'}
             ]
         },
         {
@@ -45,7 +45,7 @@ const SafetyOptions = () => {
                 {name:'낙성천(낙동강)', code:'b1'},
                 {name:'미호강', code:'b2'},
                 {name:'남천(위천)', code:'b3'},
-                {name:'단광천(황룡강)', code:'b3'}
+                {name:'단광천(황룡강)', code:'b4'}
             ]
         },
         {
@@ -59,6 +59,14 @@ const SafetyOptions = () => {
     ])
 
     const dispatch = useDispatch()
+    const { selectBox } = useSelector(state => state.safety)
+    const selectRef = useRef()
+
+    useEffect(()=>{
+        if(selectBox !== 'off'){
+            selectRef.current.visibleTree = true
+        }
+    },[selectBox])
 
     return (
         <>
@@ -68,7 +76,7 @@ const SafetyOptions = () => {
                     <h2 className="content-row-title">검색</h2>
                 </div>
                 <div className="form-control">
-                    <BaseSelectOption provider={namesRef.current} changeItem={(item)=>{dispatch({type: SAFETY_TEXT_SAFETY, text: item})}}/>
+                    <BaseSelectOption ref={selectRef} provider={namesRef.current} changeItem={(item)=>{dispatch({type: SAFETY_TEXT_SAFETY, text: item})}}/>
                 </div>
             </div>
             {/*

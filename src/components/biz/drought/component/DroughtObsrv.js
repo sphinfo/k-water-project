@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DROUGHT_SELETE_FEATURE } from "@redux/actions";
 import DroughtObsrvTab from "./DroughtObsrvTab";
 import DroughtObsrvSoilMoisture from "./DroughtObsrvSoilMoisture";
 import DroughtObsrvIndex from "./DroughtObsrvIndex";
+import { G$GetPointToDetail } from "@gis/util";
 
 
 /**
@@ -22,8 +23,12 @@ const DroughtObsrv = () => {
         }
     },[])
 
+    const [dms, setDms] = useState()
+
     useEffect(()=>{
         console.info(selectObs)
+        setDms(G$GetPointToDetail(selectObs.properties.Lon, selectObs.properties.Lat))
+        //G$GetPointToDetail(selectObs.properties.Lon, selectObs.properties.Lat).lonDms
     },[selectObs])
 
     return (
@@ -45,6 +50,10 @@ const DroughtObsrv = () => {
                     </div>
                     <div className="panel-box">
                         {selectObs.properties.Station}
+                        <br></br>
+                        {`경도 : ${ dms ? dms.lonDms : ''}`}
+                        <br></br>
+                        {`위도 : ${ dms ? dms.latDms : ''}`}
                     </div>
                 </div>
 

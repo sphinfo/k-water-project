@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_DETAIL_RESET, SAFETY_SELECT_RESULT } from "@redux/actions";
+import { SAFETY_DETAIL_RESET, SAFETY_SELECT_BOX, SAFETY_SELECT_RESULT } from "@redux/actions";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
@@ -22,7 +22,7 @@ const SafetyResult = () => {
     const dispatch = useDispatch()
 
     // 안전 검색조건
-    const { text } = useSelector(state => state.safety)
+    const { text, selectBox } = useSelector(state => state.safety)
 
 
     const [exampleList, setExampleList] = useState([])
@@ -33,9 +33,13 @@ const SafetyResult = () => {
       dispatch({type:SAFETY_DETAIL_RESET})
 
       if(text !== ''){
-        const groupArray = G$BaseSelectBoxArray(example, 'main')
-        const resultArray = groupArray.grouped
-        setExampleList(resultArray)
+        if(text === '용담댐'){
+          const groupArray = G$BaseSelectBoxArray(example, 'main')
+          const resultArray = groupArray.grouped
+          setExampleList(resultArray)
+        }else{
+          setExampleList([])
+        }
       }else{
         setExampleList([])
       }
@@ -125,7 +129,7 @@ const SafetyResult = () => {
               <div className="content-row empty-wrap">
                 <div className="empty-message">
                   <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
-                  <Button className="btn empty-btn">지역검색</Button>
+                  <Button className="btn empty-btn" onClick={()=>{{dispatch({type:SAFETY_SELECT_BOX, selectBox: !selectBox})}}}>지역검색</Button>
                 </div>
               </div>
             }  

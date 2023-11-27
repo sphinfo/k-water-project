@@ -114,19 +114,22 @@ const DroughtResult = () => {
         <>
           <div className={"content-body border-top filled"}>
             <div className="content-row">
-              <div className="form-control">
-              <ToggleButtonGroup
-                className={"toggle-btn-wrap"}
-                color={"primary"}
-                exclusive={true}
-                aria-label="toggle group"
-                fullWidth={true}>
-                <ToggleButton selected={true}>물리</ToggleButton>
-                <ToggleButton>강우</ToggleButton>
-                <ToggleButton>토양</ToggleButton>
-                <ToggleButton>유출</ToggleButton>
-              </ToggleButtonGroup>
-              </div>
+              {exampleList.length > 0 &&
+                <div className="form-control">
+                  <ToggleButtonGroup
+                    className={"toggle-btn-wrap"}
+                    color={"primary"}
+                    exclusive={true}
+                    ariaLabel="toggle group"
+                    fullWidth={true}>
+                    <ToggleButton selected={true}>물리</ToggleButton>
+                    <ToggleButton>강우</ToggleButton>
+                    <ToggleButton>토양</ToggleButton>
+                    <ToggleButton>유출</ToggleButton>
+                  </ToggleButtonGroup>
+                </div>
+              }
+              
             </div>
             <div className="content-row">
                 <div className={'content-list-wrap'}>
