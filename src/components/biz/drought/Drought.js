@@ -5,7 +5,7 @@ import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import DroughtResult from "./DroughtResult";
 import DroughtOptions from "./DroughtOptions";
 import pin from "@images/map-icon-dr.svg"
-import pin2 from "@images//point-icon-1.svg"
+import pin2 from "@images/map-icon-dr-clicked.svg"
 import { G$randomCoordinates, G$removeLayer } from "@gis/util";
 import { DROUGHT_SELETE_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
 import DroughtObsrv from "./component/DroughtObsrv";

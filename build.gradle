@@ -1,0 +1,8 @@
+plugins {
+    id 'org.siouan.frontend-jdk11' version '5.0.1'
+}
+frontend {
+    nodeVersion = '18.18.2'
+    assembleScript = 'run build'
+}
+description = 'K-WATER GIS SERVICE(FRONT-END)'
