@@ -5,9 +5,8 @@ import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
 import { DROUGHT_SELETE_LAYER } from "@redux/actions";
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import Button from "@mui/material/Button";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 
 //sample 데이터
@@ -116,17 +115,12 @@ const DroughtResult = () => {
             <div className="content-row">
               {exampleList.length > 0 &&
                 <div className="form-control">
-                  <ToggleButtonGroup
-                    className={"toggle-btn-wrap"}
-                    color={"primary"}
-                    exclusive={true}
-                    ariaLabel="toggle group"
-                    fullWidth={true}>
-                    <ToggleButton selected={true}>물리</ToggleButton>
-                    <ToggleButton>강우</ToggleButton>
-                    <ToggleButton>토양</ToggleButton>
-                    <ToggleButton>유출</ToggleButton>
-                  </ToggleButtonGroup>
+                  <Tabs className={"toggle-btn-wrap"} exclusive fullWidth={true}>
+                    <Tab className={"tab-item"} label={'물리'}></Tab>
+                    <Tab className={"tab-item"} label={'강우'}></Tab>
+                    <Tab className={"tab-item"} label={'토양'}></Tab>
+                    <Tab className={"tab-item"} label={'유출'}></Tab>
+                  </Tabs>
                 </div>
               }
               

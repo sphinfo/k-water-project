@@ -1421,9 +1421,56 @@
       background-color: $primary;
     }
   }
-
 }
+.toggle-btn-wrap{
+  padding: 10px;
+  position: relative;
+  width: 100%;
+  &.css-1ujnqem-MuiTabs-root{
+    min-height: unset;
+  }
+  .MuiTabs-flexContainer{
+    border-bottom: 0;
+    background-color: $grey-100;
+    border-radius: 30px;
+    padding: 1px;
+    .tab-item{
+      z-index: 3;
+      flex: 1 0 auto;
+      font-weight: 500;
+      font-family: $body-font-family;
+      padding: 0;
+      min-width: 30px;
+      min-height: 32px;
+      overflow: hidden;
+      .MuiTouchRipple-root{
+        border-radius: 20px;
+        background-color: unset;
+      }
+      &.Mui-selected{
+        font-weight: 700;
+        color: $white;
+      }
+    }
 
+  }
+  .MuiTabs-indicator{
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    z-index: 2;
+    &:after{
+      content: '';
+      height: 32px;
+      border-radius: 20px;
+      width: 100%;
+      background-color: $primary;
+    }
+  }
+}
 .control-box-wrap{
   background-color: $grey-200;
   padding: 8px 0;
