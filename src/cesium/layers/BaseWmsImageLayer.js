@@ -131,12 +131,6 @@ class BaseWmsImageLayer {
 				  const eastBound = parseFloat(boundingBox.querySelector('eastBoundLongitude').textContent);
 				  const southBound = parseFloat(boundingBox.querySelector('southBoundLatitude').textContent);
 				  const northBound = parseFloat(boundingBox.querySelector('northBoundLatitude').textContent);
-		  
-				  console.log('Bounding Box:');
-				  console.log(`West Bound: ${westBound}`);
-				  console.log(`East Bound: ${eastBound}`);
-				  console.log(`South Bound: ${southBound}`);
-				  console.log(`North Bound: ${northBound}`);
 
 				  const extent = [westBound, southBound, eastBound, northBound];
 

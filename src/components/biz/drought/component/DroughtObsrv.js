@@ -28,7 +28,6 @@ const DroughtObsrv = () => {
     useEffect(()=>{
         console.info(selectObs)
         setDms(G$GetPointToDetail(selectObs.properties.Lon, selectObs.properties.Lat))
-        //G$GetPointToDetail(selectObs.properties.Lon, selectObs.properties.Lat).lonDms
     },[selectObs])
 
     return (

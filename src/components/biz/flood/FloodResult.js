@@ -4,24 +4,26 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
-import { DROUGHT_SELETE_LAYER } from "@redux/actions";
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { FLOOD_SELECT_LAYER } from "@redux/actions";
+import FloodResultTab from "./FloodResultTab";
 
 
 //sample 데이터
 const example = [
-  {name:'SCENE1',  date: '23.11.10~23.11.16', main:'', checked: false, store:'Drought', layer: 'S1A_IW_GRDH_1SDV_20170315T092248_20170315T092317_015701_019D6E_150C'},
-  {name:'SCENE2', date: '23.11.10~23.11.16', main:'', checked: false, store:'Drought', layer: 'S1A_IW_GRDH_1SDV_20170315T092317_20170315T092342_015701_019D6E_4283' },
-  {name:'SCENE3', date: '23.11.10~23.11.16', main:'', checked: false, store:'Drought', layer: 'S1A_IW_GRDH_1SDV_20170315T092342_20170315T092407_015701_019D6E_425F' },
+  {name:'DATA1',  date: '23.11.10~23.11.16', main:'AI 알고리즘', checked: false, store:'WaterBody', layer: '20230718T21water_GS_RGB000102'},
+  {name:'DATA2', date: '23.11.10~23.11.16', main:'물리적 특성', checked: false, store:'WaterBody', layer: '20230718T21water_GS_landuse_RGB000102' },
+  {name:'DATA1', date: '23.11.10~23.11.16', main:'', checked: false, store:'WaterBody', layer: '20230723T21water_JL_RGB000102' },
+  
+  {name:'DATA1',  date: '23.11.10~23.11.16', main:'AI 알고리즘', checked: false, store:'WaterLevel', layer: '20230718T21water_GS_RGB000102'},
+  {name:'DATA2', date: '23.11.10~23.11.16', main:'물리적 특성', checked: false, store:'WaterLevel', layer: '20230718T21water_GS_landuse_RGB000102' },
 ]
 
-const DroughtResult = () => {
+const FloodResult = () => {
     
     const dispatch = useDispatch()
 
-    // 가뭄 검색조건
-    const { text, startDate, endDate } = useSelector(state => state.drought)
+    // 홍수 검색조건
+    const { text, startDate, endDate, floodResultTab } = useSelector(state => state.flood)
 
     const [exampleList, setExampleList] = useState([])
 
@@ -38,13 +40,9 @@ const DroughtResult = () => {
 
     
 
-    // 초기화
+    //임시 검색결과 도출
     useEffect(()=>{
         setExampleList([])
-
-        return()=>{
-          dispatch({ type: DROUGHT_SELETE_LAYER, selectDroughtLayer: false });
-        }
     },[])
 
     //체크박스 다시 그리기
@@ -52,6 +50,7 @@ const DroughtResult = () => {
 
       //exampleList 전체 데이터
       const updatedList = exampleList.map((subArray, i) => {
+
           if (outerIndex === i) {
               const updatedSubArray = subArray.map((item, j) => {
                   if (innerIndex === j) {
@@ -67,10 +66,8 @@ const DroughtResult = () => {
 
       //이벤트 발생 위치 확인후 
       const selectedItem = updatedList[outerIndex][innerIndex];
-
-      //선택이 되었으면 layerItem 전송 / 선택이 해제되었으면 false
       let value = !selectedItem.checked ? false : selectedItem
-      dispatch({ type: DROUGHT_SELETE_LAYER, selectDroughtLayer: value });
+      dispatch({ type: FLOOD_SELECT_LAYER, selectFloodLayer: value });
 
     }
 
@@ -87,8 +84,8 @@ const DroughtResult = () => {
     //list item 설정
     const renderItem = (obj, i, i2) => (
         <>
-          {/* {i2 === 0 ? obj.main : ''} */}
-          <div className="content-list-inner">
+          <div className="content-list-inner" style={{display: obj.store === floodResultTab ? '' : 'none'}}>
+            {/* {i2 === 0 ? obj.main : ''} */}
             <ListItem key={i2} selected={true}>
               <ListItemButton
                 className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
@@ -99,44 +96,21 @@ const DroughtResult = () => {
                 onClick={() => checkboxChange(i, i2)}
               >
                 <div className="list-title-wrap">
-                  <h3 className={'list-title'}>{obj.name}</h3>
-                  <h4 className="list-title-sub">{obj.date}</h4>
-                </div>
-                <div className="list-body">
-                  <div className="list-shadow"></div>
-                  <div className="img-box">{/*images*/}</div>
+                  <h3 className={'list-title'}>{obj.name} ---------- {obj.date}</h3>
                 </div>
               </ListItemButton>
             </ListItem>
           </div>
-          
         </>
     )
 
     return (
         <>
-          <div className={"content-body border-top filled"}>
-            <div className="content-row">
-              {exampleList.length > 0 &&
-                <div className="form-control">
-                  <ToggleButtonGroup
-                    className={"toggle-btn-wrap"}
-                    color={"primary"}
-                    exclusive={true}
-                    ariaLabel="toggle group"
-                    fullWidth={true}>
-                    <ToggleButton selected={true}>물리</ToggleButton>
-                    <ToggleButton>강우</ToggleButton>
-                    <ToggleButton>토양</ToggleButton>
-                    <ToggleButton>유출</ToggleButton>
-                  </ToggleButtonGroup>
-                </div>
-              }
-              
-            </div>
+          <div className={"content-body border-top filled"} style={{display: exampleList.length > 0 ? '': 'none'}}>
+            <FloodResultTab />
             <div className="content-row">
                 <div className={'content-list-wrap'}>
-                    {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
+                  {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
                 </div>
               </div>
           </div>
@@ -144,4 +118,4 @@ const DroughtResult = () => {
     )
 }
 
-export default React.memo(DroughtResult);
+export default React.memo(FloodResult);

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DROUGHT_END_DATE, DROUGHT_START_DATE, DROUGHT_SET_TEXT, ENV_SET_TEXT, ENV_START_DATE, ENV_END_DATE } from "@redux/actions";
+import { ENV_SET_TEXT, ENV_START_DATE, ENV_END_DATE, FLOOD_SET_TEXT, FLOOD_START_DATE, FLOOD_END_DATE } from "@redux/actions";
 import BaseSelectOption from "@common/util/BaseSelectOption";
 import BaseDatePicker from "@common/datepicker/BaseDatePicker";
 
@@ -15,10 +15,10 @@ const FloodOptions = () => {
                 {name:'황강댐', code:'a2'},
                 {name:'임남댐', code:'a3'},
                 {name:'대청댐', code:'a4'},
-                {name:'안동댐', code:'a4'},
-                {name:'운문댐', code:'a4'},
-                {name:'영천댐', code:'a4'},
-                {name:'사연댐', code:'a4'},
+                {name:'안동댐', code:'a5'},
+                {name:'운문댐', code:'a6'},
+                {name:'영천댐', code:'a7'},
+                {name:'사연댐', code:'a8'},
             ]
         },
         {
@@ -51,7 +51,7 @@ const FloodOptions = () => {
                     <h2 className="content-row-title">검색</h2>
                 </div>
                 <div className="form-control">
-                    <BaseSelectOption provider={namesRef.current} changeItem={(item)=>{dispatch({type: ENV_SET_TEXT, text: item})}}/>
+                    <BaseSelectOption provider={namesRef.current} changeItem={(item)=>{dispatch({type: FLOOD_SET_TEXT, text: item})}}/>
                 </div>
             </div>
             
@@ -60,9 +60,9 @@ const FloodOptions = () => {
                     <h2 className="content-row-title">기간 설정</h2>
                 </div>
                 <div className="form-control group">
-                    <BaseDatePicker maxDate={endDate} onchangeFromat={(date)=>{dispatch({type: ENV_START_DATE, date})}}/>
+                    <BaseDatePicker maxDate={endDate} onchangeFromat={(date)=>{dispatch({type: FLOOD_START_DATE, date})}}/>
                     <span>~</span>
-                    <BaseDatePicker minDate={startDate} onchangeFromat={(date)=>{dispatch({type: ENV_END_DATE, date})}}/>
+                    <BaseDatePicker minDate={startDate} onchangeFromat={(date)=>{dispatch({type: FLOOD_END_DATE, date})}}/>
                 </div>
             </div>
             
