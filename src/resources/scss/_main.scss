@@ -207,6 +207,17 @@
     width: 28px;
     height: 28px;
   }
+  &.active{
+    background-color: $primary;
+    .mapRightBt{
+      background-color: $primary;
+      svg{
+        path{
+          fill: $white;
+        }
+      }
+    }
+  }
 }
 
 .top-info-bt{
@@ -779,6 +790,15 @@
   padding: 7px;
   width: max-content;
   min-width: 120px;
+  .box-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 6px 3px 10px;
+    .box-title{
+      font-size: 14px;
+    }
+  }
   .thematic-layers-box-wrap{
     display: flex;
     flex-direction: column;
@@ -792,12 +812,19 @@
         border-radius: 8px;
         display: flex;
         min-width: 160px;
+        align-items: center;
         .MuiTreeItem-iconContainer{
           //display: none;
           order: 2;
-          transform: scale(0.7);
           margin-right: 10px;
           width: auto;
+          svg{
+            font-size: unset;
+          }
+          .css-1m9ymud-MuiSvgIcon-root{
+            width: inherit;
+            height: inherit;
+          }
         }
         &.Mui-selected{
           background: rgba(84, 166, 231, 0.20);

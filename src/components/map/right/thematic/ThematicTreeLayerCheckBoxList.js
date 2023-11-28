@@ -122,7 +122,7 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
               <>
                   <Checkbox
                       checked={selectedNodes.indexOf(nodes.id) !== -1}
-                      indeterminate={/*하위아이템이 체크되면 부모아이템에 별도의 표시를 주는 옵션..*/(nodes.id)[-1] !== (nodes.id)[0] == (nodes.id)[-1]}
+                      indeterminate={/*하위아이템이 체크되면 부모아이템에 별도의 표시를 주는 옵션..*/ 0 && (nodes.id) }
                       tabIndex={-1}
                       disableRipple
                       className={'check-box'}
@@ -185,17 +185,24 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
                 multiSelect
                 defaultCollapseIcon={<SvgIcon>
                   <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1L5.5 5L10 1" stroke="#004478" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 5L5.5 1L1 5" stroke="#004478" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </SvgIcon>}
                 defaultExpandIcon={<SvgIcon>
                   <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 5L5.5 1L1 5" stroke="#9a9a9a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M1 1L5.5 5L10 1" stroke="#717171" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
-
                 </SvgIcon>}
                 className={'thematic-layers-box-wrap'}
             >
+              <div className="box-header">
+                <h2 className="box-title">레이어</h2>
+                <Checkbox
+                  tabIndex={-1}
+                  disableRipple
+                  className={'check-box'}
+                />
+              </div>
                 {state.layerList.map((obj)=> renderTree(obj) )}
             </TreeView >
         </>
