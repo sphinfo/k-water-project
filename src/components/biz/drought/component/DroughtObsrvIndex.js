@@ -3,6 +3,8 @@ import BaseGrid from "@common/grid/BaseGrid";
 import DroughtObsrvIndexConfig from "@gis/config/DroughtObsrvIndexConfig";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from "@mui/material/IconButton";
 
 /**
  * 가뭄 활용주제도 - 가뭄지수
@@ -32,8 +34,6 @@ const DroughtObsrvIndex = () => {
     const gridRef = useRef({})
     //데이터 ref
     const rows = useMemo(()=>{ return [  ] },[])
-
-    
 
     useEffect(()=>{
         gridRef.current.provider = [
@@ -147,11 +147,44 @@ const DroughtObsrvIndex = () => {
 
     },[selectObs])
 
+
     return (
         <>
             <div className="content-row">
                 <div className="content-row-header">
-                    <h2 className={"content-row-title"}>시계열 가뭄지수 및 강수량</h2>
+                    <h2 className={"content-row-title"}>시계열 가뭄지수 및 강수량
+                        <Tooltip placement="right-start" title={
+                            <React.Fragment>
+                                <div className="tooltip-content-wrap">
+                                    <h5 className="tooltip-title">가뭄 위험 등급 판단 기준(SWDI)</h5>
+                                    <div className="tooltip-content">
+                                        <table className="table-basic table-tooltip">
+                                            <thead>
+                                            <tr>
+                                                <th>정상</th>
+                                                <th>관심</th>
+                                                <th>주의</th>
+                                                <th>경계</th>
+                                                <th>심각</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>0 초과</td>
+                                                <td>-0.5 ~ 0.0</td>
+                                                <td>-1.0 ~ 0.5</td>
+                                                <td>-1.5 ~ 1.0</td>
+                                                <td>-1.5 ~ 이하</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </React.Fragment>
+                        }>
+                            <IconButton className={'tooltip-icon'}></IconButton>
+                        </Tooltip>
+                    </h2>
                 </div>
                 <div className="panel-box">
                 <BaseChart width={260} height={320} ref={chartRef} chartType={'Line'} title={''}/>
@@ -161,6 +194,19 @@ const DroughtObsrvIndex = () => {
             <div className="content-row">
                 <div className="content-row-header">
                     <h2 className={"content-row-title"}>강우 해갈 데이터
+                        <Tooltip placement="right-start" title={
+                            <React.Fragment>
+                                <div className="tooltip-content-wrap">
+                                    <h5 className="tooltip-title">강우 해갈(drought relief)의 정의</h5>
+                                    <p className="tooltip-content">
+                                        1. 가뭄 판단 기준 심각 단계 7일 이상 <br/>
+                                        2. 가뭄 판단 기준 정상 단계 15일 지속
+                                    </p>
+                                </div>
+                            </React.Fragment>
+                        }>
+                            <IconButton className={'tooltip-icon'}></IconButton>
+                        </Tooltip>
                     </h2>
                 </div>
                 <div className="panel-box">

@@ -47,12 +47,28 @@ const DroughtObsrv = () => {
                     <div className="content-row-header">
                         <h2 className="content-row-title">관측 정보</h2>
                     </div>
-                    <div className="panel-box">
+                    <div className="panel-box info-head">
+                      <div className="panel-box-header box-title">
+                      <h3 className="panel-box-title">
                         {selectObs.properties.Station}
-                        <br></br>
-                        {`경도 : ${ dms ? dms.lonDms : ''}`}
-                        <br></br>
-                        {`위도 : ${ dms ? dms.latDms : ''}`}
+                      </h3>
+                      </div>
+                      <table className="panel-table">
+                        <colgroup>
+                          <col style={{width: '50px'}}/>
+                          <col style={{width: 'auto'}}/>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                          <th>경도</th>
+                          <td>{ dms ? dms.lonDms : ''}</td>
+                        </tr>
+                        <tr>
+                          <th>위도</th>
+                          <td>{ dms ? dms.latDms : ''}</td>
+                        </tr>
+                        </tbody>
+                      </table>
                     </div>
                 </div>
 
