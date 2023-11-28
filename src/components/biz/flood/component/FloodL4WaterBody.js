@@ -69,21 +69,23 @@ const FloodL4WaterBody = () => {
 
     return (
         <>
-            <div className={"content-body"}>
-                <div className="content-row">
-                    <div className="content-row-header">
-                        <h2 className="content-row-title">침수피해</h2>
+            <div className="control-block">
+                        <h2 className="switch-label">침수피해</h2>
                         <Switch className="float-box-switch" checked={selectFloodDamageLayer ? true : false} onClick={()=>{
                             dispatch({type:FLOOD_DAMAGE_LAYER, selectFloodDamageLayer: !selectFloodDamageLayer ? sample : false})
                         }}></Switch>
-                    </div>
-                </div>
+            </div>
+
+            <div className={"content-body"}>
+
 
                 {
                     selectFloodDamageLayer && 
 
                     <div className="content-row">
-                        <BaseChart width={260} height={320} ref={chartRef} chartType={'Bar'} title={''}/>
+                        <div className="panel-box">
+                        <BaseChart width={260} height={220} ref={chartRef} chartType={'Bar'} title={''}/>
+                        </div>
                     </div>
 
                 }

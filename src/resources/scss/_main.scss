@@ -207,6 +207,17 @@
     width: 28px;
     height: 28px;
   }
+  &.active{
+    background-color: $primary;
+    .mapRightBt{
+      background-color: $primary;
+      svg{
+        path{
+          fill: $white;
+        }
+      }
+    }
+  }
 }
 
 .top-info-bt{
@@ -779,6 +790,15 @@
   padding: 7px;
   width: max-content;
   min-width: 120px;
+  .box-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 6px 3px 10px;
+    .box-title{
+      font-size: 14px;
+    }
+  }
   .thematic-layers-box-wrap{
     display: flex;
     flex-direction: column;
@@ -792,12 +812,19 @@
         border-radius: 8px;
         display: flex;
         min-width: 160px;
+        align-items: center;
         .MuiTreeItem-iconContainer{
           //display: none;
           order: 2;
-          transform: scale(0.7);
           margin-right: 10px;
           width: auto;
+          svg{
+            font-size: unset;
+          }
+          .css-1m9ymud-MuiSvgIcon-root{
+            width: inherit;
+            height: inherit;
+          }
         }
         &.Mui-selected{
           background: rgba(84, 166, 231, 0.20);
@@ -942,6 +969,8 @@
       position: relative;
       .content-row-header{
         padding-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
         .content-row-title{
           font-size: 14px;
           color: $body-font-color;
@@ -1167,31 +1196,6 @@
   }
 }
 
-.panel-table{
-  table-layout: fixed;
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 2px;
-  > thead > tr > th,
-  > tbody > tr > th,
-  > tbody > tr > td{
-    padding: 7px 8px;
-  }
-  > thead > tr > th,
-  > tbody > tr > th{
-    background-color: $basic;
-    color: $grey-500;
-    font-size: 13px;
-    text-align: center;
-    font-weight: 600;
-    border-radius: 5px;
-    &:not(:last-of-type){
-      border-right: 1px solid $grey-200;
-    }
-  }
-}
-
-
 .folding-btn-wrap{
   position: absolute;
   z-index: 2;
@@ -1307,26 +1311,51 @@
   }
 
   .toggle-btn-wrap{
-    padding: 3px;
-    border-radius: 20px;
-    background-color: $grey-100;
-    .MuiToggleButtonGroup-grouped{
-      border: 0;
-      padding: 9px 12px;
-      border-radius: 20px;
-      line-height: 1;
-      color: $body-font-color;
-      font-weight: 500;
-      &:not(:last-of-type), &:not(:first-of-type){
-        border-top-right-radius: inherit;
-        border-bottom-right-radius: inherit;
-        border-top-left-radius: inherit;
-        border-bottom-left-radius: inherit;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    &.css-1ujnqem-MuiTabs-root{
+      min-height: unset;
+    }
+    .MuiTabs-flexContainer{
+      border-bottom: 0;
+      background-color: $grey-100;
+      border-radius: 30px;
+      padding: 3px;
+      .tab-item{
+        z-index: 3;
+        flex: 1 0 auto;
+        font-weight: 500;
+        font-family: $body-font-family;
+        padding: 0;
+        min-width: 30px;
+        min-height: 30px;
+        overflow: hidden;
+        .MuiTouchRipple-root{
+          border-radius: 20px;
+          background-color: unset;
+        }
+        &.Mui-selected{
+          font-weight: 600;
+          color: $white;
+        }
       }
-      &.Mui-selected{
+
+    }
+    .MuiTabs-indicator{
+      display: flex;
+      justify-content: center;
+      background-color: transparent;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      z-index: 2;
+      &:after{
+        content: '';
+        height: 30px;
+        border-radius: 20px;
+        width: 100%;
         background-color: $primary;
-        color: $white;
-        font-weight: 600;
       }
     }
   }
@@ -1485,13 +1514,15 @@
         font-weight: 700;
         color: $body-font-color;
       }
+      &.Mui-disabled{
+        color: #c4c4c4;
+      }
       .MuiTouchRipple-root{
         > *{
           //background-color: $primary;
         }
       }
     }
-
   }
   .MuiTabs-indicator{
     display: flex;
@@ -1506,55 +1537,7 @@
     }
   }
 }
-.toggle-btn-wrap{
-  padding: 10px;
-  position: relative;
-  width: 100%;
-  &.css-1ujnqem-MuiTabs-root{
-    min-height: unset;
-  }
-  .MuiTabs-flexContainer{
-    border-bottom: 0;
-    background-color: $grey-100;
-    border-radius: 30px;
-    padding: 1px;
-    .tab-item{
-      z-index: 3;
-      flex: 1 0 auto;
-      font-weight: 500;
-      font-family: $body-font-family;
-      padding: 0;
-      min-width: 30px;
-      min-height: 32px;
-      overflow: hidden;
-      .MuiTouchRipple-root{
-        border-radius: 20px;
-        background-color: unset;
-      }
-      &.Mui-selected{
-        font-weight: 600;
-        color: $white;
-      }
-    }
 
-  }
-  .MuiTabs-indicator{
-    display: flex;
-    justify-content: center;
-    background-color: transparent;
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    z-index: 2;
-    &:after{
-      content: '';
-      height: 32px;
-      border-radius: 20px;
-      width: 100%;
-      background-color: $primary;
-    }
-  }
-}
 .control-box-wrap{
   background-color: $grey-200;
   padding: 8px 0;
@@ -1569,6 +1552,71 @@
       }
     }
   }
+}
+.control-block{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px 10px 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  .switch-label{
+    font-size: 14px;
+  }
+  &.accordion{
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: $grey-200;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: none;
+    border-bottom: 0;
+    padding: 0;
+    color: inherit;
+    &:before{
+      content: none;
+    }
+    .accordion-header{
+      width: 100%;
+      min-height: unset;
+      padding: 15px 15px 15px 10px;
+      margin: 0;
+      .Mui-expanded{
+        margin: 0;
+        &.css-yw020d-MuiAccordionSummary-expandIconWrapper{
+          height: 2px;
+          width: 13px;
+          background-color: #454545;
+          border-radius: 3px;
+          overflow: hidden;
+        }
+      }
+    }
+    .accordion-title{
+      font-size: 14px;
+    }
+    .MuiCollapse-root{
+      width: 100%;
+    }
+    .accordion-content{
+      background-color: white;
+      border-radius: 10px;
+      margin: 0 10px 10px;
+      padding: 15px;
+      color: $body-font-color;
+      dl{
+        line-height: 1.5;
+        dt{
+          font-weight: 600;
+        }
+        &:not(:last-of-type){
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }
+}
+.css-1m9ymud-MuiSvgIcon-root{
+  font-size: unset;
 }
 
 .tooltip-icon{

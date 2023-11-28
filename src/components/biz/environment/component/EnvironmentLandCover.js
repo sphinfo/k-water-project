@@ -33,11 +33,9 @@ const EnvironmentLandCover = () => {
             </div>
 
             <div className={"content-body"}>
-                <div className="content-row">
-                    <div className="content-row-header">
-                        <h2 className="content-row-title">변화탐지</h2>
+                <div className="control-block">
+                        <h2 className="switch-label">변화탐지</h2>
                         <Switch className="float-box-switch" checked={detailLandCover} onClick={()=>{setDetailLandCover(!detailLandCover)}}></Switch>
-                    </div>
                 </div>
                 <div className="content-row">
                     <div className="content-row-header">

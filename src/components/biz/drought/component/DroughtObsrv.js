@@ -53,22 +53,16 @@ const DroughtObsrv = () => {
                         {selectObs.properties.Station}
                       </h3>
                       </div>
-                      <table className="panel-table">
-                        <colgroup>
-                          <col style={{width: '50px'}}/>
-                          <col style={{width: 'auto'}}/>
-                        </colgroup>
-                        <tbody>
-                        <tr>
-                          <th>경도</th>
-                          <td>{ dms ? dms.lonDms : ''}</td>
-                        </tr>
-                        <tr>
-                          <th>위도</th>
-                          <td>{ dms ? dms.latDms : ''}</td>
-                        </tr>
-                        </tbody>
-                      </table>
+                      <div className="table-frame-wrap">
+                        <div className="frame-thead">
+                          <div className="frame-th">경도</div>
+                          <div className="frame-th">위도</div>
+                        </div>
+                        <div className="frame-tbody">
+                          <div className="frame-td">{ dms ? dms.lonDms : ''}</div>
+                          <div className="frame-td">{ dms ? dms.latDms : ''}</div>
+                        </div>
+                      </div>
                     </div>
                 </div>
 

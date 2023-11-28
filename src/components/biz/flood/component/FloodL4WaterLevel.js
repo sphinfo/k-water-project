@@ -14,14 +14,15 @@ const FloodL4WaterLevel = () => {
 
     return (
         <>
-            <div className={"content-body"}>
-                <div className="content-row">
-                    <div className="content-row-header">
-                        <h2 className="content-row-title">수위변화</h2>
+                <div className="control-block">
+                        <h2 className="switch-label">수위변화</h2>
                         {/* <Switch className="float-box-switch" checked={detailLandCover} onClick={()=>{setDetailLandCover(!detailLandCover)}}></Switch> */}
                         <Switch className="float-box-switch" ></Switch>
-                    </div>
                 </div>
+            <div className="content-body">
+
+            {/*    content    */}
+
             </div>
         </>
     )

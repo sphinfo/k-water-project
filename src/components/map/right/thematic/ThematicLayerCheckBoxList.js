@@ -86,7 +86,7 @@ const ThematicLayerCheckBoxList = ({}, ref) => {
 
     return (
         <>
-          <div style={{color:'black'}}>
+          <div>
             <TreeView
                 multiSelect
             >
