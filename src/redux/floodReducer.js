@@ -8,6 +8,8 @@ import {
   FLOOD_SELECT_LAYER,
   FLOOD_DAMAGE_LAYER,
   FLOOD_SELECT_WATER_LEVEL,
+  FLOOD_RESET,
+  FLOOD_SELECT_BOX,
 } from './actions';
 
 const initialState = {
@@ -24,7 +26,9 @@ const initialState = {
   selectFloodDamageLayer : false,
 
   //수위 지점 선택
-  selectWaterLevel: false
+  selectWaterLevel: false,
+
+  selectBox: 'off', //대상지역
 
 };
 
@@ -52,6 +56,17 @@ function floodReducer(state = initialState, action) {
     case FLOOD_SELECT_WATER_LEVEL:
       return { ...state, selectWaterLevel: action.selectWaterLevel }
 
+    //대상지역 selectbox 
+    case FLOOD_SELECT_BOX:
+      return { ...state, selectBox: action.selectBox}
+
+    //초기화
+    case FLOOD_RESET:
+      return { ...state, 
+        selectBox: 'off', 
+        selectWaterLevel: false, 
+        selectFloodLayer: false,
+      }
 
     default:
       return state;

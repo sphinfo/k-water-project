@@ -132,7 +132,8 @@ class BaseWmsImageLayer {
 				  const southBound = parseFloat(boundingBox.querySelector('southBoundLatitude').textContent);
 				  const northBound = parseFloat(boundingBox.querySelector('northBoundLatitude').textContent);
 
-				  const extent = [westBound, southBound, eastBound, northBound];
+				  //왼쪽 패널때문에 가려지는 현상 보완 근사치
+				  const extent = [westBound+((westBound - eastBound) * 0.3), southBound, eastBound+((westBound - eastBound) * 0.3), northBound];
 
 				G$flyToExtent(extent)
 

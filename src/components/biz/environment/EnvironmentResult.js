@@ -5,7 +5,8 @@ import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
 import EnvironmentResultTab from "./EnvironmentResultTab";
-import { ENV_SELECT_LAYER } from "@redux/actions";
+import { ENV_SELECT_BOX, ENV_SELECT_LAYER } from "@redux/actions";
+import { Button } from "@mui/material";
 
 
 //sample 데이터
@@ -20,7 +21,7 @@ const EnvironmentResult = () => {
     const dispatch = useDispatch()
 
     // 가뭄 검색조건
-    const { text, startDate, endDate, environmentResultTab } = useSelector(state => state.environment)
+    const { text, startDate, endDate, environmentResultTab, selectBox } = useSelector(state => state.environment)
 
     const [exampleList, setExampleList] = useState([])
 
@@ -93,7 +94,12 @@ const EnvironmentResult = () => {
                 onClick={() => checkboxChange(i, i2)}
               >
                 <div className="list-title-wrap">
-                  <h3 className={'list-title'}>{obj.name} ---------- {obj.date}</h3>
+                  <h3 className={'list-title'}>{obj.name}</h3>
+                  <h4 className="list-title-sub">{obj.date}</h4>
+                </div>
+                <div className="list-body">
+                  <div className="list-shadow"></div>
+                  <div className="img-box">{/*images*/}</div>
                 </div>
               </ListItemButton>
             </ListItem>
@@ -103,8 +109,18 @@ const EnvironmentResult = () => {
 
     return (
         <>
-          <div className={"content-body border-top filled"} style={{display: exampleList.length > 0 ? '': 'none'}}>
-            <EnvironmentResultTab />
+          <div className={"content-body border-top filled"} >
+            {
+              exampleList.length === 0 &&
+              <div className="content-row empty-wrap">
+                <div className="empty-message">
+                  <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
+                  <Button className="btn empty-btn" onClick={()=>{{dispatch({type:ENV_SELECT_BOX, selectBox: !selectBox})}}}>지역검색</Button>
+                </div>
+              </div>
+            }  
+
+            {exampleList.length > 0 && <EnvironmentResultTab />}
             <div className="content-row">
                 <div className={'content-list-wrap'}>
                   {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}

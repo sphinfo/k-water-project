@@ -4,8 +4,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
-import { FLOOD_SELECT_LAYER } from "@redux/actions";
+import { FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
+import { Button } from "@mui/material";
 
 
 //sample 데이터
@@ -23,7 +24,7 @@ const FloodResult = () => {
     const dispatch = useDispatch()
 
     // 홍수 검색조건
-    const { text, startDate, endDate, floodResultTab } = useSelector(state => state.flood)
+    const { text, startDate, endDate, floodResultTab, selectBox } = useSelector(state => state.flood)
 
     const [exampleList, setExampleList] = useState([])
 
@@ -96,7 +97,12 @@ const FloodResult = () => {
                 onClick={() => checkboxChange(i, i2)}
               >
                 <div className="list-title-wrap">
-                  <h3 className={'list-title'}>{obj.name} ---------- {obj.date}</h3>
+                  <h3 className={'list-title'}>{obj.name}</h3>
+                  <h4 className="list-title-sub">{obj.date}</h4>
+                </div>
+                <div className="list-body">
+                  <div className="list-shadow"></div>
+                  <div className="img-box">{/*images*/}</div>
                 </div>
               </ListItemButton>
             </ListItem>
@@ -106,9 +112,20 @@ const FloodResult = () => {
 
     return (
         <>
-          <div className={"content-body border-top filled"} style={{display: exampleList.length > 0 ? '': 'none'}}>
-            <FloodResultTab />
+          <div className={"content-body border-top filled"} >
+            {
+              exampleList.length === 0 &&
+              <div className="content-row empty-wrap">
+                <div className="empty-message">
+                  <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
+                  <Button className="btn empty-btn" onClick={()=>{{dispatch({type:FLOOD_SELECT_BOX, selectBox: !selectBox})}}}>지역검색</Button>
+                </div>
+              </div>
+            }  
+
+            { exampleList.length > 0 && <FloodResultTab />}
             <div className="content-row">
+                
                 <div className={'content-list-wrap'}>
                   {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
                 </div>

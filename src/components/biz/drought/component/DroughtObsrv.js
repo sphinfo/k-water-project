@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DROUGHT_SELETE_FEATURE } from "@redux/actions";
+import { DROUGHT_SELECT_FEATURE } from "@redux/actions";
 import DroughtObsrvTab from "./DroughtObsrvTab";
 import DroughtObsrvSoilMoisture from "./DroughtObsrvSoilMoisture";
 import DroughtObsrvIndex from "./DroughtObsrvIndex";
@@ -19,7 +19,7 @@ const DroughtObsrv = () => {
     useEffect(()=>{
         return()=>{
             //선택레이어 삭제
-            dispatch({type:DROUGHT_SELETE_FEATURE, selectObs: false})
+            dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: false})
         }
     },[])
 

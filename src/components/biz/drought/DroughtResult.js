@@ -4,9 +4,10 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
-import { DROUGHT_SELETE_LAYER } from "@redux/actions";
+import { DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER } from "@redux/actions";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import { Button } from "@mui/material";
 
 
 //sample 데이터
@@ -21,7 +22,7 @@ const DroughtResult = () => {
     const dispatch = useDispatch()
 
     // 가뭄 검색조건
-    const { text, startDate, endDate } = useSelector(state => state.drought)
+    const { text, startDate, endDate, selectBox, selectResultTab } = useSelector(state => state.drought)
 
     const [exampleList, setExampleList] = useState([])
 
@@ -43,7 +44,7 @@ const DroughtResult = () => {
         setExampleList([])
 
         return()=>{
-          dispatch({ type: DROUGHT_SELETE_LAYER, selectDroughtLayer: false });
+          dispatch({ type: DROUGHT_SELECT_LAYER, selectDroughtLayer: false });
         }
     },[])
 
@@ -70,7 +71,7 @@ const DroughtResult = () => {
 
       //선택이 되었으면 layerItem 전송 / 선택이 해제되었으면 false
       let value = !selectedItem.checked ? false : selectedItem
-      dispatch({ type: DROUGHT_SELETE_LAYER, selectDroughtLayer: value });
+      dispatch({ type: DROUGHT_SELECT_LAYER, selectDroughtLayer: value });
 
     }
 
@@ -116,14 +117,24 @@ const DroughtResult = () => {
     return (
         <>
           <div className={"content-body border-top filled"}>
+            {
+              exampleList.length === 0 &&
+              <div className="content-row empty-wrap">
+                <div className="empty-message">
+                  <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
+                  <Button className="btn empty-btn" onClick={()=>{{dispatch({type:DROUGHT_SELECT_BOX, selectBox: !selectBox})}}}>지역검색</Button>
+                </div>
+              </div>
+            }
+
             <div className="content-row">
               {exampleList.length > 0 &&
                 <div className="form-control">
-                  <Tabs className={"toggle-btn-wrap"} exclusive fullWidth={true}>
-                    <Tab className={"tab-item"} label={'물리'}></Tab>
-                    <Tab className={"tab-item"} label={'강우'}></Tab>
-                    <Tab className={"tab-item"} label={'토양'}></Tab>
-                    <Tab className={"tab-item"} label={'유출'}></Tab>
+                  <Tabs className={"toggle-btn-wrap"} exclusive fullWidth={true} value={selectResultTab} onChange={(e, v)=>{dispatch({type: DROUGHT_RESULT_TAB, selectResultTab: v})}}>
+                    <Tab className={"tab-item"} label={'물리'} value={'a'}></Tab>
+                    <Tab className={"tab-item"} label={'강우'} value={'b'}></Tab>
+                    <Tab className={"tab-item"} label={'토양'} value={'c'}></Tab>
+                    <Tab className={"tab-item"} label={'유출'} value={'d'}></Tab>
                   </Tabs>
                 </div>
               }

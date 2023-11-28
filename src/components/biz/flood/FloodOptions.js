@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ENV_SET_TEXT, ENV_START_DATE, ENV_END_DATE, FLOOD_SET_TEXT, FLOOD_START_DATE, FLOOD_END_DATE } from "@redux/actions";
 import BaseSelectOption from "@common/util/BaseSelectOption";
@@ -41,7 +41,14 @@ const FloodOptions = () => {
     ])
 
     const dispatch = useDispatch()
-    const { startDate, endDate } = useSelector(state => state.flood)
+    const { startDate, endDate, selectBox } = useSelector(state => state.flood)
+    const selectRef = useRef()
+
+    useEffect(()=>{
+        if(selectBox !== 'off'){
+            selectRef.current.visibleTree = true
+        }
+    },[selectBox])
 
     return (
         <>
@@ -51,7 +58,7 @@ const FloodOptions = () => {
                     <h2 className="content-row-title">검색</h2>
                 </div>
                 <div className="form-control">
-                    <BaseSelectOption provider={namesRef.current} changeItem={(item)=>{dispatch({type: FLOOD_SET_TEXT, text: item})}}/>
+                    <BaseSelectOption ref={selectRef} provider={namesRef.current} changeItem={(item)=>{dispatch({type: FLOOD_SET_TEXT, text: item})}}/>
                 </div>
             </div>
             
