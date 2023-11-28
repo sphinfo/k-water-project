@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import { G$removeLayer } from "@gis/util";
 import EnvironmentLandCover from "./component/EnvironmentLandCover";
-import { SET_SIDE_PANEL } from "@redux/actions";
+import { ENV_RESET, SET_SIDE_PANEL } from "@redux/actions";
 
 /* 환경 */
 const Environment = () => {
@@ -42,6 +42,8 @@ const Environment = () => {
 
         //변화탐지 레이어 삭제
         G$removeLayer(landCoverDetectionLayer.current.layer)
+
+        dispatch({type:ENV_RESET})
     }
   },[])
 

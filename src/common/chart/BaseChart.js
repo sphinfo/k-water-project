@@ -8,6 +8,22 @@ const defaultOption = {
     responsive: true,  //반응형 랜더링
 	maintainAspectRatio: false, //canvas 사이즈 조정
     plugins: {
+		zoom: {
+			pan: {
+				enabled: true,
+				mode: 'xy',
+				threshold: 5,
+			},
+			zoom: {
+				wheel: {
+					enabled: true
+				},
+				pinch: {
+					enabled: true
+				},
+				mode: 'xy',
+			},
+	  },
       legend: { //범례
         position: 'top', //범례위치
       },

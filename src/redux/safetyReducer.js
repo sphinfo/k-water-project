@@ -94,7 +94,7 @@ function safetyReducer(state = initialState, action) {
     case SAFETY_SELETE_FEATURE:
       return { ...state, selectFeature: action.selectFeature}
 
-    //선택 feature 값
+    //대상지역 selectbox 
     case SAFETY_SELECT_BOX:
       return { ...state, selectBox: action.selectBox}
 

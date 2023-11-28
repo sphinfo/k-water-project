@@ -1,6 +1,6 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FLOOD_DAMAGE_LAYER, FLOOD_SELECT_WATER_LEVEL } from "@redux/actions";
+import { FLOOD_DAMAGE_LAYER, FLOOD_RESET, FLOOD_SELECT_WATER_LEVEL, SET_SIDE_PANEL } from "@redux/actions";
 import { G$removeLayer } from "@gis/util";
 import WaterLevelOverlay from "@gis/util/overlay/WaterLevelOverlay";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
@@ -75,6 +75,8 @@ const Flood = () => {
             //레이어 클릭 callback 비활성화
             GisLayerClickTool.destroyBiz(bizName)
 
+            dispatch({type:FLOOD_RESET})
+
         }
     },[])
 
@@ -133,6 +135,10 @@ const Flood = () => {
         }
     },[selectFloodDamageLayer])
 
+    //사이드 위치 조정 on
+    useEffect(()=>{
+        selectFloodLayer ? dispatch({type: SET_SIDE_PANEL, panelSide: true}) : dispatch({type: SET_SIDE_PANEL, panelSide: false})
+    },[selectFloodLayer])
 
     return (
         <>
