@@ -95,15 +95,14 @@ const BaseChart = (props, ref) => {
 	const plugins = [
 		{
 			afterDraw: function (chart) {
-			  console.log(chart);
 			  if (chart.data.length < 1) {
 				let ctx = chart.ctx;
 				let width = chart.width;
 				let height = chart.height;
 				ctx.textAlign = "center";
 				ctx.textBaseline = "middle";
-				ctx.font = "30px Arial";
-				ctx.fillText("No data to display", width / 2, height / 2);
+				ctx.font = "13px Arial";
+				ctx.fillText("확인가능한 데이터가 없습니다.", width / 2, height / 2);
 				ctx.restore();
 			  }
 			},
