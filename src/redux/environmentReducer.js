@@ -7,6 +7,8 @@ import {
   ENV_RESULT_TAB,
   ENV_SELECT_LAYER,
   ENV_LANDCOVER_DETECTION,
+  ENV_SELECT_BOX,
+  ENV_RESET,
 } from './actions';
 
 const initialState = {
@@ -22,7 +24,10 @@ const initialState = {
   selectEnvironmentLayer : false,
 
   //수변피복 변화탐지
-  landCoverDetection: false
+  landCoverDetection: false,
+
+  //대상지역 selectbox
+  selectBox: 'off'
 };
 
 function environmentReducer(state = initialState, action) {
@@ -45,6 +50,20 @@ function environmentReducer(state = initialState, action) {
 
     case ENV_LANDCOVER_DETECTION:
       return { ...state, landCoverDetection: action.landCoverDetection }
+
+    //대상지역 selectbox 
+    case ENV_SELECT_BOX:
+      return { ...state, selectBox: action.selectBox}
+
+    case ENV_RESET:
+      return  {
+        ...state,
+
+        selectBox: 'off',
+        landCoverDetection: false,
+        selectEnvironmentLayer: false,
+        environmentResultTab: false,
+      }
 
     default:
       return state;

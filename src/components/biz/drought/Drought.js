@@ -7,7 +7,7 @@ import DroughtOptions from "./DroughtOptions";
 import pin from "@images/map-icon-dr.svg"
 import pin2 from "@images/map-icon-dr-clicked.svg"
 import { G$randomCoordinates, G$removeLayer } from "@gis/util";
-import { DROUGHT_SELETE_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
+import { DROUGHT_RESET, DROUGHT_SELECT_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
 import DroughtObsrv from "./component/DroughtObsrv";
 import DroughtOverlay from "@gis/util/overlay/DroughtOverlay";
 import DroughtObsrvConfig from "@gis/config/DroughtObsrvConfig";
@@ -45,14 +45,14 @@ const Drought = () => {
             }
 
             if(station === features[0].properties.Station){
-                dispatch({type:DROUGHT_SELETE_FEATURE, selectObs: false})
+                dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: false})
                 setStation(false)
             }else{
 
                 
                 features[0].entity.billboard.image = pin2
 
-                dispatch({type:DROUGHT_SELETE_FEATURE, selectObs: features[0]})
+                dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: features[0]})
                 setStation(features[0].properties.Station)
             }
             
@@ -92,6 +92,9 @@ const Drought = () => {
             //가뭄 레이어 삭제
             G$removeLayer(droughtLayer.current.layer)
 
+            //가뭄 reducer 초기화
+            dispatch({type:DROUGHT_RESET})
+
         }
 
     },[])
@@ -123,11 +126,7 @@ const Drought = () => {
         <DroughtResult />
 
         {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
-        {selectObs && ( 
-                <div className={`panel side-panel ${!panelVisible ? 'fold' : ''}` }>
-                    <DroughtObsrv />
-                </div> 
-            )}
+        {selectObs && ( <div className={`panel side-panel ${!panelVisible ? 'fold' : ''}` }> <DroughtObsrv /> </div> )}
         </>
     )
 }

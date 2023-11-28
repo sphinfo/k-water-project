@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DROUGHT_END_DATE, DROUGHT_START_DATE, DROUGHT_SET_TEXT } from "@redux/actions";
 import BaseSelectOption from "@common/util/BaseSelectOption";
@@ -50,7 +50,14 @@ const DroughtOptions = () => {
     ])
 
     const dispatch = useDispatch()
-    const { startDate, endDate } = useSelector(state => state.drought)
+    const { startDate, endDate, selectBox } = useSelector(state => state.drought)
+    const selectRef = useRef()
+
+    useEffect(()=>{
+        if(selectBox !== 'off'){
+            selectRef.current.visibleTree = true
+        }
+    },[selectBox])
 
     return (
         <>
@@ -60,7 +67,7 @@ const DroughtOptions = () => {
                     <h2 className="content-row-title">검색</h2>
                 </div>
                 <div className="form-control">
-                    <BaseSelectOption provider={namesRef.current} changeItem={(item)=>{dispatch({type: DROUGHT_SET_TEXT, text: item})}}/>
+                    <BaseSelectOption ref={selectRef} provider={namesRef.current} changeItem={(item)=>{dispatch({type: DROUGHT_SET_TEXT, text: item})}}/>
                 </div>
             </div>
             
