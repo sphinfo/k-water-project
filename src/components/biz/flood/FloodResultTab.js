@@ -14,10 +14,14 @@ const FloodResultTab = () => {
 
     return (
         <>
-            <Tabs className="panel-tabs-wrap" fullWidth={true} exclusive value={floodResultTab} onChange={(e, v)=>{dispatch({type: FLOOD_RESULT_TAB, floodResultTab: v})}}>
+          <div className="content-row">
+            <div className="form-control">
+            <Tabs className="toggle-btn-wrap" fullWidth={true} exclusive value={floodResultTab} onChange={(e, v)=>{dispatch({type: FLOOD_RESULT_TAB, floodResultTab: v})}}>
                 <Tab className="tab-item" value={"WaterBody"} label={"수체"}></Tab>
                 <Tab className="tab-item" value={"WaterLevel"} label={"수위"}></Tab>
             </Tabs>
+            </div>
+          </div>
         </>
     )
 }
