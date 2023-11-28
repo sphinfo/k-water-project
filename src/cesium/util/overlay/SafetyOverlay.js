@@ -40,7 +40,7 @@ class SafetyOverlay {
         // widget-body div 요소 생성
         const widgetBody = document.createElement('div')
         widgetBody.className = 'map-popup-box-body'
-        widgetBody.textContent = `등급 ${properties.GRAY_INDEX}(${properties.GRAY_INDEX === 1 ? '1' : properties.GRAY_INDEX === 2 ? '2' : properties.GRAY_INDEX === 3 ? '3' : 'none'} )`
+        widgetBody.textContent = `등급 ${properties.GRAY_INDEX}(${properties.GRAY_INDEX === 1 ? '위험' : properties.GRAY_INDEX === 2 ? '보통' : properties.GRAY_INDEX === 3 ? '안전' : 'none'} )`
 
         // 요소들을 구조에 맞게 조립
         widgetHeader.appendChild(title);

@@ -3,9 +3,9 @@ import EnvironmentOptions from "./EnvironmentOptions";
 import EnvironmentResult from "./EnvironmentResult";
 import { useDispatch, useSelector } from "react-redux";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
-import { G$removeLayer } from "@gis/util";
+import { G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import EnvironmentLandCover from "./component/EnvironmentLandCover";
-import { SET_SIDE_PANEL } from "@redux/actions";
+import { ENV_RESET, SET_SIDE_PANEL } from "@redux/actions";
 
 /* 환경 */
 const Environment = () => {
@@ -20,7 +20,7 @@ const Environment = () => {
   const { selectEnvironmentLayer, landCoverDetection } = useSelector(state => state.environment)
   const { panelVisible } = useSelector(state => state.main)
 
-  //환경 레이어
+  //환경 수변피복 레이어
   const environmentLayer = useRef()
 
   //변화탐지 레이어 
@@ -42,6 +42,12 @@ const Environment = () => {
 
         //변화탐지 레이어 삭제
         G$removeLayer(landCoverDetectionLayer.current.layer)
+
+        //범례 삭제
+        G$removeWidget('BaseLegendWidget')
+
+        //전역변수 리셋
+        dispatch({type:ENV_RESET})
     }
   },[])
 
@@ -71,6 +77,29 @@ const Environment = () => {
   //사이드 위치 조정 on
   useEffect(()=>{
     selectEnvironmentLayer && selectEnvironmentLayer.store === 'LandCover' ? dispatch({type: SET_SIDE_PANEL, panelSide: true}) : dispatch({type: SET_SIDE_PANEL, panelSide: false})
+  },[selectEnvironmentLayer])
+
+
+  //범례 change 이벤트
+  useEffect(()=>{
+
+    if(selectEnvironmentLayer.store === 'LandCover'){
+      G$addWidget('BaseLegendWidget', { 
+        params: {
+            title:'피복 분류', 
+            datas: [{label:'목지', color:'#35783B'}
+                ,{label:'수체', color:'#557BDF'}
+                ,{label:'빌딩', color:'#DD59B2'}
+                ,{label:'초지', color:'#A1F8A5'}
+                ,{label:'나지', color:'#F3AC50'}
+        ]} 
+      })
+    }else{
+      G$removeWidget('BaseLegendWidget')
+    }
+    
+
+
   },[selectEnvironmentLayer])
 
   return (

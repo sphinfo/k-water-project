@@ -27,7 +27,7 @@ const Safety = () => {
      * displaceLevel : 변위등릅 레이어 선택
      */
     const {bizName, select3Level, select4Level, displaceLevel, compLayerClick} = useSelector(state => state.safety)
-    const { panelSide, panelVisible } = useSelector(state => state.main)
+    const { panelVisible } = useSelector(state => state.main)
 
     {/** 안전3레벨 / 안전4레벨 / 변위등급 ( 데이터가 있는한 정적인 레이어 ) */}
     //안전 3레벨 레이어 생성
