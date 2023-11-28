@@ -41,37 +41,37 @@ const FloodL4 = () => {
                 <FloodL4WaterLevel />
             }
 
-              <Accordion className={"control-block accordion"}>
+            <Accordion className={"control-block accordion"}>
                 <AccordionSummary className="accordion-header" expandIcon={<SvgIcon>
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 1V6M6 11V6M6 6H11M6 6H1" stroke="#454545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 1V6M6 11V6M6 6H11M6 6H1" stroke="#454545" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
                 </SvgIcon>}>
-                  <h3 className="accordion-title">데이터 원천</h3>
+                    <h3 className="accordion-title">데이터 원천</h3>
                 </AccordionSummary>
                 <AccordionDetails className={"accordion-content"}>
-                  <dl>
+                    <dl>
                     <dt>C-Band SAR</dt>
                     <dd>Lorem ipsum dolor sit amet consectetur.</dd>
-                  </dl>
-                  <dl>
+                    </dl>
+                    <dl>
                     <dt>다중 분광 위성영상</dt>
                     <dd>Lorem ipsum dolor sit amet consectetur.</dd>
-                  </dl>
-                  <dl>
+                    </dl>
+                    <dl>
                     <dt>지형정보 (DEM, Slope)</dt>
                     <dd>Lorem ipsum dolor sit amet consectetur.</dd>
-                  </dl>
-                  <dl>
+                    </dl>
+                    <dl>
                     <dt>Basemap</dt>
                     <dd>Lorem ipsum dolor sit amet consectetur.</dd>
-                  </dl>
-                  <dl>
+                    </dl>
+                    <dl>
                     <dt>현장관측 영상</dt>
                     <dd>Lorem ipsum dolor sit amet consectetur.</dd>
-                  </dl>
+                    </dl>
                 </AccordionDetails>
-              </Accordion>
+            </Accordion>
         </>
     )
 }

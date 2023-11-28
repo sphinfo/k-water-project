@@ -6,7 +6,7 @@ import DroughtResult from "./DroughtResult";
 import DroughtOptions from "./DroughtOptions";
 import pin from "@images/map-icon-dr.svg"
 import pin2 from "@images/map-icon-dr-clicked.svg"
-import { G$randomCoordinates, G$removeLayer } from "@gis/util";
+import { G$addWidget, G$randomCoordinates, G$removeLayer, G$removeWidget } from "@gis/util";
 import { DROUGHT_RESET, DROUGHT_SELECT_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
 import DroughtObsrv from "./component/DroughtObsrv";
 import DroughtOverlay from "@gis/util/overlay/DroughtOverlay";
@@ -95,6 +95,7 @@ const Drought = () => {
             //가뭄 reducer 초기화
             dispatch({type:DROUGHT_RESET})
 
+            G$removeWidget('BaseLegendgGradientWidget')
         }
 
     },[])
@@ -106,8 +107,13 @@ const Drought = () => {
         if(selectDroughtLayer){
             const {store, layer} = selectDroughtLayer
             droughtLayer.current.changeParameters({store:store, layerId:layer})
+
+            G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:10, max: 25, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+
         }else{
             droughtLayer.current.remove()
+
+            G$removeWidget('BaseLegendgGradientWidget')
         }
 
     },[selectDroughtLayer])

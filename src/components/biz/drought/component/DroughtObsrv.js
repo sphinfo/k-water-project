@@ -66,12 +66,13 @@ const DroughtObsrv = () => {
                     </div>
                 </div>
 
-            <div className={"content-row"} style={{display: obsrvTab === 'soilMoisture' ? '' : 'none'}}>
-                <DroughtObsrvSoilMoisture />
-            </div>
-            <div style={{display: obsrvTab === 'index' ? '' : 'none'}}>
-                <DroughtObsrvIndex />
-            </div>
+                <div className={"content-row"} style={{display: obsrvTab === 'soilMoisture' ? '' : 'none'}}>
+                    <DroughtObsrvSoilMoisture />
+                </div>
+                <div style={{display: obsrvTab === 'index' ? '' : 'none'}}>
+                    <DroughtObsrvIndex />
+                </div>
+                
             </div>
         </>
     )
