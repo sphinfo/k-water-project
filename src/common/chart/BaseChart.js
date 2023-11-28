@@ -1,36 +1,33 @@
 import React, { forwardRef, memo, useMemo, useRef, useImperativeHandle } from 'react';
 import { Chart as ChartJS } from 'chart.js/auto'
-import { Chart }            from 'react-chartjs-2'
-import { Line, Bar, Pie } from 'react-chartjs-2';
+import zoomPlugin from "chartjs-plugin-zoom";
+import { Chart, Line, Bar, Pie } from 'react-chartjs-2';
+ChartJS.register(zoomPlugin)
 
 //초기 옵션
 const defaultOption = {
     responsive: true,  //반응형 랜더링
 	maintainAspectRatio: false, //canvas 사이즈 조정
     plugins: {
+		legend: { //범례
+			position: 'top', //범례위치
+		},
+		title: { //차트 제목
+			display: true,
+			text: '',
+		},
 		zoom: {
 			pan: {
-				enabled: true,
-				mode: 'xy',
-				threshold: 5,
+				enabled: true, // 이동 가능하도록 설정
+				mode: 'x', // x축으로만 이동할 수 있도록 설정
 			},
 			zoom: {
-				wheel: {
-					enabled: true
-				},
-				pinch: {
-					enabled: true
-				},
-				mode: 'xy',
+			  wheel: {
+				enabled: true,
+			  },
+			  mode: 'x', // x축만 확대/축소 가능하도록 설정
 			},
-	  },
-      legend: { //범례
-        position: 'top', //범례위치
-      },
-      title: { //차트 제목
-        display: true,
-        text: '',
-      },
+		},
     }
 };
  
@@ -94,11 +91,28 @@ const BaseChart = (props, ref) => {
 		}
 
 	}))
-  
+
+	const plugins = [
+		{
+			afterDraw: function (chart) {
+			  console.log(chart);
+			  if (chart.data.length < 1) {
+				let ctx = chart.ctx;
+				let width = chart.width;
+				let height = chart.height;
+				ctx.textAlign = "center";
+				ctx.textBaseline = "middle";
+				ctx.font = "30px Arial";
+				ctx.fillText("No data to display", width / 2, height / 2);
+				ctx.restore();
+			  }
+			},
+		  },
+	]
 
   return (
 	<div style={{width: wid, height: hei}} className={className}>
-		<ChartComponent ref={chartRef} options={defaultOption} data={data}/>
+		<ChartComponent ref={chartRef} options={defaultOption} data={data} plugins={plugins}/>
 	</div>
 	
   );
