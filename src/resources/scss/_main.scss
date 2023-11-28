@@ -1167,31 +1167,6 @@
   }
 }
 
-.panel-table{
-  table-layout: fixed;
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 2px;
-  > thead > tr > th,
-  > tbody > tr > th,
-  > tbody > tr > td{
-    padding: 7px 8px;
-  }
-  > thead > tr > th,
-  > tbody > tr > th{
-    background-color: $basic;
-    color: $grey-500;
-    font-size: 13px;
-    text-align: center;
-    font-weight: 600;
-    border-radius: 5px;
-    &:not(:last-of-type){
-      border-right: 1px solid $grey-200;
-    }
-  }
-}
-
-
 .folding-btn-wrap{
   position: absolute;
   z-index: 2;
