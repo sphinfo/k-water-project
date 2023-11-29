@@ -533,14 +533,16 @@
 }
 
 .map_widget{
-  max-width: 300px;
+  max-width: 320px;
   width: auto;
   height: auto;
   background-color: $white;
   border-radius: 10px;
   .widget-box{
+    width: fit-content;
     .widget-header{
       padding: 10px;
+      width: 100%;
       border-bottom: 1px solid $line;
       .widget-title{
         font-size: 14px;
@@ -548,6 +550,7 @@
       }
     }
     .widget-body{
+      width: auto;
       background-color: $basic;
       padding: 15px 10px 10px;
       border-radius: 0 0 10px 10px;
@@ -555,8 +558,10 @@
         display: flex;
         flex-direction: row;
         gap: 5px;
+        flex-wrap: wrap;
         li{
           display: flex;
+          flex-wrap: nowrap;
           font-size: 12px;
           font-weight: 400;
           color: $body-font-color;
