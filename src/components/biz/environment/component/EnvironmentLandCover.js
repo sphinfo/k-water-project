@@ -3,7 +3,6 @@ import { Accordion, AccordionDetails, AccordionSummary, SvgIcon, Switch } from "
 import { ENV_LANDCOVER_DETECTION } from "@redux/actions";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import BaseChart from "@common/chart/BaseChart";
 
 import img from "@images/image 51.png"
 
