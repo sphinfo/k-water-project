@@ -30,10 +30,10 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
             {obj.title}
           </dt>
           <dd className={"address-item-sub"}>
-            {`주소 : ${parcel}`}
+            {parcel}
           </dd>
           <dd className={"address-item-sub"}>
-          {`도로명주소 : ${road}`}
+            <span className={"road-tag"}>도로명</span>{road}
           </dd>
         </dl>
         

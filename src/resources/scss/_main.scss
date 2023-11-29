@@ -116,6 +116,15 @@
           font-size: 12px;
           color: #7a7a7a;
         }
+        .road-tag{
+          display: inline-block;
+          margin-right: 3px;
+          font-weight: 500;
+          padding: 1px 6px;
+          background-color: $basic;
+          border-radius: 4px;
+          margin-top: 3px;
+        }
       }
     }
   }
