@@ -8,8 +8,8 @@ import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import FloodL4 from "./component/FloodL4";
 import FloodOptions from "./FloodOptions";
 import FloodResult from "./FloodResult";
-
-import pin from "@images/map-icon-dr.svg"
+import pin from "@images/map-icon-st.svg"
+import pin2 from "@images/map-icon-st-clicked.svg"
 import DroughtObsrvConfig from "@gis/config/DroughtObsrvConfig";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 
@@ -44,6 +44,7 @@ const Flood = () => {
             //수위일시 onclick 이벤트 활성화
             if(store === 'WaterLevel'){
                 dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: features[0]})
+
             }
             
         }
