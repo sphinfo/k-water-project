@@ -10,7 +10,7 @@ const FloodOptions = () => {
         {
             name:'댐', 
             code:'DAM',
-            items: [
+            items: [ 
                 {name:'용담댐', code:'YONGDAM'},
                 {name:'황강댐', code:'a2'},
                 {name:'임남댐', code:'a3'},
@@ -20,8 +20,17 @@ const FloodOptions = () => {
                 {name:'영천댐', code:'a7'},
                 {name:'사연댐', code:'a8'},
             ]
-        },
-        {
+        },{
+          name: '지역',
+          code: 'AREA',
+          items: [
+            {name:'수도권', code:'ar1'},
+            {name:'강원', code:'ar2'},
+            {name:'충청', code:'ar3'},
+            {name:'전라', code:'ar4'},
+            {name:'경상', code:'ar5'},
+          ]
+        },{
             name:'도시', 
             code: 'CITY',
             items: [
@@ -37,7 +46,7 @@ const FloodOptions = () => {
                 {name:'미호강', code:'b2'},
                 {name:'남천(위천)', code:'b3'},
             ]
-        },
+        }
     ])
 
     const dispatch = useDispatch()

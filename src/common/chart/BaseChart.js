@@ -1,7 +1,9 @@
 import React, { forwardRef, memo, useMemo, useRef, useImperativeHandle } from 'react';
 import { Chart as ChartJS } from 'chart.js/auto'
 import zoomPlugin from "chartjs-plugin-zoom";
+import annotationPlugin from "chartjs-plugin-annotation"
 import { Chart, Line, Bar, Pie } from 'react-chartjs-2';
+ChartJS.register(annotationPlugin)
 ChartJS.register(zoomPlugin)
 
 //초기 옵션

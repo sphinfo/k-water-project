@@ -11,22 +11,28 @@ const SafetyOptions = () => {
             code:'DAM',
             items: [
                 {name:'용담댐', code:'YONGDAM'},
-                {name:'황강댐', code:'a2'},
-                {name:'임남댐', code:'a3'},
                 {name:'대청댐', code:'a4'},
                 {name:'안동댐', code:'a5'},
                 {name:'운문댐', code:'a6'},
                 {name:'영천댐', code:'a7'},
                 {name:'사연댐', code:'a8'},
-                {name:'주암댐', code:'a9'},
                 {name:'소양강댐', code:'a10'}
+            ]
+        },{
+            name: '지역',
+            code: 'AREA',
+            items: [
+                {name:'강원', code:'ar1'},
+                {name:'충남', code:'ar2'},
+                {name:'충청', code:'ar3'},
+                {name:'전라', code:'ar4'},
+                {name:'경상', code:'ar5'},
             ]
         },
         {
             name:'보', 
             code: 'BO',
             items: [
-                {name:'세종보', code:'b1'},
                 {name:'창녕함안보', code:'b2'}
             ]
         },
@@ -34,18 +40,7 @@ const SafetyOptions = () => {
             name:'도시', 
             code: 'CITY',
             items: [
-                {name:'서울', code:'b1'},
                 {name:'대전', code:'b2'},
-            ]
-        },
-        {
-            name:'하천', 
-            code: 'RIVER',
-            items: [
-                {name:'낙성천(낙동강)', code:'b1'},
-                {name:'미호강', code:'b2'},
-                {name:'남천(위천)', code:'b3'},
-                {name:'단광천(황룡강)', code:'b4'}
             ]
         },
         {

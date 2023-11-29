@@ -15,7 +15,6 @@ const EnvironmentOptions = () => {
                 {name:'대청댐', code:'a4'},
                 {name:'안동댐', code:'a4'},
                 {name:'운문댐', code:'a4'},
-                {name:'영천댐', code:'a4'},
                 {name:'사연댐', code:'a4'},
                 {name:'소양강댐', code:'a4'}
             ]
@@ -35,6 +34,22 @@ const EnvironmentOptions = () => {
                 {name:'대전', code:'b2'},
             ]
         },
+        {
+            name:'하천', 
+            code: 'RIVER',
+            items: [
+                {name:'미호강', code:'b2'},
+            ]
+        },{
+            name: '지역',
+            code: 'AREA',
+            items: [
+                {name:'충청', code:'ar3'},
+                {name:'경상', code:'ar5'},
+                {name:'전라', code:'ar4'},
+                {name:'강원', code:'ar2'},
+            ]
+          }
     ])
 
     const dispatch = useDispatch()

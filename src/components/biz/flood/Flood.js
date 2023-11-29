@@ -87,6 +87,8 @@ const Flood = () => {
 
         //수체 레이어가 변경될시 4레벨 레이어 ( 침수지도 ) off
         dispatch({type:FLOOD_DAMAGE_LAYER, selectFloodDamageLayer: false})
+        //수위 레이어 선택 초기화
+        dispatch({type:FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: false})
 
         if(selectFloodLayer){
             const {store, layer} = selectFloodLayer
@@ -100,7 +102,7 @@ const Flood = () => {
                 floodWaterLevelLayer.current.entities.removeAll()
                 
                 
-            }else if(store === 'WaterLevel'){ // 수위
+            }else if(store === 'WaterLevel'){ // 수위                
 
                 //수위 임시 샘플 데이터 
                 let obsList = DroughtObsrvConfig
