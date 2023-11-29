@@ -1,7 +1,8 @@
 import { Switch } from "@mui/material";
 import { ENV_LANDCOVER_DETECTION } from "@redux/actions";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
+import BaseChart from "@common/chart/BaseChart";
 
 
 /**

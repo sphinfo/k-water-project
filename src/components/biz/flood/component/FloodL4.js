@@ -41,10 +41,10 @@ const FloodL4 = () => {
                 <FloodL4WaterLevel />
             }
 
-              <Accordion className={"control-block accordion"}>
-                <AccordionSummary className="accordion-header" expandIcon={<SvgIcon>
+              <Accordion className={"control-block accordion"} defaultExpanded={true}>
+                <AccordionSummary className="accordion-header" expandIcon={<SvgIcon fontSize={'small'}>
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 1V6M6 11V6M6 6H11M6 6H1" stroke="#454545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6 1V6M6 11V6M6 6H11M6 6H1" stroke="#454545" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </SvgIcon>}>
                   <h3 className="accordion-title">데이터 원천</h3>
