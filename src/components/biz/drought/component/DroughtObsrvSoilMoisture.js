@@ -53,8 +53,9 @@ const DroughtObsrv = () => {
                         display: false //격자 제거
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: "토양 수분",
+                        rotation: 90,
                         font: {
                           size: 10,
                         },
@@ -68,7 +69,7 @@ const DroughtObsrv = () => {
                         display: false//격자 제거
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: "강우량(mm)",
                         font: {
                           size: 10,
@@ -148,7 +149,11 @@ const DroughtObsrv = () => {
                 <h2 className="content-row-title">시계열 토양수분 및 강수량</h2>
             </div>
             <div className="panel-box">
-            <BaseChart width={260} height={320} ref={chartRef} chartType={'Line'} title={''}/>
+                <div className="chart-unit-warp">
+                    <span className="chart-unit">토양 수분</span>
+                    <span className="chart-unit">강우량(mm)</span>
+                </div>
+            <BaseChart width={260} height={260} ref={chartRef} chartType={'Line'} title={''}/>
             </div>
         </>
     )

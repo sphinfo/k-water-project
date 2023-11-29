@@ -13,8 +13,8 @@ const FloodL4WaterLevelArea = () => {
 
     //차트 dataRef
     const chartInfoRef = useRef({
-        labels: [],
-        datasets: [50,20,10],
+        labels: ['1'],
+        datasets: [50],
         backgroundColor: '#C5DCFF'
     })
 
@@ -42,9 +42,12 @@ const FloodL4WaterLevelArea = () => {
                                 display: true,
                                 backgroundColor: '#DD4747',
                                 borderRadius: 5,
-                                content: '저수위(' +150.0+ ')',
+                                content: '저수위 ( ' +150.0+ ' )',
                                 rotation: 'auto',
-                                position: 'start'
+                                position: 'start',
+                                font: {
+                                    size: 12,
+                                }
                             },
                         },
                         maxLine: {
@@ -57,9 +60,12 @@ const FloodL4WaterLevelArea = () => {
                                 display: true,
                                 backgroundColor: '#47BFD9',
                                 borderRadius: 5,
-                                content: '만수위(' +193.5+ ')',
+                                content: '만수위 ( ' +193.5+ ' )',
                                 rotation: 'auto',
-                                position: 'start'
+                                position: 'start',
+                                font: {
+                                    size: 12,
+                                }
                             },
                         },
                         nowLine: {
@@ -72,9 +78,12 @@ const FloodL4WaterLevelArea = () => {
                                 display: true,
                                 backgroundColor: '#FF9E2B',
                                 borderRadius: 5,
-                                content: '현수위('+189.12+ ')',
+                                content: '현수위 ( '+189.12+ ' )',
                                 rotation: 'auto',
-                                position: 'start'
+                                position: 'start',
+                                font: {
+                                    size: 12,
+                                }
                             },
                         }
                     }
@@ -101,6 +110,7 @@ const FloodL4WaterLevelArea = () => {
                     grid: {
                         display: false//격자 제거
                     },
+                    stack: true,
                     ticks: {
                         autoSkip: true,
                         maxTicksLimit: 5, //x축 tick 제거

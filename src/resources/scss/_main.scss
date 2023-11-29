@@ -500,6 +500,12 @@
       }
     }
   }
+  .Mui-disabled{
+    opacity: 0.55;
+    .css-jsexje-MuiSwitch-thumb{
+      box-shadow: none;
+    }
+  }
 }
 
 .cesium-viewer-infoBoxContainer{
@@ -1098,6 +1104,16 @@
   }
 }
 
+.chart-unit-warp{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 5px;
+  .chart-unit{
+    font-size: 12px;
+    color: $sub-text;
+  }
+}
 .unit{
   display: inline-block;
   margin-left: 3px;
@@ -1696,6 +1712,9 @@
     border-bottom: 0;
     padding: 0;
     color: inherit;
+    &.Mui-expanded{
+      margin-top: auto;
+    }
     &:before{
       content: none;
     }
@@ -1716,7 +1735,7 @@
       }
     }
     .css-12if0ny-MuiSvgIcon-root, .MuiSvgIcon-fontSizeMedium, .MuiSvgIcon-root{
-      font-size: unset;
+      font-size: 12px;
     }
     .accordion-title{
       font-size: 14px;

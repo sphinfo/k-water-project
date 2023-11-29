@@ -174,7 +174,10 @@ const FloodL4WaterLevel = () => {
                     </div>
                 </div>
               </div>
-
+                <Tabs className="panel-tabs-wrap" exclusive full-width >
+                    <Tab className="tab-item" label={"수위수준"}></Tab>
+                    <Tab className="tab-item" label={"수위변화"}></Tab>
+                </Tabs>
               {/* 수위변화 OFF : 지역구성 */}
               <div className="content-row" style={{display: levelChange ? 'none' : ''}}>
                 <FloodL4WaterLevelArea />

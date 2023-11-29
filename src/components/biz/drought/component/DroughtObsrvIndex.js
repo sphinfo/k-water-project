@@ -75,12 +75,15 @@ const DroughtObsrvIndex = () => {
                         display: false //격자 제거
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: "SWDI",
                         font: {
                           size: 10,
                         },
                     },
+                    ticks: {
+                        stack: true,
+                    }
                     
                 },
                 'y2': {
@@ -90,12 +93,15 @@ const DroughtObsrvIndex = () => {
                         display: false//격자 제거
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: "강우량(mm)",
                         font: {
                           size: 10,
                         },
                     },
+                    ticks: {
+                        stack: true,
+                    }
                 },
                 x: {
                     grid: {
@@ -103,6 +109,7 @@ const DroughtObsrvIndex = () => {
                     },
                     ticks: {
                         autoSkip: true,
+                        stack: true,
                         maxTicksLimit: 4 //x축 tick 제거
                     }
                 }
@@ -199,7 +206,11 @@ const DroughtObsrvIndex = () => {
                     </h2>
                 </div>
                 <div className="panel-box">
-                <BaseChart width={260} height={320} ref={chartRef} chartType={'Line'} title={''}/>
+                    <div className="chart-unit-warp">
+                        <span className="chart-unit">SWDI</span>
+                        <span className="chart-unit">강우량(mm)</span>
+                    </div>
+                <BaseChart width={260} height={260} ref={chartRef} chartType={'Line'} title={''}/>
                 </div>
             </div>
 
