@@ -4,6 +4,10 @@ import React, { forwardRef, memo, useEffect, useImperativeHandle, useState } fro
 import { useDispatch } from "react-redux";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import SvgIcon from "@mui/material/SvgIcon";
 
 const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
 
@@ -44,11 +48,16 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
 
   
   const renderComponent = (option) => (
-    <div className={"content-row"}>
-      <div className="content-row-header">
-      <h2 className={"content-row-title"}>{option.name}</h2>
-      </div>
-      <List className="search-bed-item-wrap">
+    <Accordion className={"search-bed-accordion"} defaultExpanded={true}>
+      <AccordionSummary className="search-accordion-header" expandIcon={<SvgIcon>
+        <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L5.5 5L10 1" stroke="#717171" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </SvgIcon>}>
+      <h2 className={"search-accordion-title"}>{option.name}</h2>
+      </AccordionSummary>
+      <AccordionDetails className="search-bed-item-wrap">
+        <List>
         {option.items.map((item) => (
           <ListItem
             color={'primary'}
@@ -61,8 +70,9 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
             {item.name}
           </ListItem>
       ))}
-      </List>
-    </div>
+        </List>
+      </AccordionDetails>
+    </Accordion>
   );
 
   

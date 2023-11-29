@@ -1017,6 +1017,7 @@
             margin-bottom: 6px;
             .panel-box-title{
               color: $white;
+              letter-spacing: 0;
             }
           }
         }
@@ -1232,6 +1233,7 @@
       }
       > th, td{
         padding: 6px 10px;
+        font-size: 13px;
       }
     }
     tbody > tr {
@@ -1248,6 +1250,10 @@
           text-align: right;
           font-size: 12px;
           padding-right: 0;
+        }
+        >tr > td{
+          font-size: 12px;
+          font-weight: 400;
         }
       }
       > .tr-highlight {
@@ -1321,16 +1327,63 @@
   overflow-y: auto;
   overflow-x: hidden;
   height: 400px;
-  .content-row {
-    margin-bottom: 10px;
-    .content-row-header{
-      padding-left: 10px;
+  .search-bed-accordion {
+    box-shadow: none;
+    padding: 5px 10px;
+    margin-top: 5px;
+    &.Mui-expanded{
+      margin: 0;
+      padding: 5px 0;
+    }
+    &:before{
+      height: 0.5px;
+      background-color: $line;
+      content: none;
+    }
+    &:after{
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      right: 0;
+      height: 0.5px;
+      //content: "";
+      opacity: 1;
+      background-color: $line;
+    }
+    &.css-1elwnq4-MuiPaper-root-MuiAccordion-root:first-of-type {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+    .search-accordion-header{
+      min-height: unset;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: $basic;
+      &.Mui-expanded{
+        padding: 10px 20px;
+        background-color: unset;
+      }
+      .search-accordion-title{
+        font-size: 14px;
+      }
+      .MuiAccordionSummary-content{
+        margin: 0;
+      }
+      .MuiAccordionSummary-expandIconWrapper{
+        .MuiSvgIcon-root, .MuiSvgIcon-fontSizeMedium, .css-1m9ymud-MuiSvgIcon-root{
+          font-size: unset;
+        }
+      }
     }
   }
     .search-bed-item-wrap {
-    border-radius: 8px;
-    overflow: hidden;
-    padding: 0;
+    padding: 0 10px 0;
+      .MuiList-root{
+        border-radius: 8px;
+        overflow: hidden;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
     .search-bed-item{
       background-color: $basic;
       color: $body-font-color;
@@ -1662,7 +1715,7 @@
         }
       }
     }
-    .css-12if0ny-MuiSvgIcon-root{
+    .css-12if0ny-MuiSvgIcon-root, .MuiSvgIcon-fontSizeMedium, .MuiSvgIcon-root{
       font-size: unset;
     }
     .accordion-title{
