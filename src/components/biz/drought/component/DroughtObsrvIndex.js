@@ -54,6 +54,18 @@ const DroughtObsrvIndex = () => {
                     mode: 'index', // 인덱스별로 툴팁 보이기
                     intersect: false, // 마우스 포인터와 각 선의 교차점에 툴팁 표시
                 },
+                zoom: {
+                    pan: {
+                        enabled: true, // 이동 가능하도록 설정
+                        mode: 'x', // x축으로만 이동할 수 있도록 설정
+                    },
+                    zoom: {
+                      wheel: {
+                        enabled: true,
+                      },
+                      mode: 'x', // x축만 확대/축소 가능하도록 설정
+                    },
+                },
             },
             scales: {
                 'y1': {
