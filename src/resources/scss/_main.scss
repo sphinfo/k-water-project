@@ -1027,7 +1027,7 @@
           margin-bottom: 5px;
           &.box-title{
             background-color: $grey-500;
-            padding: 10px;
+            padding: 8px 10px;
             border-radius: 8px;
             margin-bottom: 6px;
             .panel-box-title{
@@ -1763,6 +1763,9 @@
         line-height: 1.5;
         dt{
           font-weight: 600;
+        }
+        dd{
+          color: #7f7f7f;
         }
         &:not(:last-of-type){
           margin-bottom: 15px;

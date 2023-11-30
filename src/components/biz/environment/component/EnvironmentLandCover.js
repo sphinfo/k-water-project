@@ -44,9 +44,12 @@ const EnvironmentLandCover = () => {
                     },
                 },
                 scales: {
+                    'x': {
+
+                    },
                     'y': {
                         title: {
-                            display: true,
+                            display: false,
                             text: "Area(m2)",
                             font: {
                               size: 10,
@@ -96,6 +99,9 @@ const EnvironmentLandCover = () => {
                         <h2 className="content-row-title">지역 구성</h2>
                     </div>
                     <div className="panel-box">
+                        <div className="chart-unit-warp">
+                            <span className="chart-unit">Area(m2)</span>
+                        </div>
                         <BaseChart width={260} height={220} ref={chartRef} chartType={'Bar'} title={''}/>
                     </div>
                 </div>

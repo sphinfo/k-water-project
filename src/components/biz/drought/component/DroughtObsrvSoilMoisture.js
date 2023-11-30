@@ -27,6 +27,12 @@ const DroughtObsrv = () => {
             plugins: {
                 legend: {
                     position: 'bottom',
+                    labels: {
+                        boxWidth: 18,
+                        boxHeight: 3,
+                        useBorderRadius: true,
+                        borderRadius: 1.5
+                    }
                 },
                 tooltip: {
                     mode: 'index', // 인덱스별로 툴팁 보이기
@@ -82,7 +88,10 @@ const DroughtObsrv = () => {
                     },
                     ticks: {
                         autoSkip: true,
-                        maxTicksLimit: 5 //x축 tick 제거
+                        crossAlign: 'near',
+                        maxTicksLimit: 5, //x축 tick 제거
+                        maxRotation: 120,
+                        minRotation: -180
                     }
                 }
             }

@@ -27,6 +27,12 @@ const FloodL4WaterLevel = () => {
             plugins: {
                 legend: {
                     position: 'bottom',
+                    labels: {
+                        boxWidth: 18,
+                        boxHeight: 3,
+                        useBorderRadius: true,
+                        borderRadius: 1.5
+                    }
                 },
                 tooltip: {
                     mode: 'index', // 인덱스별로 툴팁 보이기
