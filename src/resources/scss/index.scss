@@ -72,6 +72,7 @@ button{
 }
 
 .btn{
+  font-family: $body-font-family;
   &.empty-btn{
     padding: 12px 15px;
     font-size: 13px;
