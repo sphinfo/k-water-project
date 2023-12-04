@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import CesiumMapView from "./components/map/CesiumMapView";
 import WidgetContainer from "./common/widget/container/WidgetContainer";
 import MapControl from "./components/map/MapControl";

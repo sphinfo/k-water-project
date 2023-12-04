@@ -1,7 +1,7 @@
 
 $body-font-family: 'Spoqa Han Sans Neo', -apple-system, BlinkMacSystemFont, 'noto sans', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 
-$body-font-color: #3D3D3D;
+$body-font-color: #f5f5f5;
 $sub-text: #9a9a9a;
 
 $primary: #54A6E7;
@@ -21,7 +21,8 @@ $grey-300: #ADADAD;
 $grey-200: #D9D9D9;
 $grey-100: #E4E4E4;
 $basic: #f5f5f5;
-$line: #EDEDED;
+$line-light: rgba(255,255,255,0.13);
+$line: rgba(255,255,255,0.5);
 $white: #ffffff;
 $black-deep: #232220;
 $black-blue: #152837;

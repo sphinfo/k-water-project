@@ -31,14 +31,14 @@ function TabPanel(props) {
       <div hidden={value !== index || value === -1} {...other} >
           {visible && (
             <>
-              <div className={`panel panel_left ${!panelVisible ? 'fold' : ''}`}>
+              <div className={`panel panel-left ${!panelVisible ? 'fold' : ''}`}>
                 <div className="panel-header">
                     <h1 className="panel-title">
                         {name}
                     </h1>
                     <IconButton className="panel-close-btn" color={"primary"} onClick={close}>
                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 17L9 9M9 9L17 17M9 9L17 1M9 9L1 1" stroke="#004478" strokeWidth="1.5" strokeLinecap="round"/>
+                            <path d="M1 17L9 9M9 9L17 17M9 9L17 1M9 9L1 1" stroke="#ffffffe6" strokeWidth="1.5" strokeLinecap="round"/>
                         </svg>
                     </IconButton>
                 </div>
