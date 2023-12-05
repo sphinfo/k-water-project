@@ -1,4 +1,5 @@
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 @import "variables";
 @import "reset";
@@ -68,13 +69,15 @@ button{
   display: none;
 }
 
-.btn{
-  font-family: $body-font-family;
+.btn {
+  font-family: $body-font-family !important;
+
   &.empty-btn{
     padding: 12px 15px;
     font-size: 13px;
-    background-color: #e7e7e7;
-    color: $sub-text;
+    background-color: transparent;
+    border: 1px solid $line;
+    color: #fff;
     border-radius: 8px;
     line-height: 1;
   }
