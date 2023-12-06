@@ -175,10 +175,11 @@
 }
 
 
-.map-view-tab{
+.map-view-tab {
   display: flex;
   column-gap: 7px;
-  .view-tab-item{
+
+  .view-tab-item {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -188,26 +189,32 @@
     font-size: 13px;
     font-weight: 500;
     box-shadow: $box-shadow;
-    background-color: white;
-    span{
+    background-color: $black-navy;
+    color: $white-alpha-80;
+    font-family: $body-font-family;
+
+    span {
       display: block;
       padding: 2px 0;
     }
-    img{
+
+    img {
       border-radius: 0 0 9px 9px;
     }
-    &.on{
+
+    &.on {
       background-color: $primary;
       color: white;
       font-weight: 600;
     }
+
   }
 }
 .map-basic-style{
   box-shadow: $box-shadow;
   border-radius: 10px;
 }
-.mapRightBt{
+.mapRightBt {
   width: 30px;
   height: 30px;
   border: 0;
@@ -215,17 +222,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $white;
+  background-color: $black-navy;
   transition: all 500ms;
-  &:hover{
-    background-color: $line;
+
+  svg > * {
+    fill: rgba(255,255,255,0.8);
   }
-  &:active{
+
+  &:hover {
+    background-color: $white-alpha-10;
+  }
+
+  &:active {
     background-color: $primary;
   }
-  &.active{
+
+  &.active {
     background-color: $primary;
-    svg > *{
+
+    svg > * {
       fill: $white;
     }
   }
@@ -234,7 +249,7 @@
 .map-widget-vertical-block{
   display: flex;
   flex-direction: column;
-  background-color: $white;
+  background-color: $black-navy;
   justify-content: center;
   align-items: center;
   padding: 2px;
@@ -838,11 +853,12 @@
   position: absolute;
   top: 74px; //map_ctrl_right 기준, 화면 기준: 54px
   right: 50px; //화면기준 50px
-  background-color: $white;
+  background-color: $black-deep;
   border-radius: 10px ;
   padding: 7px;
   width: max-content;
   min-width: 120px;
+
   .box-header{
     display: flex;
     justify-content: space-between;
@@ -857,52 +873,63 @@
     flex-direction: column;
     gap: 4px;
     flex: 1 0 120px;
-    .thematic-layer-item{
+
+    .thematic-layer-item {
       padding: 0;
-      .MuiTreeItem-content{
+      margin-bottom: 4px;
+
+      .MuiTreeItem-content {
         padding: 0;
-        background: $basic;
+        background: $white-alpha-10;
         border-radius: 8px;
         display: flex;
         min-width: 160px;
         align-items: center;
+
         .MuiTreeItem-iconContainer{
           //display: none;
           order: 2;
           margin-right: 10px;
           width: auto;
-          svg{
+          color: #fff;
+
+          svg {
             font-size: unset;
           }
+
           .css-1m9ymud-MuiSvgIcon-root{
             width: inherit;
             height: inherit;
           }
         }
+
         &.Mui-selected{
-          background: rgba(84, 166, 231, 0.20);
+          background: rgba(84, 166, 231, 0.1);
         }
-        .MuiTreeItem-label{
+        .MuiTreeItem-label {
           order: 1;
           padding: 6px 10px;
-          span{
-            color: $body-font-color;
+
+          span {
             font-size: 14px;
             line-height: 1;
           }
         }
       }
-      .MuiTreeItem-group{
+      .MuiTreeItem-group {
         margin-left: 0;
         margin-top: 4px;
-        .MuiCollapse-wrapper{
-          .MuiCollapse-wrapperInner{
+
+        .MuiCollapse-wrapper {
+          .MuiCollapse-wrapperInner {
             .MuiTreeItem-content{
-              background-color: $white;
-              &.Mui-selected{
+              background-color: transparent;
+
+              &.Mui-selected {
                 background: rgba(84, 166, 231, 0.20);
               }
-              .MuiTreeItem-label{
+
+              .MuiTreeItem-label {
                 padding: 4px 10px 4px 20px;
               }
             }
