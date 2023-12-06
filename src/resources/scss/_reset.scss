@@ -11,17 +11,13 @@ body {
   overflow: hidden;
   color: #f5f5f5;
   font-size: 14px;
-  letter-spacing: -0.6px;
-  font-family: 'Spoqa Han Sans Neo', -apple-system, BlinkMacSystemFont, 'noto sans', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  letter-spacing: -0.02rem;
+  font-family: $body-font-family;
 }
 
 input {
   color: $body-font-color;
-  font-family: 'Spoqa Han Sans Neo', -apple-system, BlinkMacSystemFont, 'noto sans', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-}
-
-button {
-  font-family: 'Spoqa Han Sans Neo', -apple-system, BlinkMacSystemFont, 'noto sans', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: $body-font-family !important;
 }
 
 ul{
