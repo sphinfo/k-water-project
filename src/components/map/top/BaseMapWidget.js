@@ -17,7 +17,8 @@ const BaseMapWidget = () => {
     },[mapType])
     
     return (
-        <>
+        <div className="map-view-tab-wrap">
+            <div className="map-view-tab-title">위성</div>
             <div className="map-view-tab">
                 <button className={mapType === 'Base' ? "view-tab-item on map-basic-style" : "view-tab-item map-basic-style"} onClick={()=>{setMapType('Base')}}>
                     <span>일반</span>
@@ -28,7 +29,7 @@ const BaseMapWidget = () => {
                     <img src={mapSatellite} alt="위성지도"/>
                     </button>
             </div>
-        </>
+        </div>
     )
 }
 

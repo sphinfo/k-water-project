@@ -41,7 +41,7 @@ const MapControl = () =>{
             <div className="map_ctrl_top">
               {/*<MapPositionWidget />  /!* 현재 위치 주소 *!/*/}
                 {/*<TimeZoneWidget />   /!* 현재 시간 *!/*/}
-                <BaseMapWidget />   {/* 배경지도 */}
+              {/*<BaseMapWidget />    배경지도 */}
 
             </div>
             

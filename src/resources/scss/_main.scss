@@ -70,7 +70,7 @@
 
   &.map-search-input {
     position: absolute;
-    right: calc(50% - (310px / 2));
+    right: 10px;
     top: 10px;
     z-index: 0;
     background-color: $black-navy;
@@ -184,12 +184,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex: 1 1 auto;
     border-radius: 9px;
-    padding: 1px;
+    padding: 2px;
     font-size: 13px;
     font-weight: 500;
     box-shadow: $box-shadow;
-    background-color: $black-navy;
+    background-color: $white-alpha-10;
     color: $white-alpha-80;
     font-family: $body-font-family;
 
@@ -199,7 +200,8 @@
     }
 
     img {
-      border-radius: 0 0 9px 9px;
+      border-radius: 0 0 8px 8px;
+      width: 100%;
     }
 
     &.on {
@@ -858,6 +860,9 @@
   padding: 7px;
   width: max-content;
   min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
   .box-header{
     display: flex;
@@ -1002,6 +1007,10 @@
     height: unset;
     top: 10px;
     left: 310px;
+    width: max-content;
+    min-width: 500px;
+    border-radius: 10px;
+    overflow: hidden;
 
     .panel-header {
     }
@@ -1405,9 +1414,9 @@
     }
   }
 
-  &.side-panel-pos{
+  /*&.side-panel-pos{
     left: 659px;
-  }
+  }*/
 }
 
 .empty-message{
