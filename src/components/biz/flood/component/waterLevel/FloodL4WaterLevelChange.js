@@ -4,11 +4,13 @@ import BaseChart from "@common/chart/BaseChart";
 import "chartjs-plugin-annotation";
 import SafetyChartConfig from "@gis/config/SafetyChartConfig";
 import FloodChangeDataConfig from "@gis/config/FloodChangeDataConfig";
+import FloodADD from "@gis/config/flood/FloodWaterLevelChartDatas";
+import FloodWaterLevelChartDatas from "@gis/config/flood/FloodWaterLevelChartDatas";
 
 
 const FloodL4WaterLevel = () => {
 
-    const { selectWaterLevel } = useSelector(state => state.flood)
+    const { text, selectWaterLevel } = useSelector(state => state.flood)
 
     //차트 ref
     const chartRef = useRef({})
@@ -81,20 +83,24 @@ const FloodL4WaterLevel = () => {
         chartInfoRef.current.labels = []
         chartInfoRef.current.datasets = []
 
+        console.info(selectWaterLevel)
         //수위 지점 select get Feature
         if(selectWaterLevel){
-            let sampleDatas = FloodChangeDataConfig
+            let sampleDatas = FloodWaterLevelChartDatas[selectWaterLevel.properties.name]
             //const random = Math.floor(Math.random() * sampleDatas.length)
 
             let date = []  //날짜
             let estWl = [] //위성기반 계측수위
             let obsWl = [] //실제계측수위
 
-            sampleDatas.map((obj)=>{
-                date.push(obj.date)
-                estWl.push(obj.estWl  === '' ? NaN : Number(obj.estWl))
-                obsWl.push(obj.obsWl  === '' ? NaN : Number(obj.obsWl))
-            })
+            if(sampleDatas && sampleDatas.length > 0){
+                sampleDatas.map((obj)=>{
+                    date.push(obj.Date)
+                    estWl.push(obj.estWl  === '' ? NaN : Number(obj.estWl))
+                    obsWl.push(obj.obsWl  === '' ? NaN : Number(obj.obsWl))
+                })
+            }
+            
 
             chartInfoRef.current.datasets.push({
                 tension: 0.4,

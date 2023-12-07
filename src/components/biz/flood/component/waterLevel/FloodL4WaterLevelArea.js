@@ -184,11 +184,11 @@ const FloodL4WaterLevelArea = () => {
                         </tr>
                         <tr>
                             <th>총 저수량<span className="unit-th">(EL.m)</span></th>
-                            <td>-</td>
+                            <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
                         </tr>
                         <tr>
                             <th>유효저수량<span className="unit-th">(EL.m)</span></th>
-                            <td>-</td>
+                            <td>{selectWaterLevel && selectWaterLevel.properties.efstr}</td>
                         </tr>
                         </tbody>
                     </table>

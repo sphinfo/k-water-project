@@ -28,7 +28,8 @@ const DroughtResult = () => {
 
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
-      if(text !== ''){
+      console.info(text)
+      if(text.name !== ''){
         const groupArray = G$BaseSelectBoxArray(example, 'main')
         const resultArray = groupArray.grouped
         setExampleList(resultArray)

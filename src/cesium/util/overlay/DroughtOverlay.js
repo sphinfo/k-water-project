@@ -36,26 +36,26 @@ class DroughtOverlay {
         overlay.appendChild(widgetBox)
         
 
-        
+        if(longitude && latitude){
+            /* 해당좌표로 오버레이 html 위치 지정 */
+            var anchor = Cartesian3.fromDegrees(longitude, latitude, 0)
+            var tmp = new Cartesian2()
 
-        /* 해당좌표로 오버레이 html 위치 지정 */
-        var anchor = Cartesian3.fromDegrees(longitude, latitude, 0)
-        var tmp = new Cartesian2()
-
-        /* 지도 위치가 변경되면 해당 위치 변경 */
-        map.scene.preRender.addEventListener(function(){
-            var result = SceneTransforms.wgs84ToWindowCoordinates(map.scene, anchor, tmp)
-            if(defined(result)){
-                overlay.style.display = 'block'
-                overlay.style.top = tmp.y - 33 + 'px'
-                overlay.style.left = tmp.x + 20 + 'px'
-            } else {
-                overlay.style.display = 'none'
-            }
-        })
+            /* 지도 위치가 변경되면 해당 위치 변경 */
+            map.scene.preRender.addEventListener(function(){
+                var result = SceneTransforms.wgs84ToWindowCoordinates(map.scene, anchor, tmp)
+                if(defined(result)){
+                    overlay.style.display = 'block'
+                    overlay.style.top = tmp.y - 33 + 'px'
+                    overlay.style.left = tmp.x + 20 + 'px'
+                } else {
+                    overlay.style.display = 'none'
+                }
+            })
 
 
-        this.overlays.push(overlay)
+            this.overlays.push(overlay)
+        }
 		
 	}
 

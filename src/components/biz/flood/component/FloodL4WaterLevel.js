@@ -12,6 +12,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import FloodL4WaterLevelArea from "./waterLevel/FloodL4WaterLevelArea";
 import FloodL4WaterLevelChange from "./waterLevel/FloodL4WaterLevelChange";
+import { G$getDateType, G$setNumberFixedKomma } from "@gis/util";
+import FloodWaterLevelChartDatas from "@gis/config/flood/FloodWaterLevelChartDatas";
 
 
 const FloodL4WaterLevel = () => {
@@ -130,12 +132,49 @@ const FloodL4WaterLevel = () => {
     //수위변화 on off
     const [levelChange, setLeveltChange] = useState(false)
 
+    const [minDate, setMinDate] = useState('-')
+    const [maxDate, setMaxDate] = useState('-')
+    const [avg, setAvg] = useState(0)
+
     //수위 레이어 선택이 되었을시
     useEffect(()=>{
 
         //수위 지점 select get Feature
         if(selectWaterLevel){
             setLeveltChange(false)
+
+            let sampleDatas = FloodWaterLevelChartDatas[selectWaterLevel.properties.name]
+
+            let date = []  //날짜
+            let estWl = [] //위성기반 계측수위
+            let obsWl = [] //실제계측수위
+
+            let avgEst = 0
+
+            if(sampleDatas && sampleDatas.length > 0){
+                sampleDatas.map((obj)=>{
+                    date.push(obj.Date)
+                    estWl.push(obj.estWl  === '' ? NaN : Number(obj.estWl))
+                    obsWl.push(obj.obsWl  === '' ? NaN : Number(obj.obsWl))
+
+                    if(obj.estWl !== ''){
+                        avgEst += Number(obj.estWl)
+                    }
+
+                })
+
+                setMinDate(date[0])
+                setMaxDate(date[date.length-1])
+                setAvg(avgEst/(date.length-1))
+
+            }else{
+                setMinDate('-')
+                setMaxDate('-')
+                setAvg(0)
+            }
+
+
+
         }
 
 
@@ -145,10 +184,13 @@ const FloodL4WaterLevel = () => {
 
     return (
         <>
-            <div className="control-block" >
+            {/**
+             * <div className="control-block" >
                     <h2 className="switch-label">수위변화</h2>
-                    <Switch disabled={selectWaterLevel ? false : true} value={levelChange} className="float-box-switch" onClick={()=>{setLeveltChange(!levelChange)}}></Switch>
-            </div>
+                    <Switch disabled={selectWaterLevel ? false : true} value={levelChange} className="float-box-switch" ></Switch>
+                </div>
+             */}
+            
             
             <div className="content-body" style={{display: selectWaterLevel ? '' : 'none'}}>
 
@@ -158,25 +200,32 @@ const FloodL4WaterLevel = () => {
                 </div>
                 <div className="panel-box info-head">
                     <div className="panel-box-header box-title">
-                        <h3 className="panel-box-title">{selectWaterLevel && selectWaterLevel.properties.Station}</h3>
+                        <h3 className="panel-box-title">{selectWaterLevel && selectWaterLevel.properties.title}</h3>
                     </div>
                     <div className="table-frame-wrap">
                     <div className="frame-thead">
                         <div className="frame-th">날짜</div>
+                        <div className="frame-th">위성 계측 수위</div>
+                        {/* <div className="frame-th">날짜</div>
                         <div className="frame-th">작일 저수율</div>
-                        <div className="frame-th">금일 저수율</div>
+                        <div className="frame-th">금일 저수율</div> */}
                     </div>
                     <div className="frame-tbody">
-                        <div className="frame-td">-</div>
+                        {/* <div className="frame-td">{selectWaterLevel && G$getDateType(selectWaterLevel.properties.date)}</div> */}
+                        <div className="frame-td">{selectWaterLevel && G$getDateType(minDate)+'~'+ G$getDateType(maxDate)}</div>
+                        <div className="frame-td">{selectWaterLevel && G$setNumberFixedKomma(avg, 1)}<span className="unit">{selectWaterLevel && selectWaterLevel.properties.unit}</span></div>
+
+                        {/* <div className="frame-td">{selectWaterLevel && G$setNumberFixedKomma(selectWaterLevel.properties.value, 1)}<span className="unit">{selectWaterLevel && selectWaterLevel.properties.unit}</span></div> */}
+                        {/* <div className="frame-td">{selectWaterLevel && selectWaterLevel.properties.date}</div>
                         <div className="frame-td">-<span className="unit">%</span></div>
-                        <div className="frame-td">-<span className="unit">%</span></div>
+                        <div className="frame-td">-<span className="unit">%</span></div> */}
                     </div>
                     </div>
                 </div>
               </div>
-                <Tabs className="panel-tabs-wrap" exclusive full-width >
-                    <Tab className="tab-item" label={"수위수준"}></Tab>
-                    <Tab className="tab-item" label={"수위변화"}></Tab>
+                <Tabs className="panel-tabs-wrap" exclusive full-width value={levelChange}>
+                    <Tab className="tab-item" label={"수위수준"} value={false} onClick={()=>{setLeveltChange(false)}}></Tab>
+                    <Tab className="tab-item" label={"수위변화"} value={true} onClick={()=>{setLeveltChange(true)}}></Tab>
                 </Tabs>
               {/* 수위변화 OFF : 지역구성 */}
               <div className="content-row" style={{display: levelChange ? 'none' : ''}}>

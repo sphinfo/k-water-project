@@ -67,8 +67,14 @@ class BaseEntityCollection extends CustomDataSource {
 					if (!isHovering) {
 						this.overlay.removeAll()
 						isHovering = true
-						let properties = pickedObject.id.properties.getValue('')
-						this.overlay._addOverlay(properties.Lon, properties.Lat, properties)
+
+						if(pickedObject.id.properties){
+							let properties = pickedObject.id.properties.getValue('')
+							this.overlay._addOverlay(
+								properties.Lon ? properties.Lon : properties.lon, 
+								properties.Lat ? properties.Lat : properties.lat,
+								properties)
+						}
 
 					}
 				} else {

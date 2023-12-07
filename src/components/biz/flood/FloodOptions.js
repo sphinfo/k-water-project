@@ -11,14 +11,14 @@ const FloodOptions = () => {
             name:'댐', 
             code:'DAM',
             items: [ 
-                {name:'용담댐', code:'YONGDAM'},
-                {name:'황강댐', code:'a2'},
-                {name:'임남댐', code:'a3'},
-                {name:'대청댐', code:'a4'},
-                {name:'안동댐', code:'a5'},
-                {name:'운문댐', code:'a6'},
-                {name:'영천댐', code:'a7'},
-                {name:'사연댐', code:'a8'},
+                {name:'용담댐', code:'YDD'},
+                {name:'황강댐', code:'HG'},
+                {name:'임남댐', code:'IN'},
+                {name:'대청댐', code:'DC'},
+                {name:'안동댐', code:'ADD'},
+                {name:'운문댐', code:'WM'},
+                {name:'영천댐', code:'YC'},
+                {name:'사연댐', code:'SY'},
             ]
         },{
           name: '지역',
@@ -42,6 +42,7 @@ const FloodOptions = () => {
             name:'하천', 
             code: 'RIVER',
             items: [
+                {name:'내성천(낙동강)', code:'NS1'},
                 {name:'낙성천(낙동강)', code:'b1'},
                 {name:'미호강', code:'b2'},
                 {name:'남천(위천)', code:'b3'},

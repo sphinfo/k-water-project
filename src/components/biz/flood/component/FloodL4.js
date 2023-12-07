@@ -8,6 +8,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import SvgIcon from "@mui/material/SvgIcon";
+import { G$addWidget, G$removeWidget } from "@gis/util";
 
 /**
  * 홍수 4레벨
@@ -41,28 +42,38 @@ const FloodL4 = () => {
         return()=>{
             //초기화
             dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: false})
+
+            G$removeWidget('FloodL4WaterBody')
         }
     },[])
+
+    useEffect(()=>{
+
+        if(selectFloodLayer && selectFloodLayer.store === 'WaterBody'){
+            G$addWidget('FloodL4WaterBody')
+        }
+
+    },[selectFloodLayer])
 
     return (
         <>
             
-            <div className={"panel-header"}>
+            {/* <div className={"panel-header"}>
                 <h1 className={"panel-title"}>
                     {"활용주제도"}
                 </h1>
-            </div>
+            </div> */}
 
-            {
+            {/* {
                 selectFloodLayer && selectFloodLayer.store === 'WaterBody' && 
                 <FloodL4WaterBody />
-            }
+            } */}
             {
                 selectFloodLayer && selectFloodLayer.store === 'WaterLevel' && 
                 <FloodL4WaterLevel />
             }
 
-            <Accordion className={"control-block accordion"} defaultExpanded={true} expanded={expanded} onChange={accordionChange}>
+            {/* <Accordion className={"control-block accordion"} defaultExpanded={true} expanded={expanded} onChange={accordionChange}>
                 <AccordionSummary className="accordion-header" 
                     expandIcon={
                         <SvgIcon fontSize={'small'}>
@@ -96,7 +107,7 @@ const FloodL4 = () => {
                     <dd>Lorem ipsum dolor sit amet consectetur.</dd>
                   </dl>
                 </AccordionDetails>
-              </Accordion>
+              </Accordion> */}
         </>
     )
 }

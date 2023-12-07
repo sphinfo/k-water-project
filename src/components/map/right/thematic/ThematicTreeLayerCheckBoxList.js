@@ -122,7 +122,7 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
               <>
                   <Checkbox
                       checked={selectedNodes.indexOf(nodes.id) !== -1}
-                      indeterminate={/*하위아이템이 체크되면 부모아이템에 별도의 표시를 주는 옵션..*/ 0 && (nodes.id) }
+                      //indeterminate={/*하위아이템이 체크되면 부모아이템에 별도의 표시를 주는 옵션..*/ 0 && (nodes.id) }
                       tabIndex={-1}
                       disableRipple
                       className={'check-box'}

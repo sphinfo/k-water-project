@@ -10,6 +10,9 @@ const widgets = {
     LegendWidget: lazy(() => import('@components/legend/LegendWidget')),
     BaseLegendWidget: lazy(() => import('@components/legend/BaseLegendWidget')),
     BaseLegendgGradientWidget: lazy(() => import('@components/legend/BaseLegendgGradientWidget')),
+
+    FloodL4WaterBody: lazy(() => import('@components/biz/flood/component/FloodL4WaterBody')),
+    
     
 };
 
@@ -32,6 +35,12 @@ const WidgetConfig = {
         style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.SafetyDisplaceSpeedWidget
     },
+
+    'FloodL4WaterBody': {
+        title: '활용주제도',
+        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        instance: widgets.FloodL4WaterBody
+    }
 };
 
 

@@ -459,6 +459,30 @@ const G$sortArrayObject = (data, sortItems, sort) => {
     return sortResult
 }
 
+const G$setNumberFixedKomma = (data, value = 1) =>{
+    let returnData = '0';
+    if (typeof data === 'number') {
+        returnData = data.toFixed(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    } else if (typeof data === 'string') {
+        if (Number(data.replaceAll(',', '')).toFixed(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") !== 'NaN') {
+            returnData = Number(data.replaceAll(',', '')).toFixed(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        } else {
+            returnData = data
+        }
+    }
+
+    return returnData
+}
+
+const G$getDateType = function ( date, type='DTD') {
+
+    if (type && date) {
+        date = type === 'MTD' ? date.toString().replace(/(\d{4})(\d{2})/, '$1-$2') : type === 'DTD' ? date.toString().replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3') : date.toString()
+    }
+
+    return date
+}
+
 export {
     G$addLayer,
     G$removeLayer,
@@ -502,4 +526,6 @@ export {
     G$randomCoordinates,
 
     G$sortArrayObject,
+    G$setNumberFixedKomma,
+    G$getDateType,
 }
