@@ -39,13 +39,11 @@ class KwaterApp extends React.Component {
 
     return (
       <ThemeProvider theme={theme}>
-        <div className="App">
-          <React.Fragment>
-            <Provider store={store}>
-              {render}
-            </Provider>
-          </React.Fragment>
-        </div>
+        <React.Fragment>
+          <Provider store={store}>
+            {render}
+          </Provider>
+        </React.Fragment>
       </ThemeProvider>
     );
   }

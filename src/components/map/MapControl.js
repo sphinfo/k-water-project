@@ -19,6 +19,8 @@ const MapControl = () =>{
 
     return (
         <>
+            <Sidebar />  {/* left menu */}
+
             <div className="loading" style={{display: loading ? '' : 'none'}} >
                 <CircularProgress color="primary" size={50} thickness={4} />
             </div>
@@ -32,12 +34,6 @@ const MapControl = () =>{
                 <MapPositionWidget />  {/* 현재 위치 주소 */}
                 <CoordiateWidget />  {/* center 좌표 */}
             </div>
-
-            <div className="map_ctrl_left">
-                <Sidebar />  {/* left menu */}
-                {/* <SampleEventBox /> */}
-            </div>
-
 
             <div className="map_ctrl_top">
                 <AddrSearchWidget />  {/* 위치 조회 */}

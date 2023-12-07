@@ -23,7 +23,7 @@ const FloodL4WaterLevelWidget = () => {
                 
                 
 
-              {/* 수위변화 OFF : 지역구성 */}
+              {/* 수위변화 OFF : 수위분석 */}
               <div className="content-row" style={{display: levelChange ? 'none' : ''}}>
                 <FloodL4WaterLevelArea />
               </div>
