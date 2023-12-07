@@ -11,7 +11,7 @@ const widgets = {
     BaseLegendWidget: lazy(() => import('@components/legend/BaseLegendWidget')),
     BaseLegendgGradientWidget: lazy(() => import('@components/legend/BaseLegendgGradientWidget')),
 
-    FloodL4WaterBody: lazy(() => import('@components/biz/flood/component/FloodL4WaterBody')),
+    FloodL4WaterBodyWidget: lazy(() => import('@components/biz/flood/widget/FloodL4WaterBodyWidget')),
     
     
 };
@@ -36,11 +36,36 @@ const WidgetConfig = {
         instance: widgets.SafetyDisplaceSpeedWidget
     },
 
-    'FloodL4WaterBody': {
-        title: '활용주제도',
+
+    /**
+     * 홍수
+     */
+
+    //홍수 - 수체 - 침수 피해 분석
+    'FloodL4WaterBodyWidget': {
+        title: '침수 피해 분석',
         style: { top: 0, left: 380, height: 800, position:'absolute'},
-        instance: widgets.FloodL4WaterBody
-    }
+        instance: widgets.FloodL4WaterBodyWidget
+    },
+
+
+    /**
+     * 가뭄
+     */
+
+
+
+    /**
+     * 안전
+     */
+
+
+
+    /**
+     * 환경
+     */
+
+
 };
 
 

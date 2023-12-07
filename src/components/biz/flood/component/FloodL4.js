@@ -2,7 +2,6 @@ import { Switch } from "@mui/material";
 import { ENV_LANDCOVER_DETECTION, FLOOD_SELECT_WATER_LEVEL } from "@redux/actions";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import FloodL4WaterBody from "./FloodL4WaterBody";
 import FloodL4WaterLevel from "./FloodL4WaterLevel";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -42,15 +41,14 @@ const FloodL4 = () => {
         return()=>{
             //초기화
             dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: false})
-
-            G$removeWidget('FloodL4WaterBody')
+            G$removeWidget('FloodL4WaterBodyWidget')
         }
     },[])
 
     useEffect(()=>{
 
         if(selectFloodLayer && selectFloodLayer.store === 'WaterBody'){
-            G$addWidget('FloodL4WaterBody')
+            G$addWidget('FloodL4WaterBodyWidget')
         }
 
     },[selectFloodLayer])

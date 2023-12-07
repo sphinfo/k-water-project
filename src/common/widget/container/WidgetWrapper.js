@@ -18,7 +18,7 @@ const widgetOption = (option = {}) => {
 
 const WidgetWrapper = (props) => {
 
-    const {wid, legend, ...other} = props;
+    const {wid, legend, title, subtitle, ...other} = props;
 
     const defaultOption = useMemo(()=>({
         ...widgetOption({...other})
@@ -52,11 +52,18 @@ const WidgetWrapper = (props) => {
                     x: defaultOption.props.x ? defaultOption.props.x : null,
                     y: defaultOption.props.y ? defaultOption.props.y : null
                 }}
-                dragHandleClassName = {'panel-header'}
+                dragHandleClassName = {'popup-header'}
                 >
-                    <div style={defaultOption} key={wid} className={`${wid} widget-legend`}>
-                        {/* 리소스가 준비될 때까지 렌더링을 일시 중지 */}
-                        <Suspense>{writeChildren()}</Suspense>
+                    <div style={defaultOption} key={wid} className={`${wid} popup`}>
+                        <div className={"popup-header"}>
+                            <h1 className={"popup-title"}>
+                                {title} {subtitle ? subtitle : ''}
+                            </h1>
+                        </div>
+                        <div className={"popup-body"}>
+                            {/* 리소스가 준비될 때까지 렌더링을 일시 중지 */}
+                            <Suspense>{writeChildren()}</Suspense>
+                        </div>
                     </div>
                 </Rnd>
             )}
