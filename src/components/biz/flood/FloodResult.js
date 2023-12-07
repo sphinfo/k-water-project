@@ -81,38 +81,52 @@ const FloodResult = () => {
 
     //결과값 출력 ( 데이터 구성을 2중 배열로 사용하려고 생각중 )
     const renderResult = (obj, i) =>(
-      <List className={'content-list'} sx={{
-        overflow: 'auto',
-      }}>
-        {obj.length > 0 && obj.map((obj, i2)=> renderItem(obj, i, i2))}
-      </List>
-    )
+      
+      //<List className={'content-list'} sx={{
+        //overflow: 'auto',
+      //}}>
+//        {obj.length > 0 && obj.map((obj, i2)=> renderItem(obj, i, i2))}
+  //    </List>
+      <>
+        {obj.length > 0 &&
+         <>
+           <p style={{display: obj[0].store === floodResultTab ? '' : 'none'}}>{obj[0].main}</p>
+           <List className={'content-list'} sx={{ overflow: 'auto' }} key={`list-${i}`}>
+             {
+               obj.map((item, i2) => (
+                 <>
+                   {renderItem(item, i, i2)}
+                 </>
+               ))
+             }
+           </List>
+         </>
+        }
+     </>
+   )
 
     //list item 설정
     const renderItem = (obj, i, i2) => (
         <>
-          <div className="content-list-inner" style={{display: obj.store === floodResultTab ? '' : 'none'}}>
-            {i2 === 0 ? obj.main : ''}
-            <ListItem key={i2} selected={true}>
-              <ListItemButton
-                className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
-                selected={true}
-                disableTouchRipple={true}
-                button={true}
-                color={'primary'}
-                onClick={() => checkboxChange(i, i2)}
-              >
-                <div className="list-title-wrap">
-                  <h3 className={'list-title'}>{obj.name}</h3>
-                  <h4 className="list-title-sub">{obj.date}</h4>
-                </div>
-                <div className="list-body">
-                  <div className="list-shadow"></div>
-                  <div className="img-box">{/*images*/}</div>
-                </div>
-              </ListItemButton>
-            </ListItem>
-          </div>
+          <ListItem key={i2} selected={true} style={{display: obj.store === floodResultTab ? '' : 'none'}}>
+            <ListItemButton
+              className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
+              selected={true}
+              disableTouchRipple={true}
+              button={true}
+              color={'primary'}
+              onClick={() => checkboxChange(i, i2)}
+            >
+              <div className="list-title-wrap">
+                <h3 className={'list-title'}>{obj.name}</h3>
+                <h4 className="list-title-sub">{obj.date}</h4>
+              </div>
+              <div className="list-body">
+                <div className="list-shadow"></div>
+                <div className="img-box">{/*images*/}</div>
+              </div>
+            </ListItemButton>
+          </ListItem>
         </>
     )
 

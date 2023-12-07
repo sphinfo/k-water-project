@@ -92,19 +92,17 @@ const SafetyResult = () => {
       <>
         {obj.length > 0 &&
           <>
+            <p>{obj[0].main + obj[0].mainName}</p>
             <List className={'content-list'} sx={{ overflow: 'auto' }} key={`list-${i}`}>
               {
                 obj.map((item, i2) => (
                   <>
-                    {i2 === 0 ? <p>{item.main + item.mainName}</p> : ''}
                     {renderItem(item, i, i2)}
                   </>
                 ))
               }
             </List>
           </>
-
-          
           }
       </>
     )
