@@ -76,31 +76,18 @@ const FloodL4WaterBodyWidget = () => {
         }
     },[selectWaterLevel])
 
-    //닫힐때 침수피해 레이어 초기화
-    useEffect(()=>{
-        return()=>{
-            dispatch({type:FLOOD_DAMAGE_LAYER, selectFloodDamageLayer: false})
-        }
-    },[])
+    
 
 
     return (
         <>
-
-            <div className="control-block">
-                <h2 className="switch-label">침수피해</h2>
-                <Switch className="float-box-switch" checked={selectFloodDamageLayer ? true : false} onClick={()=>{
-                    dispatch({type:FLOOD_DAMAGE_LAYER, selectFloodDamageLayer: !selectFloodDamageLayer ? sample : false})
-                }}></Switch>
-            </div>
-
             <div className={"content-body"}>
                 {
                     selectFloodDamageLayer && 
 
                     <div className="content-row">
                         <div className="panel-box">
-                        <BaseChart width={260} height={220} ref={chartRef} chartType={'Bar'} title={''}/>
+                            <BaseChart width={260} height={220} ref={chartRef} chartType={'Bar'} title={''}/>
                         </div>
                     </div>
 

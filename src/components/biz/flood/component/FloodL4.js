@@ -8,6 +8,10 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import SvgIcon from "@mui/material/SvgIcon";
 import { G$addWidget, G$removeWidget } from "@gis/util";
+import FloodL4WaterBody from "./waterBody/FloodL4WaterBodyThematic";
+import FloodL4WaterBodyThematic from "./waterBody/FloodL4WaterBodyThematic";
+import FloodL4WaterBodyDataInfo from "./waterBody/FloodL4WaterBodyDataInfo";
+import FloodL4WaterLevelDataInfo from "./waterLevel/FloodL4WaterLevelDataInfo";
 
 /**
  * 홍수 4레벨
@@ -22,54 +26,50 @@ const FloodL4 = () => {
      */
     const { selectFloodLayer, selectWaterLevel } = useSelector(state => state.flood)
 
-    //아코디언 change 
-    const accordionChange = (e, v) =>{
-        setExpanded(v)
-    }
-    
-    //아코디언 on off
-    const [expanded, setExpanded] = useState(true)
-    useEffect(()=>{
-        if(selectWaterLevel){
-            setExpanded(false)
-        }
-    },[selectWaterLevel])
-
-
     //수위 지점 선택 초기화
     useEffect(()=>{
         return()=>{
             //초기화
             dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: false})
-            G$removeWidget('FloodL4WaterBodyWidget')
+            G$removeWidget('FloodL4WaterLevelWidget')
         }
     },[])
 
+
+    {/* 수위 선택시 pooup widget 생성 */}
     useEffect(()=>{
 
-        if(selectFloodLayer && selectFloodLayer.store === 'WaterBody'){
-            G$addWidget('FloodL4WaterBodyWidget')
+        if(selectWaterLevel){
+            console.info(selectFloodLayer)
+            G$addWidget('FloodL4WaterLevelWidget')
+        }else{
+            G$removeWidget('FloodL4WaterLevelWidget')
         }
 
-    },[selectFloodLayer])
+    },[selectWaterLevel])
+
 
     return (
         <>
-            
-            {/* <div className={"panel-header"}>
-                <h1 className={"panel-title"}>
-                    {"활용주제도"}
-                </h1>
-            </div> */}
-
-            {/* {
+            {/* 수체 선택시 */}
+            {
                 selectFloodLayer && selectFloodLayer.store === 'WaterBody' && 
-                <FloodL4WaterBody />
-            } */}
+                <>
+                    <FloodL4WaterBodyDataInfo />
+                    <FloodL4WaterBodyThematic />
+                </>
+            }
+
+            {/* 수위 선택시 */}
             {
                 selectFloodLayer && selectFloodLayer.store === 'WaterLevel' && 
-                <FloodL4WaterLevel />
+                <>
+                    <FloodL4WaterLevelDataInfo />
+                </>
             }
+
+
+            
 
             {/* <Accordion className={"control-block accordion"} defaultExpanded={true} expanded={expanded} onChange={accordionChange}>
                 <AccordionSummary className="accordion-header" 

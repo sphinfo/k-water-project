@@ -12,7 +12,7 @@ const widgets = {
     BaseLegendgGradientWidget: lazy(() => import('@components/legend/BaseLegendgGradientWidget')),
 
     FloodL4WaterBodyWidget: lazy(() => import('@components/biz/flood/widget/FloodL4WaterBodyWidget')),
-    
+    FloodL4WaterLevelWidget: lazy(() => import('@components/biz/flood/widget/FloodL4WaterLevelWidget')),
     
 };
 
@@ -47,6 +47,14 @@ const WidgetConfig = {
         style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.FloodL4WaterBodyWidget
     },
+
+    //홍수 - 수위 - 지점선택
+    'FloodL4WaterLevelWidget': {
+        title: '수위 분석',
+        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        instance: widgets.FloodL4WaterLevelWidget
+    },
+    
 
 
     /**

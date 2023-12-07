@@ -13,7 +13,6 @@ const FloodL4WaterLevelArea = () => {
 
     //차트 dataRef
     const chartInfoRef = useRef({
-        labels: ['1'],
         datasets: [50],
         backgroundColor: '#C5DCFF'
     })
@@ -25,6 +24,15 @@ const FloodL4WaterLevelArea = () => {
             layout: {
                 padding: -8
             },
+            legend: {
+                position: 'bottom',
+                labels: {
+                    boxWidth: 18,
+                    boxHeight: 3,
+                    useBorderRadius: true,
+                    borderRadius: 1.5
+                }
+            },
             plugins: {
                 tooltip: {
                 mode: 'index', // 인덱스별로 툴팁 보이기
@@ -32,17 +40,32 @@ const FloodL4WaterLevelArea = () => {
                 },
                 annotation: {
                     annotations: {
+                        fullRangeAnnotation: {
+                            type: 'box',
+                            borderColor: 'rgba(255, 0, 0, 0)',
+                            backgroundColor: 'rgba(255, 0, 0, 0)',
+                            yMin: 0,
+                            yMax: 8,
+                            borderWidth: 1,
+                        },                
+                        /**현수위 */
+                        nowLine: {
+                            type: 'box',
+                            backgroundColor: '#32CD32',
+                            yMin: 0,
+                            yMax: 3,
+                        },
+                        /**저수위 */
                         minLine: {
                             type: 'line',
-                            borderColor: '#DD4747',
-                            yMin: 10,
-                            yMax: 10,
+                            borderColor: '#FFFA8A',
+                            yMin: 1,
+                            yMax: 1,
                             borderWidth: 2,
                             label: {
                                 display: true,
-                                backgroundColor: '#DD4747',
+                                backgroundColor: '#FFFA8A',
                                 borderRadius: 5,
-                                content: '저수위 ( ' +150.0+ ' )',
                                 rotation: 'auto',
                                 position: 'start',
                                 font: {
@@ -50,17 +73,17 @@ const FloodL4WaterLevelArea = () => {
                                 }
                             },
                         },
+                        /**만수위 */
                         maxLine: {
                             type: 'line',
-                            borderColor: '#47BFD9',
+                            borderColor: '#E83233',
                             borderWidth: 2,
-                            yMin: 50,
-                            yMax: 50,
+                            yMin: 5,
+                            yMax: 5,
                             label: {
                                 display: true,
-                                backgroundColor: '#47BFD9',
+                                backgroundColor: '#E83233',
                                 borderRadius: 5,
-                                content: '만수위 ( ' +193.5+ ' )',
                                 rotation: 'auto',
                                 position: 'start',
                                 font: {
@@ -68,17 +91,17 @@ const FloodL4WaterLevelArea = () => {
                                 }
                             },
                         },
-                        nowLine: {
+                        /**위성수위 */
+                        sateLine: {
                             type: 'line',
-                            borderColor: '#FF9E2B',
-                            yMin: 30,
-                            yMax: 30,
+                            borderColor: '#A3D0F3',
+                            yMin: 2,
+                            yMax: 2,
                             borderWidth: 2,
                             label: {
                                 display: true,
-                                backgroundColor: '#FF9E2B',
+                                backgroundColor: '#A3D0F3',
                                 borderRadius: 5,
-                                content: '현수위 ( '+189.12+ ' )',
                                 rotation: 'auto',
                                 position: 'start',
                                 font: {

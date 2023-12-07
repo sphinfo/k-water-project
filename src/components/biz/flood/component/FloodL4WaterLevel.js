@@ -206,19 +206,11 @@ const FloodL4WaterLevel = () => {
                     <div className="frame-thead">
                         <div className="frame-th">날짜</div>
                         <div className="frame-th">위성 계측 수위</div>
-                        {/* <div className="frame-th">날짜</div>
-                        <div className="frame-th">작일 저수율</div>
-                        <div className="frame-th">금일 저수율</div> */}
                     </div>
                     <div className="frame-tbody">
                         {/* <div className="frame-td">{selectWaterLevel && G$getDateType(selectWaterLevel.properties.date)}</div> */}
                         <div className="frame-td">{selectWaterLevel && G$getDateType(minDate)+'~'+ G$getDateType(maxDate)}</div>
                         <div className="frame-td">{selectWaterLevel && G$setNumberFixedKomma(avg, 1)}<span className="unit">{selectWaterLevel && selectWaterLevel.properties.unit}</span></div>
-
-                        {/* <div className="frame-td">{selectWaterLevel && G$setNumberFixedKomma(selectWaterLevel.properties.value, 1)}<span className="unit">{selectWaterLevel && selectWaterLevel.properties.unit}</span></div> */}
-                        {/* <div className="frame-td">{selectWaterLevel && selectWaterLevel.properties.date}</div>
-                        <div className="frame-td">-<span className="unit">%</span></div>
-                        <div className="frame-td">-<span className="unit">%</span></div> */}
                     </div>
                     </div>
                 </div>
