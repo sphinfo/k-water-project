@@ -84,39 +84,54 @@ const SafetyResult = () => {
 
     //결과값 출력
     const renderResult = (obj, i) =>(
-      <List className={'content-list'} sx={{
-        overflow: 'auto',
-      }}>
-        {obj.length > 0 && obj.map((obj, i2)=> renderItem(obj, i, i2))}
-      </List>
+      // <List className={'content-list'} sx={{
+      //   overflow: 'auto',
+      // }}>
+      //   {obj.length > 0 && obj.map((obj, i2)=> renderItem(obj, i, i2))}
+      // </List>
+      <>
+        {obj.length > 0 &&
+          <>
+            <List className={'content-list'} sx={{ overflow: 'auto' }} key={`list-${i}`}>
+              {
+                obj.map((item, i2) => (
+                  <>
+                    {i2 === 0 ? <p>{item.main + item.mainName}</p> : ''}
+                    {renderItem(item, i, i2)}
+                  </>
+                ))
+              }
+            </List>
+          </>
+
+          
+          }
+      </>
     )
 
     const renderItem = (obj, i, i2) => (
         <>
-          <div className="content-list-inner">
-            {i2 === 0 ? `${obj.main + obj.mainName}` : ''}
-            <ListItem key={i2} selected={true}>
-              <ListItemButton
-                className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
-                selected={true}
-                disableTouchRipple={true}
-                button={true}
-                color={'primary'}
-                onClick={() => checkboxChange(i, i2)}
-              >
-                <div className="list-title-wrap">
-                  <h3 className={'list-title'}>{obj.name}</h3>
-                  <h4 className="list-title-sub">{obj.date}</h4>
+          <ListItem key={i2} selected={true}>
+            <ListItemButton
+              className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
+              selected={true}
+              disableTouchRipple={true}
+              button={true}
+              color={'primary'}
+              onClick={() => checkboxChange(i, i2)}
+            >
+              <div className="list-title-wrap">
+                <h3 className={'list-title'}>{obj.name}</h3>
+                <h4 className="list-title-sub">{obj.date}</h4>
+              </div>
+              <div className="list-body">
+                <div className="list-shadow"></div>
+                <div className="img-box">
+                  <img src={img} />
                 </div>
-                <div className="list-body">
-                  <div className="list-shadow"></div>
-                  <div className="img-box">
-                    <img src={img} />
-                  </div>
-                </div>
-              </ListItemButton>
-            </ListItem>
-          </div>
+              </div>
+            </ListItemButton>
+          </ListItem>
         </>
     )
 
@@ -135,6 +150,7 @@ const SafetyResult = () => {
             }  
             <div className="content-row">
                 <div className={'content-list-wrap'}>
+                    {exampleList.length}
                     {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
                 </div>
               </div>
