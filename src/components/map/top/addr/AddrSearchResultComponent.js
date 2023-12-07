@@ -75,7 +75,16 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
                   return addrComponent(obj, i)
               }))}
               
-              { result.length === 0 && <EmptyMessage message={'데이터가 존재하지 않습니다.'}/> }
+              {/* { result.length === 0 && <EmptyMessage message={'데이터가 존재하지 않습니다.'}/> } */}
+              { result.length === 0 && 
+                <>
+                  <dl style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%'}}>
+                    <dt>
+                      {'데이터가 존재하지 않습니다.'}
+                    </dt>
+                  </dl>
+                </>
+               }
 
           </div>
       </>

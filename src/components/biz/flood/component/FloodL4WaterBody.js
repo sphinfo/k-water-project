@@ -67,6 +67,14 @@ const FloodL4WaterBody = () => {
     }, [selectFloodDamageLayer])
 
 
+    //닫힐때 침수피해 레이어 초기화
+    useEffect(()=>{
+        return()=>{
+            dispatch({type:FLOOD_DAMAGE_LAYER, selectFloodDamageLayer: false})
+        }
+    },[])
+
+
     return (
         <>
             <div className="control-block">

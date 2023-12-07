@@ -88,6 +88,10 @@ const Drought = () => {
             
             //관측소 레이어 삭제
             G$removeLayer(droughtObsrvLayer.current.layer)
+            if(droughtObsrvLayer.current.hoverHandler){
+                droughtObsrvLayer.current.hoverHandler.destroy()
+                droughtObsrvLayer.current.hoverHandler = undefined
+            }
 
             //가뭄 레이어 삭제
             G$removeLayer(droughtLayer.current.layer)

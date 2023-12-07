@@ -180,17 +180,17 @@ const FloodL4WaterLevelArea = () => {
                         <tbody>
                             <tr>
                                 <th>저수면적<span className="unit-th">(EL.m)</span></th>
-                                <td>-</td>
+                                <td>{selectWaterLevel && selectWaterLevel.properties.waterStor}</td>
                             </tr>
                         </tbody>
                         <tbody className={"table-depth"}>
                             <tr>
                                 <th>총 저수량<span className="unit-th">(EL.m)</span></th>
-                                <td>-</td>
+                                <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
                             </tr>
                             <tr>
                                 <th>유효저수량<span className="unit-th">(EL.m)</span></th>
-                                <td>-</td>
+                                <td>{selectWaterLevel && selectWaterLevel.properties.efstr}</td>
                             </tr>
                         </tbody>
                     </table>

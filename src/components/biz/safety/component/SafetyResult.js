@@ -32,8 +32,8 @@ const SafetyResult = () => {
 
       dispatch({type:SAFETY_DETAIL_RESET})
 
-      if(text !== ''){
-        if(text === '용담댐'){
+      if(text.name !== ''){
+        if(text.name === '용담댐'){
           const groupArray = G$BaseSelectBoxArray(example, 'main')
           const resultArray = groupArray.grouped
           setExampleList(resultArray)

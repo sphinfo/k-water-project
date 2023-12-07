@@ -15,8 +15,7 @@ const example = [
   {name:'DATA2', date: '23.11.10~23.11.16', main:'물리적 특성', checked: false, store:'WaterBody', layer: '20230718T21water_GS_landuse_RGB000102' },
   {name:'DATA1', date: '23.11.10~23.11.16', main:'', checked: false, store:'WaterBody', layer: '20230723T21water_JL_RGB000102' },
   
-  {name:'DATA1',  date: '23.11.10~23.11.16', main:'AI 알고리즘', checked: false, store:'WaterLevel', layer: '20230718T21water_GS_RGB000102'},
-  {name:'DATA2', date: '23.11.10~23.11.16', main:'물리적 특성', checked: false, store:'WaterLevel', layer: '20230718T21water_GS_landuse_RGB000102' },
+  {name:'DATA1',  date: '23.11.10~23.11.16', main:'수위', checked: false, store:'WaterLevel', layer: '',},
 ]
 
 const FloodResult = () => {
@@ -30,9 +29,16 @@ const FloodResult = () => {
 
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
-      if(text !== ''){
+      console.info(text)
+      if(text.name !== ''){
+
+        example[3].name = text.name
+
         const groupArray = G$BaseSelectBoxArray(example, 'main')
         const resultArray = groupArray.grouped
+
+        console.info(resultArray)
+
         setExampleList(resultArray)
       }else{
         setExampleList([])
@@ -86,7 +92,7 @@ const FloodResult = () => {
     const renderItem = (obj, i, i2) => (
         <>
           <div className="content-list-inner" style={{display: obj.store === floodResultTab ? '' : 'none'}}>
-            {/* {i2 === 0 ? obj.main : ''} */}
+            {i2 === 0 ? obj.main : ''}
             <ListItem key={i2} selected={true}>
               <ListItemButton
                 className={`content-list-item ${obj.checked ? 'item-on' : ''}`}

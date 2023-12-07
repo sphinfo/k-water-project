@@ -11,16 +11,17 @@ import SvgIcon from "@mui/material/SvgIcon";
 
 const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
 
-  const [selectedItems, setSelectedItems] = useState('')
+  const [selectedItems, setSelectedItems] = useState({name:''})
+
 
   const [visibleTree, setVisibleTree] = useState(false)
 
   const itemClick = (item) => {
 
-    if(selectedItems === item.name){
-      setSelectedItems('')
+    if(selectedItems.name === item.name){
+      setSelectedItems({name:''})
     }else{
-      setSelectedItems(item.name)
+      setSelectedItems(item)
     }
 
     setVisibleTree(false)
@@ -47,8 +48,8 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
   }));
 
   
-  const renderComponent = (option) => (
-    <Accordion className={"search-bed-accordion"} defaultExpanded={true}>
+  const renderComponent = (option, i) => (
+    <Accordion className={"search-bed-accordion"} defaultExpanded={true} key={i}>
       <AccordionSummary className="search-accordion-header" expandIcon={<SvgIcon>
         <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M1 1L5.5 5L10 1" stroke="#717171" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -65,7 +66,7 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
             selected={true}
             key={item.code}
             disableTouchRipple={true}
-            className={selectedItems.includes(item.name) ? "search-bed-item item-on" : "search-bed-item" }
+            className={selectedItems.name.includes(item.name) ? "search-bed-item item-on" : "search-bed-item" }
             onClick={() => itemClick(item)}>
             {item.name}
           </ListItem>
@@ -83,7 +84,7 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
       <input
         readOnly
         type="text"
-        value={selectedItems} // 선택된 항목들의 이름을 나타내도록 설정
+        value={selectedItems.name} // 선택된 항목들의 이름을 나타내도록 설정
         placeholder="연구 대상 지역"
         onClick={() => setVisibleTree(!visibleTree)}
       />
@@ -94,7 +95,7 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
         </button>
       </div>
       <div className={"search-bed map-basic-style"} style={{ display: visibleTree ? '' : 'none'}}>
-        {provider.map((option) => renderComponent(option))}
+        {provider.map((option, i) => renderComponent(option, i))}
       </div>
     </>
   );
