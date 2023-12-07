@@ -157,7 +157,7 @@ const FloodL4WaterLevel = () => {
             <div className="panel-box">
                     <BaseChart width={260} height={230} ref={chartRef} data={chartInfoRef} chartType={'Line'}/>
             </div>
-            <div className="panel-box">
+            <div className="panel-box" style={{height: 360, overflowY: 'auto'}}>
                 <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'} />
             </div>
         </>
