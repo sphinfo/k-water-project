@@ -89,22 +89,22 @@ const SafetyResult = () => {
       // }}>
       //   {obj.length > 0 && obj.map((obj, i2)=> renderItem(obj, i, i2))}
       // </List>
-      <>
-        {obj.length > 0 &&
-          <>
-            <p>{obj[0].main + obj[0].mainName}</p>
-            <List className={'content-list'} sx={{ overflow: 'auto' }} key={`list-${i}`}>
-              {
-                obj.map((item, i2) => (
-                  <>
-                    {renderItem(item, i, i2)}
-                  </>
-                ))
-              }
-            </List>
-          </>
-          }
-      </>
+        <div className="content-row">
+            {obj.length > 0 &&
+                <div className="content-list-wrap">
+                    <h4 className="content-list-title">{obj[0].main + obj[0].mainName}</h4>
+                    <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
+                        {
+                            obj.map((item, i2) => (
+                                <>
+                                    {renderItem(item, i, i2)}
+                                </>
+                            ))
+                        }
+                    </List>
+                </div>
+            }
+        </div>
     )
 
     const renderItem = (obj, i, i2) => (
@@ -118,14 +118,16 @@ const SafetyResult = () => {
               color={'primary'}
               onClick={() => checkboxChange(i, i2)}
             >
-              <div className="list-title-wrap">
-                <h3 className={'list-title'}>{obj.name}</h3>
-                <h4 className="list-title-sub">{obj.date}</h4>
-              </div>
               <div className="list-body">
-                <div className="list-shadow"></div>
                 <div className="img-box">
-                  <img src={img} />
+                  <div className="list-shadow"></div>
+                  <img src={img}/>
+                </div>
+                <div className="list-info-wrap">
+                  <p className="list-info">{obj.name}</p>
+                  <p className="list-info">{obj.layer}</p>
+                  <p className="list-info">{obj.main + obj.mainName}</p>
+                  <p className="list-info">{obj.date}</p>
                 </div>
               </div>
             </ListItemButton>
@@ -133,26 +135,22 @@ const SafetyResult = () => {
         </>
     )
 
-    return (
-        <>
-          
-          <div className={"content-body border-top filled"}>
-            {
-              exampleList.length === 0 &&
-              <div className="content-row empty-wrap">
-                <div className="empty-message">
-                  <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
-                  <Button className="btn empty-btn" onClick={()=>{{dispatch({type:SAFETY_SELECT_BOX, selectBox: !selectBox})}}}>지역검색</Button>
-                </div>
-              </div>
-            }  
-            <div className="content-row">
-                <div className={'content-list-wrap'}>
-                    {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
-                </div>
-              </div>
+  return (
+
+    <div className="content-body border-top filled">
+      {
+        exampleList.length === 0 &&
+          <div className="content-row empty-wrap">
+            <div className="empty-message">
+              <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
+              <Button className="btn empty-btn" onClick={()=>{{dispatch({type:SAFETY_SELECT_BOX, selectBox: !selectBox})}}}>지역검색</Button>
+            </div>
           </div>
-        </>
+        }
+
+        {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
+
+      </div>
     )
 }
 
