@@ -24,26 +24,25 @@ const MapControl = () =>{
             <div className="loading" style={{display: loading ? '' : 'none'}} >
                 <CircularProgress color="primary" size={50} thickness={4} />
             </div>
-            <div className="map_ctrl_right">
-                {loading}
-                <ThematicWidget /> {/* 주제도 */}
-                <MeasureMapWidget /> {/* 측정 */}
-                <ZoomMapWidget />  {/* 줌 */} 
-            </div>
-            <div className="map_ctrl_btm">
-                <MapPositionWidget />  {/* 현재 위치 주소 */}
-                <CoordiateWidget />  {/* center 좌표 */}
-            </div>
 
-            <div className="map_ctrl_top">
-                <AddrSearchWidget />  {/* 위치 조회 */}
-                <TimeZoneWidget />   {/* 현재 시간 */}
-                {/*<BaseMapWidget />    배경지도*/}
+            <div className="map-control-wrap">
+                <div className="map_ctrl_top">
+                    <AddrSearchWidget/> {/* 위치 조회 */}
+                    <TimeZoneWidget/> {/* 현재 시간 */}
+                    {/*<BaseMapWidget />    배경지도*/}
+                </div>
+                <div className="map_ctrl_right">
+                    {loading}
+                    <ThematicWidget/> {/* 주제도 */}
+                    <MeasureMapWidget/> {/* 측정 */}
+                    <ZoomMapWidget/> {/* 줌 */}
+                </div>
+                <div className="map_ctrl_btm">
+                    <MapPositionWidget/> {/* 현재 위치 주소 */}
+                    <CoordiateWidget/> {/* center 좌표 */}
+                </div>
             </div>
-            
         </>
     )
 }
-
-
 export default MapControl; 
