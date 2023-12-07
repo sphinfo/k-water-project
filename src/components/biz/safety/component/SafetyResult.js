@@ -150,7 +150,6 @@ const SafetyResult = () => {
             }  
             <div className="content-row">
                 <div className={'content-list-wrap'}>
-                    {exampleList.length}
                     {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
                 </div>
               </div>
