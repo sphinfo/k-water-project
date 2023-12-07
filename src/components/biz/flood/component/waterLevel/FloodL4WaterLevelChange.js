@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BaseChart from "@common/chart/BaseChart";
 import "chartjs-plugin-annotation";
@@ -6,6 +6,7 @@ import SafetyChartConfig from "@gis/config/SafetyChartConfig";
 import FloodChangeDataConfig from "@gis/config/FloodChangeDataConfig";
 import FloodADD from "@gis/config/flood/FloodWaterLevelChartDatas";
 import FloodWaterLevelChartDatas from "@gis/config/flood/FloodWaterLevelChartDatas";
+import BaseGrid from "@common/grid/BaseGrid";
 
 
 const FloodL4WaterLevel = () => {
@@ -20,6 +21,17 @@ const FloodL4WaterLevel = () => {
         labels: [],
         datasets: []
     })
+
+
+    //테이블 ref
+    const gridRef = useRef({})
+    //데이터 ref
+    const rows = useMemo(()=>{ return [  ] },[])
+    const columns = [
+        {accessor: 'Date', Header: '관측일자', width: 120, align: 'center'},
+        {accessor: 'estWl', Header: '실제 계측 수위', width: 200, align: 'center'},
+        {accessor: 'obsWl', Header: '위성 계측 수위', width: 200, align: 'center'},
+    ]
 
     /** 초기설정 **/
     useEffect(()=>{
@@ -124,7 +136,11 @@ const FloodL4WaterLevel = () => {
             })
 
             chartInfoRef.current.labels = date
+
+            //Table
+            gridRef.current.provider = sampleDatas
             
+            //chart
             chartRef.current.provider = chartInfoRef.current
         }
 
@@ -140,6 +156,9 @@ const FloodL4WaterLevel = () => {
             </div>
             <div className="panel-box">
                     <BaseChart width={260} height={230} ref={chartRef} data={chartInfoRef} chartType={'Line'}/>
+            </div>
+            <div className="panel-box" style={{height: 360, overflowY: 'auto'}}>
+                <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'} />
             </div>
         </>
     )
