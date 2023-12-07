@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import EventBus from '@common/eventBus/EventBus';
+import EventBus from '@common/eventBus/eventBus';
 import MapEvents from '@common/eventBus/MapEvents';
 import { G$GetPointToDetail } from '@gis/util';
 

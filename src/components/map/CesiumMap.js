@@ -1,5 +1,5 @@
 import { Cartographic, Math, ScreenSpaceEventHandler, ScreenSpaceEventType } from "cesium";
-import EventBus from "@common/eventBus/EventBus";
+import EventBus from "@common/eventBus/eventBus";
 import MapEvents from "@common/eventBus/MapEvents";
 import MapManager from "@gis/MapManager";
 

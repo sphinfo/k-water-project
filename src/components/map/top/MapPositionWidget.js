@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import EventBus from '@common/eventBus/EventBus';
+import EventBus from '@common/eventBus/eventBus';
 import MapEvents from '@common/eventBus/MapEvents';
 import { G$cartesianToLongLat } from '@gis/util';
 import createAxios from '@common/axios/creatAxios';
