@@ -155,7 +155,7 @@ const FloodL4WaterLevel = () => {
                 <h2 className="content-row-title">수위 변화 그래프</h2>
             </div>
             <div className="panel-box">
-                    <BaseChart width={260} height={230} ref={chartRef} data={chartInfoRef} chartType={'Line'}/>
+                <BaseChart width={260} height={230} ref={chartRef} data={chartInfoRef} chartType={'Line'}/>
             </div>
             <div className="panel-box" style={{height: 360, overflowY: 'auto'}}>
                 <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'} />

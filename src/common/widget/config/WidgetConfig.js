@@ -11,8 +11,12 @@ const widgets = {
     BaseLegendWidget: lazy(() => import('@components/legend/BaseLegendWidget')),
     BaseLegendgGradientWidget: lazy(() => import('@components/legend/BaseLegendgGradientWidget')),
 
+    //홍수
     FloodL4WaterBodyWidget: lazy(() => import('@components/biz/flood/widget/FloodL4WaterBodyWidget')),
     FloodL4WaterLevelWidget: lazy(() => import('@components/biz/flood/widget/FloodL4WaterLevelWidget')),
+    
+    //가뭄
+    DroughtObsrvWidget: lazy(() => import('@components/biz/drought/widget/DroughtObsrvWidget')),
     
 };
 
@@ -60,7 +64,11 @@ const WidgetConfig = {
     /**
      * 가뭄
      */
-
+    'DroughtObsrvWidget': {
+        title: '토양 수분 분석',
+        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        instance: widgets.DroughtObsrvWidget
+    },
 
 
     /**

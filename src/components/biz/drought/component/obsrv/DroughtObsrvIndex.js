@@ -26,24 +26,24 @@ const DroughtObsrvIndex = () => {
     })
 
     const columns = [
-        {accessor: 'name', Header: '해갈 시점', width: 120, align: 'center'},
-        {accessor: 'row1', Header: '강우량(mm)', width: 200, align: 'center'},
+        {accessor: 'date', Header: '해갈 시점', width: 120, align: 'center'},
+        {accessor: 'SWDI', Header: 'SWDI', width: 200, align: 'center'},
+        {accessor: 'precipitation', Header: '강우량', width: 200, align: 'center'},
+    ]
+
+    const columns2 = [
+        {accessor: 'date', Header: '해갈 시점', width: 120, align: 'center'},
+        {accessor: 'SWDI', Header: 'SWDI', width: 200, align: 'center'},
     ]
 
     //테이블 ref
     const gridRef = useRef({})
+    const grid2Ref = useRef({})
     //데이터 ref
     const rows = useMemo(()=>{ return [  ] },[])
+    const rows2 = useMemo(()=>{ return [  ] },[])
 
     useEffect(()=>{
-        gridRef.current.provider = [
-            {name:'2022.06.24',row1: '52'},
-            {name:'2020.11.19',row1: '70.5'},
-            {name:'2018.08.26',row1: '176'},
-            {name:'2017.07.15',row1: '62'},
-            {name:'2016.09.17',row1: '122'},
-            {name:'2015.09.07',row1: '122'},
-        ]
 
         chartRef.current.updateOptions = {
             plugins: {
@@ -168,6 +168,9 @@ const DroughtObsrvIndex = () => {
 
             chartRef.current.provider = chartInfoRef.current
 
+            grid2Ref.current.provider = dataset
+            gridRef.current.provider = dataset
+
         }
 
     },[selectObs])
@@ -175,73 +178,50 @@ const DroughtObsrvIndex = () => {
 
     return (
         <>
-            <div className="content-row">
-                <div className="content-row-header">
-                    <h2 className={"content-row-title"}>시계열 가뭄지수 및 강수량
-                        <Tooltip placement="right-start" title={
-                            <React.Fragment>
-                                <div className="tooltip-content-wrap">
-                                    <h5 className="tooltip-title">가뭄 위험 등급 판단 기준(SWDI)</h5>
-                                    <div className="tooltip-content">
-                                        <table className="table-basic table-tooltip">
-                                            <thead>
-                                            <tr>
-                                                <th>정상</th>
-                                                <th>관심</th>
-                                                <th>주의</th>
-                                                <th>경계</th>
-                                                <th>심각</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>0 초과</td>
-                                                <td>-0.5 ~ 0.0</td>
-                                                <td>-1.0 ~ 0.5</td>
-                                                <td>-1.5 ~ 1.0</td>
-                                                <td>-1.5 ~ 이하</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </React.Fragment>
-                        }>
-                            <IconButton className={'tooltip-icon'}></IconButton>
-                        </Tooltip>
-                    </h2>
-                </div>
+            <div style={{display: 'flex'}}>
                 <div className="panel-box">
                     <div className="chart-unit-warp">
                         <span className="chart-unit">SWDI</span>
                         <span className="chart-unit">강우량(mm)</span>
                     </div>
-                <BaseChart width={260} height={260} ref={chartRef} chartType={'Line'} title={''}/>
+                    <BaseChart width={260} height={260} ref={chartRef} chartType={'Line'} title={''}/>
                 </div>
-            </div>
 
-            <div className="content-row">
-                <div className="content-row-header">
-                    <h2 className={"content-row-title"}>강우 해갈 데이터
-                        <Tooltip placement="right-start" title={
-                            <React.Fragment>
-                                <div className="tooltip-content-wrap">
-                                    <h5 className="tooltip-title">강우 해갈(drought relief)의 정의</h5>
-                                    <p className="tooltip-content">
-                                        1. 가뭄 판단 기준 심각 단계 7일 이상 <br/>
-                                        2. 가뭄 판단 기준 정상 단계 15일 지속
-                                    </p>
-                                </div>
-                            </React.Fragment>
-                        }>
-                            <IconButton className={'tooltip-icon'}></IconButton>
-                        </Tooltip>
-                    </h2>
+                <div className="content-row">
+                    <div className="content-row-header">
+                        <h2 className={"content-row-title"}>가뭄 지수 자료</h2>
+                    </div>
+                    <div className="panel-box" style={{height: 360, overflowY: 'auto'}}>
+                        <BaseGrid ref={grid2Ref} columns={columns2} provider={rows2} className={'table-basic'} />
+                    </div>
                 </div>
-                <div className="panel-box">
-                    <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'} />
+
+
+                <div className="content-row">
+                    <div className="content-row-header">
+                        <h2 className={"content-row-title"}>강우 해갈 데이터
+                            <Tooltip placement="right-start" title={
+                                <React.Fragment>
+                                    <div className="tooltip-content-wrap">
+                                        <h5 className="tooltip-title">강우 해갈(drought relief)의 정의</h5>
+                                        <p className="tooltip-content">
+                                            1. 가뭄 판단 기준 심각 단계 7일 이상 <br/>
+                                            2. 가뭄 판단 기준 정상 단계 15일 지속
+                                        </p>
+                                    </div>
+                                </React.Fragment>
+                            }>
+                                <IconButton className={'tooltip-icon'}></IconButton>
+                            </Tooltip>
+                        </h2>
+                    </div>
+
+                    <div className="panel-box" style={{height: 360, overflowY: 'auto'}}>
+                        <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'} />
+                    </div>
                 </div>
             </div>
+            
         </>
     )
 }

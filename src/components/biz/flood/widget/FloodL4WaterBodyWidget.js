@@ -17,13 +17,20 @@ const FloodL4WaterBodyWidget = () => {
     /**
      * selectFloodDamageLayer : 침수피해지도 
      */
-    const { selectFloodDamageLayer, selectFloodLayer, selectWaterLevel } = useSelector(state => state.flood)
+    const { selectFloodDamageLayer, selectWaterLevel } = useSelector(state => state.flood)
 
     const chartRef = useRef()
     const chartInfoRef = useRef({
         labels: ['목지','수체','건물','초지','나지'],
         datasets: [50,150,100,130,60],
     })
+
+    //widget 이 닫힐때 주제도 침수피해 off
+    useEffect(()=>{
+        return () =>{
+            dispatch({type:FLOOD_DAMAGE_LAYER, selectFloodDamageLayer: false})
+        }
+    },[])
 
     useEffect(()=>{
 

@@ -1,5 +1,7 @@
 import React, {Suspense, useCallback, useMemo, useRef} from 'react';
+import IconButton from '@mui/material/IconButton';
 import { Rnd } from 'react-rnd';
+import { G$removeWidget } from '@gis/util';
 
 const widgetOption = (option = {}) => {
 
@@ -39,6 +41,10 @@ const WidgetWrapper = (props) => {
 
     }, [props.children]);
 
+    const close = () =>{
+        G$removeWidget(wid)
+    }
+
 
     return (
         <>
@@ -59,7 +65,13 @@ const WidgetWrapper = (props) => {
                             <h1 className={"popup-title"}>
                                 {title} {subtitle ? subtitle : ''}
                             </h1>
+                            <IconButton className="panel-close-btn" color={"primary"} onClick={close}>
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 17L9 9M9 9L17 17M9 9L17 1M9 9L1 1" stroke="#ffffffe6" strokeWidth="1.5" strokeLinecap="round"/>
+                                </svg>
+                            </IconButton>
                         </div>
+                        
                         <div className={"popup-body"}>
                             {/* 리소스가 준비될 때까지 렌더링을 일시 중지 */}
                             <Suspense>{writeChildren()}</Suspense>

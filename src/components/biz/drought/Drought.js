@@ -8,10 +8,11 @@ import pin from "@images/map-icon-dr.svg"
 import pin2 from "@images/map-icon-dr-clicked.svg"
 import { G$addWidget, G$randomCoordinates, G$removeLayer, G$removeWidget } from "@gis/util";
 import { DROUGHT_RESET, DROUGHT_SELECT_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
-import DroughtObsrv from "./component/DroughtObsrv";
+import DroughtObsrv from "./component/DroughtL4";
 import DroughtOverlay from "@gis/util/overlay/DroughtOverlay";
 import DroughtObsrvConfig from "@gis/config/DroughtObsrvConfig";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
+import DroughtL4 from "./component/DroughtL4";
 
 const Drought = () => {
 
@@ -136,7 +137,7 @@ const Drought = () => {
         <DroughtResult />
 
         {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
-        {selectObs && ( <div className={`panel side-panel ${!panelVisible ? 'fold' : ''}` }> <DroughtObsrv /> </div> )}
+        {selectObs && ( <DroughtL4 /> )}
         </>
     )
 }

@@ -2,6 +2,7 @@ import BaseChart from "@common/chart/BaseChart";
 import DroughtObsrvMoistureConfig from "@gis/config/DroughtObsrvMoistureConfig";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useMemo, useRef } from "react";
+import BaseGrid from "@common/grid/BaseGrid";
 /**
  * 가뭄 활용주제도 - 토양수분
  */
@@ -12,14 +13,25 @@ const DroughtObsrv = () => {
      */
     const { selectObs } = useSelector(state => state.drought)
 
+
     //차트 ref
     const chartRef = useRef({})
-
     //차트 dataRef
     const chartInfoRef = useRef({
         labels: [],
         datasets: [],
     })
+
+
+    //테이블 ref
+    const gridRef = useRef({})
+    //데이터 ref
+    const rows = useMemo(()=>{ return [  ] },[])
+    const columns = [
+        {accessor: 'date', Header: '관측일자', width: 120, align: 'center'},
+        {accessor: 'precipitation', Header: '모의 계측 수위', width: 200, align: 'center'},
+        {accessor: 'obs', Header: '실측 계측 수위', width: 200, align: 'center'},
+    ]
 
     useEffect(()=>{
 
@@ -144,7 +156,7 @@ const DroughtObsrv = () => {
                 data: precipitation,
             })
 
-            console.info(chartInfoRef.current.datasets)
+            gridRef.current.provider = dataset
 
             chartRef.current.provider = chartInfoRef.current
 
@@ -162,7 +174,11 @@ const DroughtObsrv = () => {
                     <span className="chart-unit">토양 수분</span>
                     <span className="chart-unit">강우량(mm)</span>
                 </div>
-            <BaseChart width={260} height={260} ref={chartRef} chartType={'Line'} title={''}/>
+                <BaseChart width={460} height={260} ref={chartRef} chartType={'Line'} title={''}/>
+            </div>
+            <div className="panel-box" style={{height: 360, overflowY: 'auto'}}>
+                <span className="chart-unit">토양 수분 자료</span>
+                <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'} />
             </div>
         </>
     )

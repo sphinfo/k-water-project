@@ -8,6 +8,12 @@ import FloodL4WaterLevelChange from "../component/waterLevel/FloodL4WaterLevelCh
 
 const FloodL4WaterLevelWidget = () => {
 
+    useEffect(()=>{
+        return () =>{
+            
+        }
+    },[])
+
     //수위변화 on off
     const [levelChange, setLevelChange] = useState(false)
 
