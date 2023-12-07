@@ -1,6 +1,15 @@
-
 :root{
   --color-primary: $primary;
+}
+
+#map {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: none;
+  width: 100%;
+  height: 100%;
 }
 
 .map_ctrl_top{
@@ -41,87 +50,104 @@
   transition: all 300ms;
 }
 
-.input-basic-search{
+.input-basic-search {
   display: flex;
   border-radius: 10px;
   padding: 4px 8px 4px 12px;
-  display: flex;
   align-items: center;
+
   input{
+    background-color: transparent;
+    font-weight: 300;
+
     &::placeholder{
-      color: $grey-300;
+      color: $body-font-color;
     }
     &:focus-visible{
-      outline: 2px solid $primary-200;
+      outline: 1px solid $primary-deep;
     }
   }
-  &.map-search-input{
+
+  &.map-search-input {
     position: absolute;
-    right: calc(50% - (310px / 2));
+    right: 10px;
     top: 10px;
     z-index: 0;
-    background-color: $basic;
-    input{
+    background-color: $black-navy;
+
+    input {
       width: 256px;
       height: 26px;
     }
-    &.bed-open{
+
+    &.bed-open {
       border-radius: 10px 10px 0 0;
     }
   }
   &.panel-input{
-    background-color: $white;
     flex: 1 1 auto;
+    border-radius: 8px;
+    background-color: $blue-dark;
+
     input{
       width: 100%;
       border: 0;
       height: 26px;
-
     }
+
     &:focus{
       background-color: $primary-200;
     }
   }
 }
 
-.address-bed-wrap{
+.address-bed-wrap {
   position: absolute;
   right: calc(50% - (310px / 2));
-  top: 46px;
-  background: $white;
-  width: 313px;
+  top: 44px;
+  background: $black-navy;
+  width: 310px;
   overflow: hidden;
-  &.map-basic-style{
+
+  &.map-basic-style {
     border-radius: 0 0 10px 10px;
   }
-  .address-bed-list{
+
+  .address-bed-list {
     border: 0;
     height: 360px;
     overflow-y: auto;
-    .address-bed-list-item{
+
+    .address-bed-list-item {
       padding: 14px;
-      border-top: 1px solid $line;
+      border-top: 1px solid $line-light;
       transition: all 300ms;
-      &:hover{
-        background-color: $basic;
-        border-top: 1px solid $basic;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $blue-dark;
+        border-top: 1px solid $blue-dark;
       }
-      .address-item-wrap{
+
+      .address-item-wrap {
         line-height: 1.5;
+
         .address-item-title{
-          font-weight: 600;
+          font-weight: 500;
           margin-bottom: 4px;
         }
-        .address-item-sub{
+
+        .address-item-sub {
           font-size: 12px;
-          color: #7a7a7a;
+          color: $grey-200;
         }
-        .road-tag{
+
+        .road-tag {
           display: inline-block;
           margin-right: 3px;
           font-weight: 500;
           padding: 1px 6px;
-          background-color: $basic;
+          background-color: $blue-dark;
           border-radius: 4px;
           margin-top: 3px;
         }
@@ -149,39 +175,48 @@
 }
 
 
-.map-view-tab{
+.map-view-tab {
   display: flex;
   column-gap: 7px;
-  .view-tab-item{
+
+  .view-tab-item {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex: 1 1 auto;
     border-radius: 9px;
-    padding: 1px;
+    padding: 2px;
     font-size: 13px;
     font-weight: 500;
     box-shadow: $box-shadow;
-    background-color: white;
-    span{
+    background-color: $white-alpha-10;
+    color: $white-alpha-80;
+    font-family: $body-font-family;
+
+    span {
       display: block;
       padding: 2px 0;
     }
-    img{
-      border-radius: 0 0 9px 9px;
+
+    img {
+      border-radius: 0 0 8px 8px;
+      width: 100%;
     }
-    &.on{
+
+    &.on {
       background-color: $primary;
       color: white;
       font-weight: 600;
     }
+
   }
 }
 .map-basic-style{
   box-shadow: $box-shadow;
   border-radius: 10px;
 }
-.mapRightBt{
+.mapRightBt {
   width: 30px;
   height: 30px;
   border: 0;
@@ -189,17 +224,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $white;
+  background-color: $black-navy;
   transition: all 500ms;
-  &:hover{
-    background-color: $line;
+
+  svg > * {
+    fill: rgba(255,255,255,0.8);
   }
-  &:active{
+
+  &:hover {
+    background-color: $white-alpha-10;
+  }
+
+  &:active {
     background-color: $primary;
   }
-  &.active{
+
+  &.active {
     background-color: $primary;
-    svg > *{
+
+    svg > * {
       fill: $white;
     }
   }
@@ -208,7 +251,7 @@
 .map-widget-vertical-block{
   display: flex;
   flex-direction: column;
-  background-color: $white;
+  background-color: $black-navy;
   justify-content: center;
   align-items: center;
   padding: 2px;
@@ -251,7 +294,7 @@
   }
 }
 
-.sidebar-left{
+.sidebar-left {
   position: fixed;
   top: 0;
   left: 0;
@@ -264,11 +307,14 @@
   flex-direction: column;
   justify-content: space-between;
   box-shadow: $box-shadow;
+
   .sidebar-left-footer{
     padding-bottom: 20px;
   }
-  .logo{
+
+  .logo {
     padding: 15px 7px;
+    height: 54px;
   }
   .sidebar-tab{
     padding: 10px 0;
@@ -547,42 +593,46 @@
 
 }
 
-.map_widget{
+.map_widget {
   max-width: 320px;
   width: auto;
   height: auto;
-  background-color: $white;
+  background-color: $black-navy;
   border-radius: 10px;
-  .widget-box{
+
+  .widget-box {
     width: fit-content;
-    .widget-header{
+
+    .widget-header {
       padding: 10px;
       width: 100%;
-      border-bottom: 1px solid $line;
-      .widget-title{
+      border-bottom: 1px solid $line-light;
+
+      .widget-title {
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 500;
       }
     }
     .widget-body{
       width: auto;
-      background-color: $basic;
       padding: 15px 10px 10px;
       border-radius: 0 0 10px 10px;
-      ul{
+
+      ul {
         display: flex;
         flex-direction: row;
         gap: 5px;
         flex-wrap: wrap;
-        li{
+
+        li {
           display: flex;
           flex-wrap: nowrap;
           font-size: 12px;
           font-weight: 400;
-          color: $body-font-color;
           padding-right: 10px;
         }
       }
+
       .widget-legend-chip{
         display: inline-block;
         width: 18px;
@@ -805,11 +855,15 @@
   position: absolute;
   top: 74px; //map_ctrl_right 기준, 화면 기준: 54px
   right: 50px; //화면기준 50px
-  background-color: $white;
+  background-color: $black-deep;
   border-radius: 10px ;
   padding: 7px;
   width: max-content;
   min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
   .box-header{
     display: flex;
     justify-content: space-between;
@@ -824,52 +878,63 @@
     flex-direction: column;
     gap: 4px;
     flex: 1 0 120px;
-    .thematic-layer-item{
+
+    .thematic-layer-item {
       padding: 0;
-      .MuiTreeItem-content{
+      margin-bottom: 4px;
+
+      .MuiTreeItem-content {
         padding: 0;
-        background: $basic;
+        background: $white-alpha-10;
         border-radius: 8px;
         display: flex;
         min-width: 160px;
         align-items: center;
+
         .MuiTreeItem-iconContainer{
           //display: none;
           order: 2;
           margin-right: 10px;
           width: auto;
-          svg{
+          color: #fff;
+
+          svg {
             font-size: unset;
           }
+
           .css-1m9ymud-MuiSvgIcon-root{
             width: inherit;
             height: inherit;
           }
         }
+
         &.Mui-selected{
-          background: rgba(84, 166, 231, 0.20);
+          background: rgba(84, 166, 231, 0.1);
         }
-        .MuiTreeItem-label{
+        .MuiTreeItem-label {
           order: 1;
           padding: 6px 10px;
-          span{
-            color: $body-font-color;
+
+          span {
             font-size: 14px;
             line-height: 1;
           }
         }
       }
-      .MuiTreeItem-group{
+      .MuiTreeItem-group {
         margin-left: 0;
         margin-top: 4px;
-        .MuiCollapse-wrapper{
-          .MuiCollapse-wrapperInner{
+
+        .MuiCollapse-wrapper {
+          .MuiCollapse-wrapperInner {
             .MuiTreeItem-content{
-              background-color: $white;
-              &.Mui-selected{
+              background-color: transparent;
+
+              &.Mui-selected {
                 background: rgba(84, 166, 231, 0.20);
               }
-              .MuiTreeItem-label{
+
+              .MuiTreeItem-label {
                 padding: 4px 10px 4px 20px;
               }
             }
@@ -926,44 +991,55 @@
   }
 }
 
-.panel{
+.panel {
   position: absolute;
   z-index: 3;
   top: 0;
   width: 300px;
   height: 100%;
-  background-color: $basic;
+  background-color: $black-navy;
   box-shadow: $box-shadow;
   transition: all 300ms;
   display: flex;
   flex-direction: column;
-  &.side-panel{
-    left: 300px;
-    background-color: $grey-100;
-    .panel-header{
-      background-color: $basic;
+
+  &.side-panel {
+    height: unset;
+    top: 10px;
+    left: 310px;
+    width: max-content;
+    min-width: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+
+    .panel-header {
     }
+
     &.fold{
       left: -300px;
     }
   }
-  &.panel_left{
+  &.panel-left {
     left: 54px;
+    border-left: 1px solid $line-light;
+
     &.fold{
       left: -354px;
     }
   }
-  .panel-header{
-    padding: 15px 10px;
+  .panel-header {
+    padding: 0 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: $white;
-    border-bottom: 1px solid $line;
-    .panel-title{
+    height: 54px;
+    flex: 0 0 auto;
+    border-bottom: 1px solid $line-light;
+
+    .panel-title {
       font-size: 16px;
       color: $body-font-color;
-      font-weight: 600;
+      font-weight: 500;
     }
     .css-1kuq5xv-MuiButtonBase-root-MuiIconButton-root{
       padding: 0;
@@ -991,10 +1067,11 @@
         padding-bottom: 8px;
         display: flex;
         justify-content: space-between;
-        .content-row-title{
+
+        .content-row-title {
           font-size: 14px;
           color: $body-font-color;
-          font-weight: 600;
+          font-weight: 500;
           display: flex;
           gap: 5px;
         }
@@ -1002,36 +1079,41 @@
       &.empty-wrap{
         height: 80%;
       }
-      .panel-box{
-        background-color: $white;
+      .panel-box {
+        background-color: $white-alpha-5;
+        backdrop-filter: blur(2px);
         padding: 10px;
         border-radius: 10px;
         overflow: hidden;
         margin-bottom: 10px;
-        &.full-width{
+
+        &.full-width {
           padding: 0;
         }
-        &.bg-floor-chart{
-          background-color: #F2FAFF;
+
+        &.bg-floor-chart {
+          background-color: $black-alpha-40;
         }
+
         &.info-head{
           padding: 6px;
         }
         &.mb-0{
           margin-bottom: 0;
         }
-        .panel-box-header{
+        .panel-box-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
           margin-bottom: 5px;
+
           &.box-title{
-            background-color: $grey-500;
+            background-color: $black-blue;
             padding: 8px 10px;
             border-radius: 8px;
             margin-bottom: 6px;
-            .panel-box-title{
-              color: $white;
+
+            .panel-box-title {
               letter-spacing: 0;
             }
           }
@@ -1135,21 +1217,22 @@
   font-size: 85%;
 }
 
-.table-frame-wrap{
+.table-frame-wrap {
   display: flex;
-  .frame-thead{
+
+  .frame-thead {
     flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     gap: 2px;
-    .frame-th{
+
+    .frame-th {
       padding: 8px 10px;
       border-radius: 6px;
       font-size: 13px;
       line-height: 1;
-      color: #787878;
       font-weight: 600;
-      background-color: $basic;
+      background-color: $black-alpha-30;
       text-align: center;
     }
   }
@@ -1168,38 +1251,44 @@
   }
 }
 
-.table-basic{
+.table-basic {
   table-layout: auto;
   border-collapse: collapse;
   width: 100%;
+
   > thead > tr > th,
   > tbody > tr > th,
-  > tbody > tr > td{
+  > tbody > tr > td {
     padding: 8px 7px;
   }
-  > thead > tr > th{
-    background-color: #DDEDFA;
-    color: $navy;
+
+  > thead > tr > th {
+    background-color: $black-blue;
+    color: $white;
     font-size: 12px;
     text-align: center;
     font-weight: 600;
-    &:not(:last-of-type){
-      border-right: 1px solid $primary-500;
+
+    &:not(:last-of-type) {
+      border-right: 1px solid $line-light;
     }
   }
   > tbody {
     > tr {
-      &:nth-child(even) > td{
-        background-color: $basic;
+      &:nth-child(even) > td {
+        background-color: $white-alpha-5;
       }
-      &:last-of-type > td{
-        border-bottom: 1px solid $line;
+
+      &:last-of-type > td {
+        border-bottom: 1px solid $line-light;
       }
+
       > td {
         font-size: 12px;
         text-align: right;
+
         &:not(:last-of-type) {
-          border-right: 1px solid $line;
+          border-right: 1px solid $line-light;
         }
       }
     }
@@ -1230,7 +1319,7 @@
           background-color: $basic;
         }
         &:last-of-type > td{
-          border-bottom: 1px solid $line;
+          border-bottom: 1px solid $line-light;
         }
         > td {
           font-size: 12px;
@@ -1239,23 +1328,27 @@
           text-align: center;
           background-color: $basic;
           &:not(:last-of-type) {
-            border-right: 1px solid $line;
+            border-right: 1px solid $line-light;
           }
         }
 
       }
     }
   }
-  &.panel-box-table{
+
+  &.panel-box-table {
     border-radius: 10px;
     overflow: hidden;
+
     tbody > tr {
       > th {
-        background-color: #EAEAEA;
+        background-color: $black-alpha-20;
       }
-      &:not(:last-of-type) > th, &:not(:last-of-type) > td{
-        border-bottom: 0.5px solid $grey-200;
+
+      &:not(:last-of-type) > th, &:not(:last-of-type) > td {
+        border-bottom: 0.5px solid $line-light;
       }
+
       > th, td{
         padding: 6px 10px;
         font-size: 13px;
@@ -1263,14 +1356,13 @@
     }
     tbody > tr {
       > td {
-        background-color: $basic;
+          background-color: $white-alpha-5;
         }
       }
     > tbody {
       &.table-depth{
-        border-top: 2px solid $grey-200;
-        > tr > th{
-          background-color: $basic;
+        border-top: 2px solid $line-light;
+        > tr > th {
           font-weight: 400;
           text-align: right;
           font-size: 12px;
@@ -1283,13 +1375,13 @@
       }
       > .tr-highlight {
         > th {
-          background-color: $primary-200;
+          background-color: $black-alpha-40;
           color: $primary-deep;
         }
 
         > td {
           font-weight: 600;
-          background-color: $primary-100;
+          background-color: $black-alpha-30;
           color: $primary-deep;
         }
       }
@@ -1304,18 +1396,17 @@
   top: calc(50% - 21px);
   left: 360px;
   transition: all 300ms;
+
   .folding-btn{
-    background-color: $basic;
+    background-color: $black-navy;
     width: 22px;
     height: 42px;
     border-radius: 7px;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='16' fill='none'%3E%3Cpath stroke='%2354A6E7' stroke-linecap='round' stroke-width='3' d='M7 14 2.533 8.64a1 1 0 0 1 0-1.28L7 2'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: center;
-    &:hover{
-      background-color: $basic;
-    }
   }
+
   &.folding-off{
     left: 60px !important;
     .folding-btn{
@@ -1323,9 +1414,9 @@
     }
   }
 
-  &.side-panel-pos{
+  /*&.side-panel-pos{
     left: 659px;
-  }
+  }*/
 }
 
 .empty-message{
@@ -1338,7 +1429,7 @@
   .empty-text{
     font-size: 14px;
     font-weight: 500;
-    color: $grey-400;
+    color: $grey-200;
   }
 }
 
@@ -1347,19 +1438,27 @@
   z-index: 4;
   top: 77px;
   width: calc(100% - 20px);
-  background-color: $white;
+  background-color: $blue-dark;
   border-radius: 10px;
   overflow-y: auto;
   overflow-x: hidden;
   height: 400px;
+
+  .MuiPaper-root {
+    background-color: inherit;
+    border-bottom: 1px solid $black-navy;
+  }
+
   .search-bed-accordion {
     box-shadow: none;
     padding: 5px 10px;
     margin-top: 5px;
-    &.Mui-expanded{
+
+    &.Mui-expanded {
       margin: 0;
-      padding: 5px 0;
+      padding: 5px 0 10px;
     }
+
     &:before{
       height: 0.5px;
       background-color: $line;
@@ -1383,13 +1482,14 @@
       min-height: unset;
       padding: 10px;
       border-radius: 8px;
-      background-color: $basic;
+
       &.Mui-expanded{
         padding: 10px 20px;
         background-color: unset;
       }
       .search-accordion-title{
         font-size: 14px;
+        color: $body-font-color;
       }
       .MuiAccordionSummary-content{
         margin: 0;
@@ -1403,14 +1503,15 @@
   }
     .search-bed-item-wrap {
     padding: 0 10px 0;
+
       .MuiList-root{
         border-radius: 8px;
         overflow: hidden;
         padding-top: 0;
         padding-bottom: 0;
+        background-color: rgba(0, 0, 0, 0.3);
       }
     .search-bed-item{
-      background-color: $basic;
       color: $body-font-color;
       padding: 12px 10px;
       .MuiTouchRipple-root{
@@ -1422,41 +1523,47 @@
   }
 }
 
-.form-control{
+.form-control {
   display: flex;
   align-items: center;
   gap: 8px;
+
   &.group{
     justify-content: space-between;
   }
+
   span{
     color: $body-font-color;
     font-weight: bold;
   }
-  .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+
+  .date-picker {
      *{
       border: 0;
       outline: 0;
       outline-offset: 0;
     }
 
-    .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+    .MuiInputBase-root {
       border-radius: 8px;
-      background-color: $white;
+      background-color: $blue-dark;
       outline: 0;
       outline-offset: 0;
-      .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
-        padding: 6px 0px 6px 10px;
-        font-size: 14px;
-        letter-spacing: -0.2px;
-        color: $grey-400;
+
+      input {
+        padding: 6px 0 6px 10px;
+        font-size: 13px;
+        color: #f5f5f5;
+        font-weight: 300;
       }
-      .css-i4bv87-MuiSvgIcon-root{
-        font-size: 19px;
+
+      .MuiButtonBase-root {
+        .MuiSvgIcon-root {
+          font-size: 19px;
+          color: rgba(255,255,255,0.5);
+        }
       }
     }
-  }
-  .date-picker{
   }
 
   .toggle-btn-wrap{
@@ -1466,32 +1573,37 @@
     &.css-1ujnqem-MuiTabs-root{
       min-height: unset;
     }
-    .MuiTabs-flexContainer{
+
+    .MuiTabs-flexContainer {
       border-bottom: 0;
-      background-color: $grey-100;
-      border-radius: 30px;
+      background-color: $blue-dark;
+      border-radius: 8px;
       padding: 3px;
-      .tab-item{
+
+      .tab-item {
         z-index: 3;
         flex: 1 0 auto;
-        font-weight: 500;
-        font-family: $body-font-family;
+        font-weight: 400;
         padding: 0;
         min-width: 30px;
         min-height: 30px;
         overflow: hidden;
-        .MuiTouchRipple-root{
-          border-radius: 20px;
+        color: $white-alpha-50;
+
+        .MuiTouchRipple-root {
+          border-radius: 6px;
           background-color: unset;
         }
-        &.Mui-selected{
-          font-weight: 600;
+
+        &.Mui-selected {
+          font-weight: 500;
           color: $white;
         }
       }
 
     }
-    .MuiTabs-indicator{
+
+    .MuiTabs-indicator {
       display: flex;
       justify-content: center;
       background-color: transparent;
@@ -1499,10 +1611,11 @@
       top: 3px;
       left: 3px;
       z-index: 2;
-      &:after{
+
+      &:after {
         content: '';
         height: 30px;
-        border-radius: 20px;
+        border-radius: 6px;
         width: 100%;
         background-color: $primary;
       }
@@ -1530,13 +1643,15 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-        li{
+
+      li {
         background-color: unset;
         padding: 0;
       }
-      .content-list-item{
+
+      .content-list-item {
         position: relative;
-        background-color: $grey-400;
+        background-color: $blue-dark;
         border-radius: 8px;
         display: flex;
         justify-content: space-between;
@@ -1554,19 +1669,22 @@
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
-          .list-title, .list-title-sub{
-            background-color: $black-navy;
+
+          .list-title, .list-title-sub {
+            background-color: $black-deep;
             padding: 7px 9px;
             border-radius: 6px;
           }
-          .list-title{
+
+          .list-title {
             font-size: 14px;
             font-weight: 400;
             margin-bottom: 8px;
             line-height: 1;
             color: $white;
           }
-          .list-title-sub{
+
+          .list-title-sub {
             font-size: 12px;
             line-height: 1;
             margin: 0;
@@ -1645,22 +1763,25 @@
 
 }
 
-.panel-tabs-wrap{
-  &.css-1ujnqem-MuiTabs-root{
+.panel-tabs-wrap {
+  &.MuiTabs-root {
     min-height: 40px;
   }
-  .MuiTabs-flexContainer{
+
+  .MuiTabs-flexContainer {
     width: 100%;
-    border-bottom: 1px solid $grey-200;
-    .tab-item{
+    border-bottom: 1px solid $line-light;
+
+    .tab-item {
       flex: 1 0 50%;
-      font-weight: 500;
-      font-family: $body-font-family;
+      font-weight: 400;
       padding: 0;
       min-width: 70px;
       min-height: 40px;
-      &.Mui-selected{
-        font-weight: 700;
+      color: $white-alpha-50;
+
+      &.Mui-selected {
+        font-weight: 600;
         color: $body-font-color;
       }
       &.Mui-disabled{
@@ -1702,19 +1823,21 @@
     }
   }
 }
-.control-block{
+.control-block {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 15px 10px 10px;
   border-bottom: 1px solid rgba(0,0,0,0.05);
-  .switch-label{
+
+  .switch-label {
     font-size: 14px;
   }
-  &.accordion{
+
+  &.accordion {
     flex-direction: column;
     justify-content: flex-start;
-    background-color: $grey-200;
+    background-color: $black-navy;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     box-shadow: none;
@@ -1722,20 +1845,25 @@
     padding: 0;
     color: inherit;
     margin-top: auto;
-    &.Mui-expanded{
+
+    &.Mui-expanded {
       margin-top: auto;
     }
-    &:before{
+
+    &:before {
       content: none;
     }
-    .accordion-header{
+
+    .accordion-header {
       width: 100%;
       min-height: unset;
       padding: 15px 15px 15px 10px;
       margin: 0;
-      .Mui-expanded, .MuiAccordionSummary-content{
+
+      .Mui-expanded, .MuiAccordionSummary-content {
         margin: 0;
-        &.MuiAccordionSummary-expandIconWrapper{
+
+        &.MuiAccordionSummary-expandIconWrapper {
           height: 2px;
           width: 13px;
           background-color: #454545;
@@ -1747,27 +1875,34 @@
     .css-12if0ny-MuiSvgIcon-root, .MuiSvgIcon-fontSizeMedium, .MuiSvgIcon-root{
       font-size: 12px;
     }
-    .accordion-title{
+
+    .accordion-title {
       font-size: 14px;
+      font-weight: 500;
     }
-    .MuiCollapse-root{
+
+    .MuiCollapse-root {
       width: 100%;
     }
-    .accordion-content{
-      background-color: white;
+
+    .accordion-content {
+      background-color: $white-alpha-5;
       border-radius: 10px;
       margin: 0 10px 10px;
       padding: 15px;
-      color: $body-font-color;
-      dl{
+
+      dl {
         line-height: 1.5;
-        dt{
-          font-weight: 600;
+
+        dt {
+          font-weight: 500;
         }
-        dd{
-          color: #7f7f7f;
+
+        dd {
+          color: $white-alpha-50;
         }
-        &:not(:last-of-type){
+
+        &:not(:last-of-type) {
           margin-bottom: 15px;
         }
       }

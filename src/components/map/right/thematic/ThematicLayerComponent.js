@@ -3,6 +3,7 @@ import { useRef } from "react";
 import ThematicLayerCheckBoxList from "./ThematicLayerCheckBoxList";
 import ThematicTreeLayerCheckBoxList from "./ThematicTreeLayerCheckBoxList";
 import { useSelector } from "react-redux";
+import BaseMapWidget from "@components/map/top/BaseMapWidget";
 
 
 const ThematicLayerComponent = () => {
@@ -12,10 +13,12 @@ const ThematicLayerComponent = () => {
 
     return (
         <>  
-                <div className="thematic-layers-box" style={{display: thematicMode ? '': 'none'}}>
-                        {/* <ThematicLayerCheckBoxList ref={treeRef} /> */}
-                        <ThematicTreeLayerCheckBoxList ref={treeRef} />
-                </div>
+            <div className="thematic-layers-box" style={{display: thematicMode ? '': 'none'}}>
+
+                <BaseMapWidget />   {/* 배경지도 */}
+                {/* <ThematicLayerCheckBoxList ref={treeRef} /> */}
+                <ThematicTreeLayerCheckBoxList ref={treeRef} />
+            </div>
 
         </>
     )

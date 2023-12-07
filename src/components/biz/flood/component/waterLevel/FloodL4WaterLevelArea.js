@@ -169,7 +169,7 @@ const FloodL4WaterLevelArea = () => {
                     </table>
                 </div>
                 <div className="panel-box-header">
-                    <h3 className="panel-box-title">수위</h3>
+                    <h3 className="panel-box-title">저수지</h3>
                 </div>
                 <div className="panel-box-content">
                     <table className="table-basic panel-box-table">
@@ -178,20 +178,18 @@ const FloodL4WaterLevelArea = () => {
                             <col style={{width: 'auto'}}/>
                         </colgroup>
                         <tbody>
-                            <tr>
-                                <th>저수면적<span className="unit-th">(EL.m)</span></th>
-                                <td>{selectWaterLevel && selectWaterLevel.properties.waterStor}</td>
-                            </tr>
-                        </tbody>
-                        <tbody className={"table-depth"}>
-                            <tr>
-                                <th>총 저수량<span className="unit-th">(EL.m)</span></th>
-                                <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
-                            </tr>
-                            <tr>
-                                <th>유효저수량<span className="unit-th">(EL.m)</span></th>
-                                <td>{selectWaterLevel && selectWaterLevel.properties.efstr}</td>
-                            </tr>
+                        <tr>
+                            <th>저수면적<span className="unit-th">(EL.m)</span></th>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <th>총 저수량<span className="unit-th">(EL.m)</span></th>
+                            <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
+                        </tr>
+                        <tr>
+                            <th>유효저수량<span className="unit-th">(EL.m)</span></th>
+                            <td>{selectWaterLevel && selectWaterLevel.properties.efstr}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
