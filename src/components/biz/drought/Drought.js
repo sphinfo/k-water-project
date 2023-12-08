@@ -49,15 +49,10 @@ const Drought = () => {
                 dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: false})
                 setStation(false)
             }else{
-
-                
                 features[0].entity.billboard.image = pin2
-
                 dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: features[0]})
                 setStation(features[0].properties.Station)
             }
-            
-            
         }
     }));
 

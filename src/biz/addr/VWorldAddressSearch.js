@@ -7,7 +7,7 @@ class VWorldAddressSearch{
   _size = '&pageunit=10'
 
   constructor() {
-    this.apiKey = '77143F13-AD7D-3DC3-8B6F-673CD59B01B6';
+    this.apiKey = '4660313D-1779-3BEA-8424-812231F3B59D';
 
     this._geoAxios = new BaseGeoserverAxios()
 

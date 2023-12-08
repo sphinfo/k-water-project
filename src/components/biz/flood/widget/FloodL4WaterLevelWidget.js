@@ -5,12 +5,18 @@ import Tabs from "@mui/material/Tabs";
 import { Switch } from "@mui/material";
 import FloodL4WaterLevelArea from "../component/waterLevel/FloodL4WaterLevelArea";
 import FloodL4WaterLevelChange from "../component/waterLevel/FloodL4WaterLevelChange";
+import { FLOOD_SELECT_WATER_LEVEL } from "@redux/actions";
+import pin from "@images/map-icon-st.svg"
 
 const FloodL4WaterLevelWidget = () => {
 
+    const dispatch = useDispatch()
+    const {  selectWaterLevel } = useSelector(state => state.flood)
+
     useEffect(()=>{
         return () =>{
-            
+            selectWaterLevel.entity.billboard.image = pin
+            dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: false})
         }
     },[])
 

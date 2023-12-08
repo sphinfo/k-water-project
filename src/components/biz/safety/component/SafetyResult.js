@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_DETAIL_RESET, SAFETY_SELECT_BOX, SAFETY_SELECT_RESULT } from "@redux/actions";
+import { SAFETY_CLICK_MODE, SAFETY_DETAIL_RESET, SAFETY_SELECT_BOX, SAFETY_SELECT_DISPLACE_LEVEL, SAFETY_SELECT_RESULT } from "@redux/actions";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
@@ -17,15 +17,43 @@ const example = [
   {name:'DESC', date: '23.11.10~23.11.16', main:'SBAS', mainName: '(분산산란체)', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
 ]
 
+const displaceLevelData = {name:'변위등급', store:'Safety', layer: '20231114_SAFETY_YONGDAM', checked: false}
+
 const SafetyResult = () => {
     
     const dispatch = useDispatch()
 
     // 안전 검색조건
-    const { text, selectBox } = useSelector(state => state.safety)
-
+    const { text, selectBox, select4Level, select3Level } = useSelector(state => state.safety)
 
     const [exampleList, setExampleList] = useState([])
+
+    //변위등급 button
+    const [levelButton, setLevelButton] = useState(false)
+
+    //변위등급 레이어 on / off
+    useEffect(()=>{
+      levelButton ? dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: displaceLevelData}) : dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: false})
+      if(levelButton){
+        //변위등급이 선택되면 비교 클릭모드 OFF
+        dispatch({type:SAFETY_CLICK_MODE, compLayerClick: false})
+      }
+    },[levelButton])
+
+    //3레벨이 해제되면 변위등급도 OFF
+    useEffect(()=>{
+      if(!select3Level){
+        setLevelButton(false)
+      }
+
+    },[select3Level])
+
+    //변위등급 변화
+    useEffect(()=>{
+        if(select4Level){
+          setLevelButton(false)
+        }
+    },[select4Level])
 
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
@@ -84,11 +112,6 @@ const SafetyResult = () => {
 
     //결과값 출력
     const renderResult = (obj, i) =>(
-      // <List className={'content-list'} sx={{
-      //   overflow: 'auto',
-      // }}>
-      //   {obj.length > 0 && obj.map((obj, i2)=> renderItem(obj, i, i2))}
-      // </List>
         <div className="content-row">
             {obj.length > 0 &&
                 <div className="content-list-wrap">
@@ -135,6 +158,44 @@ const SafetyResult = () => {
         </>
     )
 
+
+    //변위등급 
+    const renderSafetyLevel = () =>{
+      return (
+        <div className="content-row">
+          <div className="content-list-wrap">
+            <h4 className="content-list-title">변위등급</h4>
+              <List className="content-list" sx={{overflow: 'auto'}} key={`list`}>
+                <ListItem selected={true}>
+                  <ListItemButton
+                    className={`content-list-item ${levelButton ? 'item-on' : ''}`}
+                    selected={true}
+                    disableTouchRipple={true}
+                    button={true}
+                    color={'primary'}
+                    onClick={()=>{setLevelButton(!levelButton)}}
+                  >
+                    <div className="list-body">
+                      <div className="img-box">
+                        <div className="list-shadow"></div>
+                        <img src={img}/>
+                      </div>
+                      <div className="list-info-wrap">
+                        <p className="list-info">변위등급</p>
+                        <p className="list-info">변위등급</p>
+                        <p className="list-info">변위등급</p>
+                        <p className="list-info">변위등급</p>
+                      </div>
+                    </div>
+                  </ListItemButton>
+                </ListItem>
+              </List>
+          </div>
+        </div>
+      )
+        
+    }
+
   return (
 
     <div className="content-body border-top filled">
@@ -150,6 +211,8 @@ const SafetyResult = () => {
 
         {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
 
+        {exampleList.length > 0 && displaceLevelData && renderSafetyLevel()}
+        
       </div>
     )
 }

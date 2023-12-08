@@ -1,5 +1,6 @@
 import MapManager from "@gis/MapManager"
 import {Cartesian2, Cartesian3, SceneTransforms, defined} from "cesium"
+import { G$GetPointToDetail } from ".."
 
 /* 안전 html 오버레이  */
 class SafetyOverlay {
@@ -8,6 +9,8 @@ class SafetyOverlay {
 
 	async _addOverlay(longitude, latitude, properties) {
 
+        this.removeAll()
+        
         //지도
 		let map = MapManager.map
 
@@ -25,9 +28,9 @@ class SafetyOverlay {
         widgetHeader.className = 'map-popup-box-header'
 
         // h4 요소 생성
-        const title = document.createElement('h4')
-        title.className = 'map-popup-box-title'
-        title.textContent = '변위 등급'
+        //const title = document.createElement('h4')
+        //title.className = 'map-popup-box-title'
+        //title.textContent = '변위 등급'
 
         // IconButton 요소 생성
         const iconButton = document.createElement('div')
@@ -37,13 +40,15 @@ class SafetyOverlay {
             map.container.removeChild(overlay)
         })
 
+        let coord = G$GetPointToDetail(longitude, latitude)
+
         // widget-body div 요소 생성
         const widgetBody = document.createElement('div')
         widgetBody.className = 'map-popup-box-body'
-        widgetBody.textContent = `등급 ${properties.GRAY_INDEX}(${properties.GRAY_INDEX === 1 ? '위험' : properties.GRAY_INDEX === 2 ? '보통' : properties.GRAY_INDEX === 3 ? '안전' : 'none'} )`
+        widgetBody.textContent = `LON ${coord.lonDms} lAT ${coord.latDms}`
 
         // 요소들을 구조에 맞게 조립
-        widgetHeader.appendChild(title);
+        //widgetHeader.appendChild(title);
         widgetHeader.appendChild(iconButton)
         widgetBox.appendChild(widgetHeader)
         widgetBox.appendChild(widgetBody)

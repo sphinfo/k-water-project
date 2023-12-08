@@ -19,7 +19,7 @@ const MapPositionWidget = () => {
     const changeAddr = async(event)=>{
         console.info(event)
         let lonlat = G$cartesianToLongLat(event.detail)
-        const responseA = await request(`/vworld/req/address?service=address&request=getAddress&version=2.0&crs=epsg:4326&point=${lonlat.longitude},${lonlat.latitude}&format=json&type=both&zipcode=true&simple=false&key=77143F13-AD7D-3DC3-8B6F-673CD59B01B6`);
+        const responseA = await request(`/vworld/req/address?service=address&request=getAddress&version=2.0&crs=epsg:4326&point=${lonlat.longitude},${lonlat.latitude}&format=json&type=both&zipcode=true&simple=false&key=4660313D-1779-3BEA-8424-812231F3B59D`);
         if(responseA.data.response.result){
             setAddr(responseA.data.response.result[0].text)
         }

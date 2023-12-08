@@ -5,7 +5,7 @@ import {
   SAFETY_START_DATE,
   SAFETY_END_DATE,
   SAFETY_TEXT_SAFETY,
-  SAFETY_DETAIL_SEARCH_TYPE,
+  SAFETY_CLICK_MODE,
   SAFETY_DETAIL_SEARCH_TAB_TYPE,
   SAFETY_DETAIL_RESET,
   SAFETY_SELECT_RESULT,
@@ -28,7 +28,7 @@ const initialState = {
   compLayerClick: false, //4레벨 진행시 true ( 해당 플레그 값으로 비교 클릭 이벤트 및 기타 기능 활성화)
   
   //4레벨 탭 
-  detailSearchTabType: 'datas',
+  detailSearchTabType: false,
 
   /* 3레벨 선택 검색결과 */
   select3Level: false,
@@ -62,7 +62,7 @@ function safetyReducer(state = initialState, action) {
     case SAFETY_END_DATE:
       return { ...state, endDate: action.date }
 
-    case SAFETY_DETAIL_SEARCH_TYPE:
+    case SAFETY_CLICK_MODE:
       return { ...state, compLayerClick: action.compLayerClick }
     
     case SAFETY_DETAIL_SEARCH_TAB_TYPE:

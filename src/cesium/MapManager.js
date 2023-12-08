@@ -9,7 +9,7 @@ class MapManager {
     _map = null
     _baseMapLayer = null
     _baseMapType = 'Satellite'
-    _vworld_key = '77143F13-AD7D-3DC3-8B6F-673CD59B01B6'
+    _vworld_key = '4660313D-1779-3BEA-8424-812231F3B59D'
     _vwroldLayer = { Base:{layer : 'Base', tileType : 'png'}, 
                      gray: {layer : 'gray', tileType : 'png'},
                      midnight: {layer : 'midnight', tileType : 'png'},

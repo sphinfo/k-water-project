@@ -65,6 +65,12 @@ const Flood = () => {
         }
     }));
 
+    useEffect(()=>{
+        //WIDGET 창이 닫혔을시
+        if(!selectWaterLevel){
+            setStation(false)
+        }
+    },[selectWaterLevel])
 
     /* 초기 세팅 사항 */
     useEffect(()=>{

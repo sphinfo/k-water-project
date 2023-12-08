@@ -6,6 +6,7 @@ const widgets = {
 
     //안전
     SafetyDisplaceSpeedWidget: lazy(() => import('@components/biz/safety/widget/SafetyDisplaceSpeedWidget')),
+    SafetyL4CompWidget: lazy(() => import('@components/biz/safety/widget/SafetyL4CompWidget')),
 
     LegendWidget: lazy(() => import('@components/legend/LegendWidget')),
     BaseLegendWidget: lazy(() => import('@components/legend/BaseLegendWidget')),
@@ -74,7 +75,12 @@ const WidgetConfig = {
     /**
      * 안전
      */
-
+    'SafetyL4CompWidget': {
+        title: '지점별 변위 속도 비교',
+        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        instance: widgets.SafetyL4CompWidget
+    },
+    
 
 
     /**

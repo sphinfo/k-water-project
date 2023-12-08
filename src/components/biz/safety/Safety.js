@@ -121,8 +121,12 @@ const Safety = () => {
 
             //변위등급을 껏을시 4레벨이 선택되어 있으면 4레벨만 켜기  /  4레벨이 꺼져있으면 3레벨 켜기
             if(select4Level){
+                const {store, layer} = select4Level
+                GisLayerClickTool.addLayer(bizName, [`${store}:${layer}`])
                 safety4LevelLayerRef.current.setVisible(true)
             }else{
+                const {store, layer} = select3Level
+                GisLayerClickTool.addLayer(bizName, [`${store}:${layer}`])
                 safety3LevelLayerRef.current.setVisible(true)
             }
 
