@@ -1,5 +1,6 @@
 import BaseGeoserverAxios from "@common/axios/BaseGeoserverAxios";
 import createAxios from "@common/axios/creatAxios";
+import MapManager from "@gis/MapManager";
 
 
 class VWorldAddressSearch{
@@ -7,7 +8,7 @@ class VWorldAddressSearch{
   _size = '&pageunit=10'
 
   constructor() {
-    this.apiKey = '4660313D-1779-3BEA-8424-812231F3B59D';
+    this.apiKey = MapManager._vworld_key;
 
     this._geoAxios = new BaseGeoserverAxios()
 
