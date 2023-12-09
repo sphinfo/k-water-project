@@ -7,6 +7,7 @@ import { G$BaseSelectBoxArray } from "@gis/util";
 import { FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
 import { Button } from "@mui/material";
+import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 
 
 //sample 데이터
@@ -81,33 +82,29 @@ const FloodResult = () => {
 
     //결과값 출력 ( 데이터 구성을 2중 배열로 사용하려고 생각중 )
     const renderResult = (obj, i) =>(
-      
-      //<List className={'content-list'} sx={{
-        //overflow: 'auto',
-      //}}>
-//        {obj.length > 0 && obj.map((obj, i2)=> renderItem(obj, i, i2))}
-  //    </List>
       <>
-        {obj.length > 0 &&
-         <>
-           <p style={{display: obj[0].store === floodResultTab ? '' : 'none'}}>{obj[0].main}</p>
-           <List className={'content-list'} sx={{ overflow: 'auto' }} key={`list-${i}`}>
-             {
-               obj.map((item, i2) => (
-                 <>
-                   {renderItem(item, i, i2)}
-                 </>
-               ))
-             }
-           </List>
-         </>
-        }
+        <div className="content-row">
+            {obj.length > 0 &&
+                <div className="content-list-wrap">
+                    <h4 className="content-list-title" style={{display: obj[0].store === floodResultTab ? '' : 'none'}}>{obj[0].main}</h4>
+                    <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
+                        {
+                            obj.map((item, i2) => (
+                                <>
+                                    {renderItem(item, i, i2)}
+                                </>
+                            ))
+                        }
+                    </List>
+                </div>
+            }
+        </div>
      </>
    )
 
     //list item 설정
     const renderItem = (obj, i, i2) => (
-        <>
+      <>
           <ListItem key={i2} selected={true} style={{display: obj.store === floodResultTab ? '' : 'none'}}>
             <ListItemButton
               className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
@@ -117,13 +114,17 @@ const FloodResult = () => {
               color={'primary'}
               onClick={() => checkboxChange(i, i2)}
             >
-              <div className="list-title-wrap">
-                <h3 className={'list-title'}>{obj.name}</h3>
-                <h4 className="list-title-sub">{obj.date}</h4>
-              </div>
               <div className="list-body">
-                <div className="list-shadow"></div>
-                <div className="img-box">{/*images*/}</div>
+                <div className="img-box">
+                  <div className="list-shadow"></div>
+                  <img src={img}/>
+                </div>
+                <div className="list-info-wrap">
+                  <p className="list-info">{obj.name}</p>
+                  <p className="list-info">{obj.layer}</p>
+                  <p className="list-info">{obj.main + obj.mainName}</p>
+                  <p className="list-info">{obj.date}</p>
+                </div>
               </div>
             </ListItemButton>
           </ListItem>
@@ -144,12 +145,7 @@ const FloodResult = () => {
             }  
 
             { exampleList.length > 0 && <FloodResultTab />}
-            <div className="content-row">
-                
-                <div className={'content-list-wrap'}>
-                  {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
-                </div>
-              </div>
+            {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
           </div>
         </>
     )

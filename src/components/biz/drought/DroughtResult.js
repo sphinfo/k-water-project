@@ -8,6 +8,7 @@ import { DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER } from "@r
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Button } from "@mui/material";
+import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 
 
 //sample 데이터
@@ -79,28 +80,27 @@ const DroughtResult = () => {
 
     //결과값 출력 ( 데이터 구성을 2중 배열로 사용하려고 생각중 )
     const renderResult = (obj, i) =>(
-      <>
-        {obj.length > 0 &&
-         <>
-           <List className={'content-list'} sx={{ overflow: 'auto' }} key={`list-${i}`}>
-             {
-               obj.map((item, i2) => (
-                 <>
-                   {renderItem(item, i, i2)}
-                 </>
-               ))
-             }
-           </List>
-         </>
-        }
-     </>
+      <div className="content-row">
+          {obj.length > 0 &&
+              <div className="content-list-wrap">
+                  <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
+                      {
+                          obj.map((item, i2) => (
+                              <>
+                                  {renderItem(item, i, i2)}
+                              </>
+                          ))
+                      }
+                  </List>
+              </div>
+          }
+      </div>
     )
 
     //list item 설정
     const renderItem = (obj, i, i2) => (
         <>
-          {/* {i2 === 0 ? obj.main : ''} */}
-          <ListItem key={i2} selected={true}>
+        <ListItem key={i2} selected={true}>
             <ListItemButton
               className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
               selected={true}
@@ -109,17 +109,20 @@ const DroughtResult = () => {
               color={'primary'}
               onClick={() => checkboxChange(i, i2)}
             >
-              <div className="list-title-wrap">
-                <h3 className={'list-title'}>{obj.name}</h3>
-                <h4 className="list-title-sub">{obj.date}</h4>
-              </div>
               <div className="list-body">
-                <div className="list-shadow"></div>
-                <div className="img-box">{/*images*/}</div>
+                <div className="img-box">
+                  <div className="list-shadow"></div>
+                  <img src={img}/>
+                </div>
+                <div className="list-info-wrap">
+                  <p className="list-info">{obj.name}</p>
+                  <p className="list-info">{`obj.layer`}</p>
+                  <p className="list-info">{obj.main + obj.mainName}</p>
+                  <p className="list-info">{obj.date}</p>
+                </div>
               </div>
             </ListItemButton>
           </ListItem>
-          
         </>
     )
 
@@ -143,17 +146,12 @@ const DroughtResult = () => {
                     <Tab className={"tab-item"} label={'물리'} value={'a'}></Tab>
                     <Tab className={"tab-item"} label={'강우'} value={'b'}></Tab>
                     <Tab className={"tab-item"} label={'토양'} value={'c'}></Tab>
-                    <Tab className={"tab-item"} label={'유출'} value={'d'}></Tab>
                   </Tabs>
                 </div>
               }
               
             </div>
-            <div className="content-row">
-                <div className={'content-list-wrap'}>
-                    {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
-                </div>
-              </div>
+            {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
           </div>
         </>
     )
