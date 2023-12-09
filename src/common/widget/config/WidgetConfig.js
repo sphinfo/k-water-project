@@ -18,6 +18,9 @@ const widgets = {
     
     //가뭄
     DroughtObsrvWidget: lazy(() => import('@components/biz/drought/widget/DroughtObsrvWidget')),
+
+    //환경
+    EnvironmentLandCoverWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentLandCoverWidget')),
     
 };
 
@@ -86,6 +89,13 @@ const WidgetConfig = {
     /**
      * 환경
      */
+
+    'EnvironmentLandCoverWidget': {
+        title: '수변 피복 분석',
+        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        instance: widgets.EnvironmentLandCoverWidget
+    },
+    
 
 
 };

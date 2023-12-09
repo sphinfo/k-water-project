@@ -18,16 +18,16 @@ const SafetyOptions = () => {
                 {name:'사연댐', code:'a8'},
                 {name:'소양강댐', code:'a10'}
             ]
-        },{
-            name: '지역',
-            code: 'AREA',
-            items: [
-                {name:'강원', code:'ar1'},
-                {name:'충남', code:'ar2'},
-                {name:'충청', code:'ar3'},
-                {name:'전라', code:'ar4'},
-                {name:'경상', code:'ar5'},
-            ]
+        // },{
+        //     name: '지역',
+        //     code: 'AREA',
+        //     items: [
+        //         {name:'강원', code:'ar1'},
+        //         {name:'충남', code:'ar2'},
+        //         {name:'충청', code:'ar3'},
+        //         {name:'전라', code:'ar4'},
+        //         {name:'경상', code:'ar5'},
+        //     ]
         },
         {
             name:'보', 

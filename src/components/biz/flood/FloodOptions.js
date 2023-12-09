@@ -20,16 +20,16 @@ const FloodOptions = () => {
                 {name:'영천댐', code:'YC'},
                 {name:'사연댐', code:'SY'},
             ]
-        },{
-          name: '지역',
-          code: 'AREA',
-          items: [
-            {name:'수도권', code:'ar1'},
-            {name:'강원', code:'ar2'},
-            {name:'충청', code:'ar3'},
-            {name:'전라', code:'ar4'},
-            {name:'경상', code:'ar5'},
-          ]
+        // },{
+        //   name: '지역',
+        //   code: 'AREA',
+        //   items: [
+        //     {name:'수도권', code:'ar1'},
+        //     {name:'강원', code:'ar2'},
+        //     {name:'충청', code:'ar3'},
+        //     {name:'전라', code:'ar4'},
+        //     {name:'경상', code:'ar5'},
+        //   ]
         },{
             name:'도시', 
             code: 'CITY',

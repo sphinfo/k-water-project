@@ -1,6 +1,6 @@
 import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_DETAIL_SEARCH_TAB_TYPE, SET_SIDE_PANEL } from "@redux/actions";
+import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_DETAIL_SEARCH_TAB_TYPE, SET_SIDE_PANEL, SAFETY_CLICK_MODE } from "@redux/actions";
 import { G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 
@@ -102,11 +102,11 @@ const Safety = () => {
     useEffect(()=>{
 
         GisLayerClickTool.resetLayer(bizName)
+        dispatch({type: SAFETY_CLICK_MODE, compLayerClick: false})
+
         if(displaceLevel){
 
             //변위 등급 선택시 비교탭 off 및 비교클릭이벤트 해제
-            dispatch({type:SAFETY_DETAIL_SEARCH_TAB_TYPE, detailSearchTabType:'datas' })
-
             safety3LevelLayerRef.current.setVisible(false)
             safety4LevelLayerRef.current.setVisible(false)
 
@@ -117,7 +117,6 @@ const Safety = () => {
         }else{
 
             safetyDisplaceLevelLayerRef.current.remove()
-
 
             //변위등급을 껏을시 4레벨이 선택되어 있으면 4레벨만 켜기  /  4레벨이 꺼져있으면 3레벨 켜기
             if(select4Level){
@@ -201,6 +200,7 @@ const Safety = () => {
 
         G$removeWidget('BaseLegendWidget')
         G$removeWidget('BaseLegendgGradientWidget')
+        dispatch({type: SAFETY_CLICK_MODE, compLayerClick: false})
 
 
         //변위등급이 켜져잇는경우 STEP 1
@@ -232,7 +232,8 @@ const Safety = () => {
                 //3레벨이 켜져있는경우
                 if(select3Level){
                     G$addWidget('BaseLegendgGradientWidget', { 
-                        params: {title:select3Level.main === 'PSI' ? '고정산란체 - L3TD-A1' : '분란산란체 - L3TD-A2', 
+                        //params: {title:select3Level.main === 'PSI' ? '고정산란체 - L3TD-A1' : '분란산란체 - L3TD-A2', 
+                        params: {title:'변위 속도(cm/year)', 
                         min:-0.3, 
                         max: 3, 
                         datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}})

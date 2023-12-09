@@ -4,8 +4,8 @@ import EnvironmentResult from "./EnvironmentResult";
 import { useDispatch, useSelector } from "react-redux";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import { G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
-import EnvironmentLandCover from "./component/EnvironmentLandCover";
 import { ENV_RESET, SET_SIDE_PANEL } from "@redux/actions";
+import EnvironmentL4 from "./component/EnvironmentL4";
 
 /* 환경 */
 const Environment = () => {
@@ -113,7 +113,7 @@ const Environment = () => {
       {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
       {selectEnvironmentLayer && selectEnvironmentLayer.store === 'LandCover' && ( 
         <div className={`panel side-panel ${!panelVisible ? 'fold' : ''}` }>
-          <EnvironmentLandCover /> 
+          <EnvironmentL4 /> 
         </div>
       
       )}
