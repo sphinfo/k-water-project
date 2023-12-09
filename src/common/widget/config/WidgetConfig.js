@@ -7,6 +7,7 @@ const widgets = {
     //안전
     SafetyDisplaceSpeedWidget: lazy(() => import('@components/biz/safety/widget/SafetyDisplaceSpeedWidget')),
     SafetyL4CompWidget: lazy(() => import('@components/biz/safety/widget/SafetyL4CompWidget')),
+    SafetyL4LevelDataWidget: lazy(() => import('@components/biz/safety/widget/SafetyL4LevelDataWidget')),
 
     LegendWidget: lazy(() => import('@components/legend/LegendWidget')),
     BaseLegendWidget: lazy(() => import('@components/legend/BaseLegendWidget')),
@@ -83,6 +84,12 @@ const WidgetConfig = {
         style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.SafetyL4CompWidget
     },
+    'SafetyL4LevelDataWidget': {
+        title: '변위 등급',
+        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        instance: widgets.SafetyL4LevelDataWidget
+    },
+    
     
 
 

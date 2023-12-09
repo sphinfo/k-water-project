@@ -10,7 +10,6 @@ const SafetyL4 = () => {
 
     return (
         <>
-
             <SafetyL4CompBtn />
             <SafetyL4Thematic />
             <BaseOragDataInfo a={true} b={true}/>

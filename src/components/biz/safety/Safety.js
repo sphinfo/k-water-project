@@ -52,6 +52,7 @@ const Safety = () => {
             //변위등급이 켜져 있는 경우 ovelay 
             if(displaceLevel){
                 const {clickPosition, properties} = features[0]
+                dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: features[0]})
                 overlayRef.current._addOverlay(clickPosition.longitude, clickPosition.latitude, properties)
             }
         }
@@ -106,6 +107,9 @@ const Safety = () => {
 
         if(displaceLevel){
 
+            //변위등급 위젯 띄우기
+            G$addWidget('SafetyL4LevelDataWidget')
+
             //변위 등급 선택시 비교탭 off 및 비교클릭이벤트 해제
             safety3LevelLayerRef.current.setVisible(false)
             safety4LevelLayerRef.current.setVisible(false)
@@ -116,6 +120,7 @@ const Safety = () => {
 
         }else{
 
+            G$removeWidget('SafetyL4LevelDataWidget')
             safetyDisplaceLevelLayerRef.current.remove()
 
             //변위등급을 껏을시 4레벨이 선택되어 있으면 4레벨만 켜기  /  4레벨이 꺼져있으면 3레벨 켜기
@@ -217,6 +222,9 @@ const Safety = () => {
                 ]} 
             })
         }else{
+
+            G$removeWidget('SafetyL4LevelDataWidget')
+
             //변위등급 범례 on
             //3레벨,4레벨 켜져있는경우 ( 4레벨만 on )
             if(select3Level && select4Level){
