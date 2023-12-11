@@ -29,6 +29,7 @@ dl, dt, dd, ul, li{
 
 button{
   background-color: unset;
+  cursor: pointer;
 }
 
 
@@ -81,6 +82,9 @@ button{
   border-radius: 8px;
   line-height: 1;
   cursor: pointer;
+  display: flex;
+  gap: 5px;
+  align-items: center;
 
   &.empty-btn {
     background-color: transparent;

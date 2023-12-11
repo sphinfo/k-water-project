@@ -1,11 +1,10 @@
 import React from "react";
 import Tooltip from '@mui/material/Tooltip';
-import IconButton from "@mui/material/IconButton";
 
 const InfoA = (props) => {
     return (
         <>
-            <Tooltip placement="right-start" title={
+            <Tooltip placement="top" title={
                 <React.Fragment>
                     <div className="tooltip-content-wrap">
                         <h5 className="tooltip-title">강우 해갈(drought relief)의 정의</h5>
@@ -16,8 +15,8 @@ const InfoA = (props) => {
                     </div>
                 </React.Fragment>
             }>
-                C-BAND SAR
-                <IconButton className="tooltip-icon"></IconButton>
+                <span>C-BAND SAR</span>
+                <span className="tooltip-icon"></span>
             </Tooltip>
         </>
     )
