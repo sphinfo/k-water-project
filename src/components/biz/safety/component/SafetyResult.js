@@ -7,6 +7,7 @@ import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import Button from "@mui/material/Button";
+import { getSafety3LevelResult } from "@common/axios/safety";
 //Safety-20231114_L4TD_YONGDAM_UD.jpg
 
 //sample 데이터
@@ -27,6 +28,9 @@ const SafetyResult = () => {
     const { text, selectBox, select4Level, select3Level } = useSelector(state => state.safety)
 
     const [exampleList, setExampleList] = useState([])
+
+    //debouncing timer
+    const [timer, setTimer] = useState(null);
 
     //변위등급 button
     const [levelButton, setLevelButton] = useState(false)
@@ -61,19 +65,36 @@ const SafetyResult = () => {
       dispatch({type:SAFETY_DETAIL_RESET})
 
       if(text.name !== ''){
-        if(text.name === '용담댐'){
-          const groupArray = G$BaseSelectBoxArray(example, 'main')
-          const resultArray = groupArray.grouped
-          setExampleList(resultArray)
-        }else{
-          setExampleList([])
+
+        if (timer) {
+          clearTimeout(timer)
         }
+
+        const delayRequest = setTimeout(() => {
+          if (text.name === '용담댐') {
+            //*******API*************/
+            // let params = {type:'drought', from: '20231201', to: '20231210'}
+            // getSafety3LevelResult(params).then((result) => {
+            // })
+
+            const groupArray = G$BaseSelectBoxArray(example, 'main')
+            const resultArray = groupArray.grouped
+            setExampleList(resultArray)
+            
+          } else {
+            setExampleList([])
+          }
+        }, 1000)
+  
+        // 타이머 설정
+        setTimer(delayRequest)
+
       }else{
         setExampleList([])
       }
       
     },[text])
-
+    
     
 
     //임시 검색결과 도출

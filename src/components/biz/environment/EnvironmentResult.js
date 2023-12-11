@@ -12,9 +12,10 @@ import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 
 //sample 데이터
 const example = [
-  {name:'DATA1',  date: '23.11.10~23.11.16', main:'AI 알고리즘', checked: false, store:'LandCover', layer: 'RF_20220914_clip'},
-  {name:'DATA2', date: '23.11.10~23.11.16', main:'광학자료', checked: false, store:'LandCover', layer: 'RF_20221101_clip' },
-  {name:'DATA1', date: '23.11.10~23.11.16', main:'', checked: false, store:'Garbage', layer: 'Chlorophyll_Map_2' },
+  {name:'DATA1',  date: '23.11.10~23.11.16', main:'수변피복', checked: false, store:'LandCover', layer: 'RF_20220914_clip'},
+  {name:'DATA2', date: '23.11.10~23.11.16', main:'수변피복', checked: false, store:'LandCover', layer: 'RF_20221101_clip' },
+  {name:'DATA1', date: '23.11.10~23.11.16', main:'부유물', checked: false, store:'Garbage', layer: 'Chlorophyll_Map_2' },
+  {name:'DATA1', date: '23.11.10~23.11.16', main:'녹조', checked: false, store:'Garbage', layer: 'Chlorophyll_Map_2' },
 ]
 
 const EnvironmentResult = () => {
@@ -28,6 +29,9 @@ const EnvironmentResult = () => {
 
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
+
+      //*******API*************/
+
       if(text.name !== ''){
         const groupArray = G$BaseSelectBoxArray(example, 'main')
         const resultArray = groupArray.grouped
@@ -66,6 +70,7 @@ const EnvironmentResult = () => {
       //이벤트 발생 위치 확인후 
       const selectedItem = updatedList[outerIndex][innerIndex];
       let value = !selectedItem.checked ? false : selectedItem
+
       dispatch({ type: ENV_SELECT_LAYER, selectEnvironmentLayer: value });
 
     }

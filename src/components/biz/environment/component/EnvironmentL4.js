@@ -25,15 +25,22 @@ const EnvironmentL4 = () => {
 
         return()=>{
             G$removeWidget('EnvironmentLandCoverWidget')
+            G$removeWidget('EnvironmentGarbageWidget')
         }
     },[])
 
 
     useEffect(()=>{
-        if(selectEnvironmentLayer){
+
+        console.info(selectEnvironmentLayer)
+
+        if(selectEnvironmentLayer.store === 'LandCover'){
             G$addWidget('EnvironmentLandCoverWidget')
+            G$removeWidget('EnvironmentGarbageWidget')
         }else{
             G$removeWidget('EnvironmentLandCoverWidget')
+            G$addWidget('EnvironmentGarbageWidget')
+
         }
 
     },[selectEnvironmentLayer])
@@ -42,7 +49,10 @@ const EnvironmentL4 = () => {
 
     return (
         <>
-            <EnvironmentThematic />
+            {
+                selectEnvironmentLayer && selectEnvironmentLayer.store === 'LandCover' &&
+                <EnvironmentThematic />
+            }
             <BaseOragDataInfo a={true} b={true}/>
         </>
     )

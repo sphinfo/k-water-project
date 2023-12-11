@@ -127,6 +127,9 @@ const SafetyL4CompWidget = () => {
     useEffect(()=>{
         if(selectFeature){
 
+
+            //*******API*************/
+            
             //레이어가 선택되면 API 통하여 데이터 가져오기
             addData()
         }

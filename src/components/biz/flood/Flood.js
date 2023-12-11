@@ -133,6 +133,10 @@ const Flood = () => {
                 floodWaterLevelLayer.current.entities.removeAll()
 
                 let zoom = false
+
+                //*******API*************/
+
+                
                 //수위 임시 샘플 데이터 
                 let obsList = FloodWaterLevelStationDataConfig
                 obsList.map((properties)=>{

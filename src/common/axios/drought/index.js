@@ -1,9 +1,9 @@
 import createAxios from "../creatAxios";
-import SafetyConfig from "./SafetyConfig";
+import DroughtConfig from "./DroughtConfig";
 
 
 
-const getSafety3LevelResult = async (props) => {
+const getDrought3LevelResult = async (props) => {
 
     const {params={}} = props
 
@@ -23,5 +23,5 @@ const getSafety3LevelResult = async (props) => {
 
 
 export {
-    getSafety3LevelResult,
+    getDrought3LevelResult,
 }

@@ -27,6 +27,8 @@ const FloodL4WaterBodyThematic = () => {
 
     //닫힐때 침수피해 레이어 초기화
     useEffect(()=>{
+
+        //*******API*************/
         
         return()=>{
             dispatch({type:FLOOD_DAMAGE_LAYER, selectFloodDamageLayer: false})

@@ -1,15 +1,15 @@
 import createAxios from "../creatAxios";
-import SafetyConfig from "./SafetyConfig";
+import FloodConfig from "./FloodConfig";
 
 
 
-const getSafety3LevelResult = async (props) => {
+const getFlood3LevelResult = async (props) => {
 
     const {params={}} = props
 
     const { request } = createAxios();
     const result = await request({
-        url: SafetyConfig.TEST_URL,
+        url: FloodConfig.TEST_URL,
         method: 'GET',
         params: params
     })
@@ -23,5 +23,5 @@ const getSafety3LevelResult = async (props) => {
 
 
 export {
-    getSafety3LevelResult,
+    getFlood3LevelResult,
 }

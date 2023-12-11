@@ -118,6 +118,8 @@ const DroughtObsrv = () => {
         
         if(selectObs){
 
+            //*******API*************/
+
             //chartRef.current.provider = chartInfoRef.current
             chartInfoRef.current.datasets = []
             let dataset = DroughtObsrvMoistureConfig
