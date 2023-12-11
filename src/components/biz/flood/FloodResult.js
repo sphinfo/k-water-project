@@ -9,6 +9,7 @@ import FloodResultTab from "./FloodResultTab";
 import { Button } from "@mui/material";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import { getFlood3LevelResult } from "@common/axios/flood";
+import { getL3Layers } from "@common/axios/common";
 
 
 //sample 데이터
@@ -41,11 +42,12 @@ const FloodResult = () => {
 
         const delayRequest = setTimeout(() => {
           if (text.name === '용담댐') {
-            //*******API*************/
-            let params = {type:'drought', level: 'L3'}
-            // getFlood3LevelResult(params).then((result) => {
 
-            // })
+            //*******API*************/
+            let params = {type:'flood', level: 'L3'}
+            getL3Layers(params).then((result) => {
+              console.info(result)
+            })
 
             example[3].name = text.name
 

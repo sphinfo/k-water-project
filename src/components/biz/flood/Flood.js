@@ -1,7 +1,7 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FLOOD_DAMAGE_LAYER, FLOOD_RESET, FLOOD_SELECT_WATER_LEVEL, SET_SIDE_PANEL } from "@redux/actions";
-import { G$addWidget, G$flyToPoint, G$removeLayer, G$removeWidget } from "@gis/util";
+import { G$addWidget, G$flyToPoint, G$paramWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import WaterLevelOverlay from "@gis/util/overlay/WaterLevelOverlay";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
@@ -56,6 +56,7 @@ const Flood = () => {
                     setStation(false)
                 }else{
                     features[0].entity.billboard.image = pin2
+                    G$paramWidget('FloodL4WaterLevelWidget', {subTitle: '123'})
                     dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: features[0]})
                     setStation(features[0].properties.Station)
                 }

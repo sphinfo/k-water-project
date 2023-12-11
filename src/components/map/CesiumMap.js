@@ -78,9 +78,7 @@ export default class CesiumMap {
             var cameraPositionCartesian = me.map.camera.position;
             EventBus.dispatch(new CustomEvent(MapEvents.mapMoveEnd, { detail: cameraPositionCartesian }));
 
-            var currentExtent = me.map.camera.computeViewRectangle();
-
-            console.info(currentExtent)
+            var currentExtent = me.map.camera.computeViewRectangle()
 
             var camPos = me.map.camera.positionCartographic; 
             // console.info(camPos)
@@ -93,7 +91,7 @@ export default class CesiumMap {
             var east = Math.toDegrees(currentExtent.east)
             var north = Math.toDegrees(currentExtent.north)
 
-            console.info(`bbox : xmin: ${west}, ymin: ${south}, xmax: ${east}, ymax: ${north}`)
+            //console.info(`bbox : xmin: ${west}, ymin: ${south}, xmax: ${east}, ymax: ${north}`)
 
         });
 
@@ -105,7 +103,7 @@ export default class CesiumMap {
                 var longitude = Math.toDegrees(cartographic.longitude);
                 var latitude = Math.toDegrees(cartographic.latitude);
                 //console.log("마우스 좌표:", longitude, latitude);
-                console.info(longitude+','+latitude)
+                //console.info(longitude+','+latitude)
             }
             
         }, ScreenSpaceEventType.LEFT_CLICK);

@@ -25,6 +25,8 @@ const WidgetConatiner = (props) => {
                                     legend,
                                 } = widget;
 
+                                console.info(widget)
+
                                 return (
                                     // 공통 widget wrapper ( 사이즈 및 스타일 설정을 위한 warpper )
                                     <WidgetWrapper

@@ -498,6 +498,16 @@ const G$covertKm = function ( line ) {
     return output;
 }
 
+const G$makeFormDataParam = (param = {}) => {
+    var formBody = [];
+    for (var property in param) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(param[property]);
+        formBody.push(`${encodedKey}=${encodedValue}`);
+    }
+    return formBody.join("&");
+}
+
 export {
     G$addLayer,
     G$removeLayer,
@@ -545,4 +555,5 @@ export {
     G$getDateType,
 
     G$covertKm,
+    G$makeFormDataParam,
 }

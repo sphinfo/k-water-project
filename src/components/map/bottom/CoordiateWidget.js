@@ -10,7 +10,6 @@ const CoordiateWidget = () => {
 
     useEffect(()=>{
         EventBus.addListener(MapEvents.mouseMove, event => {
-            console.info(event.detail)
             setCoord(G$GetPointToDetail(event.detail.longitude, event.detail.latitude))
             setHeight(event.detail.z)
         })

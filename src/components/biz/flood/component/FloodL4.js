@@ -2,7 +2,7 @@ import { Switch } from "@mui/material";
 import { ENV_LANDCOVER_DETECTION, FLOOD_SELECT_WATER_LEVEL } from "@redux/actions";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { G$addWidget, G$removeWidget } from "@gis/util";
+import { G$addWidget, G$paramWidget, G$removeWidget } from "@gis/util";
 import FloodL4WaterBodyThematic from "./waterBody/FloodL4WaterBodyThematic";
 import BaseOragDataInfo from "@components/biz/common/BaseOragDataInfo";
 
@@ -34,7 +34,7 @@ const FloodL4 = () => {
 
         if(selectWaterLevel){
             console.info(selectFloodLayer)
-            G$addWidget('FloodL4WaterLevelWidget')
+            G$addWidget('FloodL4WaterLevelWidget',{subTitle: '지점'})
         }else{
             G$removeWidget('FloodL4WaterLevelWidget')
         }

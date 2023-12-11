@@ -129,7 +129,7 @@ export default function Sidebar () {
         <div className="sidebar-left-footer">
           {/* <div className={ value === INDEX_4 ? "sidebar-tab active" : "sidebar-tab" }><div className="tab-icon i-modify"></div></div> */}
           {/* <div className={ value === INDEX_5 ? "sidebar-tab active" : "sidebar-tab" }><div className="tab-icon i-user"></div></div> */}
-          <div className={ value === INDEX_5.i ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_5.i) }} ><div className="tab-icon i-user"></div>{INDEX_5.name}</div>
+          {/* <div className={ value === INDEX_5.i ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_5.i) }} ><div className="tab-icon i-user"></div>{INDEX_5.name}</div> */}
         </div>
       </div>
 

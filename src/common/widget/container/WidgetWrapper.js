@@ -20,7 +20,7 @@ const widgetOption = (option = {}) => {
 
 const WidgetWrapper = (props) => {
 
-    const {wid, legend, title, subtitle, ...other} = props;
+    const {wid, legend, title, subTitle, ...other} = props;
 
     const defaultOption = useMemo(()=>({
         ...widgetOption({...other})
@@ -63,7 +63,7 @@ const WidgetWrapper = (props) => {
                     <div style={defaultOption} key={wid} className={`${wid} popup`}>
                         <div className={"popup-header"}>
                             <h1 className={"popup-title"}>
-                                {title} {subtitle ? subtitle : ''}
+                                {title} {subTitle ? subTitle : ''}
                             </h1>
                             <IconButton className="panel-close-btn" color={"primary"} onClick={close}>
                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">

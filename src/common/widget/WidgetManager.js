@@ -117,7 +117,7 @@ class WidgetManager {
         const instance = this._hasInstance(widgetId);
         if (instance) {
             const idx = this._getInstanceIndex(widgetId);
-            this._instances[idx] = {...instance, props};
+            this._instances[idx] = {...instance, ...props};
         } else {
             this._widgetMessage(widgetId, NOT_FOUND_MSG);
         }

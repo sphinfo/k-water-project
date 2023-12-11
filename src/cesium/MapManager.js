@@ -114,6 +114,7 @@ class MapManager {
 
             if(this._baseMapLayer){
                 this.removeLayer(this.getImageryLayersById('baseMap'))
+                this.removeLayer(this.getImageryLayersById('Hybrid'))
             }
             
             let option = this._vwroldLayer[type]
@@ -131,6 +132,25 @@ class MapManager {
             this._baseMapType = type
 
             if(this.map){
+
+                if(type === 'Satellite'){
+
+                    let subMap = null
+                    let subOption = this._vwroldLayer['Hybrid']
+
+                    subMap = this.addImageLayer(
+                        new WebMapTileServiceImageryProvider({
+                            url : `http://api.vworld.kr/req/wmts/1.0.0/${this._vworld_key}/${subOption.layer}/{TileMatrix}/{TileRow}/{TileCol}.${subOption.tileType}`,
+                            layer : 'Hybrid',
+                            style : 'default',
+                            tileMatrixSetID: 'EPSG:900913',
+                            maximumLevel: 19,
+                            credit : new Credit('VWorld Korea')
+                    }))
+                    subMap.id = 'Hybrid'
+                    this.map.imageryLayers.lower(subMap)
+                }
+
                 this.map.imageryLayers.lower(this._baseMapLayer)
             }
             
