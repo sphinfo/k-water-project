@@ -41,7 +41,7 @@ const WidgetConfig = {
     
     'SafetyDisplaceSpeedWidget': {
         title: '변위 속도 위젯',
-        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.SafetyDisplaceSpeedWidget
     },
 
@@ -53,14 +53,14 @@ const WidgetConfig = {
     //홍수 - 수체 - 침수 피해 분석
     'FloodL4WaterBodyWidget': {
         title: '침수 피해 분석',
-        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.FloodL4WaterBodyWidget
     },
 
     //홍수 - 수위 - 지점선택
     'FloodL4WaterLevelWidget': {
         title: '수위 분석',
-        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.FloodL4WaterLevelWidget
     },
     
@@ -71,7 +71,7 @@ const WidgetConfig = {
      */
     'DroughtObsrvWidget': {
         title: '토양 수분 분석',
-        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.DroughtObsrvWidget
     },
 
@@ -81,12 +81,12 @@ const WidgetConfig = {
      */
     'SafetyL4CompWidget': {
         title: '지점별 변위 속도 비교',
-        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.SafetyL4CompWidget
     },
     'SafetyL4LevelDataWidget': {
         title: '변위 등급',
-        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.SafetyL4LevelDataWidget
     },
     
@@ -99,12 +99,12 @@ const WidgetConfig = {
 
     'EnvironmentLandCoverWidget': {
         title: '수변 피복 분석',
-        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.EnvironmentLandCoverWidget
     },
     'EnvironmentGarbageWidget': {
         title: '부유물 정보',
-        style: { top: 0, left: 380, height: 800, position:'absolute'},
+        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.EnvironmentGarbageWidget
     },
 

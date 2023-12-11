@@ -13,13 +13,15 @@ const BaseOragDataInfo = (props) => {
 
     return (
         <>
-            <div style={{position: 'fixed', bottom: 10, left: 400, width: 600, height: 50, display: 'flex'}}>
-                <h3 onClick={()=>{setVisible(!visible)}}>원천 데이터 정보 {visible ? '-' : '+'}</h3>
-                <div style={{display: visible ? '' : 'none'}}>
-                    { a && <InfoA /> }
-                    { b && <InfoB /> }
-                    { c && <InfoC /> }
-                    { d && <InfoD /> }
+            <div className="map-data">
+                <button className="btn btn-map-data" onClick={()=>{setVisible(!visible)}}>
+                    원천 데이터 정보 {visible ? '-' : '+'}
+                </button>
+                <div className="map-data-list" style={{display: visible ? '' : 'none'}}>
+                    <div className="map-data-list-item">{ a && <InfoA /> }</div>
+                    <div className="map-data-list-item">{ b && <InfoB /> }</div>
+                    <div className="map-data-list-item">{ c && <InfoC /> }</div>
+                    <div className="map-data-list-item">{ d && <InfoD /> }</div>
                 </div>
             </div>
             

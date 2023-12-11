@@ -49,14 +49,21 @@ const FloodL4WaterBodyThematic = () => {
 
     return (
         <>
-            <div style={{position: 'fixed', bottom: 70, left: 400, width: 200, height: 50}}>
-                <h1>활용 주제도</h1>
-                <div>
-                    {'img'}
-                    {'침수피해'}
-                    <Switch className="float-box-switch" checked={selectFloodDamageLayer ? true : false} onClick={()=>{
-                        dispatch({type:FLOOD_DAMAGE_LAYER, selectFloodDamageLayer: !selectFloodDamageLayer ? sample : false})
-                    }}></Switch>
+            <div className="widget widget-toggle">
+                <div className="widget-box">
+                    <div className="widget-header">
+                        <h4 className="widget-title">활용 주제도</h4>
+                    </div>
+                    <div className="widget-body">
+                        <div className="switch-list">
+                            <div className="switch-list-item">
+                                <span className="switch-label">침수 피해</span>
+                                <Switch className="float-box-switch" checked={selectFloodDamageLayer ? true : false} onClick={()=>{
+                                    dispatch({type:FLOOD_DAMAGE_LAYER, selectFloodDamageLayer: !selectFloodDamageLayer ? sample : false})
+                                }}></Switch>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
