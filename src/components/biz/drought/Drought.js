@@ -56,6 +56,12 @@ const Drought = () => {
         }
     }));
 
+    //WIDGET 창이 닫혔을시
+    useEffect(()=>{
+        if(!selectObs){
+            setStation(false)
+        }
+    },[selectObs])
 
     /* 초기 세팅 사항 */
     useEffect(()=>{
@@ -67,6 +73,9 @@ const Drought = () => {
         droughtLayer.current = new BaseWmsImageLayer('Drought','')
 
         //let samplePoint = G$randomCoordinates(100)
+
+        //*******API*************/
+
         let obsList = DroughtObsrvConfig
         obsList.map((properties)=>{
             droughtObsrvLayer.current._addFeature({lng:properties.Lon, lat:properties.Lat, properties, hover: true})

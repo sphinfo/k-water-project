@@ -130,6 +130,10 @@ const DroughtObsrvIndex = () => {
     useEffect(()=>{
         
         if(selectObs){
+
+
+            //*******API*************/
+
             chartInfoRef.current.datasets = []
             let dataset = DroughtObsrvIndexConfig
 

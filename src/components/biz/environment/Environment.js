@@ -75,9 +75,9 @@ const Environment = () => {
   },[landCoverDetection])
 
   //사이드 위치 조정 on
-  useEffect(()=>{
-    selectEnvironmentLayer && selectEnvironmentLayer.store === 'LandCover' ? dispatch({type: SET_SIDE_PANEL, panelSide: true}) : dispatch({type: SET_SIDE_PANEL, panelSide: false})
-  },[selectEnvironmentLayer])
+  // useEffect(()=>{
+  //   selectEnvironmentLayer && selectEnvironmentLayer.store === 'LandCover' ? dispatch({type: SET_SIDE_PANEL, panelSide: true}) : dispatch({type: SET_SIDE_PANEL, panelSide: false})
+  // },[selectEnvironmentLayer])
 
 
   //범례 change 이벤트
@@ -111,7 +111,7 @@ const Environment = () => {
       <EnvironmentResult />
 
       {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
-      {selectEnvironmentLayer && selectEnvironmentLayer.store === 'LandCover' && ( 
+      {selectEnvironmentLayer && ( 
         <div className={`panel side-panel ${!panelVisible ? 'fold' : ''}` }>
           <EnvironmentL4 /> 
         </div>

@@ -8,6 +8,7 @@ import { FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
 import { Button } from "@mui/material";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
+import { getFlood3LevelResult } from "@common/axios/flood";
 
 
 //sample 데이터
@@ -15,7 +16,6 @@ const example = [
   {name:'DATA1',  date: '23.11.10~23.11.16', main:'AI 알고리즘', checked: false, store:'WaterBody', layer: '20230718T21water_GS_RGB000102'},
   {name:'DATA2', date: '23.11.10~23.11.16', main:'물리적 특성', checked: false, store:'WaterBody', layer: '20230718T21water_GS_landuse_RGB000102' },
   {name:'DATA1', date: '23.11.10~23.11.16', main:'', checked: false, store:'WaterBody', layer: '20230723T21water_JL_RGB000102' },
-  
   {name:'DATA1',  date: '23.11.10~23.11.16', main:'수위', checked: false, store:'WaterLevel', layer: '',},
 ]
 
@@ -28,19 +28,43 @@ const FloodResult = () => {
 
     const [exampleList, setExampleList] = useState([])
 
+    //debouncing timer
+    const [timer, setTimer] = useState(null);
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
-      console.info(text)
+      //*******API*************/
       if(text.name !== ''){
 
-        example[3].name = text.name
+        if (timer) {
+          clearTimeout(timer)
+        }
 
-        const groupArray = G$BaseSelectBoxArray(example, 'main')
-        const resultArray = groupArray.grouped
+        const delayRequest = setTimeout(() => {
+          if (text.name === '용담댐') {
+            //*******API*************/
+            let params = {type:'drought', level: 'L3'}
+            // getFlood3LevelResult(params).then((result) => {
 
-        console.info(resultArray)
+            // })
 
-        setExampleList(resultArray)
+            example[3].name = text.name
+
+              const groupArray = G$BaseSelectBoxArray(example, 'main')
+              const resultArray = groupArray.grouped
+
+              setExampleList(resultArray)
+            
+          } else {
+            setExampleList([])
+          }
+        }, 1000)
+  
+        // 타이머 설정
+        setTimer(delayRequest)
+
+
+        
+
       }else{
         setExampleList([])
       }

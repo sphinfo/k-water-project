@@ -95,7 +95,9 @@ const FloodL4WaterLevel = () => {
         chartInfoRef.current.labels = []
         chartInfoRef.current.datasets = []
 
-        console.info(selectWaterLevel)
+
+        //*******API*************/
+
         //수위 지점 select get Feature
         if(selectWaterLevel){
             let sampleDatas = FloodWaterLevelChartDatas[selectWaterLevel.properties.name]

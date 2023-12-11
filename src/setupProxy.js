@@ -33,13 +33,14 @@ module.exports = function (app) {
 		})
 	)
 
+
 	app.use(
-		createProxyMiddleware('/starGeo',{
-			target: 'http://221.147.56.177:58080/geoserver',
+		createProxyMiddleware('/api',{
+			target: 'http://121.152.185.126:18080/api/',
 			changeOrigin: true,
-            pathRewrite: {
-                '^/starGeo': ''
-            }
+			pathRewrite: {
+				'^/api': ''
+			}
 		})
 	)
 

@@ -1,6 +1,6 @@
 import { CallbackProperty, Cartesian3, Cartographic, Color, ColorMaterialProperty, HeightReference, PolygonHierarchy, ScreenSpaceEventHandler, ScreenSpaceEventType, defined } from "cesium";
 import * as Cesium from 'cesium';
-import { G$getPointsToArea, G$getPointsToLength, G$pointsToCenter } from '@gis/util';
+import { G$covertKm, G$getPointsToArea, G$getPointsToLength, G$pointsToCenter, G$setNumberFixedKomma } from '@gis/util';
 
 let activeShapePoints = []  //클릭좌표
 let activeShape             //map add
@@ -93,11 +93,11 @@ class GisDrawTool {
 
                 if(drawingMode === 'line'){
                     let lineLength = G$getPointsToLength(activeShapePoints)
-                    floatingPoint.label.text = lineLength.toFixed() + 'm'
+                    floatingPoint.label.text = G$covertKm(lineLength.toFixed())
                 }else if(drawingMode === 'polygon'){
                     let polygonArea = G$getPointsToArea(activeShapePoints)
                     floatingPoint.label = {
-                        text: polygonArea.toFixed() + '㎡',
+                        text: G$setNumberFixedKomma(polygonArea.toFixed()) + '㎡',
                         font: "14pt monospace",
                         style: Cesium.LabelStyle.FILL_AND_OUTLINE,
                         outlineWidth: 2,
@@ -114,7 +114,7 @@ class GisDrawTool {
     createPoint(worldPosition, lineLength) {
         //라인일시 매 기점마다 label 추가
         let label = drawingMode === 'line' ? {
-            text: `${lineLength === 0 ? 'start' : lineLength+'m'}`,
+            text: `${lineLength === 0 ? 'start' : G$covertKm(lineLength)}`,
             font: "14pt monospace",
             style: Cesium.LabelStyle.FILL_AND_OUTLINE,
             outlineWidth: 2,
@@ -178,7 +178,7 @@ class GisDrawTool {
             position: position,
             clampToGround: true,
             label: {
-                text: text.toFixed()+'㎡',
+                text: G$setNumberFixedKomma(text.toFixed())+'㎡',
                 font: "14pt monospace",
                 style: Cesium.LabelStyle.FILL_AND_OUTLINE,
                 outlineWidth: 2,

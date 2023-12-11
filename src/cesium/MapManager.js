@@ -129,7 +129,12 @@ class MapManager {
             }))
             this._baseMapLayer.id = 'baseMap'
             this._baseMapType = type
-            //this._map.imageryLayers.addImageryProvider(this._baseMapLayer)
+
+            if(this.map){
+                this.map.imageryLayers.lower(this._baseMapLayer)
+            }
+            
+            
             return this._baseMapLayer
         }else{
             return null

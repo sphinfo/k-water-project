@@ -483,6 +483,21 @@ const G$getDateType = function ( date, type='DTD') {
     return date
 }
 
+const G$covertKm = function ( line ) {
+
+    var length;
+    length = Math.round(line * 100) / 100;
+    var output;
+    if (length > 100) {
+        output = (Math.round(length / 1000 * 100) / 100)
+            + ' ' + 'km';
+    } else {
+        output = (Math.round(length * 100) / 100)
+            + ' ' + 'm';
+    }
+    return output;
+}
+
 export {
     G$addLayer,
     G$removeLayer,
@@ -528,4 +543,6 @@ export {
     G$sortArrayObject,
     G$setNumberFixedKomma,
     G$getDateType,
+
+    G$covertKm,
 }
