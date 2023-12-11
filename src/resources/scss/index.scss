@@ -74,14 +74,25 @@ button{
 
 .btn {
   font-family: $body-font-family !important;
+  padding: 10px 15px;
+  font-size: 13px;
+  color: #fff;
+  background-color: $black-navy;
+  border-radius: 8px;
+  line-height: 1;
+  cursor: pointer;
 
-  &.empty-btn{
-    padding: 12px 15px;
-    font-size: 13px;
+  &.empty-btn {
     background-color: transparent;
     border: 1px solid $line;
+    padding: 10px 15px;
+    font-size: 13px;
     color: #fff;
     border-radius: 8px;
     line-height: 1;
+  }
+
+  &.btn-map-data {
+    box-shadow: $box-shadow;
   }
 }

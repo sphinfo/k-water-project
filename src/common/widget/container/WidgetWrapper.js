@@ -49,7 +49,7 @@ const WidgetWrapper = (props) => {
     return (
         <>
             {legend ? (
-                <div style={defaultOption} key={wid} className={`${wid} widget-legend`}>
+                <div style={defaultOption} key={wid} className={`${wid} widget widget-legend`}>
                     <Suspense>{writeChildren()}</Suspense>
                 </div>
             ) : (
@@ -65,7 +65,7 @@ const WidgetWrapper = (props) => {
                             <h1 className={"popup-title"}>
                                 {title} {subTitle ? subTitle : ''}
                             </h1>
-                            <IconButton className="panel-close-btn" color={"primary"} onClick={close}>
+                            <IconButton className="panel-close-btn" onClick={close}>
                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 17L9 9M9 9L17 17M9 9L17 1M9 9L1 1" stroke="#ffffffe6" strokeWidth="1.5" strokeLinecap="round"/>
                                 </svg>

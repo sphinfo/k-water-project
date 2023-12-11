@@ -287,7 +287,7 @@
   box-shadow: $box-shadow;
   font-size: 12px;
   color: $white;
-  width: 310px;
+  width: 400px;
   align-items: center;
   justify-content: center;
 
@@ -595,108 +595,189 @@
 
 }
 
-.map_widget {
-  max-width: 320px;
-  width: auto;
-  height: auto;
+.widget {
+  position: absolute;
   background-color: $black-navy;
+  box-shadow: $box-shadow;
   border-radius: 10px;
+  width: fit-content;
+  height: fit-content;
+  min-width: 200px;
 
-  .widget-box {
-    width: fit-content;
+  &.widget-toggle {
+    left: 310px;
+    bottom: 55px;
+  }
 
-    .widget-header {
-      padding: 10px;
-      width: 100%;
-      border-bottom: 1px solid $line-light;
+  &.widget-legend{
+    z-index: 10;
+    right: 10px;
+    bottom: 55px;
 
-      .widget-title {
-        font-size: 14px;
-        font-weight: 500;
-      }
+    &.safety{
+      right: unset;
+      left: 64px;
+      bottom: unset;
+      top: 265px;
+      //transform: translateY(-50%);
     }
-    .widget-body{
-      width: auto;
-      padding: 15px 10px 10px;
-      border-radius: 0 0 10px 10px;
 
-      ul {
-        display: flex;
-        flex-direction: row;
-        gap: 5px;
-        flex-wrap: wrap;
-
-        li {
-          display: flex;
-          flex-wrap: nowrap;
-          font-size: 12px;
-          font-weight: 400;
-          padding-right: 10px;
+    dl.widget-legend-wrap{
+      dt{
+        h4{
+          font-size: 13px;
+          font-weight: 600;
+          color: $body-font-color;
         }
+        width: auto;
+        margin-bottom: 10px;
       }
-
-      .widget-legend-chip{
-        display: inline-block;
-        width: 18px;
-        height: 13px;
-        margin-right: 4px;
-        border-radius: 3px;
+      dd{
         background-color: $basic;
-        &.legend-test-1{
-          background-color: #86E1F4;
-        }
-        &.legend-test-2{
-          background-color: #5DD38C;
-        }
-        &.legend-test-3{
-          background-color: #FAEB66;
-        }
-        &.legend-test-4{
-          background-color: #FFAD33;
-        }
-        &.legend-test-5{
-          background-color: #E95757;
-        }
-        &.legend-test-6{
-          background-color: #682323;
-        }
-        &.e-w-velocity{
-          background: linear-gradient(0deg, #EE6969 0%, #FFE34F 25.52%, #8FE99E 52.08%, #89F7F7 77.08%, #5E52EC 100%);
-        }
-      }
-    }
-    &.legend-gradient{
-      .widget-body{
-        display: flex;
-        flex-direction: column;
-        gap: 3px;
-        padding: 10px 10px 5px;
-        .widget-legend-chip{
-          width: 230px;
-          height: 17px;
-          margin-right: 0;
-        }
-        .widget-legend-unit{
+        ul{
           display: flex;
-          justify-content: space-between;
+          flex-direction: column;
+          gap: 5px;
           li{
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            gap: 3px;
-            font-size: 10px;
-            padding-right: 0;
-            &:before{
-              //content: '';
-              display: block;
-              width: 1px;
-              height: 5px;
-              background-color: $grey-400;
-            }
+            font-size: 12px;
+            font-weight: 400;
+            color: $body-font-color;
+            padding-right: 10px;
           }
         }
       }
+    }
+  }
+}
+
+.widget-box {
+  .widget-header {
+    padding: 10px;
+    width: 100%;
+    border-bottom: 1px solid $line-light;
+
+    .widget-title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+  .widget-body {
+    width: auto;
+    padding: 15px 10px 10px;
+    border-radius: 0 0 10px 10px;
+
+    ul {
+      display: flex;
+      flex-direction: row;
+      gap: 5px;
+      flex-wrap: wrap;
+
+      li {
+        display: flex;
+        flex-wrap: nowrap;
+        font-size: 12px;
+        font-weight: 400;
+        padding-right: 10px;
+      }
+    }
+
+    .widget-legend-chip{
+      display: inline-block;
+      width: 18px;
+      height: 13px;
+      margin-right: 4px;
+      border-radius: 3px;
+
+      &.legend-test-1{
+        background-color: #86E1F4;
+      }
+      &.legend-test-2{
+        background-color: #5DD38C;
+      }
+      &.legend-test-3{
+        background-color: #FAEB66;
+      }
+      &.legend-test-4{
+        background-color: #FFAD33;
+      }
+      &.legend-test-5{
+        background-color: #E95757;
+      }
+      &.legend-test-6{
+        background-color: #682323;
+      }
+      &.e-w-velocity{
+        background: linear-gradient(0deg, #EE6969 0%, #FFE34F 25.52%, #8FE99E 52.08%, #89F7F7 77.08%, #5E52EC 100%);
+      }
+    }
+  }
+  &.legend-gradient{
+    .widget-body{
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 10px 10px 5px;
+      .widget-legend-chip{
+        width: 230px;
+        height: 17px;
+        margin-right: 0;
+      }
+      .widget-legend-unit{
+        display: flex;
+        justify-content: space-between;
+        li{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          gap: 3px;
+          font-size: 10px;
+          padding-right: 0;
+          &:before{
+            //content: '';
+            display: block;
+            width: 1px;
+            height: 5px;
+            background-color: $grey-400;
+          }
+        }
+      }
+    }
+  }
+}
+
+.switch-list {
+  .switch-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.map-data {
+  position: absolute;
+  left: 310px;
+  bottom: 10px;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+
+  .map-data-list {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .map-data-list-item {
+      padding: 10px 15px;
+      font-size: 13px;
+      color: #fff;
+      background-color: $black-navy;
+      border-radius: 8px;
+      line-height: 1;
+      cursor: pointer;
     }
   }
 }
@@ -807,53 +888,6 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none'%3E%3Cpath stroke='%23004478' stroke-linecap='round' stroke-width='1.5' d='m12.754 1-6 6m-6 6 6-6m0 0 6 6m-6-6-6-6'/%3E%3C/svg%3E");
   background-position: center;
   background-repeat: no-repeat;
-}
-
-.widget-legend{
-  z-index: 10;
-  position: absolute;
-  right: 10px;
-  bottom: 50px;
-  width: fit-content;
-  height: fit-content;
-  background-color: $white;
-  border-radius: 10px;
-  box-shadow: $box-shadow;
-
-  &.safety{
-    right: unset;
-    left: 64px;
-    bottom: unset;
-    top: 265px;
-    //transform: translateY(-50%);
-  }
-
-  dl.widget-legend-wrap{
-      dt{
-        h4{
-          font-size: 13px;
-          font-weight: 600;
-          color: $body-font-color;
-        }
-        width: auto;
-        margin-bottom: 10px;
-      }
-      dd{
-        background-color: $basic;
-        ul{
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
-          li{
-            display: flex;
-            font-size: 12px;
-            font-weight: 400;
-            color: $body-font-color;
-            padding-right: 10px;
-          }
-        }
-      }
-  }
 }
 
 .thematic-layers-box{
@@ -1057,7 +1091,7 @@
 .popup {
   position: absolute;
   top: 10px;
-  left: 310px;
+  left: 364px;
   z-index: 3;
   background-color: $black-navy;
   box-shadow: $box-shadow;
@@ -1991,25 +2025,17 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
 .MuiTooltip-tooltip{
-  &.css-ja5taz-MuiTooltip-tooltip{
     color: $body-font-color;
     max-width: 330px;
-    background-color: $white;
+    background-color: $black-navy;
     padding: 0;
     border-radius: 10px;
     box-shadow: $box-shadow;
-  }
 }
 .tooltip-content-wrap{
-  //position: absolute;
-  //top: 20px;
-  //left: 0;
-  //z-index: 5;
-  //background-color: $white;
   padding: 10px;
-  //border-radius: 10px;
-  //box-shadow: $box-shadow;
   .tooltip-title{
     font-size: 13px;
     margin-bottom: 10px;
