@@ -8,6 +8,7 @@ import { G$BaseSelectBoxArray } from "@gis/util";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import Button from "@mui/material/Button";
 import { getSafety3LevelResult } from "@common/axios/safety";
+import { getL3Layers } from "@common/axios/common";
 //Safety-20231114_L4TD_YONGDAM_UD.jpg
 
 //sample 데이터
@@ -71,15 +72,17 @@ const SafetyResult = () => {
         }
 
         const delayRequest = setTimeout(() => {
-          if (text.name === '용담댐') {
-            //*******API*************/
-            // let params = {type:'drought', from: '20231201', to: '20231210'}
-            // getSafety3LevelResult(params).then((result) => {
-            // })
+          if (text.name !== '') {
+            
+            //*******API************* getL3Layers: 레벨3 결과값/
+            let params = {type:'safety', level: 'L3'}
+            getL3Layers(params).then((result) => {
 
-            const groupArray = G$BaseSelectBoxArray(example, 'main')
-            const resultArray = groupArray.grouped
-            setExampleList(resultArray)
+              const groupArray = G$BaseSelectBoxArray(example, 'main')
+              const resultArray = groupArray.grouped
+              setExampleList(resultArray)
+
+            })
             
           } else {
             setExampleList([])

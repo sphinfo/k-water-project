@@ -19,7 +19,7 @@ const initialState = {
   endDate: dayjs().format('YYYY-MM-DD'),   //검색 옵션 ( 기간설정 )
   obsrvTab: 'soilMoisture', //활용주제도 Tab
 
-  selectResultTab: 'a', //가뭄 검색결과 Tab
+  selectResultTab: 'A1', //가뭄 검색결과 Tab
 
   selectObs: false,     //관측소 선택 Feature
 

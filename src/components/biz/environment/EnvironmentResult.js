@@ -27,6 +27,9 @@ const EnvironmentResult = () => {
 
     const [exampleList, setExampleList] = useState([])
 
+    //debouncing timer
+    const [timer, setTimer] = useState(null);
+    
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
 

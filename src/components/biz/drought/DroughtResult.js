@@ -9,6 +9,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Button } from "@mui/material";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
+import { getL3Layers } from "@common/axios/common";
 
 
 //sample 데이터
@@ -27,16 +28,40 @@ const DroughtResult = () => {
 
     const [exampleList, setExampleList] = useState([])
 
+    //debouncing timer
+    const [timer, setTimer] = useState(null);
+
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
-
-      //*******API*************/
-
       
       if(text.name !== ''){
-        const groupArray = G$BaseSelectBoxArray(example, 'main')
-        const resultArray = groupArray.grouped
-        setExampleList(resultArray)
+        
+        if (timer) {
+          clearTimeout(timer)
+        }
+
+        const delayRequest = setTimeout(() => {
+          if (text.name !== '') {
+
+            //*******API************* getL3Layers: 레벨3 결과값/
+            let params = {type:'drought', level: 'L3'}
+            getL3Layers(params).then((result) => {
+
+              const groupArray = G$BaseSelectBoxArray(example)
+              const resultArray = groupArray.grouped
+              setExampleList(resultArray)
+
+            })
+              
+            
+          } else {
+            setExampleList([])
+          }
+        }, 1000)
+  
+        // 타이머 설정
+        setTimer(delayRequest)
+
       }else{
         setExampleList([])
       }
@@ -148,9 +173,9 @@ const DroughtResult = () => {
               {exampleList.length > 0 &&
                 <div className="form-control">
                   <Tabs className={"toggle-btn-wrap"} exclusive fullWidth={true} value={selectResultTab} onChange={(e, v)=>{dispatch({type: DROUGHT_RESULT_TAB, selectResultTab: v})}}>
-                    <Tab className={"tab-item"} label={'물리'} value={'a'}></Tab>
-                    <Tab className={"tab-item"} label={'강우'} value={'b'}></Tab>
-                    <Tab className={"tab-item"} label={'토양'} value={'c'}></Tab>
+                    <Tab className={"tab-item"} label={'물리'} value={'A1'}></Tab>
+                    <Tab className={"tab-item"} label={'강우'} value={'A2'}></Tab>
+                    <Tab className={"tab-item"} label={'토양'} value={'A3'}></Tab>
                   </Tabs>
                 </div>
               }

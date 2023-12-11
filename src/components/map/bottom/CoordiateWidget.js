@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import EventBus from '@common/eventBus/eventBus';
 import MapEvents from '@common/eventBus/MapEvents';
-import { G$GetPointToDetail } from '@gis/util';
+import { G$GetPointToDetail, G$covertKm } from '@gis/util';
+import MapManager from '@gis/MapManager';
 
 const CoordiateWidget = () => {
     
@@ -11,8 +12,13 @@ const CoordiateWidget = () => {
     useEffect(()=>{
         EventBus.addListener(MapEvents.mouseMove, event => {
             setCoord(G$GetPointToDetail(event.detail.longitude, event.detail.latitude))
-            setHeight(event.detail.z)
         })
+
+        EventBus.addListener(MapEvents.mapMoveEnd, event =>{
+            var cameraHeight = MapManager.map.camera.positionCartographic.height
+            setHeight(G$covertKm(cameraHeight.toFixed(0)))
+        })
+        
     },[])
     
 

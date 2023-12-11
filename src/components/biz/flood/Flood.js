@@ -136,8 +136,6 @@ const Flood = () => {
                 let zoom = false
 
                 //*******API*************/
-
-                
                 //수위 임시 샘플 데이터 
                 let obsList = FloodWaterLevelStationDataConfig
                 obsList.map((properties)=>{
@@ -224,11 +222,10 @@ const Flood = () => {
             {/* 홍수 3레벨 레이어 선택되었을시 ( 활용주제도 open )*/}
             
             {selectFloodLayer && ( 
-                <div className="side-content">
+                <div className={`panel side-panel ${!panelVisible ? 'fold' : ''}` }>
                     <FloodL4 /> 
                 </div>
             )}
-
         </>
     )
 }
