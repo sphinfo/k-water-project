@@ -63,11 +63,10 @@ export default class CesiumMap {
                 var cartesian = me.map.camera.pickEllipsoid(event.endPosition, me.map.scene.globe.ellipsoid);
                 if (cartesian) {
                     let cartographic = Cartographic.fromCartesian(cartesian);
-                    let height = cartesian.z
                     let longitude = Math.toDegrees(cartographic.longitude);
                     let latitude = Math.toDegrees(cartographic.latitude);
                     // event bus 활용
-                    EventBus.dispatch(new CustomEvent(MapEvents.mouseMove, { detail: {longitude:longitude, latitude:latitude, height: height}}));
+                    EventBus.dispatch(new CustomEvent(MapEvents.mouseMove, { detail: {longitude:longitude, latitude:latitude }}));
                 }
             }
             

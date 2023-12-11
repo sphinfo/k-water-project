@@ -34,7 +34,7 @@ const FloodL4 = () => {
 
         if(selectWaterLevel){
             console.info(selectFloodLayer)
-            G$addWidget('FloodL4WaterLevelWidget',{subTitle: '지점'})
+            G$addWidget('FloodL4WaterLevelWidget')
         }else{
             G$removeWidget('FloodL4WaterLevelWidget')
         }

@@ -20,6 +20,7 @@ const example = [
   {name:'DATA1',  date: '23.11.10~23.11.16', main:'수위', checked: false, store:'WaterLevel', layer: '',},
 ]
 
+
 const FloodResult = () => {
     
     const dispatch = useDispatch()
@@ -34,28 +35,42 @@ const FloodResult = () => {
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
       //*******API*************/
-      if(text.name !== ''){
+      if(text.code !== ''){
 
         if (timer) {
           clearTimeout(timer)
         }
 
         const delayRequest = setTimeout(() => {
-          if (text.name === '용담댐') {
-
-            //*******API*************/
+          if (text.name !== '') {
+            //*******API************* getL3Layers: 레벨3 결과값/
             let params = {type:'flood', level: 'L3'}
-            getL3Layers(params).then((result) => {
-              console.info(result)
+            getL3Layers(params).then((response) => {
+              console.info(response)
+              if(response.result.data.length > 0){
+
+                // let resultList = []
+                // response.result.data.map((obj)=>{
+                //   let store = 'WaterBody'
+                //   let layer = ''
+                //   let text = ''
+                //   resultList.push({...obj, store, layer, text})
+                // })
+
+                // //수위 지점 따로 추가 해야함
+                // resultList.push({name:text.name, store: 'WaterLevel', code: text.code})
+
+
+
+                //const groupArray = G$BaseSelectBoxArray(resultList, 'store')
+                const groupArray = G$BaseSelectBoxArray(example, 'store')
+                const resultArray = groupArray.grouped
+
+                setExampleList(resultArray)
+              }else{
+                setExampleList([])
+              }
             })
-
-            example[3].name = text.name
-
-              const groupArray = G$BaseSelectBoxArray(example, 'main')
-              const resultArray = groupArray.grouped
-
-              setExampleList(resultArray)
-            
           } else {
             setExampleList([])
           }
@@ -63,9 +78,6 @@ const FloodResult = () => {
   
         // 타이머 설정
         setTimer(delayRequest)
-
-
-        
 
       }else{
         setExampleList([])
@@ -112,7 +124,7 @@ const FloodResult = () => {
       {obj.length > 0 &&
         <div className="content-row" style={{display: obj[0].store === floodResultTab ? '' : 'none'}}>
             <div className="content-list-wrap">
-                <h4 className="content-list-title" >{obj[0].main}</h4>
+                <h4 className="content-list-title" key={i}>{obj[0].main}</h4>
                 <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
                     {
                         obj.map((item, i2) => (
@@ -142,10 +154,15 @@ const FloodResult = () => {
               onClick={() => checkboxChange(i, i2)}
             >
               <div className="list-body">
-                <div className="img-box">
-                  <div className="list-shadow"></div>
-                  <img src={img}/>
-                </div>
+                
+                {
+                  obj.store === 'WaterBody' && 
+                  <div className="img-box" >
+                    <div className="list-shadow"></div>
+                    <img src={img}/>
+                  </div>
+                }
+                
                 <div className="list-info-wrap">
                   <p className="list-info">{obj.name}</p>
                   <p className="list-info">{obj.layer}</p>

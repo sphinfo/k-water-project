@@ -29,7 +29,6 @@ const FloodL4WaterBodyThematic = () => {
     useEffect(()=>{
 
         //*******API*************/
-        
         return()=>{
             dispatch({type:FLOOD_DAMAGE_LAYER, selectFloodDamageLayer: false})
             G$removeWidget('FloodL4WaterBodyWidget')

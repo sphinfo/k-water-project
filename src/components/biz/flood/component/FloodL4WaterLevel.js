@@ -215,7 +215,7 @@ const FloodL4WaterLevel = () => {
                     </div>
                 </div>
               </div>
-                <Tabs className="panel-tabs-wrap" exclusive full-width value={levelChange}>
+                <Tabs className="panel-tabs-wrap" exclusive fullWidth value={levelChange}>
                     <Tab className="tab-item" label={"수위수준"} value={false} onClick={()=>{setLeveltChange(false)}}></Tab>
                     <Tab className="tab-item" label={"수위변화"} value={true} onClick={()=>{setLeveltChange(true)}}></Tab>
                 </Tabs>

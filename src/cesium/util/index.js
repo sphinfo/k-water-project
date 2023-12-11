@@ -408,7 +408,7 @@ const G$paramWidget = (wId, props) =>{
 }
 
 /* 수자원공사 검색 조건 공통화 작업 */
-const G$BaseSelectBoxArray = (datas, col) =>{
+const G$BaseSelectBoxArray = (datas, col=null) =>{
 
     /**
      * key 하나를 공통으로 잡은후 그룹형으로 변경
@@ -417,21 +417,25 @@ const G$BaseSelectBoxArray = (datas, col) =>{
      */
     const groupArray = datas.reduce((acc, item, index) => {
         
-        const key = item[col]
-        if (!acc.order.includes(key)) {
-          acc.order.push(key)
+        if (col !== null) {
+            const key = item[col];
+            if (!acc.order.includes(key)) {
+                acc.order.push(key);
+            }
+
+            const mainIndex = acc.order.indexOf(key);
+
+            if (!acc.grouped[mainIndex]) {
+                acc.grouped[mainIndex] = [];
+            }
+
+            acc.grouped[mainIndex].push(item);
+        } else {
+            acc.grouped.push([item])
         }
-        
-        const mainIndex = acc.order.indexOf(key);
-        
-        if (!acc.grouped[mainIndex]) {
-          acc.grouped[mainIndex] = []
-        }
-        
-        acc.grouped[mainIndex].push(item)
         
         return acc;
-    }, { grouped: [], order: [] })
+    }, { grouped: col !== null ? [] : [[]], order: [] })
 
     return groupArray
 }
