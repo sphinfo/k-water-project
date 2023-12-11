@@ -80,21 +80,23 @@ const DroughtResult = () => {
 
     //결과값 출력 ( 데이터 구성을 2중 배열로 사용하려고 생각중 )
     const renderResult = (obj, i) =>(
-      <div className="content-row">
-          {obj.length > 0 &&
-              <div className="content-list-wrap">
-                  <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
-                      {
-                          obj.map((item, i2) => (
-                              <>
-                                  {renderItem(item, i, i2)}
-                              </>
-                          ))
-                      }
-                  </List>
-              </div>
-          }
-      </div>
+        <>
+            {obj.length > 0 &&
+                <div className="content-row">
+                    <div className="content-list-wrap">
+                        <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
+                            {
+                                obj.map((item, i2) => (
+                                    <>
+                                        {renderItem(item, i, i2)}
+                                    </>
+                              ))
+                            }
+                        </List>
+                    </div>
+                </div>
+            }
+        </>
     )
 
     //list item 설정

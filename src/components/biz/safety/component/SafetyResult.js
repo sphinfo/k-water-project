@@ -112,22 +112,24 @@ const SafetyResult = () => {
 
     //결과값 출력
     const renderResult = (obj, i) =>(
-        <div className="content-row">
+        <>
             {obj.length > 0 &&
-                <div className="content-list-wrap">
-                    <h4 className="content-list-title">{obj[0].main + obj[0].mainName}</h4>
-                    <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
-                        {
-                            obj.map((item, i2) => (
-                                <>
-                                    {renderItem(item, i, i2)}
-                                </>
-                            ))
-                        }
-                    </List>
+                <div className="content-row">
+                    <div className="content-list-wrap">
+                        <h4 className="content-list-title">{obj[0].main + obj[0].mainName}</h4>
+                        <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
+                            {
+                                obj.map((item, i2) => (
+                                    <>
+                                        {renderItem(item, i, i2)}
+                                    </>
+                                ))
+                            }
+                        </List>
+                    </div>
                 </div>
             }
-        </div>
+        </>
     )
 
     const renderItem = (obj, i, i2) => (
