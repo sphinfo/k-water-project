@@ -53,6 +53,8 @@ const Safety = () => {
             if(displaceLevel){
                 const {clickPosition, properties} = features[0]
                 dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: features[0]})
+
+                console.info(clickPosition)
                 overlayRef.current._addOverlay(clickPosition.longitude, clickPosition.latitude, properties)
             }
         }
@@ -116,7 +118,7 @@ const Safety = () => {
 
             const {store, layer} = displaceLevel
             safetyDisplaceLevelLayerRef.current.changeParameters({store:store, layerId:layer})
-            GisLayerClickTool.addLayer(bizName, [`${store}:${layer}`])
+            GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
 
         }else{
 
@@ -126,11 +128,11 @@ const Safety = () => {
             //변위등급을 껏을시 4레벨이 선택되어 있으면 4레벨만 켜기  /  4레벨이 꺼져있으면 3레벨 켜기
             if(select4Level){
                 const {store, layer} = select4Level
-                GisLayerClickTool.addLayer(bizName, [`${store}:${layer}`])
+                GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
                 safety4LevelLayerRef.current.setVisible(true)
             }else{
                 const {store, layer} = select3Level
-                GisLayerClickTool.addLayer(bizName, [`${store}:${layer}`])
+                GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
                 safety3LevelLayerRef.current.setVisible(true)
             }
 
@@ -154,7 +156,7 @@ const Safety = () => {
             safety3LevelLayerRef.current.changeParameters({store:store, layerId:layer})
             
             //callback 레이어로 추가
-            GisLayerClickTool.addLayer(bizName, [`${store}:${layer}`])
+            GisLayerClickTool.addLayer(bizName, [`${store.toLowerCase()}:${layer}`])
             //console.info(safety3LevelLayerRef.current)
             //3레벨 선택이 되었을시 4레벨 데이터를 가져와야함 2안을 적용했을시 / 1안이 적용되었으면 조건입력후 4레벨 데이터 가져오기 ( SafetyDisplaceLevelTemp )
 
@@ -179,7 +181,7 @@ const Safety = () => {
         if(select4Level){
             const {store, layer} = select4Level
             safety4LevelLayerRef.current.changeParameters({store:store, layerId:layer})
-            GisLayerClickTool.addLayer(bizName, [`${store}:${layer}`])
+            GisLayerClickTool.addLayer(bizName, [`${store.toLowerCase()}:${layer}`])
 
         }else{
             //4레벨 레이어 지우기

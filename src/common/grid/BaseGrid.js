@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
-import { useTable } from 'react-table'
+import { useTable, useSortBy } from 'react-table'
 import BodyRow from "./table/BodyRow";
 import EmptyMessage from "./table/EmptyMessage";
 
@@ -29,7 +29,7 @@ const BaseGrid = ({ columns, provider = [], className='', ...props }, ref) => {
 		headerGroups, 
 		rows, 
 		prepareRow 
-	} = useTable({  columns, data });
+	} = useTable({  columns, data }, useSortBy);
 
 
 	/* data change */
@@ -45,15 +45,19 @@ const BaseGrid = ({ columns, provider = [], className='', ...props }, ref) => {
 
 	/* Header render */
 	const RenderHeader = useCallback((headerGroups) => {
-		
-		return headerGroups.map((headerGroup, i) => (
-			<tr {...headerGroup.getHeaderGroupProps()}>
-				{headerGroup.headers.map((column) => (
-					<th {...column.getHeaderProps()}>{column.render("Header")}</th>
-				))}
-			</tr>
-		));
-	}, []);
+        return headerGroups.map((headerGroup, i) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                        {column.render("Header")}
+                        <span>
+                            {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                        </span>
+                    </th>
+                ))}
+            </tr>
+        ))
+    }, [])
 
 
 	// Body Render

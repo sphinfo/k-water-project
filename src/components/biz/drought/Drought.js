@@ -76,11 +76,10 @@ const Drought = () => {
         //let samplePoint = G$randomCoordinates(100)
 
         //*******API*************/
-        let obsList = DroughtObsrvConfig
+        //let obsList = DroughtObsrvConfig
         getDroughtObs().then((response) => {
             console.info(response)
             if(response.result.data.length > 0){
-                console.info(response.result.data)
                 response.result.data.map((obj)=>{
                     droughtObsrvLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})
                 })

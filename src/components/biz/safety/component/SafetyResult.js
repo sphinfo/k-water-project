@@ -9,6 +9,7 @@ import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import Button from "@mui/material/Button";
 import { getSafety3LevelResult, getSafetydisplaceResult } from "@common/axios/safety";
 import { getL3Layers } from "@common/axios/common";
+import dayjs from "dayjs";
 //Safety-20231114_L4TD_YONGDAM_UD.jpg
 
 //sample 데이터
@@ -50,18 +51,15 @@ const SafetyResult = () => {
 
     //3레벨이 해제되면 변위등급도 OFF
     useEffect(()=>{
-      if(!select3Level){
-        setLevelButton(false)
-      }
-
-    },[select3Level])
+      setLevelButton(false)
+    },[select3Level, select4Level])
 
     //변위등급 변화
-    useEffect(()=>{
-        if(select4Level){
-          setLevelButton(false)
-        }
-    },[select4Level])
+    // useEffect(()=>{
+    //     if(select4Level){
+    //       setLevelButton(false)
+    //     }
+    // },[select4Level])
 
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
@@ -77,11 +75,11 @@ const SafetyResult = () => {
         const delayRequest = setTimeout(() => {
           if (text.code && text.code !== '') {
             
+            //변위 등급 초기화
+            setDisplaceLevelData(false)
             //*******API************* getL3Layers: 레벨3 결과값/
-            let params = {type:'safety', level: 'L3', location: text.code}
+            let params = {type:'safety', level: 'L3', location: text.code, from:dayjs().format('YYYYMMDD'), to:dayjs().format('YYYYMMDD')}
             getL3Layers(params).then((response) => {
-
-              console.info(response)
               
               if(response.result.data.length > 0){
 
@@ -90,10 +88,16 @@ const SafetyResult = () => {
 
                   let store = obj.dataType
                   let layer = obj.name
-                  let group = ''
-                  let groupNm = '변위탐지'
+                  let group = obj.level
+                  let groupNm = obj.level === 'L3' ? '변위탐지' : '변위등급'
                   let categoryNm = obj.category.indexOf('L3TD_A1') > 0 ? '고정산란체' : obj.category.indexOf('L3TD_A2') > 0 ? '분산산란체' : ''
-                  resultList.push({...obj, store, layer, group, categoryNm, groupNm})
+                  
+
+                  if(obj.level === 'L3'){
+                    resultList.push({...obj, store, layer, group, categoryNm, groupNm})
+                  }else{
+                    setDisplaceLevelData({...obj, store, layer, group, categoryNm, groupNm})
+                  }
 
                 })
 
@@ -152,14 +156,6 @@ const SafetyResult = () => {
           dispatch({ type: SAFETY_DETAIL_RESET });
       } else {
           dispatch({ type: SAFETY_SELECT_RESULT, select3Level: selectedItem })
-
-          //3레벨 레이어가 선택되었을시 변위등급 레이어 가져오기
-          //getSafetydisplaceResult().then((response)=>{
-            //console.info(response)
-            //setDisplaceLevelData(response)
-          //})
-
-
       }
     }
 
@@ -170,7 +166,7 @@ const SafetyResult = () => {
             {obj.length > 0 &&
                 <div className="content-row">
                     <div className="content-list-wrap">
-                        <h4 className="content-list-title">{obj[0].groupNm}</h4>
+                        {/** <h4 className="content-list-title">{obj[0].groupNm}</h4> */}
                         <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
                             {
                                 obj.map((item, i2) => (
@@ -193,7 +189,6 @@ const SafetyResult = () => {
               className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
               selected={true}
               disableTouchRipple={true}
-              button={true}
               color={'primary'}
               onClick={() => checkboxChange(i, i2)}
             >
@@ -227,20 +222,19 @@ const SafetyResult = () => {
                     className={`content-list-item ${levelButton ? 'item-on' : ''}`}
                     selected={true}
                     disableTouchRipple={true}
-                    button={true}
                     color={'primary'}
                     onClick={()=>{setLevelButton(!levelButton)}}
                   >
                     <div className="list-body">
                       <div className="img-box">
                         <div className="list-shadow"></div>
-                        <img src={img}/>
-                      </div>
-                      <div className="list-info-wrap">
-                        <p className="list-info">변위등급</p>
-                        <p className="list-info">변위등급</p>
-                        <p className="list-info">변위등급</p>
-                        <p className="list-info">변위등급</p>
+                          <img src={displaceLevelData.thumbnailUrl}/>
+                        </div>
+                        <div className="list-info-wrap">
+                          <p className="list-info">{displaceLevelData.groupNm}</p>
+                          <p className="list-info">{displaceLevelData.category}</p>
+                          <p className="list-info">{`${displaceLevelData.satellite}`}</p>
+                          <p className="list-info">{`${displaceLevelData.startedAt}~${displaceLevelData.endedAt}`}</p>
                       </div>
                     </div>
                   </ListItemButton>
@@ -267,7 +261,7 @@ const SafetyResult = () => {
 
         {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))}
 
-        {layerList.length > 0 && displaceLevelData && renderSafetyLevel()}
+        {displaceLevelData && renderSafetyLevel()}
         
       </div>
     )

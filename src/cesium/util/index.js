@@ -1,4 +1,4 @@
-import { Cartesian3, Cartographic, Color, Math as MathC, PolygonGraphics, PolygonHierarchy, Rectangle, Transforms, WebMercatorProjection } from "cesium";
+import { Cartesian3, Cartographic, Color, Ellipsoid, Math as MathC, PolygonGraphics, PolygonHierarchy, Rectangle, Transforms, WebMercatorProjection } from "cesium";
 import createColormap from "colormap";
 import MapManager from "../MapManager";
 import MainWidgetManager from "@common/widget/WidgetManager";
@@ -512,6 +512,13 @@ const G$makeFormDataParam = (param = {}) => {
     return formBody.join("&");
 }
 
+const G$4326to3857 = (longitude, latitude, height=0) =>{
+
+    var cartographicPosition = Cartographic.fromDegrees(longitude, latitude)
+    var webMercatorProjection = new WebMercatorProjection()
+    return webMercatorProjection.project(cartographicPosition)
+}
+
 export {
     G$addLayer,
     G$removeLayer,
@@ -560,4 +567,6 @@ export {
 
     G$covertKm,
     G$makeFormDataParam,
+
+    G$4326to3857,
 }

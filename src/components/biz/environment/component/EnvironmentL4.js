@@ -34,7 +34,7 @@ const EnvironmentL4 = () => {
 
         console.info(selectEnvironmentLayer)
 
-        if(selectEnvironmentLayer.store === 'LandCover'){
+        if(selectEnvironmentLayer.group === 'LandCover'){
             G$addWidget('EnvironmentLandCoverWidget')
             G$removeWidget('EnvironmentGarbageWidget')
         }else{
@@ -50,7 +50,7 @@ const EnvironmentL4 = () => {
     return (
         <>
             {
-                selectEnvironmentLayer && selectEnvironmentLayer.store === 'LandCover' &&
+                selectEnvironmentLayer && selectEnvironmentLayer.group === 'LandCover' &&
                 <EnvironmentThematic />
             }
             <BaseOragDataInfo a={true} b={true}/>

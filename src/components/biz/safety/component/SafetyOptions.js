@@ -13,10 +13,10 @@ const SafetyOptions = () => {
                 {name:'용담댐', code:'YONGDAM'},
                 {name:'대청댐', code:'DAECHEONG'},
                 {name:'안동댐', code:'ANDONG'},
-                {name:'운문댐', code:'a6'},
-                {name:'영천댐', code:'a7'},
-                {name:'사연댐', code:'a8'},
-                {name:'소양강댐', code:'a10'}
+                {name:'운문댐', code:'UNMUN'},
+                {name:'영천댐', code:'YEONGCHEON'},
+                {name:'사연댐', code:'SAYEON'},
+                {name:'소양강댐', code:'SOYANG'}
             ]
         // },{
         //     name: '지역',
@@ -33,14 +33,14 @@ const SafetyOptions = () => {
             name:'보', 
             code: 'BO',
             items: [
-                {name:'창녕함안보', code:'b2'}
+                {name:'창녕함안보', code:'CHANGNYEONG'}
             ]
         },
         {
             name:'도시', 
             code: 'CITY',
             items: [
-                {name:'대전', code:'b2'},
+                {name:'대전', code:'DAEJEON'},
             ]
         },
         {
@@ -48,7 +48,7 @@ const SafetyOptions = () => {
             code: 'SI',
             items: [
                 {name:'논산천제방', code:'b1'},
-                {name:'정선 세대터널', code:'b2'},
+                {name:'정선 세대터널', code:'b7'},
             ]
         }
     ])

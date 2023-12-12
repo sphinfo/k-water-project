@@ -17,9 +17,9 @@ const FloodOptions = () => {
                 {name:'임남댐', code:'IN'},
                 {name:'대청댐', code:'DAECHEONG'},//code:'DC'},//
                 {name:'안동댐', code:'ANDONG'},//code:'ADD'},//
-                {name:'운문댐', code:'WM'},
-                {name:'영천댐', code:'YC'},
-                {name:'사연댐', code:'SY'},
+                {name:'운문댐', code:'UNMUN'},
+                {name:'영천댐', code:'YEONGCHEON'},
+                {name:'사연댐', code:'SAYEON'},
             ]
         // },{
         //   name: '지역',
@@ -36,7 +36,7 @@ const FloodOptions = () => {
             code: 'CITY',
             items: [
                 {name:'서울', code:'SEOUL'},
-                {name:'대전', code:'b2'},//
+                {name:'대전', code:'DAEJEON'},//
             ]
         },
         {
@@ -78,7 +78,7 @@ const FloodOptions = () => {
                     <h2 className="content-row-title">기간 설정</h2>
                 </div>
                 <div className="form-control group">
-                    <BaseDatePicker date={dayjs('20200101')} maxDate={endDate} onchangeFromat={(date)=>{dispatch({type: FLOOD_START_DATE, date})}}/>
+                    <BaseDatePicker date={dayjs('20150101')} maxDate={endDate} onchangeFromat={(date)=>{dispatch({type: FLOOD_START_DATE, date})}}/>
                     <span>~</span>
                     <BaseDatePicker minDate={startDate} onchangeFromat={(date)=>{dispatch({type: FLOOD_END_DATE, date})}}/>
                 </div>

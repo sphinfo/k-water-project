@@ -4,5 +4,6 @@
 export default {
     
     GET_L3_LAYERS: `/api/layers/getAll`,
+    GET_L4_LAYERS: `/api/layers/getChildren`,
 
 };

@@ -1,17 +1,8 @@
-import React, {useEffect, useRef, useState} from "react";
-import { Switch, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { FLOOD_DAMAGE_LAYER, SAFETY_SELECT_4_LEVEL, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
+import React, {useEffect, useState} from "react";
+import { Switch } from "@mui/material";
+import { SAFETY_SELECT_4_LEVEL, SAFETY_SELECT_4_LEVEL_RESET } from "@redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import img from "@images/Safety-20231114_L4TD_YONGDAM_UD.jpg"
-import BaseChart from "@common/chart/BaseChart";
-import "chartjs-plugin-annotation";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import { G$addWidget, G$getDateType, G$removeWidget, G$setNumberFixedKomma } from "@gis/util";
-import FloodWaterLevelChartDatas from "@gis/config/flood/FloodWaterLevelChartDatas";
+import { getL4Layers } from "@common/axios/common";
 
 
 const example = [{
@@ -50,6 +41,10 @@ const SafetyL4Thematic = () => {
          * 현재는 임의로 버튼 추가
          * */
         //select3Level 레벨 값 API 확인후  (***API 필요***)
+        console.info(select3Level)
+        getL4Layers({id:select3Level.id}).then((response)=>{
+            console.info(response.result)
+        })
 
         setLevel4List(example)
 
@@ -90,7 +85,6 @@ const SafetyL4Thematic = () => {
     const renderResult = (item, i) =>{
         return (
             <div className="switch-list-item">
-
                 <span className="switch-label">{item.name}</span>
                 <Switch
                     checked={item.checked}
@@ -109,7 +103,7 @@ const SafetyL4Thematic = () => {
                         <h4 className="widget-title">활용 주제도</h4>
                     </div>
                     <div className="widget-body">
-                    <div className="switch-list">
+                        <div className="switch-list">
                             {level4List.length > 0 && level4List.map((obj, i) => renderResult(obj, i))}
                         </div>
                     </div>

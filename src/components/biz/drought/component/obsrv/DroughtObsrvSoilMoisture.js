@@ -3,6 +3,8 @@ import DroughtObsrvMoistureConfig from "@gis/config/DroughtObsrvMoistureConfig";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useMemo, useRef } from "react";
 import BaseGrid from "@common/grid/BaseGrid";
+import { getDroughtObsMoisture } from "@common/axios/drought";
+import { G$getDateType } from "@gis/util";
 /**
  * 가뭄 활용주제도 - 토양수분
  */
@@ -83,6 +85,7 @@ const DroughtObsrv = () => {
                 'y2': {
                     type: 'linear',
                     position: 'right',
+                    reverse: true ,
                     grid: {
                         display: false//격자 제거
                     },
@@ -118,50 +121,74 @@ const DroughtObsrv = () => {
         
         if(selectObs){
 
-            //*******API*************/
-
-            //chartRef.current.provider = chartInfoRef.current
             chartInfoRef.current.datasets = []
-            let dataset = DroughtObsrvMoistureConfig
 
-            let label = []  //날짜 x 축
-            let precipitation = [] // 강우량
-            let obs = [] // 실측 토양 수분
-            let sim = [] //모의 토양 수분
+            getDroughtObsMoisture({code:selectObs.properties.code}).then((response)=>{
+                if(response.result.data.length > 0){
 
-            dataset.map((obj)=>{
-                label.push(obj.date)
-                precipitation.push(obj.precipitation  === '' ? NaN : Number(obj.precipitation))
-                obs.push(obj.obs  === '' ? NaN : Number(obj.obs))
-                sim.push(obj.sim  === '' ? NaN : Number(obj.sim))
+                    let label = []  //날짜 x 축
+                    let precipitation = [] // 강우량
+                    let obs = [] // 실측 토양 수분
+                    let sim = [] //모의 토양 수분
+
+                    response.result.data.map((obj)=>{
+                        
+                        obj.date = G$getDateType(obj.createdAt.substring(0,8)) 
+
+                        label.push(obj.date)
+                        precipitation.push(obj.precipitation  === '' ? NaN : Number(obj.precipitation))
+                        obs.push(obj.obs  === '' ? NaN : Number(obj.obs))
+                        sim.push(obj.sim  === '' ? NaN : Number(obj.sim))
+                    })
+
+                    //강우(bar)        /실측토양수분/모의토양수분
+                    //precipitation   /obs        /sim
+                    
+                    chartInfoRef.current.labels = label
+
+                    chartInfoRef.current.datasets.push({
+                        label: '강우량',
+                        type: 'bar',
+                        yAxisID: 'y2', 
+                        borderColor: '#004478',
+                        backgroundColor: '#004478',
+                        data: precipitation,
+                    })
+                    
+                    chartInfoRef.current.datasets.push({
+                        label: '실측 토양 수분',
+                        type: 'line',
+                        yAxisID: 'y1',
+                        pointRadius: 1,
+                        borderWidth: 1,
+                        borderColor: '#54A6E7',
+                        backgroundColor: '#54A6E7',
+                        data:obs,
+                    })
+
+                    chartInfoRef.current.datasets.push({
+                        label: '모의 토양 수분',
+                        type: 'line',
+                        yAxisID: 'y1',
+                        pointRadius: 1,
+                        borderWidth: 1,
+                        borderColor: '#FF9933',
+                        backgroundColor: '#FF9933',
+                        data:sim,
+                    })
+
+                    
+
+                    gridRef.current.provider = response.result.data
+
+                    chartRef.current.provider = chartInfoRef.current
+
+                }else{
+                    gridRef.current.provider = []
+
+                    chartRef.current.provider = chartInfoRef.current
+                }
             })
-            
-            chartInfoRef.current.labels = label
-
-            chartInfoRef.current.datasets.push({
-                label: '실측 토양 수분',
-                type: 'line',
-                yAxisID: 'y1',
-                pointRadius: 1,
-                borderWidth: 1,
-                borderColor: '#54A6E7',
-                backgroundColor: '#54A6E7',
-                data:obs,
-            })
-
-            chartInfoRef.current.datasets.push({
-                label: '강수량',
-                type: 'bar',
-                yAxisID: 'y2', 
-                borderColor: '#FF9933',
-                backgroundColor: '#FF9933',
-                data: precipitation,
-            })
-
-            gridRef.current.provider = dataset
-
-            chartRef.current.provider = chartInfoRef.current
-
         }
 
     },[selectObs])

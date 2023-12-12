@@ -173,7 +173,7 @@ const DroughtObsrvIndex = () => {
             chartRef.current.provider = chartInfoRef.current
 
             grid2Ref.current.provider = dataset
-            gridRef.current.provider = dataset
+            //gridRef.current.provider = dataset
 
         }
 
@@ -201,7 +201,7 @@ const DroughtObsrvIndex = () => {
                 </div>
 
 
-                <div className="content-row">
+                {/* <div className="content-row">
                     <div className="content-row-header">
                         <h2 className={"content-row-title"}>강우 해갈 데이터
                             <Tooltip placement="right-start" title={
@@ -223,7 +223,7 @@ const DroughtObsrvIndex = () => {
                     <div className="panel-box" style={{height: 360, overflowY: 'auto'}}>
                         <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'} />
                     </div>
-                </div>
+                </div> */}
             </div>
             
         </>

@@ -6,11 +6,13 @@ import pin from "@images/point-icon.png"
 import IconButton from '@mui/material/IconButton';
 import pin1 from "@images/point-icon-1.svg"
 import pin2 from "@images/point-icon-2.svg"
-import { G$RandomId, G$removeLayer } from "@gis/util";
+import { G$4326to3857, G$RandomId, G$removeLayer } from "@gis/util";
 import useEnhancedEffect from "@mui/material/utils/useEnhancedEffect";
 import SafetyChartConfig from "@gis/config/SafetyChartConfig";
 import { SAFETY_CLICK_MODE } from "@redux/actions";
 import BaseGrid from "@common/grid/BaseGrid";
+import { Cartesian3, Cartographic, Ellipsoid, WebMercatorProjection } from "cesium";
+import { getSafetyCompResult } from "@common/axios/safety";
 
 const SafetyL4CompWidget = () => {
 
@@ -127,11 +129,15 @@ const SafetyL4CompWidget = () => {
     useEffect(()=>{
         if(selectFeature){
 
-
-            //*******API*************/
+            console.info(selectFeature)
+            let coord = G$4326to3857(selectFeature.clickPosition.longitude, selectFeature.clickPosition.latitude)
+            //getSafetyCompResult({lng:coord.y, lat:coord.x}).then((response)=>{
+                //addData()
+            //})
             
-            //레이어가 선택되면 API 통하여 데이터 가져오기
             addData()
+            //레이어가 선택되면 API 통하여 데이터 가져오기
+            
         }
     },[selectFeature])
 

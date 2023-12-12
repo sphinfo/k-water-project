@@ -13,11 +13,11 @@ const EnvironmentOptions = () => {
             code:'DAM',
             items: [
                 {name:'용담댐', code:'YONGDAM'},
-                {name:'대청댐', code:'a4'},
-                {name:'안동댐', code:'a4'},
-                {name:'운문댐', code:'a4'},
-                {name:'사연댐', code:'a4'},
-                {name:'소양강댐', code:'a4'}
+                {name:'대청댐', code:'DAECHEONG'},
+                {name:'안동댐', code:'ANDONG'},
+                {name:'운문댐', code:'UNMUN'},
+                {name:'사연댐', code:'SAYEON'},
+                {name:'소양강댐', code:'SOYANG'}
             ]
         },
         {
@@ -25,21 +25,21 @@ const EnvironmentOptions = () => {
             code: 'BO',
             items: [
                 {name:'세종보', code:'b1'},
-                {name:'창녕함안보', code:'b2'}
+                {name:'창녕함안보', code:'CHANGNYEONG'}
             ]
         },
         {
             name:'도시', 
             code: 'CITY',
             items: [
-                {name:'대전', code:'b2'},
+                {name:'대전', code:'DAEJEON'},
             ]
         },
         {
             name:'하천', 
             code: 'RIVER',
             items: [
-                {name:'미호강', code:'b2'},
+                {name:'미호강', code:'MIHOCHEON'},
             ]
         },{
             name: '지역',
@@ -79,7 +79,7 @@ const EnvironmentOptions = () => {
                     <h2 className="content-row-title">기간 설정</h2>
                 </div>
                 <div className="form-control group">
-                    <BaseDatePicker date={dayjs('20200101')} maxDate={endDate} onchangeFromat={(date)=>{dispatch({type: ENV_START_DATE, date})}}/>
+                    <BaseDatePicker date={dayjs('20150101')} maxDate={endDate} onchangeFromat={(date)=>{dispatch({type: ENV_START_DATE, date})}}/>
                     <span>~</span>
                     <BaseDatePicker minDate={startDate} onchangeFromat={(date)=>{dispatch({type: ENV_END_DATE, date})}}/>
                 </div>

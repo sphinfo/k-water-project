@@ -97,7 +97,7 @@ const BaseChart = (props, ref) => {
 	const plugins = [
 		{
 			afterDraw: function (chart) {
-			  if (chart.data.length < 1) {
+			  if (chart.data.datasets.length < 1) {
 				let ctx = chart.ctx;
 				let width = chart.width;
 				let height = chart.height;

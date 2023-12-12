@@ -20,7 +20,7 @@ const DroughtOptions = () => {
                 {name:'운문댐', code:'UNMUN'},
                 {name:'영천댐', code:'YEONGCHEON'},
                 {name:'주암댐', code:'a4'},
-                {name:'소양강댐', code:'a4'}
+                {name:'소양강댐', code:'SOYANG'}
             ]
         // },{
         //     name: '지역',
@@ -45,8 +45,8 @@ const DroughtOptions = () => {
             name:'하천', 
             code: 'RIVER',
             items: [
-                {name:'내성천(낙동강)', code:'b1'},
-                {name:'미호강', code:'b2'},
+                {name:'내성천(낙동강)', code:'NAESEONGCHEON'},
+                {name:'미호강', code:'MIHOCHEON'},
                 {name:'남천(위천)', code:'NAMCHEON'},
             ]
         },
@@ -86,7 +86,7 @@ const DroughtOptions = () => {
                     <h2 className="content-row-title">기간 설정</h2>
                 </div>
                 <div className="form-control group">
-                    <BaseDatePicker date={dayjs('20200101')} maxDate={endDate} onchangeFromat={(date)=>{dispatch({type: DROUGHT_START_DATE, date})}}/>
+                    <BaseDatePicker date={dayjs('20150101')} maxDate={endDate} onchangeFromat={(date)=>{dispatch({type: DROUGHT_START_DATE, date})}}/>
                     <span>~</span>
                     <BaseDatePicker minDate={startDate} onchangeFromat={(date)=>{dispatch({type: DROUGHT_END_DATE, date})}}/>
                 </div>

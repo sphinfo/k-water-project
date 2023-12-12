@@ -52,16 +52,33 @@ const EnvironmentResult = () => {
 
                   let store = obj.dataType
                   let layer = obj.name
-                  let group = obj.category.indexOf('A1') > 0 ? 'A1' : obj.category.indexOf('A2') > 0 ? 'A2' : obj.category.indexOf('A3') > 0 ? 'A3' : ''
-                  let groupNm = '토양수분'
-                  let categoryNm = obj.category.indexOf('A1') > 0 ? '물리' : obj.category.indexOf('A2') > 0 ? '강우' : obj.category.indexOf('A3') > 0 ? '토양' : ''
-                  resultList.push({...obj, store, layer, group, categoryNm, groupNm})
+
+                 /* <div className="img-box" >
+                  <div className="list-shadow"></div>
+                  <img src={obj.thumbnailUrl}/>
+                </div>
+                <div className="list-info-wrap">
+                  <p className="list-info">{obj.categoryNm}</p> 수변피복 / 부우물 탐지 , 녹조탐지
+                  <p className="list-info">{obj.category}</p>
+                  <p className="list-info">{`${obj.satellite}`}</p>
+                  <p className="list-info">{`${obj.startedAt}~${obj.endedAt}`}</p>*/
+
+                  console.info(obj.category)
+                  let group = obj.category === 'L3GA' ? 'Garbage' : obj.category === 'L3AE' ? 'Garbage': obj.category === 'L3AL' ? 'Garbage' : obj.category === 'L3LCA1' ? 'LandCover' : obj.category === 'L3LCA2' ? 'LandCover' : 'a'
+                  let categoryNm = obj.category === 'L3GA' ? '부유물' : obj.category === 'L3AE' ? '녹조 농도' : obj.category === 'L3AL' ? '녹조 탐지' : obj.category === 'L3LCA1' ? '수변피복' : obj.category === 'L3LCA2' ? '수변피복' : 'b'
+                  let groupNm = obj.category === 'L3GA' ? '부유물' : obj.category === 'L3AE' ? '녹조 농도' : obj.category === 'L3AL' ? '녹조 탐지' : obj.category === 'L3LCA1' ? 'AI 알고리즘' : obj.category === 'L3LCA2' ? '광학자료' : 'c'
+
+
+
+
+                  resultList.push({...obj, store, layer, group, groupNm, categoryNm})
                 })
 
                 //environmentResultTab
                 //
                 const groupArray = G$BaseSelectBoxArray(resultList, 'group')
                 const resultArray = groupArray.grouped
+                console.info(resultArray)
                 setLayerList(resultArray)
               }else{
                 setLayerList([])
@@ -121,7 +138,7 @@ const EnvironmentResult = () => {
     const renderResult = (obj, i) =>(
         <>
             {obj.length > 0 &&
-                <div className="content-row"  style={{display: obj[0].store === environmentResultTab ? '' : 'none'}}>
+                <div className="content-row"  style={{display: obj[0].group === environmentResultTab ? '' : 'none'}}>
                     <div className="content-list-wrap">
                       <h4 className="content-list-title">{obj[0].main}</h4>
                       <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
@@ -141,7 +158,7 @@ const EnvironmentResult = () => {
 
     //list item 설정
     const renderItem = (obj, i, i2) => (
-      <ListItem key={i2} selected={true} style={{display: obj.store === environmentResultTab ? '' : 'none'}}>
+      <ListItem key={i2} selected={true} style={{display: obj.group === environmentResultTab ? '' : ''}}>
           <ListItemButton
             className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
             selected={true}
@@ -151,15 +168,15 @@ const EnvironmentResult = () => {
             onClick={() => checkboxChange(i, i2)}
           >
             <div className="list-body">
-              <div className="img-box">
+              <div className="img-box" >
                 <div className="list-shadow"></div>
-                <img src={img}/>
+                <img src={obj.thumbnailUrl}/>
               </div>
               <div className="list-info-wrap">
-                <p className="list-info">{obj.name}</p>
-                <p className="list-info">{obj.layer}</p>
-                <p className="list-info">{obj.main + obj.mainName}</p>
-                <p className="list-info">{obj.date}</p>
+                <p className="list-info">{obj.categoryNm}</p>
+                <p className="list-info">{obj.category}</p>
+                <p className="list-info">{`${obj.satellite}`}</p>
+                <p className="list-info">{`${obj.startedAt}${obj.endedAt ? '~'+obj.endedAt : ''}`}</p>
               </div>
             </div>
           </ListItemButton>
