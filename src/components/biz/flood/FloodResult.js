@@ -7,8 +7,6 @@ import { G$BaseSelectBoxArray } from "@gis/util";
 import { FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
 import { Button } from "@mui/material";
-import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
-import { getFlood3LevelResult } from "@common/axios/flood";
 import { getL3Layers } from "@common/axios/common";
 
 
@@ -21,14 +19,16 @@ const example = [
 ]
 
 
-const FloodResult = () => {
+const FloodResult = (waterObsList=[]) => {
     
     const dispatch = useDispatch()
 
     // 홍수 검색조건
     const { text, startDate, endDate, floodResultTab, selectBox } = useSelector(state => state.flood)
 
-    const [exampleList, setExampleList] = useState([])
+    const [layerList, setLayerList] = useState([])
+
+    const [noData, setNoData] = useState(false)
 
     //debouncing timer
     const [timer, setTimer] = useState(null);
@@ -42,14 +42,11 @@ const FloodResult = () => {
         }
 
         const delayRequest = setTimeout(() => {
-          console.info(text)
           if (text.code && text.code !== '') {
             //*******API************* getL3Layers: 레벨3 결과값/
             let params = {type:'flood', level: 'L3', location: text.code}
             getL3Layers(params).then((response) => {
-              console.info(response)
               if(response.result.data.length > 0){
-
                 let resultList = []
                 response.result.data.map((obj)=>{
 
@@ -61,20 +58,30 @@ const FloodResult = () => {
                   resultList.push({...obj, store, layer, group, categoryNm, groupNm})
                 })
 
-                //수위 지점 따로 추가 해야함
-                resultList.push({name:text.name, group: 'WaterLevel',groupNm: '지점수위', code: text.code})
+
+                //waterObsList
+                if(waterObsList.length > 0){
+                  waterObsList.map((obj)=>{
+                    if(obj.name.indexOf(text.code) > 0){
+                      //수위 지점 따로 추가 해야함 ( 관측소 정보 가져온데이터와 비교 하여 있으면 표출 )
+                      resultList.push({group: 'WaterLevel',groupNm: '지점수위', category: '3WL', satellite: 'Sentinel 1',code: text.code, ...obj})
+                    }
+                  })
+                }
 
                 const groupArray = G$BaseSelectBoxArray(resultList, 'store')
-                //const groupArray = G$BaseSelectBoxArray(example, 'store')
                 const resultArray = groupArray.grouped
 
-                setExampleList(resultArray)
+                setLayerList(resultArray)
+                setNoData(false)
               }else{
-                setExampleList([])
+                setLayerList([])
+                setNoData(true)
               }
             })
           } else {
-            setExampleList([])
+            setLayerList([])
+            setNoData(false)
           }
         }, 1000)
   
@@ -82,22 +89,28 @@ const FloodResult = () => {
         setTimer(delayRequest)
 
       }else{
-        setExampleList([])
+        setLayerList([])
       }
     },[text, startDate, endDate])
 
-    
+    useEffect(()=>{
+      //수위 탭이 생성되면 수위 첫번째 buttn click 이벤트 
+      if(floodResultTab === 'WaterLevel'){
+
+      }
+
+    },[floodResultTab])
 
     //임시 검색결과 도출
     useEffect(()=>{
-        setExampleList([])
+        setLayerList([])
     },[])
 
     //체크박스 다시 그리기
     const checkboxChange = (outerIndex, innerIndex) =>{
 
-      //exampleList 전체 데이터
-      const updatedList = exampleList.map((subArray, i) => {
+      //layerList 전체 데이터
+      const updatedList = layerList.map((subArray, i) => {
 
           if (outerIndex === i) {
               const updatedSubArray = subArray.map((item, j) => {
@@ -110,7 +123,7 @@ const FloodResult = () => {
           }
           return subArray.map(item => ({ ...item, checked: false })); // 다른 항목들의 선택 해제
       });
-      setExampleList(updatedList);
+      setLayerList(updatedList);
 
       //이벤트 발생 위치 확인후 
       const selectedItem = updatedList[outerIndex][innerIndex];
@@ -137,7 +150,6 @@ const FloodResult = () => {
                     }
                 </List>
             </div>
-
         </div>
       }
      </>
@@ -178,8 +190,8 @@ const FloodResult = () => {
                     <div className="list-info-wrap">
                       <p className="list-info">{obj.groupNm}</p>
                       <p className="list-info">{obj.category}</p>
-                      <p className="list-info">{`${obj.satellite}|${obj.categoryNm}`}</p>
-                      <p className="list-info">{`${obj.startedAt}~${obj.endedAt}`}</p>
+                      <p className="list-info">{`${obj.satellite}`}</p>
+                      <p className="list-info">{`${obj.date}`}</p>
                     </div>
                   </>
                 }
@@ -194,17 +206,17 @@ const FloodResult = () => {
         <>
           <div className={"content-body border-top filled"} >
             {
-              exampleList.length === 0 &&
+              layerList.length === 0 &&
               <div className="content-row empty-wrap">
                 <div className="empty-message">
-                  <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
+                  <h3 className="empty-text">{noData ? '데이터가 존재하지 않습니다.' : '연구대상 지역을 선택해주세요'}</h3>
                   <Button className="btn empty-btn" onClick={()=>{{dispatch({type:FLOOD_SELECT_BOX, selectBox: !selectBox})}}}>지역검색</Button>
                 </div>
               </div>
             }  
 
-            { exampleList.length > 0 && <FloodResultTab />}
-            {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
+            { layerList.length > 0 && <FloodResultTab />}
+            {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))}
           </div>
         </>
     )

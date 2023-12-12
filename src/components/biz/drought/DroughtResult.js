@@ -39,20 +39,31 @@ const DroughtResult = () => {
         if (timer) {
           clearTimeout(timer)
         }
-
         const delayRequest = setTimeout(() => {
-          if (text.name !== '') {
+          if (text.code && text.code !== '') {
 
             //*******API************* getL3Layers: 레벨3 결과값/
-            let params = {type:'drought', level: 'L3'}
-            getL3Layers(params).then((result) => {
+            let params = {type:'drought', level: 'L3', location: text.code}
+            getL3Layers(params).then((response) => {
+              if(response.result.data.length > 0){
+                let resultList = []
+                response.result.data.map((obj)=>{
 
-              const groupArray = G$BaseSelectBoxArray(example)
-              const resultArray = groupArray.grouped
-              setExampleList(resultArray)
+                  let store = obj.dataType
+                  let layer = obj.name
+                  let group = obj.category.indexOf('A1') > 0 ? 'A1' : obj.category.indexOf('A2') > 0 ? 'A2' : obj.category.indexOf('A3') > 0 ? 'A3' : ''
+                  let groupNm = '토양수분'
+                  let categoryNm = obj.category.indexOf('A1') > 0 ? '물리' : obj.category.indexOf('A2') > 0 ? '강우' : obj.category.indexOf('A3') > 0 ? '토양' : ''
+                  resultList.push({...obj, store, layer, group, categoryNm, groupNm})
+                })
 
+                const groupArray = G$BaseSelectBoxArray(resultList, 'group')
+                const resultArray = groupArray.grouped
+                setExampleList(resultArray)
+              }else{
+                setExampleList([])
+              }
             })
-              
             
           } else {
             setExampleList([])
@@ -110,7 +121,7 @@ const DroughtResult = () => {
     const renderResult = (obj, i) =>(
         <>
             {obj.length > 0 &&
-                <div className="content-row">
+                <div className="content-row" style={{display: obj[0].group === selectResultTab ? '' : 'none'}}>
                     <div className="content-list-wrap">
                         <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
                             {
@@ -140,15 +151,15 @@ const DroughtResult = () => {
               onClick={() => checkboxChange(i, i2)}
             >
               <div className="list-body">
-                <div className="img-box">
+                <div className="img-box" >
                   <div className="list-shadow"></div>
-                  <img src={img}/>
+                  <img src={obj.thumbnailUrl}/>
                 </div>
                 <div className="list-info-wrap">
-                  <p className="list-info">{obj.name}</p>
-                  <p className="list-info">{`obj.layer`}</p>
-                  <p className="list-info">{obj.main + obj.mainName}</p>
-                  <p className="list-info">{obj.date}</p>
+                  <p className="list-info">{obj.groupNm}</p>
+                  <p className="list-info">{obj.category}</p>
+                  <p className="list-info">{`${obj.satellite}`}</p>
+                  <p className="list-info">{`${obj.startedAt}~${obj.endedAt}`}</p>
                 </div>
               </div>
             </ListItemButton>

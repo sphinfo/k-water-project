@@ -1,5 +1,5 @@
 const FloodWaterLevelChartDatas={
-    ANDONG: [
+    DAM_ANDONG_001: [
         {Date:'20150927',estWl:'140.3416416',obsWl:'139.52'},
         {Date:'20160927',estWl:'147.2153515',obsWl:'147.69'},
         {Date:'20161102',estWl:'147.5129618',obsWl:'147.61'},
@@ -455,7 +455,7 @@ IN:[{Date:'20210105',estWl:'316.6367341',obsWl:''},
 {Date:'20211219',estWl:'315.2873331',obsWl:''},
 {Date:'20211231',estWl:'314.3593473',obsWl:''},],
 
-DAECHEONG: [
+DAM_DAECHEONG_001: [
     {Date:'20170219',estWl:'71.14657964',obsWl:'71.69'},
     {Date:'20170303',estWl:'71.4071848',obsWl:'72.1'},
     {Date:'20170315',estWl:'71.62404826',obsWl:'72.03'},
@@ -1032,7 +1032,7 @@ HG: [
             
             ],
 
-            WM:
+            DAM_UNMUN_001:
 
             [
                 {Date:'20151121',estWl:'140.4705998',obsWl:'140.22'},

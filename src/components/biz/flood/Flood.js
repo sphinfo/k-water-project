@@ -10,9 +10,8 @@ import FloodOptions from "./FloodOptions";
 import FloodResult from "./FloodResult";
 import pin from "@images/map-icon-st.svg"
 import pin2 from "@images/map-icon-st-clicked.svg"
-import DroughtObsrvConfig from "@gis/config/DroughtObsrvConfig";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
-import FloodWaterLevelStationDataConfig from "@gis/config/FloodWaterLevelStationDataConfig";
+import { getFloodObs } from "@common/axios/flood";
 
 /* 홍수 */
 const Flood = () => {
@@ -25,7 +24,6 @@ const Flood = () => {
      * selectFloodDamageLayer : 홍수 - 수체 - 침수피해 레이어 선택
      */
     const { bizName, selectFloodLayer, selectFloodDamageLayer, selectWaterLevel, text, floodResultTab } = useSelector(state => state.flood)
-    const { panelVisible } = useSelector(state => state.main)
 
     //홍수 - 수체 레이어 (3level)
     const floodLayer = useRef()
@@ -35,6 +33,7 @@ const Flood = () => {
     //홍수 - 수위 Point Wfs
     const floodWaterLevelLayer = useRef()
 
+    const [waterObsList, setWaterObsList] = useState([])
 
     const [station, setStation] = useState(false)
 
@@ -42,23 +41,22 @@ const Flood = () => {
     const layerSelectRef = useRef();
     useImperativeHandle(layerSelectRef, ()=>({
         getFeatures(features){
-            
-            const {store, layer} = selectFloodLayer
+
             //수위일시 onclick 이벤트 활성화
-            if(store === 'WaterLevel'){
+            if(floodResultTab === 'WaterLevel'){
 
                 if(selectWaterLevel){
                     selectWaterLevel.entity.billboard.image = pin
                 }
     
-                if(station === features[0].properties.Station){
+                if(station === features[0].properties.name){
                     dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: false})
                     setStation(false)
                 }else{
                     features[0].entity.billboard.image = pin2
                     G$paramWidget('FloodL4WaterLevelWidget', {subTitle: '123'})
                     dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: features[0]})
-                    setStation(features[0].properties.Station)
+                    setStation(features[0].properties.name)
                 }
 
             }
@@ -67,19 +65,21 @@ const Flood = () => {
     }));
 
     useEffect(()=>{
+        
         //WIDGET 창이 닫혔을시
         if(!selectWaterLevel){
             setStation(false)
         }
+
     },[selectWaterLevel])
 
     /* 초기 세팅 사항 */
     useEffect(()=>{
 
         //홍수 - 수체 레이어 (3level)
-        floodLayer.current = new BaseWmsImageLayer('','')
+        floodLayer.current = new BaseWmsImageLayer('flood','')
         //홍수 - 수체 - 변화탐지 레이어  (4level)
-        floodDamageLayer.current = new BaseWmsImageLayer('','')
+        floodDamageLayer.current = new BaseWmsImageLayer('flood','')
 
         //홍수 - 수위 Point Wfs
         floodWaterLevelLayer.current = new BaseEntityCollection({name:'floodWaterLevelLayer', image: pin, overlay: new WaterLevelOverlay()})
@@ -88,6 +88,20 @@ const Flood = () => {
         GisLayerClickTool.addBiz(bizName, layerSelectRef, ['floodWaterLevelLayer'])
         //레이어 클릭 callback 활성화
         GisLayerClickTool.enable(bizName)
+
+        //*******API************* 초기 지점 데이터 가져오기/
+        getFloodObs().then((response) => {
+            let obsList = []
+            if(response.result.data.length > 0){
+                response.result.data.map((obj)=>{
+                    obsList.push(obj)
+                    floodWaterLevelLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})
+                })
+            }
+
+            //지점정보 저장
+            setWaterObsList(obsList)
+        })
 
         return()=>{
             //범례 삭제
@@ -118,38 +132,28 @@ const Flood = () => {
         dispatch({type:FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: false})
 
         if(selectFloodLayer){
-            const {store, layer} = selectFloodLayer
-
+            const {store, group, layer} = selectFloodLayer
             
-            if(store === 'WaterBody'){ // 수체
-                
+            if(group === 'WaterBody'){ // 수체
                 //수체 레이어 그리기
                 floodLayer.current.changeParameters({store:store, layerId:layer})
                 //수위 레이어 삭제
-                floodWaterLevelLayer.current.entities.removeAll()
+                floodWaterLevelLayer.current.show = false
+                //floodWaterLevelLayer.current.entities.removeAll()
+            }else if(group === 'WaterLevel'){ // 수위
+                floodWaterLevelLayer.current.show = true
+                //floodWaterLevelLayer.current.entities.removeAll()
                 
-                
-            }else if(store === 'WaterLevel'){ // 수위                
-
-                floodWaterLevelLayer.current.entities.removeAll()
-
-                let zoom = false
-
-                //*******API*************/
-                //수위 임시 샘플 데이터 
-                let obsList = FloodWaterLevelStationDataConfig
-                obsList.map((properties)=>{
+                /*obsList.map((properties)=>{
                     //text
                     if(properties.name === text.code){
                         zoom = properties
                     }
                     floodWaterLevelLayer.current._addFeature({lng:properties.lon, lat:properties.lat, properties, hover: true})
                 })
-
                 if(zoom){
                     G$flyToPoint([zoom.lon, zoom.lat], 46000)
-                }
-                
+                }*/
 
                 //수체 레이어 삭제
                 floodLayer.current.remove()
@@ -157,7 +161,7 @@ const Flood = () => {
             }
         }else{
 
-            floodWaterLevelLayer.current.entities.removeAll()
+            //floodWaterLevelLayer.current.entities.removeAll()
             floodLayer.current.remove()
             
         }
@@ -217,7 +221,7 @@ const Flood = () => {
             {/* 검색조건 영역   ex) 공토영역이 될듯 ? ( 검색 TEXT, 기간 설정 등.. )*/}
             <FloodOptions />
             {/* 결과결과 영역 */}
-            <FloodResult />
+            <FloodResult waterObsList={waterObsList}/>
 
             {/* 홍수 3레벨 레이어 선택되었을시 ( 활용주제도 open )*/}
 

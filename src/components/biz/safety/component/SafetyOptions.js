@@ -11,8 +11,8 @@ const SafetyOptions = () => {
             code:'DAM',
             items: [
                 {name:'용담댐', code:'YONGDAM'},
-                {name:'대청댐', code:'a4'},
-                {name:'안동댐', code:'a5'},
+                {name:'대청댐', code:'DAECHEONG'},
+                {name:'안동댐', code:'ANDONG'},
                 {name:'운문댐', code:'a6'},
                 {name:'영천댐', code:'a7'},
                 {name:'사연댐', code:'a8'},

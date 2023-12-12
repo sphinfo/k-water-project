@@ -12,7 +12,7 @@ const MapPositionWidget = () => {
     const [addr, setAddr] = useState('');
 
     useEffect(()=>{
-        EventBus.addListener(MapEvents.mapMoveEnd, event => {
+        EventBus.addListener(MapEvents.mapMoveEnd2, event => {
             changeAddr(event)
         })
     },[])

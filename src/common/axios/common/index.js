@@ -5,15 +5,20 @@ import CommonConfig from "./CommonConfig";
 
 
 const getL3Layers = async (props={}) => {
-    const { request } = createAxios();
-    const result = await request({
-        url: CommonConfig.GET_L3_LAYERS,
-        params: props,
-        method: 'GET',
-    })
+    try{
+        const { request } = createAxios();
+        const result = await request({
+            url: CommonConfig.GET_L3_LAYERS,
+            params: props,
+            method: 'GET',
+        })
+        
+        props = { ...props, result: result.data };
+        return props;
+    }catch(error){
+        return {message:'error', result:{data:[]}}
+    }
     
-    props = { ...props, result: result.data };
-    return props;
 }
 
 

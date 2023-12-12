@@ -16,7 +16,7 @@ class BaseWmsImageLayer {
 			store
 			,layerId
 			,cqlFIlter
-			,wmsUrl: `/waterGeo/${store}/wms`
+			,wmsUrl: `/waterGeo/${store.toLowerCase()}/wms`
 			,wmsParameters: {
 				format: 'image/png',
 				transparent: true, //투명도
@@ -48,16 +48,17 @@ class BaseWmsImageLayer {
 			this.props.wmsParameters = {...this.props.wmsParameters, CQL_FILTER:this.props.cqlFilter}
 		}
 		
+		console.info(this.props)
 		//지도추가
 		this.layer = MapManager.addImageLayer(
 			new WebMapServiceImageryProvider({
 				url: this.props.wmsUrl,
-				layers: this.props.layerId,
+				layers: `${this.props.store.toLowerCase()}:${this.props.layerId}`,
 				parameters: this.props.wmsParameters,
 		}))
 
 		// 변경된 이미지 레이어 설정 ( Geoserver 사용 store:layer )
-		this.layer.id = `${this.props.store}:${this.props.layerId}`
+		this.layer.id = `${this.props.store.toLowerCase()}:${this.props.layerId}`
 		
 		// 이동
 		if(this.fly){

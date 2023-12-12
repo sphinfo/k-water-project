@@ -38,7 +38,7 @@ class BaseEntityCollection extends CustomDataSource {
 				scale: 1.0,
 				disableDepthTestDistance: Number.POSITIVE_INFINITY
 			},
-			properties: properties,
+			properties: {...properties, lon:lng, lat: lat},
 			name: this.id,
 			id: properties.id ? properties.id : null
 		});

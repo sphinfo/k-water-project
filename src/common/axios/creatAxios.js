@@ -14,6 +14,10 @@ const createAxios = (config = {}) => {
       return config;
     },
     function (error) {
+      if (error.response && error.response.status === 504) {
+        console.error('Error 504 - Gateway Timeout');
+        return Promise.reject(error); // 에러를 그대로 반환하거나 처리합니다.
+      }
       return Promise.reject(error);
     }
   );

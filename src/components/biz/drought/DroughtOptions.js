@@ -14,10 +14,10 @@ const DroughtOptions = () => {
                 {name:'용담댐', code:'YONGDAM'},
                 {name:'황강댐', code:'a2'},
                 {name:'임남댐', code:'a3'},
-                {name:'대청댐', code:'a4'},
-                {name:'안동댐', code:'a4'},
-                {name:'운문댐', code:'a4'},
-                {name:'영천댐', code:'a4'},
+                {name:'대청댐', code:'DAECHEONG'},
+                {name:'안동댐', code:'ANDONG'},
+                {name:'운문댐', code:'UNMUN'},
+                {name:'영천댐', code:'YEONGCHEON'},
                 {name:'주암댐', code:'a4'},
                 {name:'소양강댐', code:'a4'}
             ]
@@ -37,7 +37,7 @@ const DroughtOptions = () => {
             code: 'BO',
             items: [
                 {name:'세종보', code:'b1'},
-                {name:'창녕함안보', code:'b2'}
+                {name:'창녕함안보', code:'CHANGNYEONG'}
             ]
         },
         {
@@ -46,7 +46,7 @@ const DroughtOptions = () => {
             items: [
                 {name:'내성천(낙동강)', code:'b1'},
                 {name:'미호강', code:'b2'},
-                {name:'남천(위천)', code:'b3'},
+                {name:'남천(위천)', code:'NAMCHEON'},
             ]
         },
         {
