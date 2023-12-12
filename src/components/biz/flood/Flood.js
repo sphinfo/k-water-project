@@ -99,6 +99,7 @@ const Flood = () => {
                 })
             }
 
+            console.info(obsList)
             //지점정보 저장
             setWaterObsList(obsList)
         })

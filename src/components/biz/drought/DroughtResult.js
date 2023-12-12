@@ -26,7 +26,7 @@ const DroughtResult = () => {
     // 가뭄 검색조건
     const { text, startDate, endDate, selectBox, selectResultTab } = useSelector(state => state.drought)
 
-    const [exampleList, setExampleList] = useState([])
+    const [layerList, setLayerList] = useState([])
 
     //debouncing timer
     const [timer, setTimer] = useState(null);
@@ -59,14 +59,14 @@ const DroughtResult = () => {
 
                 const groupArray = G$BaseSelectBoxArray(resultList, 'group')
                 const resultArray = groupArray.grouped
-                setExampleList(resultArray)
+                setLayerList(resultArray)
               }else{
-                setExampleList([])
+                setLayerList([])
               }
             })
             
           } else {
-            setExampleList([])
+            setLayerList([])
           }
         }, 1000)
   
@@ -74,7 +74,7 @@ const DroughtResult = () => {
         setTimer(delayRequest)
 
       }else{
-        setExampleList([])
+        setLayerList([])
       }
     },[text, startDate, endDate])
 
@@ -82,7 +82,7 @@ const DroughtResult = () => {
 
     // 초기화
     useEffect(()=>{
-        setExampleList([])
+        setLayerList([])
 
         return()=>{
           dispatch({ type: DROUGHT_SELECT_LAYER, selectDroughtLayer: false });
@@ -92,8 +92,8 @@ const DroughtResult = () => {
     //체크박스 다시 그리기
     const checkboxChange = (outerIndex, innerIndex) =>{
 
-      //exampleList 전체 데이터
-      const updatedList = exampleList.map((subArray, i) => {
+      //layerList 전체 데이터
+      const updatedList = layerList.map((subArray, i) => {
           if (outerIndex === i) {
               const updatedSubArray = subArray.map((item, j) => {
                   if (innerIndex === j) {
@@ -105,7 +105,7 @@ const DroughtResult = () => {
           }
           return subArray.map(item => ({ ...item, checked: false })); // 다른 항목들의 선택 해제
       });
-      setExampleList(updatedList);
+      setLayerList(updatedList);
 
       //이벤트 발생 위치 확인후 
       const selectedItem = updatedList[outerIndex][innerIndex];
@@ -171,7 +171,7 @@ const DroughtResult = () => {
         <>
           <div className={"content-body border-top filled"}>
             {
-              exampleList.length === 0 &&
+              layerList.length === 0 &&
               <div className="content-row empty-wrap">
                 <div className="empty-message">
                   <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
@@ -181,7 +181,7 @@ const DroughtResult = () => {
             }
 
             <div className="content-row">
-              {exampleList.length > 0 &&
+              {layerList.length > 0 &&
                 <div className="form-control">
                   <Tabs className={"toggle-btn-wrap"} exclusive fullWidth={true} value={selectResultTab} onChange={(e, v)=>{dispatch({type: DROUGHT_RESULT_TAB, selectResultTab: v})}}>
                     <Tab className={"tab-item"} label={'물리'} value={'A1'}></Tab>
@@ -192,7 +192,7 @@ const DroughtResult = () => {
               }
               
             </div>
-            {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
+            {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))}
           </div>
         </>
     )

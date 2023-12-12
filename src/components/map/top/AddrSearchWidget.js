@@ -5,6 +5,11 @@ import { SEARCH_ADDR, SEARCH_RIVER } from '@redux/actions';
 import MainGeoserverSearch from '@biz/addr/MainGeoserverSearch';
 import VWorldAddressSearch from '@biz/addr/VWorldAddressSearch';
 import AddrSearchResult from './addr/AddrSearchResult';
+import createAxios from '@common/axios/creatAxios';
+import { G$cartesianToLongLat } from '@gis/util';
+import MapManager from '@gis/MapManager';
+import MapEvents from '@common/eventBus/MapEvents';
+import EventBus from '@common/eventBus/eventBus';
 
 
 const searchList = [{store: 'river_network', layerId: 'W_FRST', column: 'NAME1'}
@@ -16,9 +21,25 @@ const AddrSearchWidget = () => {
     const dispatch = useDispatch()
 
     const searchAddr = useRef(new VWorldAddressSearch())  //vworld 검색 api
-    //const searchGeoserver = useRef(new MainGeoserverSearch()) //Geoserver 검색 api
     const [addrSearchText, setAddrSearchText] = useState('') //검색 text
     
+    const { request } = createAxios();
+
+    const [addr, setAddr] = useState('');
+
+    useEffect(()=>{
+        EventBus.addListener(MapEvents.mapMoveEnd2, event => {
+            changeAddr(event)
+        })
+    },[])
+
+    const changeAddr = async(event)=>{
+        let lonlat = G$cartesianToLongLat(event.detail)
+        const responseA = await request(`/vworld/req/address?service=address&request=getAddress&version=2.0&crs=epsg:4326&point=${lonlat.longitude},${lonlat.latitude}&format=json&type=both&zipcode=true&simple=false&key=${MapManager._vworld_key}`);
+        if(responseA.data.response.result){
+            setAddr(responseA.data.response.result[0].text)
+        }
+    }
 
     const [visible, setVisible] = useState(false)
 
@@ -34,15 +55,6 @@ const AddrSearchWidget = () => {
             }).catch((error)=>{
                 console.info(error)
             })
-
-            // searchGeoserver.current.searchName(searchList, addrSearchText).then((result)=>{
-            //     if(result){
-            //         dispatch({ type: SEARCH_RIVER, result:result })
-            //     }
-            // }).catch((error)=>{
-            //     console.info(error)
-            // })
-
         }
     }
 
@@ -57,7 +69,7 @@ const AddrSearchWidget = () => {
                     value={addrSearchText}
                     onChange={handleChange}
                     onKeyPress={addrSearch}
-                    placeholder={"지역/건물/시설물 조회"}
+                    placeholder={addr}
                 />
                 <button onClick={()=>{addrSearch()}} className="map-search-bt">
                     <svg className="bt-icons magnify" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 22" fill="none">

@@ -19,7 +19,7 @@ const example = [
 ]
 
 
-const FloodResult = (waterObsList=[]) => {
+const FloodResult = ({waterObsList=[], ...props}) => {
     
     const dispatch = useDispatch()
 
@@ -59,12 +59,12 @@ const FloodResult = (waterObsList=[]) => {
                 })
 
 
-                //waterObsList
+                //수위 지점 리스트 ( 초기에 가져온 값에서 확인 가능함 )
                 if(waterObsList.length > 0){
                   waterObsList.map((obj)=>{
                     if(obj.name.indexOf(text.code) > 0){
                       //수위 지점 따로 추가 해야함 ( 관측소 정보 가져온데이터와 비교 하여 있으면 표출 )
-                      resultList.push({group: 'WaterLevel',groupNm: '지점수위', category: '3WL', satellite: 'Sentinel 1',code: text.code, ...obj})
+                      resultList.push({krNm: text.name, group: 'WaterLevel',groupNm: '지점수위', category: '3WL', satellite: 'Sentinel 1',code: text.code, ...obj})
                     }
                   })
                 }
@@ -136,23 +136,23 @@ const FloodResult = (waterObsList=[]) => {
     //결과값 출력 ( 데이터 구성을 2중 배열로 사용하려고 생각중 )
     const renderResult = (obj, i) =>(
       <>
-      {obj.length > 0 &&
-        <div className="content-row" style={{display: obj[0].group === floodResultTab ? '' : 'none'}}>
-            <div className="content-list-wrap">
-                <h4 className="content-list-title" key={i}>{obj[0].main}</h4>
-                <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
-                    {
-                        obj.map((item, i2) => (
-                            <>
-                                {renderItem(item, i, i2)}
-                            </>
-                        ))
-                    }
-                </List>
-            </div>
-        </div>
-      }
-     </>
+        {obj.length > 0 &&
+          <div className="content-row" style={{display: obj[0].group === floodResultTab ? '' : 'none'}}>
+              <div className="content-list-wrap">
+                  <h4 className="content-list-title" key={i}>{obj[0].main}</h4>
+                  <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
+                      {
+                          obj.map((item, i2) => (
+                              <>
+                                  {renderItem(item, i, i2)}
+                              </>
+                          ))
+                      }
+                  </List>
+              </div>
+          </div>
+        }
+      </>
    )
 
     //list item 설정
@@ -213,9 +213,9 @@ const FloodResult = (waterObsList=[]) => {
                   <Button className="btn empty-btn" onClick={()=>{{dispatch({type:FLOOD_SELECT_BOX, selectBox: !selectBox})}}}>지역검색</Button>
                 </div>
               </div>
-            }  
+            }
 
-            { layerList.length > 0 && <FloodResultTab />}
+            {layerList.length > 0 && <FloodResultTab />}
             {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))}
           </div>
         </>

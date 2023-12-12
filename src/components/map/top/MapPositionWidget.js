@@ -23,7 +23,6 @@ const MapPositionWidget = () => {
         if(responseA.data.response.result){
             setAddr(responseA.data.response.result[0].text)
         }
-
     }
     
     

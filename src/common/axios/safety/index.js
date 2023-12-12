@@ -1,21 +1,15 @@
 import createAxios from "../creatAxios";
 import SafetyConfig from "./SafetyConfig";
 
-
-
-const getSafety3LevelResult = async (props) => {
+const getSafetydisplaceResult = async (props) => {
 
     const {params={}} = props
-
     const { request } = createAxios();
     const result = await request({
-        url: SafetyConfig.TEST_URL,
+        url: SafetyConfig.GET_DISPLACE_LAYER,
         method: 'GET',
         params: params
     })
-
-    console.info(result)
-    
     props = { ...props, result: result };
     return props;
 }
@@ -23,5 +17,5 @@ const getSafety3LevelResult = async (props) => {
 
 
 export {
-    getSafety3LevelResult,
+    getSafetydisplaceResult,
 }

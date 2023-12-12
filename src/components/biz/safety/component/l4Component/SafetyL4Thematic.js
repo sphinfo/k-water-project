@@ -49,7 +49,6 @@ const SafetyL4Thematic = () => {
          * select3Level : 3레벨값이 바뀌면 4레벨 데이터 LIST 가 변경되어야 한다 API 후 SET LIST
          * 현재는 임의로 버튼 추가
          * */
-
         //select3Level 레벨 값 API 확인후  (***API 필요***)
 
         setLevel4List(example)

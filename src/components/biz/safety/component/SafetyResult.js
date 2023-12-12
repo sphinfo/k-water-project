@@ -7,7 +7,7 @@ import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import Button from "@mui/material/Button";
-import { getSafety3LevelResult } from "@common/axios/safety";
+import { getSafety3LevelResult, getSafetydisplaceResult } from "@common/axios/safety";
 import { getL3Layers } from "@common/axios/common";
 //Safety-20231114_L4TD_YONGDAM_UD.jpg
 
@@ -28,13 +28,16 @@ const SafetyResult = () => {
     // 안전 검색조건
     const { text, selectBox, select4Level, select3Level } = useSelector(state => state.safety)
 
-    const [exampleList, setExampleList] = useState([])
+    const [layerList, setLayerList] = useState([])
 
     //debouncing timer
     const [timer, setTimer] = useState(null);
 
     //변위등급 button
     const [levelButton, setLevelButton] = useState(false)
+
+    //변위등급 데이터
+    const [displaceLevelData, setDisplaceLevelData] = useState(false)
 
     //변위등급 레이어 on / off
     useEffect(()=>{
@@ -91,19 +94,20 @@ const SafetyResult = () => {
                   let groupNm = '변위탐지'
                   let categoryNm = obj.category.indexOf('L3TD_A1') > 0 ? '고정산란체' : obj.category.indexOf('L3TD_A2') > 0 ? '분산산란체' : ''
                   resultList.push({...obj, store, layer, group, categoryNm, groupNm})
+
                 })
 
-                const groupArray = G$BaseSelectBoxArray(resultList, 'groupNm')
+                const groupArray = G$BaseSelectBoxArray(resultList)
                 const resultArray = groupArray.grouped
-                setExampleList(resultArray)
+                setLayerList(resultArray)
               }else{
-                setExampleList([])
+                setLayerList([])
               }
 
             })
             
           } else {
-            setExampleList([])
+            setLayerList([])
           }
         }, 1000)
   
@@ -111,7 +115,7 @@ const SafetyResult = () => {
         setTimer(delayRequest)
 
       }else{
-        setExampleList([])
+        setLayerList([])
       }
       
     },[text])
@@ -120,13 +124,13 @@ const SafetyResult = () => {
 
     //임시 검색결과 도출
     useEffect(()=>{
-        setExampleList([])
+        setLayerList([])
     },[])
 
     //체크박스 다시 그리기
     const checkboxChange = (outerIndex, innerIndex) =>{
-      //exampleList 전체 데이터
-      const updatedList = exampleList.map((subArray, i) => {
+      //layerList 전체 데이터
+      const updatedList = layerList.map((subArray, i) => {
           if (outerIndex === i) {
               const updatedSubArray = subArray.map((item, j) => {
                   if (innerIndex === j) {
@@ -138,7 +142,7 @@ const SafetyResult = () => {
           }
           return subArray.map(item => ({ ...item, checked: false })); // 다른 항목들의 선택 해제
       });
-      setExampleList(updatedList);
+      setLayerList(updatedList);
 
       //이베트 발생 위치 확인후 
       const selectedItem = updatedList[outerIndex][innerIndex]
@@ -147,7 +151,15 @@ const SafetyResult = () => {
       if (!selectedItem.checked) {
           dispatch({ type: SAFETY_DETAIL_RESET });
       } else {
-          dispatch({ type: SAFETY_SELECT_RESULT, select3Level: selectedItem });
+          dispatch({ type: SAFETY_SELECT_RESULT, select3Level: selectedItem })
+
+          //3레벨 레이어가 선택되었을시 변위등급 레이어 가져오기
+          //getSafetydisplaceResult().then((response)=>{
+            //console.info(response)
+            //setDisplaceLevelData(response)
+          //})
+
+
       }
     }
 
@@ -244,7 +256,7 @@ const SafetyResult = () => {
 
     <div className="content-body border-top filled">
       {
-        exampleList.length === 0 &&
+        layerList.length === 0 &&
           <div className="content-row empty-wrap">
             <div className="empty-message">
               <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
@@ -253,9 +265,9 @@ const SafetyResult = () => {
           </div>
         }
 
-        {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
+        {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))}
 
-        {exampleList.length > 0 && displaceLevelData && renderSafetyLevel()}
+        {layerList.length > 0 && displaceLevelData && renderSafetyLevel()}
         
       </div>
     )
