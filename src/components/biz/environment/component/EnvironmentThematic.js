@@ -52,30 +52,34 @@ const EnvironmentThematic = () => {
     //4레벨 Switch 버튼 render
     const renderResult = (item, i) =>{
         return (
-            <>  
-                <div>
-                    {item.name}
-                    <Switch
-                        checked={item.checked}
-                        onClick={(e) => handleSwitchChange(i)}
-                        name={item.name}
-                    />
-                </div>
-            </>
+            <div className="switch-list-item">
+                <span className="switch-label">{item.name}</span>
+                <Switch
+                    checked={item.checked}
+                    onClick={(e) => handleSwitchChange(i)}
+                    name={item.name}
+                />
+            </div>
         )
-        
-        
+
+
     }
 
-    
 
     return (
-        <>
-            <div style={{position: 'fixed', bottom: 190, left: 400, width: 200, height: 50}}>
-                <h1>활용 주제도</h1>
-                {thematicList.length > 0 && thematicList.map((obj, i)=> renderResult(obj, i))}
+        <div className="widget widget-toggle">
+            <div className="widget-box">
+                <div className="widget-header">
+                    <h4 className="widget-title">활용 주제도</h4>
+                </div>
+                <div className="widget-body">
+                    <div className="switch-list">
+                        {thematicList.length > 0 && thematicList.map((obj, i) => renderResult(obj, i))}
+
+                    </div>
+                </div>
             </div>
-        </>
+        </div>
     )
 }
 
