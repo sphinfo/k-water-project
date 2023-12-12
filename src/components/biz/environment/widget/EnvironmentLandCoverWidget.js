@@ -79,6 +79,30 @@ const EnvironmentLandCover = () => {
         <>
 
             <div className={"content-body"}>
+
+                <div className="content-row">
+                    <div className="panel-box">
+                        <div className="number-dashboard">
+                            <div className="nd-item">
+                                <h4 className="nd-item-title">전체면적(㎡)</h4>
+                                <div className="nd-item-body">1,000k</div>
+                            </div>
+                            <div className="nd-item">
+                                <h4 className="nd-item-title">최대 피해 면적(㎡)</h4>
+                                <div className="nd-item-body">
+                                    <span className="text-naji">나지</span> 380k
+                                </div>
+                            </div>
+                            <div className="nd-item">
+                                <h4 className="nd-item-title">최소 피해 면적(㎡)</h4>
+                                <div className="nd-item-body">
+                                    <span className="text-mokji">목지</span> 30k
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="content-row">
                     <div className="content-row-header">
                         <h2 className="content-row-title">지역 구성</h2>
@@ -87,17 +111,17 @@ const EnvironmentLandCover = () => {
                         <div className="chart-unit-warp">
                             <span className="chart-unit">Area(m2)</span>
                         </div>
-                        <BaseChart width={260} height={220} ref={chartRef} chartType={'Bar'} title={''}/>
+                        <BaseChart width={'100%'} height={300} ref={chartRef} chartType={'Bar'} title={''}/>
                     </div>
                 </div>
 
 
-                <div className="content-row" style={{display: landCoverDetection? '' : 'none'}}>
+                <div className="content-row" style={{display: landCoverDetection ? '' : 'none'}}>
                     <div className="content-row-header">
                         <h2 className="content-row-title">변화 수치</h2>
                     </div>
                     <div className="panel-box">
-                        <img src={img} />
+                        <img src={img}/>
                     </div>
                 </div>
             </div>
