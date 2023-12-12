@@ -30,28 +30,37 @@ function TabPanel(props) {
   return (
     <div hidden={value !== index || value === -1} {...other} >
       {visible && (
-        <div className={`panel panel-left ${!panelVisible ? 'fold' : ''}`}>
-          <div className="panel-header">
+          <div className={`panel panel-left ${!panelVisible ? 'fold' : ''}`}>
+            <div className="panel-header">
               <h1 className="panel-title">
-                  {name}
+                {name}
               </h1>
               <IconButton className="panel-close-btn" color={"primary"} onClick={close}>
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 17L9 9M9 9L17 17M9 9L17 1M9 9L1 1" stroke="#ffffffe6" strokeWidth="1.5" strokeLinecap="round"/>
-                  </svg>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 17L9 9M9 9L17 17M9 9L17 1M9 9L1 1" stroke="#ffffffe6" strokeWidth="1.5"
+                        strokeLinecap="round"/>
+                </svg>
               </IconButton>
+            </div>
+
+            {children}
+
+            <div className="panel-bottom">
+              <div className="data-date-info">
+                <span>최신 데이터 추가일</span>
+                <span>2023.12.15 16:00</span>
+              </div>
+            </div>
           </div>
-          {children}
-        </div>
       )}
     </div>
   );
 }
 
-export default function Sidebar () {
+export default function Sidebar() {
 
   const dispatch = useDispatch()
-  const { panelVisible, panelSide } = useSelector(state => state.main)
+  const {panelVisible, panelSide} = useSelector(state => state.main)
 
   const INDEX_0 = useMemo(() => { return {i:0, name:'홍수'}}, []); 
   const INDEX_1 = useMemo(() => { return {i:1, name:'가뭄'}}, []); 

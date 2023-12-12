@@ -40,6 +40,8 @@ const MapControl = () =>{
                     <CoordiateWidget/> {/* center 좌표 */}
                 </div>
             </div>
+
+            <div className="logo-box"></div>
         </>
     )
 }
