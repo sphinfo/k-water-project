@@ -1,5 +1,5 @@
 const FloodWaterLevelChartDatas={
-    ADD: [
+    ANDONG: [
         {Date:'20150927',estWl:'140.3416416',obsWl:'139.52'},
         {Date:'20160927',estWl:'147.2153515',obsWl:'147.69'},
         {Date:'20161102',estWl:'147.5129618',obsWl:'147.61'},
@@ -279,7 +279,7 @@ const FloodWaterLevelChartDatas={
         {Date:'20230612',estWl:'142.9137789',obsWl:'142.192'},
         {Date:'20230624',estWl:'142.9232268',obsWl:'141.55'},
 ],
-YDD: [
+YONGDAM: [
 {Date:'20150927',estWl:'',obsWl:'242.83'},
 {Date:'20160927',estWl:'249.0591259',obsWl:'248.72'},
 {Date:'20161102',estWl:'250.3929941',obsWl:'250.84'},
@@ -455,7 +455,7 @@ IN:[{Date:'20210105',estWl:'316.6367341',obsWl:''},
 {Date:'20211219',estWl:'315.2873331',obsWl:''},
 {Date:'20211231',estWl:'314.3593473',obsWl:''},],
 
-DC: [
+DAECHEONG: [
     {Date:'20170219',estWl:'71.14657964',obsWl:'71.69'},
     {Date:'20170303',estWl:'71.4071848',obsWl:'72.1'},
     {Date:'20170315',estWl:'71.62404826',obsWl:'72.03'},
@@ -654,7 +654,7 @@ HG: [
     {Date:'20211218',estWl:'106.339546',obsWl:''},
     
     ],
-    NS1:[
+    NAESEONGCHEON:[
         {Date:'20210104',estWl:'1.47507781',obsWl:''},
         {Date:'20210116',estWl:'1.53867073',obsWl:''},
         {Date:'20210128',estWl:'1.2554772',obsWl:''},

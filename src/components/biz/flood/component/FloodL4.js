@@ -46,7 +46,7 @@ const FloodL4 = () => {
         <>
             {/* 수체 선택시 */}
             {
-                selectFloodLayer && selectFloodLayer.store === 'WaterBody' && 
+                selectFloodLayer && selectFloodLayer.group === 'WaterBody' && 
                 <>
                     <FloodL4WaterBodyThematic />
                     <BaseOragDataInfo a={true} b={true}/>
@@ -55,7 +55,7 @@ const FloodL4 = () => {
 
             {/* 수위 선택시 */}
             {
-                selectFloodLayer && selectFloodLayer.store === 'WaterLevel' && 
+                selectFloodLayer && selectFloodLayer.group === 'WaterLevel' && 
                 <>
                     <BaseOragDataInfo a={true}/>
                 </>

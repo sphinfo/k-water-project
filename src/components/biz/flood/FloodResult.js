@@ -42,28 +42,30 @@ const FloodResult = () => {
         }
 
         const delayRequest = setTimeout(() => {
-          if (text.name !== '') {
+          console.info(text)
+          if (text.code && text.code !== '') {
             //*******API************* getL3Layers: 레벨3 결과값/
-            let params = {type:'flood', level: 'L3'}
+            let params = {type:'flood', level: 'L3', location: text.code}
             getL3Layers(params).then((response) => {
               console.info(response)
               if(response.result.data.length > 0){
 
-                // let resultList = []
-                // response.result.data.map((obj)=>{
-                //   let store = 'WaterBody'
-                //   let layer = ''
-                //   let text = ''
-                //   resultList.push({...obj, store, layer, text})
-                // })
+                let resultList = []
+                response.result.data.map((obj)=>{
 
-                // //수위 지점 따로 추가 해야함
-                // resultList.push({name:text.name, store: 'WaterLevel', code: text.code})
+                  let store = obj.dataType
+                  let layer = obj.name
+                  let group = 'WaterBody'
+                  let groupNm = '수체탐지'
+                  let categoryNm = obj.category === 'L3WBA1' ? 'AI 알고리즘' : obj.category === 'L3WBA2' ? '물리' : obj.category
+                  resultList.push({...obj, store, layer, group, categoryNm, groupNm})
+                })
 
+                //수위 지점 따로 추가 해야함
+                resultList.push({name:text.name, group: 'WaterLevel',groupNm: '지점수위', code: text.code})
 
-
-                //const groupArray = G$BaseSelectBoxArray(resultList, 'store')
-                const groupArray = G$BaseSelectBoxArray(example, 'store')
+                const groupArray = G$BaseSelectBoxArray(resultList, 'store')
+                //const groupArray = G$BaseSelectBoxArray(example, 'store')
                 const resultArray = groupArray.grouped
 
                 setExampleList(resultArray)
@@ -122,7 +124,7 @@ const FloodResult = () => {
     const renderResult = (obj, i) =>(
       <>
       {obj.length > 0 &&
-        <div className="content-row" style={{display: obj[0].store === floodResultTab ? '' : 'none'}}>
+        <div className="content-row" style={{display: obj[0].group === floodResultTab ? '' : 'none'}}>
             <div className="content-list-wrap">
                 <h4 className="content-list-title" key={i}>{obj[0].main}</h4>
                 <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
@@ -144,7 +146,7 @@ const FloodResult = () => {
     //list item 설정
     const renderItem = (obj, i, i2) => (
       <>
-          <ListItem key={i2} selected={true} style={{display: obj.store === floodResultTab ? '' : 'none'}}>
+          <ListItem key={i2} selected={true} style={{display: obj.group === floodResultTab ? '' : 'none'}}>
             <ListItemButton
               className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
               selected={true}
@@ -156,19 +158,32 @@ const FloodResult = () => {
               <div className="list-body">
                 
                 {
-                  obj.store === 'WaterBody' && 
-                  <div className="img-box" >
-                    <div className="list-shadow"></div>
-                    <img src={img}/>
-                  </div>
+                  obj.group === 'WaterBody' && 
+                  <>
+                    <div className="img-box" >
+                      <div className="list-shadow"></div>
+                      <img src={obj.thumbnailUrl}/>
+                    </div>
+                    <div className="list-info-wrap">
+                      <p className="list-info">{obj.groupNm}</p>
+                      <p className="list-info">{obj.category}</p>
+                      <p className="list-info">{`${obj.satellite}|${obj.categoryNm}`}</p>
+                      <p className="list-info">{`${obj.startedAt}~${obj.endedAt}`}</p>
+                    </div>
+                  </>
+                }
+                {
+                  obj.group === 'WaterLevel' && 
+                  <>
+                    <div className="list-info-wrap">
+                      <p className="list-info">{obj.groupNm}</p>
+                      <p className="list-info">{obj.category}</p>
+                      <p className="list-info">{`${obj.satellite}|${obj.categoryNm}`}</p>
+                      <p className="list-info">{`${obj.startedAt}~${obj.endedAt}`}</p>
+                    </div>
+                  </>
                 }
                 
-                <div className="list-info-wrap">
-                  <p className="list-info">{obj.name}</p>
-                  <p className="list-info">{obj.layer}</p>
-                  <p className="list-info">{obj.main + obj.mainName}</p>
-                  <p className="list-info">{obj.date}</p>
-                </div>
               </div>
             </ListItemButton>
           </ListItem>
