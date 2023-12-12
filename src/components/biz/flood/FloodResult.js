@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray } from "@gis/util";
+import { G$BaseSelectBoxArray, G$flyToPoint } from "@gis/util";
 import { FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
 import { Button } from "@mui/material";
@@ -44,7 +44,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
         const delayRequest = setTimeout(() => {
           if (text.code && text.code !== '') {
             //*******API************* getL3Layers: 레벨3 결과값/
-            let params = {type:'flood', level: 'L3', location: text.code}
+            let params = {type:'flood', level: 'L3', location: text.code, from: startDate, to: endDate}
             getL3Layers(params).then((response) => {
               if(response.result.data.length > 0){
                 let resultList = []
@@ -96,9 +96,13 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     useEffect(()=>{
       //수위 탭이 생성되면 수위 첫번째 buttn click 이벤트 
       if(floodResultTab === 'WaterLevel'){
-
+        layerList.map((obj,i)=>{
+          if(obj[0].group === 'WaterLevel'){
+            G$flyToPoint([obj[0].lng, obj[0].lat], 46000)
+            checkboxChange(i,0)
+          }
+        })
       }
-
     },[floodResultTab])
 
     //임시 검색결과 도출

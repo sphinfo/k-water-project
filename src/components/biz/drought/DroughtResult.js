@@ -43,7 +43,7 @@ const DroughtResult = () => {
           if (text.code && text.code !== '') {
 
             //*******API************* getL3Layers: 레벨3 결과값/
-            let params = {type:'drought', level: 'L3', location: text.code}
+            let params = {type:'drought', level: 'L3', location: text.code, from: startDate, to: endDate}
             getL3Layers(params).then((response) => {
               if(response.result.data.length > 0){
                 let resultList = []

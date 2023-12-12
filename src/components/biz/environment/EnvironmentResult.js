@@ -8,6 +8,7 @@ import EnvironmentResultTab from "./EnvironmentResultTab";
 import { ENV_SELECT_BOX, ENV_SELECT_LAYER } from "@redux/actions";
 import { Button } from "@mui/material";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
+import { getL3Layers } from "@common/axios/common";
 
 
 //sample 데이터
@@ -25,37 +26,74 @@ const EnvironmentResult = () => {
     // 가뭄 검색조건
     const { text, startDate, endDate, environmentResultTab, selectBox } = useSelector(state => state.environment)
 
-    const [exampleList, setExampleList] = useState([])
+    const [layerList, setLayerList] = useState([])
 
     //debouncing timer
     const [timer, setTimer] = useState(null);
-    
+
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
 
       //*******API*************/
 
       if(text.name !== ''){
-        const groupArray = G$BaseSelectBoxArray(example, 'main')
-        const resultArray = groupArray.grouped
-        setExampleList(resultArray)
+        
+        if (timer) {
+          clearTimeout(timer)
+        }
+        const delayRequest = setTimeout(() => {
+          if (text.code && text.code !== '') {
+            //*******API************* getL3Layers: 레벨3 결과값/
+            let params = {type:'environment', level: 'L3', location: text.code, from: startDate, to: endDate}
+            getL3Layers(params).then((response) => {
+              if(response.result.data.length > 0){
+                let resultList = []
+                response.result.data.map((obj)=>{
+
+                  let store = obj.dataType
+                  let layer = obj.name
+                  let group = obj.category.indexOf('A1') > 0 ? 'A1' : obj.category.indexOf('A2') > 0 ? 'A2' : obj.category.indexOf('A3') > 0 ? 'A3' : ''
+                  let groupNm = '토양수분'
+                  let categoryNm = obj.category.indexOf('A1') > 0 ? '물리' : obj.category.indexOf('A2') > 0 ? '강우' : obj.category.indexOf('A3') > 0 ? '토양' : ''
+                  resultList.push({...obj, store, layer, group, categoryNm, groupNm})
+                })
+
+                //environmentResultTab
+                //
+                const groupArray = G$BaseSelectBoxArray(resultList, 'group')
+                const resultArray = groupArray.grouped
+                setLayerList(resultArray)
+              }else{
+                setLayerList([])
+              }
+            })
+            
+          } else {
+            setLayerList([])
+          }
+        }, 1000)
+  
+        // 타이머 설정
+        setTimer(delayRequest)
+
       }else{
-        setExampleList([])
+        setLayerList([])
       }
+      
     },[text, startDate, endDate])
 
     
 
     //임시 검색결과 도출
     useEffect(()=>{
-        setExampleList([])
+        setLayerList([])
     },[])
 
     //체크박스 다시 그리기
     const checkboxChange = (outerIndex, innerIndex) =>{
 
-      //exampleList 전체 데이터
-      const updatedList = exampleList.map((subArray, i) => {
+      //layerList 전체 데이터
+      const updatedList = layerList.map((subArray, i) => {
 
           if (outerIndex === i) {
               const updatedSubArray = subArray.map((item, j) => {
@@ -68,7 +106,7 @@ const EnvironmentResult = () => {
           }
           return subArray.map(item => ({ ...item, checked: false })); // 다른 항목들의 선택 해제
       });
-      setExampleList(updatedList);
+      setLayerList(updatedList);
 
       //이벤트 발생 위치 확인후 
       const selectedItem = updatedList[outerIndex][innerIndex];
@@ -132,7 +170,7 @@ const EnvironmentResult = () => {
         <>
           <div className={"content-body border-top filled"} >
             {
-              exampleList.length === 0 &&
+              layerList.length === 0 &&
               <div className="content-row empty-wrap">
                 <div className="empty-message">
                   <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
@@ -141,8 +179,8 @@ const EnvironmentResult = () => {
               </div>
             }  
 
-            {exampleList.length > 0 && <EnvironmentResultTab />}
-            {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
+            {layerList.length > 0 && <EnvironmentResultTab />}
+            {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))}
           </div>
         </>
     )

@@ -12,7 +12,7 @@ const TextInput = ({ value, onChange, placeholder='', placeholderTextColor='', o
 
   return (
     <input 
-      type="text" 
+      type="search" 
       className={className}
       value={value} 
       onChange={onChange}  
