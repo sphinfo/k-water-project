@@ -85,10 +85,6 @@ const SafetyResult = () => {
                 let resultList = []
                 response.result.data.map((obj)=>{
 
-                  //groupNm
-                  //category
-                  // ? | ? | ?
-                  // date
                   let store = obj.dataType
                   let layer = obj.name
                   let group = ''
@@ -97,10 +93,7 @@ const SafetyResult = () => {
                   resultList.push({...obj, store, layer, group, categoryNm, groupNm})
                 })
 
-                console.info(resultList)
-
-                //const groupArray = G$BaseSelectBoxArray(example)
-                const groupArray = G$BaseSelectBoxArray(resultList)
+                const groupArray = G$BaseSelectBoxArray(resultList, 'groupNm')
                 const resultArray = groupArray.grouped
                 setExampleList(resultArray)
               }else{
@@ -165,7 +158,7 @@ const SafetyResult = () => {
             {obj.length > 0 &&
                 <div className="content-row">
                     <div className="content-list-wrap">
-                        {/** <h4 className="content-list-title">{obj[0].main + obj[0].mainName}</h4>*/}
+                        <h4 className="content-list-title">{obj[0].groupNm}</h4>
                         <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
                             {
                                 obj.map((item, i2) => (
@@ -193,15 +186,15 @@ const SafetyResult = () => {
               onClick={() => checkboxChange(i, i2)}
             >
               <div className="list-body">
-                <div className="img-box">
+                <div className="img-box" >
                   <div className="list-shadow"></div>
-                  <img src={img}/>
+                  <img src={obj.thumbnailUrl}/>
                 </div>
                 <div className="list-info-wrap">
-                  <p className="list-info">{obj.name}</p>
-                  <p className="list-info">{obj.layer}</p>
-                  <p className="list-info">{obj.main + obj.mainName}</p>
-                  <p className="list-info">{obj.date}</p>
+                  <p className="list-info">{obj.groupNm}</p>
+                  <p className="list-info">{obj.category}</p>
+                  <p className="list-info">{`${obj.satellite}`}</p>
+                  <p className="list-info">{`${obj.startedAt}~${obj.endedAt}`}</p>
                 </div>
               </div>
             </ListItemButton>
@@ -262,7 +255,7 @@ const SafetyResult = () => {
 
         {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
 
-        {/*exampleList.length > 0 && displaceLevelData && renderSafetyLevel()*/}
+        {exampleList.length > 0 && displaceLevelData && renderSafetyLevel()}
         
       </div>
     )
