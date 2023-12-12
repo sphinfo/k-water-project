@@ -220,9 +220,12 @@ const Flood = () => {
             <FloodResult />
 
             {/* 홍수 3레벨 레이어 선택되었을시 ( 활용주제도 open )*/}
-            
-            {selectFloodLayer && ( 
-                <FloodL4 /> 
+
+
+            {selectFloodLayer && (
+                <div className="side-content">
+                    <FloodL4/>
+                </div>
             )}
         </>
     )

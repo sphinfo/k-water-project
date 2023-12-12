@@ -603,6 +603,12 @@
 
 }
 
+.side-content {
+  position: absolute;
+  left: 300px;
+  height: 100%;
+}
+
 .widget {
   position: absolute;
   background-color: $black-navy;
@@ -613,7 +619,7 @@
   min-width: 200px;
 
   &.widget-toggle {
-    left: 310px;
+    left: 10px;
     bottom: 55px;
   }
 
@@ -765,7 +771,7 @@
 
 .map-data {
   position: absolute;
-  left: 310px;
+  left: 10px;
   bottom: 10px;
   min-width: 200px;
   display: flex;
@@ -790,7 +796,6 @@
     }
 
     .map-data-list-item {
-      padding: 8px 15px;
       font-size: 13px;
       color: #fff;
       background-color: $black-navy;
@@ -802,7 +807,40 @@
         display: flex;
         align-items: center;
         gap: 4px;
+        padding: 8px 12px;
       }
+    }
+  }
+}
+
+.number-dashboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+
+  .nd-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    flex: 1 1 0;
+    border-right: 1px solid rgba(255,255,255,0.2);
+
+    &:last-child {
+      border-right: 0;
+    }
+
+    .nd-item-title {
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .nd-item-body {
+      font-size: 18px;
+      font-weight: 600;
     }
   }
 }
@@ -1090,6 +1128,10 @@
 
     &.fold{
       left: -354px;
+
+      .side-content {
+        left: 408px;
+      }
     }
   }
 
@@ -1227,127 +1269,128 @@
   &.filled{
     height: 100%;
   }
-  .content-row{
-    padding: 15px 10px 0;
-    position: relative;
-    .content-row-header{
-      padding-bottom: 8px;
+}
+
+.content-row{
+  padding: 15px 12px 0;
+  position: relative;
+  .content-row-header{
+    padding-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+
+    .content-row-title {
+      font-size: 14px;
+      color: $body-font-color;
+      font-weight: 500;
+      display: flex;
+      gap: 5px;
+    }
+  }
+  &.empty-wrap{
+    height: 80%;
+  }
+  .panel-box {
+    background-color: $white-alpha-5;
+    backdrop-filter: blur(2px);
+    padding: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+
+    &.full-width {
+      padding: 0;
+    }
+
+    &.bg-floor-chart {
+      background-color: $black-alpha-40;
+    }
+
+    &.info-head{
+      padding: 6px;
+    }
+    &.mb-0{
+      margin-bottom: 0;
+    }
+    .panel-box-header {
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
 
-      .content-row-title {
-        font-size: 14px;
-        color: $body-font-color;
-        font-weight: 500;
-        display: flex;
-        gap: 5px;
+      &.box-title{
+        background-color: $black-blue;
+        padding: 8px 10px;
+        border-radius: 8px;
+        margin-bottom: 6px;
+
+        .panel-box-title {
+          letter-spacing: 0;
+        }
       }
     }
-    &.empty-wrap{
-      height: 80%;
+    .panel-box-title{
+      font-size: 14px;
     }
-    .panel-box {
-      background-color: $white-alpha-5;
-      backdrop-filter: blur(2px);
-      padding: 10px;
-      border-radius: 10px;
-      overflow: hidden;
+    .panel-box-content:not(:last-child){
       margin-bottom: 10px;
-
-      &.full-width {
-        padding: 0;
-      }
-
-      &.bg-floor-chart {
-        background-color: $black-alpha-40;
-      }
-
-      &.info-head{
-        padding: 6px;
-      }
-      &.mb-0{
-        margin-bottom: 0;
-      }
-      .panel-box-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 5px;
-
-        &.box-title{
-          background-color: $black-blue;
-          padding: 8px 10px;
-          border-radius: 8px;
-          margin-bottom: 6px;
-
-          .panel-box-title {
-            letter-spacing: 0;
-          }
+    }
+    &.point-box{
+      padding: 0;
+      box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
+      .panel-box-header{
+        padding: 10px;
+        .panel-box-title{
+          font-size: 14px;
+          line-height: 1;
+        }
+        .point-icon{
+          width: 10px;
+          height: 10px;
+          border-radius: 10px;
         }
       }
-      .panel-box-title{
+      .panel-body{
+        padding: 4px;
         font-size: 14px;
       }
-      .panel-box-content:not(:last-child){
-        margin-bottom: 10px;
-      }
-      &.point-box{
-        padding: 0;
-        box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
+      &.point-1{
         .panel-box-header{
-          padding: 10px;
-          .panel-box-title{
-            font-size: 14px;
-            line-height: 1;
-          }
+          background-color: $primary-200;
           .point-icon{
-            width: 10px;
-            height: 10px;
-            border-radius: 10px;
+            background-color: $primary;
           }
         }
-        .panel-body{
-          padding: 4px;
-          font-size: 14px;
-        }
-        &.point-1{
-          .panel-box-header{
-            background-color: $primary-200;
-            .point-icon{
-              background-color: $primary;
-            }
+      }
+      &.point-2{
+        .panel-box-header{
+          background-color: #FFEBD6;
+          .point-icon{
+            background-color: $orange;
           }
         }
-        &.point-2{
-          .panel-box-header{
-            background-color: #FFEBD6;
-            .point-icon{
-              background-color: $orange;
-            }
+      }
+      &.point-3{
+        .panel-box-header{
+          background-color: #CCDAE4;
+          .point-icon{
+            background-color: $navy;
           }
         }
-        &.point-3{
-          .panel-box-header{
-            background-color: #CCDAE4;
-            .point-icon{
-              background-color: $navy;
-            }
+      }
+      &.point-4{
+        .panel-box-header{
+          background-color: #CFF0EC;
+          .point-icon{
+            background-color: $leaf;
           }
         }
-        &.point-4{
-          .panel-box-header{
-            background-color: #CFF0EC;
-            .point-icon{
-              background-color: $leaf;
-            }
-          }
-        }
-        &.point-5{
-          .panel-box-header{
-            background-color: #E3DBF9;
-            .point-icon{
-              background-color: $grape;
-            }
+      }
+      &.point-5{
+        .panel-box-header{
+          background-color: #E3DBF9;
+          .point-icon{
+            background-color: $grape;
           }
         }
       }
@@ -1360,6 +1403,10 @@
   overflow-y: auto;
   overflow-x: hidden;
   padding-bottom: 15px;
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
 }
 
 .chart-unit-warp{
@@ -1902,7 +1949,8 @@
           display: flex;
           flex-direction: column;
           gap: 5px;
-          width: calc(100% - 100px);
+          min-width: calc(100% - 100px);
+          flex: 1 0 0;
           padding: 10px;
           background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.00) 100%);
 

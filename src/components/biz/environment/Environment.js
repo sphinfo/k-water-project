@@ -111,14 +111,14 @@ const Environment = () => {
       <EnvironmentResult />
 
       {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
-      {selectEnvironmentLayer && ( 
-        <div className={`panel side-panel ${!panelVisible ? 'fold' : ''}` }>
-          <EnvironmentL4 /> 
-        </div>
-      
+      {selectEnvironmentLayer && (
+          <div className="side-content">
+              <EnvironmentL4/>
+          </div>
+
       )}
     </>
-)
+  )
 }
 
 export default React.memo(Environment);
