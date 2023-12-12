@@ -73,18 +73,7 @@ const FloodL4WaterBodyWidget = () => {
         }
 
     }, [selectFloodDamageLayer])
-
     
-    //아코디언 on off
-    const [expanded, setExpanded] = useState(true)
-    useEffect(()=>{
-        if(selectWaterLevel){
-            setExpanded(false)
-        }
-    },[selectWaterLevel])
-
-    
-
 
     return (
         <>

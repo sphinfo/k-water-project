@@ -29,16 +29,7 @@ const FloodL4 = () => {
     },[])
 
 
-    {/* 수위 선택시 pooup widget 생성 */}
-    useEffect(()=>{
-
-        if(selectWaterLevel){
-            G$addWidget('FloodL4WaterLevelWidget')
-        }else{
-            G$removeWidget('FloodL4WaterLevelWidget')
-        }
-
-    },[selectWaterLevel])
+    
 
 
     return (
@@ -54,7 +45,7 @@ const FloodL4 = () => {
 
             {/* 수위 선택시 */}
             {
-                selectFloodLayer && selectFloodLayer.group === 'WaterLevel' && 
+                selectWaterLevel && selectFloodLayer.group === 'WaterLevel' && 
                 <>
                     <BaseOragDataInfo a={true}/>
                 </>

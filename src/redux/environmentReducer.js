@@ -14,8 +14,8 @@ import {
 const initialState = {
   bizName: 'Environment',
   text: [], //검색 옵션 ( 지점및 검색 텍스트 )
-  startDate: dayjs().format('YYYY-MM-DD'), //검색 옵션 ( 기간설정 )
-  endDate: dayjs().format('YYYY-MM-DD'),   //검색 옵션 ( 기간설정 )
+  startDate: dayjs().format('YYYYMMDD'), //검색 옵션 ( 기간설정 )
+  endDate: dayjs().format('YYYYMMDD'),   //검색 옵션 ( 기간설정 )
 
   //검색결과 Tab
   environmentResultTab: 'LandCover',

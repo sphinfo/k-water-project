@@ -54,7 +54,7 @@ const Flood = () => {
                     setStation(false)
                 }else{
                     features[0].entity.billboard.image = pin2
-                    G$paramWidget('FloodL4WaterLevelWidget', {subTitle: '123'})
+                    G$paramWidget('FloodL4WaterLevelWidget')
                     dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: features[0]})
                     setStation(features[0].properties.name)
                 }
@@ -64,13 +64,15 @@ const Flood = () => {
         }
     }));
 
+    
+    //수위 선택되면 chart widget 생성
     useEffect(()=>{
-        
-        //WIDGET 창이 닫혔을시
-        if(!selectWaterLevel){
+        if(selectWaterLevel){
+            G$addWidget('FloodL4WaterLevelWidget')
+        }else{
+            G$removeWidget('FloodL4WaterLevelWidget')
             setStation(false)
         }
-
     },[selectWaterLevel])
 
     /* 초기 세팅 사항 */

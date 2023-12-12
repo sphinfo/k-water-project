@@ -35,7 +35,7 @@ const BaseDatePicker = (props, ref) => {
     }
 
     (onChange && onChange(d));
-    (onchangeFromat && onchangeFromat(d.format('YYYY-MM-DD')));
+    (onchangeFromat && onchangeFromat(d.format('YYYYMMDD')));
   });
 
   const max = useMemo(()=>{

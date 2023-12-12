@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ENV_SET_TEXT, ENV_START_DATE, ENV_END_DATE, FLOOD_SET_TEXT, FLOOD_START_DATE, FLOOD_END_DATE } from "@redux/actions";
 import BaseSelectOption from "@common/util/BaseSelectOption";
 import BaseDatePicker from "@common/datepicker/BaseDatePicker";
+import dayjs from "dayjs";
 
 const FloodOptions = () => {
 
@@ -34,7 +35,7 @@ const FloodOptions = () => {
             name:'도시', 
             code: 'CITY',
             items: [
-                {name:'서울', code:'b1'},
+                {name:'서울', code:'SEOUL'},
                 {name:'대전', code:'b2'},//
             ]
         },
@@ -77,7 +78,7 @@ const FloodOptions = () => {
                     <h2 className="content-row-title">기간 설정</h2>
                 </div>
                 <div className="form-control group">
-                    <BaseDatePicker maxDate={endDate} onchangeFromat={(date)=>{dispatch({type: FLOOD_START_DATE, date})}}/>
+                    <BaseDatePicker date={dayjs('20200101')} maxDate={endDate} onchangeFromat={(date)=>{dispatch({type: FLOOD_START_DATE, date})}}/>
                     <span>~</span>
                     <BaseDatePicker minDate={startDate} onchangeFromat={(date)=>{dispatch({type: FLOOD_END_DATE, date})}}/>
                 </div>

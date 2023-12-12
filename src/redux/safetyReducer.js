@@ -21,8 +21,8 @@ const initialState = {
   bizName: 'Safety',
   safetyType: 'displace', // 사용 x
   text: [], //검색 옵션 ( 지점및 검색 텍스트 )
-  startDate: dayjs().format('YYYY-MM-DD'), //검색 옵션 ( 기간설정 )
-  endDate: dayjs().format('YYYY-MM-DD'),   //검색 옵션 ( 기간설정 )
+  startDate: dayjs().format('YYYYMMDD'), //검색 옵션 ( 기간설정 )
+  endDate: dayjs().format('YYYYMMDD'),   //검색 옵션 ( 기간설정 )
 
   /* 비교 탭 선택시 레이어 클릭 이벤트 활성화 */
   compLayerClick: false, //4레벨 진행시 true ( 해당 플레그 값으로 비교 클릭 이벤트 및 기타 기능 활성화)
