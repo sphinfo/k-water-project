@@ -8,7 +8,7 @@ const FloodWaterLevelStationDataConfig=[
     {"type": "WLEVEL", "name": "SY", "lon": 129.1821388574211, "lat": 35.583967590657196, "symbol": 1, "date": "20210722", "time": "212409", "value": 138.5079328568812, "unit": "EL.m", "lineColor": 4, "areaColor": 4, "title": "사연댐", waterStor : '1.9',  ttlst : '30.3' ,  efstr : '20.0' ,},
     {"type": "WLEVEL", "name": "WC1", "lon": 128.38618236608002, "lat": 35.76110620209728, "symbol": 1, "date": "20210722", "time": "212409", "value": 138.5079328568812, "unit": "EL.m", "lineColor": 4, "areaColor": 4, "title": "위천", waterStor : '-',  ttlst : '-' ,  efstr : '-' ,},
     {"type": "WLEVEL", "name": "WM", "lon": 128.81517363343846, "lat": 35.71500473814916, "symbol": 1, "date": "20210722", "time": "212409", "value": 138.5079328568812, "unit": "EL.m", "lineColor": 4, "areaColor": 4, "title": "운문댐", waterStor : '17.8',  ttlst : '160.3' ,  efstr : '126.2' ,},
-{"type": "WLEVEL", "name": "YC", "lon": 129.01431576718718, "lat": 36.06430256841989, "symbol": 1, "date": "20210722", "time": "212409", "value": 138.5079328568812, "unit": "EL.m", "lineColor": 4, "areaColor": 4, "title": "영천댐", waterStor : '6.9',  ttlst : '103.2' ,  efstr : '81.4' ,},
+    {"type": "WLEVEL", "name": "YC", "lon": 129.01431576718718, "lat": 36.06430256841989, "symbol": 1, "date": "20210722", "time": "212409", "value": 138.5079328568812, "unit": "EL.m", "lineColor": 4, "areaColor": 4, "title": "영천댐", waterStor : '6.9',  ttlst : '103.2' ,  efstr : '81.4' ,},
  
 ]
 

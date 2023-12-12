@@ -2,26 +2,24 @@ import createAxios from "../creatAxios";
 import DroughtConfig from "./DroughtConfig";
 
 
-
-const getDrought3LevelResult = async (props) => {
-
-    const {params={}} = props
-
-    const { request } = createAxios();
-    const result = await request({
-        url: SafetyConfig.TEST_URL,
-        method: 'GET',
-        params: params
-    })
-
-    console.info(result)
+// 기뭄 관측소 지점
+const getDroughtObs = async (props) => {
+    try{
+        const { request } = createAxios();
+        const result = await request({
+            url: DroughtConfig.GET_DROUHGT_OBS,
+            method: 'GET',
+        })
+        props = { ...props, result: result.data };
+        return props;
+    }catch(error){
+        return {message:'error', result:{data:[]}}
+    }
     
-    props = { ...props, result: result };
-    return props;
 }
 
 
 
 export {
-    getDrought3LevelResult,
+    getDroughtObs,
 }

@@ -13,6 +13,7 @@ import DroughtOverlay from "@gis/util/overlay/DroughtOverlay";
 import DroughtObsrvConfig from "@gis/config/DroughtObsrvConfig";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import DroughtL4 from "./component/DroughtL4";
+import { getDroughtObs } from "@common/axios/drought";
 
 const Drought = () => {
 
@@ -70,16 +71,22 @@ const Drought = () => {
         droughtObsrvLayer.current = new BaseEntityCollection({name:'droughtObsrvLayer', image: pin, overlay: new DroughtOverlay()})
 
         //가뭄 메인 레이어
-        droughtLayer.current = new BaseWmsImageLayer('Drought','')
+        droughtLayer.current = new BaseWmsImageLayer('drought','')
 
         //let samplePoint = G$randomCoordinates(100)
 
         //*******API*************/
-
         let obsList = DroughtObsrvConfig
-        obsList.map((properties)=>{
-            droughtObsrvLayer.current._addFeature({lng:properties.Lon, lat:properties.Lat, properties, hover: true})
+        getDroughtObs().then((response) => {
+            console.info(response)
+            if(response.result.data.length > 0){
+                console.info(response.result.data)
+                response.result.data.map((obj)=>{
+                    droughtObsrvLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})
+                })
+            }
         })
+        droughtObsrvLayer.current.show = false
 
         //레이어 클릭 callback 등록
         GisLayerClickTool.addBiz(bizName, layerSelectRef, ['droughtObsrvLayer'])
@@ -116,12 +123,17 @@ const Drought = () => {
         if(selectDroughtLayer){
             const {store, layer} = selectDroughtLayer
             droughtLayer.current.changeParameters({store:store, layerId:layer})
-
+            //범례 on
             G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:10, max: 25, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+            //지점 on
+            droughtObsrvLayer.current.show = true
 
         }else{
+            //가뭄 off
             droughtLayer.current.remove()
-
+            //지점 off
+            droughtObsrvLayer.current.show = false
+            //범례 off
             G$removeWidget('BaseLegendgGradientWidget')
         }
 

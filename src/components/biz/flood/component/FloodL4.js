@@ -33,7 +33,6 @@ const FloodL4 = () => {
     useEffect(()=>{
 
         if(selectWaterLevel){
-            console.info(selectFloodLayer)
             G$addWidget('FloodL4WaterLevelWidget')
         }else{
             G$removeWidget('FloodL4WaterLevelWidget')

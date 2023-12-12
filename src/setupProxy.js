@@ -5,7 +5,7 @@ module.exports = function (app) {
 	//수자원공사 Geoserver TestServer
 	app.use(
 		createProxyMiddleware('/waterGeo',{
-			target: 'http://221.147.56.180:28080/geoserver',
+			target: 'http://121.152.185.126:18081/geoserver',
 			changeOrigin: true,
             pathRewrite: {
                 '^/waterGeo': ''

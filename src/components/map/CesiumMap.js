@@ -76,6 +76,7 @@ export default class CesiumMap {
         me.map.camera.moveEnd.addEventListener( async ()=>{
             var cameraPositionCartesian = me.map.camera.position;
             EventBus.dispatch(new CustomEvent(MapEvents.mapMoveEnd, { detail: cameraPositionCartesian }));
+            EventBus.dispatch(new CustomEvent(MapEvents.mapMoveEnd2, { detail: cameraPositionCartesian }));
 
             var currentExtent = me.map.camera.computeViewRectangle()
 

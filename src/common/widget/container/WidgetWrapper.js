@@ -1,4 +1,4 @@
-import React, {Suspense, useCallback, useMemo, useRef} from 'react';
+import React, {Suspense, useCallback, useMemo, useRef, useState} from 'react';
 import IconButton from '@mui/material/IconButton';
 import { Rnd } from 'react-rnd';
 import { G$removeWidget } from '@gis/util';
@@ -19,6 +19,8 @@ const widgetOption = (option = {}) => {
 };
 
 const WidgetWrapper = (props) => {
+
+    const [mini, setMini] = useState(false)
 
     const {wid, legend, title, subTitle, ...other} = props;
 
@@ -60,13 +62,13 @@ const WidgetWrapper = (props) => {
                 }}
                 dragHandleClassName = {'popup-header'}
                 >
-                    <div style={defaultOption} key={wid} className={`${wid} popup`}>
+                    <div style={defaultOption} key={wid} className={`${wid} popup ${mini ? 'minimize' : ''}`}>
                         <div className={"popup-header"}>
                             <h1 className={"popup-title"}>
                                 {title} {subTitle ? subTitle : ''}
                             </h1>
                             <div className="btn-wrap">
-                                <button className="btn-icon btn-min-max"></button>
+                                <button className="btn-icon btn-min-max" onClick={()=>{setMini(!mini)}}></button>
                                 <button className="btn-icon btn-close" onClick={close}></button>
                             </div>
                         </div>

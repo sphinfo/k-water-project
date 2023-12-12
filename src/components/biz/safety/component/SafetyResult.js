@@ -72,15 +72,40 @@ const SafetyResult = () => {
         }
 
         const delayRequest = setTimeout(() => {
-          if (text.name !== '') {
+          if (text.code && text.code !== '') {
             
             //*******API************* getL3Layers: 레벨3 결과값/
-            let params = {type:'safety', level: 'L3'}
-            getL3Layers(params).then((result) => {
+            let params = {type:'safety', level: 'L3', location: text.code}
+            getL3Layers(params).then((response) => {
 
-              const groupArray = G$BaseSelectBoxArray(example, 'main')
-              const resultArray = groupArray.grouped
-              setExampleList(resultArray)
+              console.info(response)
+              
+              if(response.result.data.length > 0){
+
+                let resultList = []
+                response.result.data.map((obj)=>{
+
+                  //groupNm
+                  //category
+                  // ? | ? | ?
+                  // date
+                  let store = obj.dataType
+                  let layer = obj.name
+                  let group = ''
+                  let groupNm = '변위탐지'
+                  let categoryNm = obj.category.indexOf('L3TD_A1') > 0 ? '고정산란체' : obj.category.indexOf('L3TD_A2') > 0 ? '분산산란체' : ''
+                  resultList.push({...obj, store, layer, group, categoryNm, groupNm})
+                })
+
+                console.info(resultList)
+
+                //const groupArray = G$BaseSelectBoxArray(example)
+                const groupArray = G$BaseSelectBoxArray(resultList)
+                const resultArray = groupArray.grouped
+                setExampleList(resultArray)
+              }else{
+                setExampleList([])
+              }
 
             })
             
@@ -140,7 +165,7 @@ const SafetyResult = () => {
             {obj.length > 0 &&
                 <div className="content-row">
                     <div className="content-list-wrap">
-                        <h4 className="content-list-title">{obj[0].main + obj[0].mainName}</h4>
+                        {/** <h4 className="content-list-title">{obj[0].main + obj[0].mainName}</h4>*/}
                         <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
                             {
                                 obj.map((item, i2) => (
@@ -237,7 +262,7 @@ const SafetyResult = () => {
 
         {exampleList.length > 0 && exampleList.map((obj, i)=> renderResult(obj, i))}
 
-        {exampleList.length > 0 && displaceLevelData && renderSafetyLevel()}
+        {/*exampleList.length > 0 && displaceLevelData && renderSafetyLevel()*/}
         
       </div>
     )
