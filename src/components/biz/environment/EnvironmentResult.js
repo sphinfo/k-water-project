@@ -54,29 +54,15 @@ const EnvironmentResult = () => {
                   let store = obj.dataType.toLowerCase()
                   let layer = obj.name
 
-                 /* <div className="img-box" >
-                  <div className="list-shadow"></div>
-                  <img src={obj.thumbnailUrl}/>
-                </div>
-                <div className="list-info-wrap">
-                  <p className="list-info">{obj.categoryNm}</p> 수변피복 / 부우물 탐지 , 녹조탐지
-                  <p className="list-info">{obj.category}</p>
-                  <p className="list-info">{`${obj.satellite}`}</p>
-                  <p className="list-info">{`${obj.startedAt}~${obj.endedAt}`}</p>*/
-
-                  console.info(obj.category)
                   let group = obj.category === 'L3GA' ? 'Garbage' : obj.category === 'L3AE' ? 'Garbage': obj.category === 'L3AL' ? 'Garbage' : obj.category === 'L3LCA1' ? 'LandCover' : obj.category === 'L3LCA2' ? 'LandCover' : 'a'
                   let categoryNm = obj.category === 'L3GA' ? '부유물' : obj.category === 'L3AE' ? '녹조 농도' : obj.category === 'L3AL' ? '녹조 탐지' : obj.category === 'L3LCA1' ? '수변피복' : obj.category === 'L3LCA2' ? '수변피복' : 'b'
                   let groupNm = obj.category === 'L3GA' ? '부유물' : obj.category === 'L3AE' ? '녹조 농도' : obj.category === 'L3AL' ? '녹조 탐지' : obj.category === 'L3LCA1' ? 'AI 알고리즘' : obj.category === 'L3LCA2' ? '광학자료' : 'c'
 
-
-
-
                   resultList.push({...obj, store, layer, group, groupNm, categoryNm})
+
                 })
 
                 //environmentResultTab
-                //
                 const groupArray = G$BaseSelectBoxArray(resultList, 'group')
                 const resultArray = groupArray.grouped
                 console.info(resultArray)

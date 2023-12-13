@@ -4,11 +4,17 @@ import { ENV_LANDCOVER_DETECTION } from "@redux/actions";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import img from "@images/image 51.png"
+import { G$normalizeWithColors } from "@gis/util";
 
 /**
  * 환경 수변피복 레이어 변화탐지
  */
+
+const colorType = [
+    { index: 0, rgb: [255, 255, 255] },
+    { index: 1, rgb: [56, 5, 120] },
+]
+
 const EnvironmentLandCover = () => {
 
     const dispatch = useDispatch()
@@ -29,7 +35,6 @@ const EnvironmentLandCover = () => {
     useEffect(()=>{
 
         if(selectEnvironmentLayer){
-
 
             //*******API*************/
 
@@ -118,8 +123,6 @@ const EnvironmentLandCover = () => {
                     <div className="content-col" style={{display: landCoverDetection ? '' : 'none'}}>
                         <div className="content-row">
                             <div className="panel-box">
-                                <img src={img}/>
-
                                 <div className="heatmap-chart-wrap">
                                     <div className="heatmap-chart">
                                         <div className="chart-axis-wrap">
@@ -145,9 +148,10 @@ const EnvironmentLandCover = () => {
                                                 <div className="axis-title">변경 후 피복</div>
                                             </div>
                                         </div>
+
                                         <div className="chart-item-group">
                                             <div className="chart-item no-item">136.30</div>
-                                            <div className="chart-item">136.30</div>
+                                            <div className="chart-item" ></div>
                                             <div className="chart-item">136.30</div>
                                             <div className="chart-item">136.30</div>
                                             <div className="chart-item">136.30</div>

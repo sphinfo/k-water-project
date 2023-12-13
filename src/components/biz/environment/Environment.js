@@ -3,9 +3,11 @@ import EnvironmentOptions from "./EnvironmentOptions";
 import EnvironmentResult from "./EnvironmentResult";
 import { useDispatch, useSelector } from "react-redux";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
-import { G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
+import { G$RandomId, G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import { ENV_RESET, SET_SIDE_PANEL } from "@redux/actions";
 import EnvironmentL4 from "./component/EnvironmentL4";
+import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
+import BasePolygonEntityCollection from "@gis/layers/BasePolygonEntityCollection";
 
 /* 환경 */
 const Environment = () => {
@@ -26,6 +28,8 @@ const Environment = () => {
   //변화탐지 레이어 
   const landCoverDetectionLayer = useRef()
 
+  const l3aeLayer = useRef()
+
 
   /* 초기 세팅 사항 */
   useEffect(()=>{
@@ -36,12 +40,20 @@ const Environment = () => {
     //변화탐지 레이어
     landCoverDetectionLayer.current = new BaseWmsImageLayer('','')
 
+    //녹조 레이어
+    l3aeLayer.current = new BasePolygonEntityCollection({name:'l3aeLayer'})
+    
+
     return()=>{
         //환경 레이어 삭제
         G$removeLayer(environmentLayer.current.layer)
 
         //변화탐지 레이어 삭제
         G$removeLayer(landCoverDetectionLayer.current.layer)
+
+        //녹조레이어 삭제
+        G$removeLayer(l3aeLayer.current.layer)
+
 
         //범례 삭제
         G$removeWidget('BaseLegendWidget')
@@ -60,6 +72,11 @@ const Environment = () => {
       const {store, layer} = selectEnvironmentLayer
       environmentLayer.current.changeParameters({store:store, layerId:layer})
       environmentLayer.current.setOpacity(0.5)
+
+      //xmin: 127.13132143969365, ymin: 37.124692874903765, xmax: 127.21297046703523, ymax: 37.15921662499071
+      //floodWaterLevelLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})
+      
+      l3aeLayer.current._addFeature({xmin: 125.91287239770594, ymin: 33.13214078423106, xmax: 126.97424130801869, ymax: 33.60135814408788, properties:{id:G$RandomId()}})
     }else{
       environmentLayer.current.remove()
     }

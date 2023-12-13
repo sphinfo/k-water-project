@@ -91,7 +91,7 @@ export default class CesiumMap {
             var east = Math.toDegrees(currentExtent.east)
             var north = Math.toDegrees(currentExtent.north)
 
-            //console.info(`bbox : xmin: ${west}, ymin: ${south}, xmax: ${east}, ymax: ${north}`)
+            console.info(`bbox : xmin: ${west}, ymin: ${south}, xmax: ${east}, ymax: ${north}`)
 
         });
 
