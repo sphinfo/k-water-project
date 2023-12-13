@@ -131,6 +131,7 @@ const SafetyL4CompWidget = () => {
 
             console.info(selectFeature)
             let coord = G$4326to3857(selectFeature.clickPosition.longitude, selectFeature.clickPosition.latitude)
+            console.info(coord)
             //getSafetyCompResult({lng:coord.y, lat:coord.x}).then((response)=>{
                 //addData()
             //})
