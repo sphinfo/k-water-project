@@ -45,15 +45,15 @@ const EnvironmentLandCover = () => {
                     <div className="number-dashboard number-dashboard-min">
                         <div className="nd-item">
                             <h4 className="nd-item-title">전체 부유물 면적</h4>
-                            <div className="nd-item-body">87,242㎡</div>
+                            <div className="nd-item-body">87,242 ㎡</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="content-row">
                 <div className="panel-box">
-                    <div className="table-wrap" style={{height: 360, overflowY: 'auto'}}>
-                        <table className="table-basic">
+                    <div className="table-wrap" style={{maxHeight: 360, overflowY: 'auto'}}>
+                        <table className="table-basic env-table">
                             <thead>
                             <tr>
                                 <th>No.</th>

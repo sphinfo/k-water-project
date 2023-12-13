@@ -1651,7 +1651,7 @@
   > thead > tr > th,
   > tbody > tr > th,
   > tbody > tr > td {
-    padding: 8px 7px;
+    padding: 8px 12px;
   }
 
   > thead > tr > th {
@@ -1691,6 +1691,7 @@
     min-width: unset;
     border-radius: 6px;
     overflow: hidden;
+
     > thead > tr > th,
     > tbody > tr > th,
     > tbody > tr > td{
@@ -1732,6 +1733,16 @@
           }
         }
 
+      }
+    }
+  }
+
+  &.env-table {
+    > tbody > tr > td {
+      text-align: center;
+
+      &:last-child {
+        text-align: right;
       }
     }
   }
