@@ -111,6 +111,7 @@ const Drought = () => {
             dispatch({type:DROUGHT_RESET})
 
             G$removeWidget('BaseLegendgGradientWidget')
+            G$removeWidget('BaseLegendgGradientWidget2')
         }
 
     },[])
@@ -125,6 +126,7 @@ const Drought = () => {
             droughtLayer.current.setOpacity(0.5)
             //범례 on
             G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:10, max: 25, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+            G$addWidget('BaseLegendgGradientWidget2', { params: {title:'토양수분', min:10, max: 25, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
             //지점 on
             droughtObsrvLayer.current.show = true
 
@@ -135,6 +137,7 @@ const Drought = () => {
             droughtObsrvLayer.current.show = false
             //범례 off
             G$removeWidget('BaseLegendgGradientWidget')
+            G$removeWidget('BaseLegendgGradientWidget2')
         }
 
     },[selectDroughtLayer])

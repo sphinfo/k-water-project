@@ -12,6 +12,7 @@ const widgets = {
     LegendWidget: lazy(() => import('@components/legend/LegendWidget')),
     BaseLegendWidget: lazy(() => import('@components/legend/BaseLegendWidget')),
     BaseLegendgGradientWidget: lazy(() => import('@components/legend/BaseLegendgGradientWidget')),
+    BaseLegendgGradientWidget2: lazy(() => import('@components/legend/BaseLegendgGradientWidget2')),
 
     //홍수
     FloodL4WaterBodyWidget: lazy(() => import('@components/biz/flood/widget/FloodL4WaterBodyWidget')),
@@ -140,6 +141,13 @@ const LegendWWidgetConfig = {
         style: {  position:'absolute'},
         instance: widgets.BaseLegendgGradientWidget
     },
+    'BaseLegendgGradientWidget2': {
+        title: 'BaseLegendGradientWidget',
+        legend: true,
+        style: {  position:'absolute'},
+        instance: widgets.BaseLegendgGradientWidget2
+    },
+    
 }
 
 export default {

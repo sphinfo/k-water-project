@@ -31,8 +31,8 @@ const DroughtObsrv = () => {
     const rows = useMemo(()=>{ return [  ] },[])
     const columns = [
         {accessor: 'date', Header: '관측일자', width: 120, align: 'center'},
-        {accessor: 'precipitation', Header: '모의 계측 수위', width: 200, align: 'center'},
-        {accessor: 'obs', Header: '실측 계측 수위', width: 200, align: 'center'},
+        {accessor: 'precipitation', Header: '모의 토양 수분 (vol.%)', width: 200, align: 'center'},
+        {accessor: 'obs', Header: '실측 토양 수분 (vol.%)', width: 200, align: 'center'},
     ]
 
     useEffect(()=>{
@@ -201,7 +201,7 @@ const DroughtObsrv = () => {
                         <div className="number-dashboard">
                             <div className="nd-item">
                                 <h4 className="nd-item-title">관측소 평균 토양 수분</h4>
-                                <div className="nd-item-body">0.0507</div>
+                                <div className="nd-item-body">0.0507 vol.%</div>
                             </div>
                             <div className="nd-item">
                                 <h4 className="nd-item-title">실측/모의 잔차 평균</h4>
