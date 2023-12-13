@@ -1,7 +1,7 @@
 import BaseChart from "@common/chart/BaseChart";
 import BaseGrid from "@common/grid/BaseGrid";
 import DroughtObsrvIndexConfig from "@gis/config/DroughtObsrvIndexConfig";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from "@mui/material/IconButton";
@@ -119,6 +119,8 @@ const DroughtObsrvIndex = () => {
 
     }, [])
 
+    const [obsSwid, setObsSwid] = useState(0)
+    const [obsSwidNm, setObsSwidNm] = useState('-')
 
     //DroughtObsrvIndexConfig
     //지점이 선택되었을시 토양수분 API로 가져온후 차트에 데이터 매핑 ( 현재 API x )
@@ -145,7 +147,7 @@ const DroughtObsrvIndex = () => {
                     let avg = 0
                     let avg2 = 0
 
-                    response.result.data.map((obj)=>{
+                    response.result.data.map((obj, i)=>{
                         
                         if(obj.createdAt){
                             obj.date = G$getDateType(obj.createdAt.substring(0,8)) 
@@ -156,8 +158,28 @@ const DroughtObsrvIndex = () => {
                         swdi.push(obj.swdi  === '' ? NaN : Number(obj.swdi))
                         obj.swdi = Number(obj.swdi).toFixed(4)
                         precipitation.push(obj.precipitation  === '' ? NaN : Number(obj.precipitation))
+                        
 
+                        if(i === response.result.data.length-1){
+                            setObsSwid(obj.swdi)
+                            let swdiNm = '';
+                            if (obj.swdi > 0) {
+                                swdiNm = '정상';
+                            } else if (obj.swdi >= -0.5 && obj.swdi < 0) {
+                                swdiNm = '관심';
+                            } else if (obj.swdi >= -1.0 && obj.swdi < -0.5) {
+                                swdiNm = '주의';
+                            } else if (obj.swdi >= -1.5 && obj.swdi < -1.0) {
+                                swdiNm = '경계';
+                            } else {
+                                swdiNm = '심각';
+                            }
+                            setObsSwidNm(swdiNm)
+
+                        }
                     })
+
+                    
 
                     chartInfoRef.current.labels = label
     
@@ -209,11 +231,11 @@ const DroughtObsrvIndex = () => {
                         <div className="number-dashboard">
                             <div className="nd-item">
                                 <h4 className="nd-item-title">현재 가뭄 상태</h4>
-                                <div className="nd-item-body">정상</div>
+                                <div className="nd-item-body">{obsSwidNm}</div>
                             </div>
                             <div className="nd-item">
                                 <h4 className="nd-item-title">관측소 해갈 강우량(mm)</h4>
-                                <div className="nd-item-body">80</div>
+                                <div className="nd-item-body">{obsSwid}</div>
                             </div>
                         </div>
                     </div>
