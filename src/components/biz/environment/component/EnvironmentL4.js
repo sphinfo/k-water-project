@@ -37,9 +37,24 @@ const EnvironmentL4 = () => {
         if(selectEnvironmentLayer.group === 'LandCover'){
             G$addWidget('EnvironmentLandCoverWidget')
             G$removeWidget('EnvironmentGarbageWidget')
+            G$removeWidget('EnvironmentL3AEWidget')
         }else{
             G$removeWidget('EnvironmentLandCoverWidget')
+            
+            
+            if(selectEnvironmentLayer.category === 'L3AE'){
+                //녹조
+                
+            }else{
+                //부유물
+                
+            }
+            
+            G$addWidget('EnvironmentL3AEWidget')
             G$addWidget('EnvironmentGarbageWidget')
+            
+
+
 
         }
 

@@ -83,7 +83,7 @@ const Environment = () => {
   //범례 change 이벤트
   useEffect(()=>{
 
-    if(selectEnvironmentLayer.store === 'LandCover'){
+    if(selectEnvironmentLayer.group === 'LandCover'){
       G$addWidget('BaseLegendWidget', { 
         params: {
             title:'피복 분류', 
