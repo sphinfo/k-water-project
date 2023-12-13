@@ -3,11 +3,12 @@ import EnvironmentOptions from "./EnvironmentOptions";
 import EnvironmentResult from "./EnvironmentResult";
 import { useDispatch, useSelector } from "react-redux";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
-import { G$RandomId, G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
+import { G$RandomId, G$addWidget, G$flyToExtent, G$flyToPoint, G$removeLayer, G$removeWidget } from "@gis/util";
 import { ENV_RESET, SET_SIDE_PANEL } from "@redux/actions";
 import EnvironmentL4 from "./component/EnvironmentL4";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import BasePolygonEntityCollection from "@gis/layers/BasePolygonEntityCollection";
+import { Cartesian3, Rectangle } from "cesium";
 
 /* 환경 */
 const Environment = () => {
@@ -19,7 +20,7 @@ const Environment = () => {
    * selectEnvironmentLayer : 환경 레이어 선택
    * landCoverDetection : 변화 탐지 선택
    */
-  const { selectEnvironmentLayer, landCoverDetection } = useSelector(state => state.environment)
+  const { selectEnvironmentLayer, landCoverDetection, text } = useSelector(state => state.environment)
   const { panelVisible } = useSelector(state => state.main)
 
   //환경 수변피복 레이어
@@ -35,18 +36,14 @@ const Environment = () => {
   useEffect(()=>{
 
     //환경 메인 레이어
-    environmentLayer.current = new BaseWmsImageLayer('','')
+    environmentLayer.current = new BaseWmsImageLayer('','',null, false)
 
     //변화탐지 레이어
-    landCoverDetectionLayer.current = new BaseWmsImageLayer('','')
+    landCoverDetectionLayer.current = new BaseWmsImageLayer('','',null, false)
 
     //녹조 레이어
     l3aeLayer.current = new BasePolygonEntityCollection({name:'l3aeLayer'})
     
-
-    //			
-
-    l3aeLayer.current._addFeature({xmin: 127.505519, ymin: 36.41462133, xmax: 127.5096512, ymax: 36.41048908, properties:{id:G$RandomId()}})
     
     return()=>{
         //환경 레이어 삭제
@@ -72,15 +69,28 @@ const Environment = () => {
 
     //변화탐지 레이어 삭제
     landCoverDetectionLayer.current.remove()
+    l3aeLayer.current.entities.removeAll()
 
     if(selectEnvironmentLayer){
       const {store, layer} = selectEnvironmentLayer
       environmentLayer.current.changeParameters({store:store, layerId:layer})
 
-      //xmin: 127.13132143969365, ymin: 37.124692874903765, xmax: 127.21297046703523, ymax: 37.15921662499071
-      //floodWaterLevelLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})
       
-      //l3aeLayer.current._addFeature({xmin: 125.91287239770594, ymin: 33.13214078423106, xmax: 126.97424130801869, ymax: 33.60135814408788, properties:{id:G$RandomId()}})
+      
+      if(selectEnvironmentLayer.group === 'LandCover'){
+        const {xmin, xmax, ymin, ymax} = text
+        l3aeLayer.current._addFeature({xmin: xmin, ymin: ymin, xmax: xmax, ymax: ymax, properties:{id:G$RandomId()}})
+        G$flyToPoint([xmin,ymin],103000)
+
+
+      }else if(selectEnvironmentLayer.group === 'Garbage'){
+        l3aeLayer.current._addFeature({xmin: 127.505519, ymin: 36.41462133, xmax: 127.5096512, ymax: 36.41048908, properties:{id:G$RandomId()}})
+        G$flyToPoint([127.505519,36.41462133],8000)
+      }
+
+      //
+
+
     }else{
       environmentLayer.current.remove()
     }
@@ -89,7 +99,7 @@ const Environment = () => {
   //변화탐지 레이어
   useEffect(()=>{
     if(landCoverDetection){
-      landCoverDetectionLayer.current.changeParameters({store:'LandCover', layerId:'change_detection'})
+      landCoverDetectionLayer.current.changeParameters({store:'environment', layerId:'20231212113940_environment_L4LC_Q8eh_DAEJEON-DAECHEONG-YONGDAM-SEJONG-ANDONG-SAYEON-UNMUN-MIHO-CHANGNYEONG-SOYANG'})
     }else{
       landCoverDetectionLayer.current.remove()
     }

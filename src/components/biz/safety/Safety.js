@@ -46,7 +46,11 @@ const Safety = () => {
     useImperativeHandle(layerSelectRef, ()=>({
         getFeatures(features){
             if(compLayerClick){
-                dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: features[0]})
+                
+                if(features[0].properties.GRAY_INDEX){
+                    dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: features[0]})
+                }
+                
             }
 
             //변위등급이 켜져 있는 경우 ovelay 
@@ -95,6 +99,8 @@ const Safety = () => {
             //범례 삭제
             G$removeWidget('BaseLegendWidget')
             G$removeWidget('BaseLegendgGradientWidget')
+            G$removeWidget('SafetyL4LevelDataWidget')
+            
 
         }
 

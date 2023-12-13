@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import { Switch, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { FLOOD_DAMAGE_LAYER, SAFETY_CLICK_MODE, SAFETY_SELECT_4_LEVEL, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
+import { FLOOD_DAMAGE_LAYER, SAFETY_CLICK_MODE, SAFETY_SELECT_4_LEVEL, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_SELECT_DISPLACE_LEVEL, SAFETY_SELETE_FEATURE } from "@redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { G$addWidget, G$removeWidget } from "@gis/util";
 
@@ -15,8 +15,8 @@ const SafetyL4LevelDataWidget = () => {
 
     //click mode가 on 되면 비교 widget 띄우기
     useEffect(()=>{
-        console.info(selectFeature)
-    },[selectFeature])
+        dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: false})
+    },[])
 
     return (
         <div className="content-body">
@@ -30,7 +30,7 @@ const SafetyL4LevelDataWidget = () => {
                         </div>
                         <div className="nd-item">
                             <h4 className="nd-item-title"></h4>
-                            <div className="nd-item-body">{`안전`}</div>
+                            <div className="nd-item-body">{selectFeature && selectFeature.properties.GRAY_INDEX === 1 ? '안전' : selectFeature && selectFeature.properties.GRAY_INDEX === 2 ? '보통' : selectFeature && selectFeature.properties.GRAY_INDEX === 3 ? '위험' : ''}</div>
                         </div>
                     </div>
                 </div>

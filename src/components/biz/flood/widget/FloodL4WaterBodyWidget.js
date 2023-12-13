@@ -42,7 +42,6 @@ const FloodL4WaterBodyWidget = () => {
 
         if(selectFloodDamageLayer){
 
-            console.info()
             let data = FloodL4ChartConfig[`${selectFloodDamageLayer.filename}`]
 
             if(data && data.length>0){

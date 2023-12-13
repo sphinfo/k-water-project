@@ -1,10 +1,8 @@
 import BaseChart from "@common/chart/BaseChart";
-import { Accordion, AccordionDetails, AccordionSummary, SvgIcon, Switch } from "@mui/material";
-import { ENV_LANDCOVER_DETECTION } from "@redux/actions";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { G$normalizeWithColors } from "@gis/util";
+import img from "@images/Safety-20231114_L4TD_YONGDAM_UD.jpg"
+import { G$arrayGetMinMax, G$normalizeWithColors, G$setNumberFixedKomma } from "@gis/util";
 
 /**
  * 환경 수변피복 레이어 변화탐지
@@ -21,15 +19,18 @@ const EnvironmentLandCover = () => {
     /**
      * selectEnvironmentLayer: 수변피복 레이어 선택
      */
-    const { selectEnvironmentLayer, landCoverDetection } = useSelector(state => state.environment)
-    
+    const { selectEnvironmentLayer, landCoverDetection, text } = useSelector(state => state.environment)
 
     //차트 정보
     const chartRef = useRef()
     const chartInfoRef = useRef({
-        labels: ['목지','수체','건물','초지','나지'],
-        datasets: [50,150,100,130,60],
+        labels: ['수체', '나지', '초지','목지', '건물'],
+        datasets: [],
     })
+
+    const [max, setMax] = useState('')
+    const [min, setMin] = useState('')
+    const [maxArea, setMaxArea] = useState(0)
 
     //레이어 변경시 reset
     useEffect(()=>{
@@ -37,44 +38,59 @@ const EnvironmentLandCover = () => {
         if(selectEnvironmentLayer){
 
             //*******API*************/
+            const {data} = text
 
-            chartRef.current.updateOptions = {
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                },
-                scales: {
-                    'x': {
+            if(data && data.length > 0){
 
-                    },
-                    'y': {
-                        title: {
-                            display: false,
-                            text: "Area(m2)",
-                            font: {
-                              size: 10,
-                            },
+                let area = 0
+                data.map((obj)=>{
+                    area += obj
+                })
+
+                setMaxArea(area)
+
+                setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]} - ${G$setNumberFixedKomma(data[G$arrayGetMinMax(data).min], 0)}`)
+                setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]} - ${G$setNumberFixedKomma(data[G$arrayGetMinMax(data).max], 0)}`)
+
+                chartRef.current.updateOptions = {
+                    plugins: {
+                        legend: {
+                            display: false
                         },
-                    }
-                },
+                    },
+                    scales: {
+                        'x': {
+    
+                        },
+                        'y': {
+                            title: {
+                                display: false,
+                                text: "Area(m2)",
+                                font: {
+                                  size: 10,
+                                },
+                            },
+                        }
+                    },
+                }
+    
+                chartInfoRef.current.datasets = []
+    
+    
+                //chartInfoRef.current.labels = label
+    
+                chartInfoRef.current.datasets.push({
+                    type: 'bar',
+                    borderColor: ['#557BDF','#F3AC50', '#A1F8A5','#35783B', '#DD59B2'],
+                    backgroundColor: ['#557BDF','#F3AC50', '#A1F8A5','#35783B', '#DD59B2'],
+                    data: data,
+                })
+    
+                chartRef.current.provider = chartInfoRef.current
+
             }
 
-            chartInfoRef.current.datasets = []
-
-            //let label = []  //날짜 x 축
-            let datas = [50,150,100,130,60]
-
-            //chartInfoRef.current.labels = label
-
-            chartInfoRef.current.datasets.push({
-                type: 'bar',
-                borderColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-                data: datas,
-            })
-
-            chartRef.current.provider = chartInfoRef.current
+            
         }
 
     },[selectEnvironmentLayer])
@@ -92,18 +108,18 @@ const EnvironmentLandCover = () => {
                                 <div className="number-dashboard">
                                     <div className="nd-item">
                                         <h4 className="nd-item-title">전체면적(㎡)</h4>
-                                        <div className="nd-item-body">1,000k</div>
+                                        <div className="nd-item-body">{G$setNumberFixedKomma(maxArea,0)}</div>
                                     </div>
                                     <div className="nd-item">
-                                        <h4 className="nd-item-title">최대 피해 면적(㎡)</h4>
+                                        <h4 className="nd-item-title">최대 면적(㎡)</h4>
                                         <div className="nd-item-body">
-                                            <span className="text-naji">나지</span> 380k
+                                            <span className="text">{max}</span>
                                         </div>
                                     </div>
                                     <div className="nd-item">
-                                        <h4 className="nd-item-title">최소 피해 면적(㎡)</h4>
+                                        <h4 className="nd-item-title">최소 면적(㎡)</h4>
                                         <div className="nd-item-body">
-                                            <span className="text-mokji">목지</span> 30k
+                                            <span className="text">{min}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +138,9 @@ const EnvironmentLandCover = () => {
 
                     <div className="content-col" style={{display: landCoverDetection ? '' : 'none'}}>
                         <div className="content-row">
-                            <div className="panel-box">
+                        <img style={{width:500, height:440}} src={text.img} />
+                            {/** 
+                             * <div className="panel-box">
                                 <div className="heatmap-chart-wrap">
                                     <div className="heatmap-chart">
                                         <div className="chart-axis-wrap">
@@ -189,6 +207,8 @@ const EnvironmentLandCover = () => {
 
 
                             </div>
+                            */}
+                            
                         </div>
                     </div>
 

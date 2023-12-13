@@ -23,7 +23,7 @@ const BaseOragDataInfo = (props) => {
                 </button>
 
 
-                <div className={`map-data-list ${visible ? 'show' : ''}`}>
+                <div className={`map-data-list ${visible ? '' : ''}`}>
                     <div className="map-data-list-item">{ a && <InfoA /> }</div>
                     <div className="map-data-list-item">{ b && <InfoB /> }</div>
                     <div className="map-data-list-item">{ c && <InfoC /> }</div>

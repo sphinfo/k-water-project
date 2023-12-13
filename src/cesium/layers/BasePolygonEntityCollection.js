@@ -34,6 +34,7 @@ class BasePolygonEntityCollection extends CustomDataSource {
 			polyline: {
 				positions: positions,
 				material: Color.WHITE.withAlpha(1), 
+				width: 5,
 				outline: true
 			},
 			properties: { ...properties },
@@ -43,7 +44,7 @@ class BasePolygonEntityCollection extends CustomDataSource {
 
 		this.entities.add(polygonEntity)
 
-		const centerCartographic = Cartographic.fromDegrees(xmin, ymax);
+		/*const centerCartographic = Cartographic.fromDegrees(xmin, ymax);
 		const centerPosition = Cartesian3.fromRadians(centerCartographic.longitude, centerCartographic.latitude);
 
 		this.entities.add({
@@ -62,12 +63,22 @@ class BasePolygonEntityCollection extends CustomDataSource {
                 backgroundPadding: new Cartesian2(8, 4),
 				pixelOffset: new Cartesian2(-10, 0), 
             },
-        });
+        });*/
 		
 		if(callback){
 			callback(polygonEntity)
 		}
 		
+	}
+
+	//개별 entity 삭제
+	removeEntityById(id=null) {
+		if(id){
+			const entityToRemove = this.entities.getById(id);
+			if (entityToRemove) {
+				this.entities.remove(entityToRemove)
+			}
+		}
 	}
 	
 }

@@ -6,7 +6,7 @@ import pin from "@images/point-icon.png"
 import IconButton from '@mui/material/IconButton';
 import pin1 from "@images/point-icon-1.svg"
 import pin2 from "@images/point-icon-2.svg"
-import { G$4326to3857, G$RandomId, G$removeLayer } from "@gis/util";
+import { G$4326to3857, G$RandomId, G$getDateType, G$removeLayer } from "@gis/util";
 import useEnhancedEffect from "@mui/material/utils/useEnhancedEffect";
 import SafetyChartConfig from "@gis/config/SafetyChartConfig";
 import { SAFETY_CLICK_MODE } from "@redux/actions";
@@ -31,7 +31,7 @@ const SafetyL4CompWidget = () => {
     //차트 데이터 Ref 
     const chartInfoRef = useRef({
         //X축 
-        labels: ['2017-0308','2017-0320','2017-0401','2017-0413','2017-0425','2017-0507','2017-0519','2017-0531','2017-0612','2017-0624','2017-0706','2017-0718','2017-0730','2017-0811','2017-0823','2017-0904','2017-0916','2017-0928','2017-1010','2017-1022','2017-1103','2017-1115','2017-1209','2017-1221','2018-0102','2018-0114','2018-0126','2018-0207','2018-0619','2018-0701','2018-0713','2018-0725','2018-0806','2018-0818','2018-0830','2018-0911','2018-0923','2018-1005','2018-1017','2018-1029','2018-1110','2018-1122','2018-1204','2018-1216','2018-1228','2019-0109','2019-0121','2019-0202','2019-0214','2019-0226','2019-0310','2019-0322','2019-0403','2019-0415','2019-0427','2019-0509','2019-0521','2019-0602','2019-0614','2019-0626','2019-0708','2019-0720','2019-0813','2019-0825','2019-0906','2019-0918','2019-0930','2019-1012','2019-1024','2019-1105','2019-1117','2019-1129','2019-1211','2019-1223','2020-0104','2020-0116','2020-0128','2020-0209','2020-0221','2020-0304','2020-0316','2020-0328','2020-0409','2020-0421','2020-0503','2020-0515','2020-0527','2020-0608','2020-0620','2020-0702','2020-0714','2020-0726','2020-0807','2020-0819','2020-0831','2020-0912','2020-0924','2020-1006','2020-1018','2020-1030','2020-1111','2020-1123','2020-1205','2020-1217','2020-1229','2021-0110','2021-0122','2021-0203','2021-0215','2021-0227','2021-0311','2021-0323','2021-0404','2021-0416','2021-0428','2021-0510','2021-0522','2021-0603','2021-0615','2021-0627','2021-0709','2021-0721','2021-0802','2021-0814','2021-0826','2021-0907','2021-0919','2021-1001','2021-1013','2021-1025','2021-1106','2021-1118','2021-1130','2021-1212','2021-1224'],
+        labels: [],
         //Y축
         datasets: [],
     })
@@ -128,15 +128,27 @@ const SafetyL4CompWidget = () => {
     //grid 레이어가 선택이 되면 pinlayer 추가
     useEffect(()=>{
         if(selectFeature){
-
-            console.info(selectFeature)
             let coord = G$4326to3857(selectFeature.clickPosition.longitude, selectFeature.clickPosition.latitude)
-            console.info(coord)
-            //getSafetyCompResult({lng:coord.y, lat:coord.x}).then((response)=>{
-                //addData()
-            //})
+            let id = select4Level ? select4Level.id : select3Level.id
+            console.info(id)
+            getSafetyCompResult({y:parseFloat(coord.y), x:parseFloat(coord.x), id: Number(id)}).then((response)=>{
+
+                let datas = []
+                let cols = []
+                if(response.result.data.data.length > 0){
+                    response.result.data.data.map((obj)=>{
+                        datas.push(obj.value)
+                        cols.push(G$getDateType(obj.createdAt.substring(0,8)) )
+                    })
+                }
+
+                if(chartInfoRef.current.labels.length === 0){
+                    chartInfoRef.current.labels = cols
+                }
+                addData(datas)
+            })
             
-            addData()
+            //addData()
             //레이어가 선택되면 API 통하여 데이터 가져오기
             
         }
@@ -152,7 +164,7 @@ const SafetyL4CompWidget = () => {
 
 
     //데이터 추가
-    const addData = () =>{
+    const addData = (datas=[]) =>{
         let {clickPosition, properties} = selectFeature
 
         //차트에 데이터 Max 2개
@@ -180,13 +192,10 @@ const SafetyL4CompWidget = () => {
                 img:pointNm === `P1` ? pin1 : pin2
             })
 
-            let sampleDatas = SafetyChartConfig
-            const random = Math.floor(Math.random() * sampleDatas.length)
-
             //차트 data push
             chartInfoRef.current.datasets.push({
                 tension: 0.4,
-                data:sampleDatas[random],
+                data: datas,
                 label: pointNm,
                 id: properties.id,
                 pointRadius: 1,
@@ -200,7 +209,7 @@ const SafetyL4CompWidget = () => {
 
         }else if(chartInfoRef.current.datasets.length === 2){
             //데이터가 두개 있을경우 첫번째 point를 지우고 다시 데이터를 넣기
-            removeData()
+            removeData(datas)
         }
     }
 
@@ -224,7 +233,7 @@ const SafetyL4CompWidget = () => {
     }
 
 
-    const removeData = (removeObj) =>{
+    const removeData = (datas) =>{
         //하나 이상일때 제거
         if(chartInfoRef.current.datasets.length > 1){
 
@@ -237,7 +246,7 @@ const SafetyL4CompWidget = () => {
             /* point Feature 제거 */
             safetyPinLayer.current.removeEntityById(removeId)
 
-            addData()
+            addData(datas)
         }
     }
 

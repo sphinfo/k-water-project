@@ -41,12 +41,23 @@ const SafetyL4Thematic = () => {
          * 현재는 임의로 버튼 추가
          * */
         //select3Level 레벨 값 API 확인후  (***API 필요***)
-        console.info(select3Level)
         getL4Layers({id:select3Level.id}).then((response)=>{
             console.info(response.result)
+
+            let dataList = []
+            if(response.result.data.length > 0){
+                response.result.data.map((obj)=>{
+                    let name = obj.filename.indexOf('_EW_') > -1 ? 'EAST-WEST' : obj.filename.indexOf('_UD_') > -1 ? 'UP-DOWN' : obj.filename.indexOf('_NS_') > -1 ? 'NORTH-SOUTH' : ''
+                    dataList.push({store:obj.dataType.toLowerCase(), layer: obj.name, checked: false, name: name, id:obj.id})
+                })
+                setLevel4List(dataList)
+            }else{
+                setLevel4List(dataList)    
+            }
+            
         })
 
-        setLevel4List(example)
+        
 
     },[select3Level])
 

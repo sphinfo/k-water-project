@@ -25,13 +25,11 @@ const getSafetydisplaceResult = async (props) => {
  * @returns 
  */
 const getSafetyCompResult = async (props) => {
-
-    const {params={}} = props
     const { request } = createAxios();
     const result = await request({
         url: SafetyConfig.GET_SAFETY_COMP_RESULT,
         method: 'GET',
-        params: params
+        params: props
     })
     props = { ...props, result: result };
     return props;

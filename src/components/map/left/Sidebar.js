@@ -48,7 +48,7 @@ function TabPanel(props) {
             <div className="panel-bottom">
               <div className="data-date-info">
                 <span>최신 데이터 추가일</span>
-                <span>2023.12.15 16:00</span>
+                <span>-</span>
               </div>
             </div>
           </div>

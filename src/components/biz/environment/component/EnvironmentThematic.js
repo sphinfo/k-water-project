@@ -9,8 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 const example = [{
     name: '변화탐지',
-    store:'LandCover', 
-    layerId:'change_detection',
+    store:'environment', 
+    layerId:'20231212113940_environment_L4LC_Q8eh_DAEJEON-DAECHEONG-YONGDAM-SEJONG-ANDONG-SAYEON-UNMUN-MIHO-CHANGNYEONG-SOYANG',
     checked: false
 }]
 
@@ -43,7 +43,7 @@ const EnvironmentThematic = () => {
             }
             return { ...item, checked: false };
         })
-        select4Level ? dispatch({type:ENV_LANDCOVER_DETECTION, p: select4Level}) : dispatch({type:ENV_LANDCOVER_DETECTION, landCoverDetection: false})
+        select4Level ? dispatch({type:ENV_LANDCOVER_DETECTION, landCoverDetection: select4Level}) : dispatch({type:ENV_LANDCOVER_DETECTION, landCoverDetection: false})
         setThematicList(newList);
     }
 
