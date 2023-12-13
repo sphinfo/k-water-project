@@ -9,6 +9,7 @@ import {
   ENV_LANDCOVER_DETECTION,
   ENV_SELECT_BOX,
   ENV_RESET,
+  ENV_RESET_LAYER,
 } from './actions';
 
 const initialState = {
@@ -60,6 +61,11 @@ function environmentReducer(state = initialState, action) {
         ...initialState
       }
 
+    case ENV_RESET_LAYER:
+      return { ...state,
+        selectEnvironmentLayer : false,
+        landCoverDetection: false,
+      }
     default:
       return state;
   }

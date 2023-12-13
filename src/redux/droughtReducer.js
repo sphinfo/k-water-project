@@ -10,6 +10,7 @@ import {
   DROUGHT_SELECT_BOX,
   DROUGHT_RESET,
   DROUGHT_RESULT_TAB,
+  DROUGHT_RESET_LAYER,
 } from './actions';
 
 const initialState = {
@@ -64,6 +65,11 @@ function droughtReducer(state = initialState, action) {
         ...initialState
       }
 
+    case DROUGHT_RESET_LAYER:
+      return { ...state, 
+        selectObs: false,
+        selectDroughtLayer: false,
+      }
     default:
       return state;
   }

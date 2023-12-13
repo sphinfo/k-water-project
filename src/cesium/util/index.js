@@ -274,7 +274,7 @@ const G$normalizeWithColors = ({value=0, min=-12, max=13, type='jet', nshades=30
         opacity 
     );
 
-    return cesiumColor;
+    return {cesiumColor, hex};
 }
 
 

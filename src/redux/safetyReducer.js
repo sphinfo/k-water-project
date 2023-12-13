@@ -14,6 +14,7 @@ import {
   SAFETY_SELECT_4_LEVEL_RESET,
   SAFETY_SELECT_DISPLACE_LEVEL,
   SAFETY_SELECT_BOX,
+  SAFETY_RESET_LAYER,
 } from './actions';
 import safetyLayers from '@gis/layers/safety/safetyLayers';
 
@@ -102,6 +103,14 @@ function safetyReducer(state = initialState, action) {
     case SAFETY_DETAIL_RESET:
       return { ...state, 
         ...initialState
+      }
+
+    case SAFETY_RESET_LAYER:
+      return { ...state,
+        select3Level: false,
+        select4Level: false,
+        displaceLevel: false,
+        selectFeature: null,
       }
     default:
       return state;

@@ -10,6 +10,7 @@ import {
   FLOOD_SELECT_WATER_LEVEL,
   FLOOD_RESET,
   FLOOD_SELECT_BOX,
+  FLOOD_RESET_LAYER,
 } from './actions';
 
 const initialState = {
@@ -64,6 +65,14 @@ function floodReducer(state = initialState, action) {
     case FLOOD_RESET:
       return { ...state, 
         ...initialState
+      }
+
+    //레이어 초기화
+    case FLOOD_RESET_LAYER:
+      return { ...state,
+        selectWaterLevel: false, 
+        selectFloodLayer: false,
+        selectFloodDamageLayer: false,
       }
 
     default:
