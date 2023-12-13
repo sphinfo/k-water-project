@@ -140,6 +140,7 @@ const Flood = () => {
             if(group === 'WaterBody'){ // 수체
                 //수체 레이어 그리기
                 floodLayer.current.changeParameters({store:store, layerId:layer})
+                floodLayer.current.setOpacity(0.5)
                 //수위 레이어 삭제
                 floodWaterLevelLayer.current.show = false
                 //floodWaterLevelLayer.current.entities.removeAll()
@@ -193,6 +194,7 @@ const Flood = () => {
 
             const {store, layer} = selectFloodDamageLayer
             floodDamageLayer.current.changeParameters({store:store, layerId:layer})
+            floodDamageLayer.current.setOpacity(0.5)
         }else{
             floodDamageLayer.current.remove()
             G$removeWidget('BaseLegendWidget')

@@ -14,7 +14,7 @@ const FloodOptions = () => {
             items: [ 
                 {name:'용담댐', code:'YONGDAM'},//code:'YDD'},//
                 {name:'황강댐', code:'HG'},
-                {name:'임남댐', code:'IN'},
+                {name:'임남댐', code:'IMNAM'},
                 {name:'대청댐', code:'DAECHEONG'},//code:'DC'},//
                 {name:'안동댐', code:'ANDONG'},//code:'ADD'},//
                 {name:'운문댐', code:'UNMUN'},

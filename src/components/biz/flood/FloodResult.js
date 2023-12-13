@@ -4,7 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$flyToPoint } from "@gis/util";
-import { FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER } from "@redux/actions";
+import { FLOOD_RESET, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, LOADING } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
 import { Button } from "@mui/material";
 import { getL3Layers } from "@common/axios/common";
@@ -34,9 +34,9 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     const [timer, setTimer] = useState(null);
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
+      dispatch({type:FLOOD_RESET})
       //*******API*************/
       if(text.code !== ''){
-
         if (timer) {
           clearTimeout(timer)
         }
@@ -45,6 +45,8 @@ const FloodResult = ({waterObsList=[], ...props}) => {
           if (text.code && text.code !== '') {
             //*******API************* getL3Layers: 레벨3 결과값/
             let params = {type:'flood', level: 'L3', location: text.code, from: startDate, to: endDate}
+            
+
             getL3Layers(params).then((response) => {
               if(response.result.data.length > 0){
                 let resultList = []
@@ -90,6 +92,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
 
       }else{
         setLayerList([])
+        
       }
     },[text, startDate, endDate])
 

@@ -59,6 +59,7 @@ const Environment = () => {
     if(selectEnvironmentLayer){
       const {store, layer} = selectEnvironmentLayer
       environmentLayer.current.changeParameters({store:store, layerId:layer})
+      environmentLayer.current.setOpacity(0.5)
     }else{
       environmentLayer.current.remove()
     }
@@ -68,6 +69,7 @@ const Environment = () => {
   useEffect(()=>{
     if(landCoverDetection){
       landCoverDetectionLayer.current.changeParameters({store:'LandCover', layerId:'change_detection'})
+      landCoverDetectionLayer.current.setOpacity(0.5)
     }else{
       landCoverDetectionLayer.current.remove()
     }
