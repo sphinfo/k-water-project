@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BaseChart from "@common/chart/BaseChart";
 import "chartjs-plugin-annotation";
+import FloodWaterLevelStationDataConfig from "@gis/config/FloodWaterLevelStationDataConfig";
 
 
 const FloodL4WaterLevelArea = () => {
@@ -11,11 +12,29 @@ const FloodL4WaterLevelArea = () => {
     //차트 ref
     const chartRef = useRef({})
 
+    const [satationInfo, setStationInfo] = useState(false)
+
     //차트 dataRef
     const chartInfoRef = useRef({
         datasets: [50],
         backgroundColor: '#C5DCFF'
     })
+
+    //** 샘플 데이터 에서 수위 정보 추출 */
+    useEffect(()=>{
+
+        let stationInfos = FloodWaterLevelStationDataConfig
+        
+        if(selectWaterLevel){
+            const {properties} = selectWaterLevel
+            stationInfos.map((obj)=>{
+                if(properties.name.indexOf(obj.name) > -1){
+                    setStationInfo(obj)
+                }
+            })
+        }
+
+    },[selectWaterLevel])
 
     /** 초기설정 **/
     useEffect(()=>{
@@ -180,7 +199,7 @@ const FloodL4WaterLevelArea = () => {
                             </tr>
                             <tr>
                                 <th>현 수위<span className="unit-th">(EL.m)</span></th>
-                                <td>-</td>
+                                <td>{selectWaterLevel && selectWaterLevel.properties.value}</td>
                             </tr>
                             <tr>
                                 <th>만 수위<span className="unit-th">(EL.m)</span></th>
@@ -205,15 +224,15 @@ const FloodL4WaterLevelArea = () => {
                         <tbody>
                         <tr>
                             <th>저수면적<span className="unit-th">(EL.m)</span></th>
-                            <td>-</td>
+                            <td>{satationInfo && satationInfo.waterStor}</td>
                         </tr>
                         <tr>
                             <th>총 저수량<span className="unit-th">(EL.m)</span></th>
-                            <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
+                            <td>{satationInfo && satationInfo.ttlst}</td>
                         </tr>
                         <tr>
                             <th>유효저수량<span className="unit-th">(EL.m)</span></th>
-                            <td>{selectWaterLevel && selectWaterLevel.properties.efstr}</td>
+                            <td>{satationInfo && satationInfo.efstr}</td>
                         </tr>
                         </tbody>
                     </table>

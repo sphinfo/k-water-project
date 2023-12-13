@@ -150,8 +150,8 @@ const DroughtObsrv = () => {
                         label: '강우량',
                         type: 'bar',
                         yAxisID: 'y2', 
-                        borderColor: '#004478',
-                        backgroundColor: '#004478',
+                        borderColor: 'white',
+                        backgroundColor: 'white',
                         data: precipitation,
                     })
                     

@@ -101,13 +101,7 @@ function safetyReducer(state = initialState, action) {
     //초기화
     case SAFETY_DETAIL_RESET:
       return { ...state, 
-        compLayerClick: false,  //4레벨 진행시 true ( 해당 플레그 값으로 비교 클릭 이벤트 및 기타 기능 비 활성화)
-        detailSearchTabType: 'datas', 
-        select3Level: false, //3레벨 선택
-        select4Level: false, //4레벨 선택
-        displaceLevel: false, //변위등급 레이어
-        selectFeature: null,
-        selectBox : 'off', // selectbox 초기화
+        ...initialState
       }
     default:
       return state;
