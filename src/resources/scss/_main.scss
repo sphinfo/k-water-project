@@ -1476,7 +1476,8 @@
 
 
 .heatmap-chart-wrap {
-  padding: 20px;
+  padding: 12px;
+
   .heatmap-chart {
     min-width: 400px;
     padding: 0 0 40px 40px;
@@ -1528,10 +1529,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        min-width: 50px;
-        min-height: 50px;
-        border: 1px solid $white-alpha-30;
+        min-width: 40px;
+        min-height: 40px;
+        border: 1px solid #777;
         aspect-ratio: 1;
+        margin-left: -1px;
+        margin-top: -1px;
 
         &.no-item {
           border: 1px solid transparent;
