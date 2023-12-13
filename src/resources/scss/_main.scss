@@ -1235,11 +1235,15 @@
   }
 }
 
+.react-draggable {
+  z-index: 999;
+}
+
 .popup {
   position: absolute;
   top: 10px;
   left: 364px;
-  z-index: 3;
+  z-index: 999;
   background-color: $black-navy;
   box-shadow: $box-shadow;
   transition: all 300ms;
@@ -1364,7 +1368,6 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
 
     &.full-width {
@@ -1385,7 +1388,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
 
       &.box-title{
         background-color: $black-blue;
@@ -1398,9 +1401,12 @@
         }
       }
     }
-    .panel-box-title{
+
+    .panel-box-title {
       font-size: 14px;
+      font-weight: 500;
     }
+
     .panel-box-content:not(:last-child){
       margin-bottom: 10px;
     }
@@ -1601,6 +1607,14 @@
   }
 }
 
+.table-wrap {
+  .table-title {
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+}
+
 .table-group {
   display: flex;
   flex-direction: column;
@@ -1619,6 +1633,7 @@
   table-layout: auto;
   border-collapse: collapse;
   width: 100%;
+  min-width: 350px;
 
   > thead > tr > th,
   > tbody > tr > th,

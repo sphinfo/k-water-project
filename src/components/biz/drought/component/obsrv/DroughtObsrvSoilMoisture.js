@@ -200,20 +200,12 @@ const DroughtObsrv = () => {
                     <div className="panel-box">
                         <div className="number-dashboard">
                             <div className="nd-item">
-                                <h4 className="nd-item-title">전체면적(㎡)</h4>
-                                <div className="nd-item-body">1,000k</div>
+                                <h4 className="nd-item-title">관측소 평균 토양 수분</h4>
+                                <div className="nd-item-body">0.0507</div>
                             </div>
                             <div className="nd-item">
-                                <h4 className="nd-item-title">최대 피해 면적(㎡)</h4>
-                                <div className="nd-item-body">
-                                    <span className="text-naji">나지</span> 380k
-                                </div>
-                            </div>
-                            <div className="nd-item">
-                                <h4 className="nd-item-title">최소 피해 면적(㎡)</h4>
-                                <div className="nd-item-body">
-                                    <span className="text-mokji">목지</span> 30k
-                                </div>
+                                <h4 className="nd-item-title">실측/모의 잔차 평균</h4>
+                                <div className="nd-item-body">0.0421</div>
                             </div>
                         </div>
                     </div>
@@ -221,24 +213,22 @@ const DroughtObsrv = () => {
 
                 <div className="content-row">
                     <div className="panel-box">
-                        <div className="panel-box-header">
-                            <h2 className="panel-box-title">시계열 토양수분 및 강수량</h2>
-                        </div>
-
                         <div className="chart-unit-warp">
                             <span className="chart-unit">토양 수분</span>
                             <span className="chart-unit">강우량(mm)</span>
                         </div>
-                        <BaseChart width={460} height={260} ref={chartRef} chartType={'Line'} title={''}/>
+                        <BaseChart width={420} height={260} ref={chartRef} chartType={'Line'} title={''}/>
                     </div>
                 </div>
             </div>
 
             <div className="content-col">
-                <div className="content-row">
-                    <div className="panel-box">
+                <div className="content-row height-100">
+                    <div className="panel-box height-100">
+                        <div className="panel-box-header">
+                            <h4 className="panel-box-title">토양 수분 자료</h4>
+                        </div>
                         <div className="table-wrap" style={{height: 360, overflowY: 'auto'}}>
-                            <span className="table-title">토양 수분 자료</span>
                             <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'}/>
                         </div>
                     </div>

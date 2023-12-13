@@ -182,23 +182,48 @@ const DroughtObsrvIndex = () => {
 
     return (
         <>
-            <div style={{display: 'flex'}}>
-                <div className="panel-box">
-                    <div className="chart-unit-warp">
-                        <span className="chart-unit">SWDI</span>
-                        <span className="chart-unit">강우량(mm)</span>
+            <div className="content-col">
+                <div className="content-row">
+                    <div className="panel-box">
+                        <div className="number-dashboard">
+                            <div className="nd-item">
+                                <h4 className="nd-item-title">현재 가뭄 상태</h4>
+                                <div className="nd-item-body">정상</div>
+                            </div>
+                            <div className="nd-item">
+                                <h4 className="nd-item-title">관측소 해갈 강우량(mm)</h4>
+                                <div className="nd-item-body">80</div>
+                            </div>
+                        </div>
                     </div>
-                    <BaseChart width={260} height={260} ref={chartRef} chartType={'Line'} title={''}/>
                 </div>
 
                 <div className="content-row">
-                    <div className="content-row-header">
-                        <h2 className={"content-row-title"}>가뭄 지수 자료</h2>
-                    </div>
-                    <div className="panel-box" style={{height: 360, overflowY: 'auto'}}>
-                        <BaseGrid ref={grid2Ref} columns={columns2} provider={rows2} className={'table-basic'} />
+                    <div className="panel-box">
+                        <div className="chart-unit-warp">
+                            <span className="chart-unit">SWDI</span>
+                            <span className="chart-unit">강우량(mm)</span>
+                        </div>
+                        <BaseChart width={'100%'} height={260} ref={chartRef} chartType={'Line'} title={''}/>
                     </div>
                 </div>
+            </div>
+
+            <div className="content-col">
+                <div className="content-row height-100">
+                    <div className="panel-box height-100">
+                        <div className="panel-box-header">
+                            <h4 className="panel-box-title">가뭄 지수 자료</h4>
+                        </div>
+                        <div className="table-wrap" style={{height: 360, overflowY: 'auto'}}>
+                            <BaseGrid ref={grid2Ref} columns={columns2} provider={rows2} className={'table-basic'}/>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div style={{display: 'flex'}}>
 
 
                 {/* <div className="content-row">
