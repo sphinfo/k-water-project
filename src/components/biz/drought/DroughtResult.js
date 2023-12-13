@@ -4,7 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
-import { DROUGHT_RESET, DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER } from "@redux/actions";
+import { DROUGHT_RESET, DROUGHT_RESET_LAYER, DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER } from "@redux/actions";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Button } from "@mui/material";
@@ -33,7 +33,7 @@ const DroughtResult = () => {
 
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
-      dispatch({type:DROUGHT_RESET})
+      dispatch({type:DROUGHT_RESET_LAYER})
       if(text.name !== ''){
         
         if (timer) {

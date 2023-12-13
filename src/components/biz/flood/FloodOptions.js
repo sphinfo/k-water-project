@@ -13,7 +13,7 @@ const FloodOptions = () => {
             code:'DAM',
             items: [ 
                 {name:'용담댐', code:'YONGDAM'},//code:'YDD'},//
-                {name:'황강댐', code:'HG'},
+                {name:'황강댐', code:'HWANGGANG'},
                 {name:'임남댐', code:'IMNAM'},
                 {name:'대청댐', code:'DAECHEONG'},//code:'DC'},//
                 {name:'안동댐', code:'ANDONG'},//code:'ADD'},//
@@ -44,7 +44,7 @@ const FloodOptions = () => {
             code: 'RIVER',
             items: [
                 {name:'내성천(낙동강)', code:'NAESEONGCHEON'},//code:'NS1'},//
-                {name:'낙성천(낙동강)', code:'b1'},
+                //{name:'낙성천(낙동강)', code:'b1'},
                 {name:'미호강', code:'MIHOCHEON'}, //code:'b2'},//
                 {name:'남천(위천)', code:'WYECHEON'},//code:'b3'},//
             ]

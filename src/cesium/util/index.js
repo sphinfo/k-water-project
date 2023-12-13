@@ -248,13 +248,13 @@ const G$cartesianToLongLat = (cartesian) =>{
 }
 
 //color map을 통한 min max nomalizetion ( colormap 분리필요 ) 230927
-const G$normalizeWithColors = ({value=0, min=-12, max=13, type='jet', nshades=30, format='hex', opacity=1}) =>{
+const G$normalizeWithColors = ({value=0, min=-12, max=13, type='jet', nshades=30, format='hex', opacity=0.9}) =>{
     
     let colormap = createColormap({
         colormap: type,
         nshades: nshades,
         format: format,
-        alpha: 1
+        alpha: 0.9
     })
 
     const normalized = (value - min) / (max - min)
@@ -274,7 +274,7 @@ const G$normalizeWithColors = ({value=0, min=-12, max=13, type='jet', nshades=30
         opacity 
     );
 
-    return cesiumColor;
+    return {cesiumColor, hex};
 }
 
 

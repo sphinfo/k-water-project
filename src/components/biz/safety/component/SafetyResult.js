@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_CLICK_MODE, SAFETY_DETAIL_RESET, SAFETY_SELECT_BOX, SAFETY_SELECT_DISPLACE_LEVEL, SAFETY_SELECT_RESULT } from "@redux/actions";
+import { SAFETY_CLICK_MODE, SAFETY_DETAIL_RESET, SAFETY_RESET_LAYER, SAFETY_SELECT_BOX, SAFETY_SELECT_DISPLACE_LEVEL, SAFETY_SELECT_RESULT } from "@redux/actions";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
@@ -64,7 +64,7 @@ const SafetyResult = () => {
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
 
-      dispatch({type:SAFETY_DETAIL_RESET})
+      dispatch({type:SAFETY_RESET_LAYER})
 
       if(text.name !== ''){
 
