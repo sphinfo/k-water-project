@@ -39,11 +39,11 @@ const ZoomMapWidget = () => {
                     <path d="M1.5 1H14.5" stroke="rgba(255,255,255,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
             </button>
-            <button style={{backgroundColor:"white"}} onClick={()=>{AddrSearchWidget('FloodL4WaterBodyWidget')}}>홍수-수체</button>
+            {/* <button style={{backgroundColor:"white"}} onClick={()=>{AddrSearchWidget('FloodL4WaterBodyWidget')}}>홍수-수체</button>
             <button style={{backgroundColor:"white"}} onClick={()=>{AddrSearchWidget('FloodL4WaterLevelWidget')}}>홍수-수위</button>
             <button style={{backgroundColor:"white"}} onClick={()=>{AddrSearchWidget('DroughtObsrvWidget')}}>가뭄</button>
             <button style={{backgroundColor:"white"}} onClick={()=>{AddrSearchWidget('SafetyL4CompWidget')}}>안전 속도비교</button>
-            <button style={{backgroundColor:"white"}} onClick={()=>{AddrSearchWidget('SafetyL4LevelDataWidget')}}>안전 변위</button>
+            <button style={{backgroundColor:"white"}} onClick={()=>{AddrSearchWidget('SafetyL4LevelDataWidget')}}>안전 변위</button> */}
             
             
 

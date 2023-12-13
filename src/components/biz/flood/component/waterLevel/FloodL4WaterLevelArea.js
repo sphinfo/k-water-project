@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BaseChart from "@common/chart/BaseChart";
 import "chartjs-plugin-annotation";
+import FloodWaterLevelStationDataConfig from "@gis/config/FloodWaterLevelStationDataConfig";
 
 
 const FloodL4WaterLevelArea = () => {
@@ -11,11 +12,29 @@ const FloodL4WaterLevelArea = () => {
     //차트 ref
     const chartRef = useRef({})
 
+    const [satationInfo, setStationInfo] = useState(false)
+
     //차트 dataRef
     const chartInfoRef = useRef({
         datasets: [50],
         backgroundColor: '#C5DCFF'
     })
+
+    //** 샘플 데이터 에서 수위 정보 추출 */
+    useEffect(()=>{
+
+        let stationInfos = FloodWaterLevelStationDataConfig
+        
+        if(selectWaterLevel){
+            const {properties} = selectWaterLevel
+            stationInfos.map((obj)=>{
+                if(properties.name.indexOf(obj.name) > -1){
+                    setStationInfo(obj)
+                }
+            })
+        }
+
+    },[selectWaterLevel])
 
     /** 초기설정 **/
     useEffect(()=>{
@@ -157,132 +176,68 @@ const FloodL4WaterLevelArea = () => {
 
     return (
         <>
-            <div className="content-col">
-                <div className="content-row">
-                    <div className="panel-box">
-                        <div className="number-dashboard">
-                            <div className="nd-item text-blue">
-                                <h4 className="nd-item-title">위성 수위(EL.m)</h4>
-                                <div className="nd-item-body">252.60</div>
-                            </div>
-                            <div className="nd-item">
-                                <h4 className="nd-item-title">현 수위(EL.m)</h4>
-                                <div className="nd-item-body">257.90</div>
-                            </div>
-                            <div className="nd-item">
-                                <h4 className="nd-item-title">계측 차이(EL.m)</h4>
-                                <div className="nd-item-body">3.70</div>
-                            </div>
-                        </div>
-                    </div>
+            <div className="content-row-header">
+                <h2 className="content-row-title">지역 구성</h2>
+            </div>
+            <div className="panel-box">
+                <div className="panel-box full-width bg-floor-chart">
+                    <BaseChart width={280} height={230} ref={chartRef} data={chartInfoRef} chartType={'bar'}/>
                 </div>
-                <div className="content-row">
-                    <div className="panel-box">
-                        <BaseChart width={'100%'} height={300} ref={chartRef} data={chartInfoRef} chartType={'bar'}/>
-                    </div>
+                <div className="panel-box-header">
+                    <h3 className="panel-box-title">수위</h3>
+                </div>
+                <div className="panel-box-content">
+                    <table className="table-basic panel-box-table">
+                        <colgroup>
+                            <col style={{width: '45%'}}/>
+                            <col style={{width: 'auto'}}/>
+                        </colgroup>
+                        <tbody>
+                            <tr className={"tr-highlight"}>
+                                <th>위성 수위<span className="unit-th">(EL.m)</span></th>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <th>현 수위<span className="unit-th">(EL.m)</span></th>
+                                <td>{selectWaterLevel && selectWaterLevel.properties.value}</td>
+                            </tr>
+                            <tr>
+                                <th>만 수위<span className="unit-th">(EL.m)</span></th>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <th>저 수위<span className="unit-th">(EL.m)</span></th>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div className="panel-box-header">
+                    <h3 className="panel-box-title">저수지</h3>
+                </div>
+                <div className="panel-box-content">
+                    <table className="table-basic panel-box-table">
+                        <colgroup>
+                            <col style={{width: '45%'}}/>
+                            <col style={{width: 'auto'}}/>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th>저수면적<span className="unit-th">(EL.m)</span></th>
+                            <td>{satationInfo && satationInfo.waterStor}</td>
+                        </tr>
+                        <tr>
+                            <th>총 저수량<span className="unit-th">(EL.m)</span></th>
+                            <td>{satationInfo && satationInfo.ttlst}</td>
+                        </tr>
+                        <tr>
+                            <th>유효저수량<span className="unit-th">(EL.m)</span></th>
+                            <td>{satationInfo && satationInfo.efstr}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-            <div className="content-col">
-                <div className="content-row">
-                    <div className="panel-box">
-                        <div className="table-group">
-                            <table className="table-basic panel-box-table">
-                                <caption>제원</caption>
-                                <colgroup>
-                                    <col style={{width: '50%'}}/>
-                                    <col style={{width: 'auto'}}/>
-                                </colgroup>
-                                <tbody>
-                                <tr>
-                                    <th>위성 수위<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <th>현 수위<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <th>만 수위<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <th>저 수위<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-                            <table className="table-basic panel-box-table">
-                                <caption>유역</caption>
-                                <colgroup>
-                                    <col style={{width: '50%'}}/>
-                                    <col style={{width: 'auto'}}/>
-                                </colgroup>
-                                <tbody>
-                                <tr>
-                                    <th>유역면적<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <th>연간용수공급용량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-                            <table className="table-basic panel-box-table">
-                                <caption>저수지</caption>
-                                <colgroup>
-                                    <col style={{width: '50%'}}/>
-                                    <col style={{width: 'auto'}}/>
-                                </colgroup>
-                                <tbody>
-                                <tr>
-                                    <th>저수면적<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <th>총 저수량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
-                                </tr>
-                                <tr>
-                                    <th>유효저수량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.efstr}</td>
-                                </tr>
-                                <tr>
-                                    <th>저수면적<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <th>총 저수량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
-                                </tr>
-                                <tr>
-                                    <th>유효저수량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.efstr}</td>
-                                </tr>
-                                <tr>
-                                    <th>저수면적<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <th>총 저수량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
-                                </tr>
-                                <tr>
-                                    <th>유효저수량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.efstr}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
         </>
     )
 }

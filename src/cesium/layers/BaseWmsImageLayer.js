@@ -1,6 +1,6 @@
 import MapManager from "@gis/MapManager";
 import { G$addLayer, G$flyToExtent, G$removeLayerForId } from "@gis/util";
-import { WebMapServiceImageryProvider } from "cesium";
+import { Rectangle, WebMapServiceImageryProvider, WebMercatorTilingScheme } from "cesium";
 /**
  *  공동 WMS 레이어 Class 
  */
@@ -55,6 +55,8 @@ class BaseWmsImageLayer {
 				url: this.props.wmsUrl,
 				layers: `${this.props.store.toLowerCase()}:${this.props.layerId}`,
 				parameters: this.props.wmsParameters,
+				// tilingScheme: new WebMercatorTilingScheme(),
+            	// rectangle: Rectangle.fromDegrees(-180.0, -90.0, 180.0, 90.0)
 		}))
 
 		// 변경된 이미지 레이어 설정 ( Geoserver 사용 store:layer )
