@@ -14,6 +14,7 @@ import DroughtObsrvConfig from "@gis/config/DroughtObsrvConfig";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import DroughtL4 from "./component/DroughtL4";
 import { getDroughtObs } from "@common/axios/drought";
+import { getL4Layers } from "@common/axios/common";
 
 const Drought = () => {
 
@@ -24,12 +25,15 @@ const Drought = () => {
      * selectObs : 선택된 관측소 정보
      * selectDroughtLayer : 가뭄 메인 레이어
      */
-    const { bizName, selectObs, selectDroughtLayer } = useSelector(state => state.drought)
+    const { bizName, selectObs, selectDroughtLayer, obsrvTab } = useSelector(state => state.drought)
     const { panelVisible } = useSelector(state => state.main)
 //
 
-    //가뭄 레이어 (  )
+    //가뭄 레이어 ( 3L )
     const droughtLayer = useRef()
+
+    //가뭄 레이어 ( 4L )
+    const droughtL4Layer = useRef()
 
     //관측소 레이어
     const droughtObsrvLayer = useRef()
@@ -73,6 +77,9 @@ const Drought = () => {
         //가뭄 메인 레이어
         droughtLayer.current = new BaseWmsImageLayer('drought','')
 
+        //가뭄 메인 레이어 L4
+        droughtL4Layer.current = new BaseWmsImageLayer('drought','')
+
         //let samplePoint = G$randomCoordinates(100)
 
         //*******API*************/
@@ -106,6 +113,7 @@ const Drought = () => {
 
             //가뭄 레이어 삭제
             G$removeLayer(droughtLayer.current.layer)
+            G$removeLayer(droughtL4Layer.current.layer)
 
             //가뭄 reducer 초기화
             dispatch({type:DROUGHT_RESET})
@@ -120,6 +128,8 @@ const Drought = () => {
     //가뭄 레이어 선택되었을때
     useEffect(()=>{
 
+        droughtL4Layer.current.remove()
+        
         if(selectDroughtLayer){
             const {store, layer} = selectDroughtLayer
             droughtLayer.current.changeParameters({store:store, layerId:layer})
@@ -140,6 +150,26 @@ const Drought = () => {
         }
 
     },[selectDroughtLayer])
+
+    useEffect(()=>{
+
+        if(obsrvTab === 'index'){
+            if(selectDroughtLayer){
+                const {id} = selectDroughtLayer
+                getL4Layers({id:id}).then((response)=>{
+                    if(response.result.data.length > 0){
+                        let store = response.result.data[0].dataType.toLowerCase()
+                        let layer = response.result.data[0].name
+                        droughtL4Layer.current.changeParameters({store:store, layerId:layer})
+                    }
+                })
+            }
+        }else{
+            droughtL4Layer.current.remove()
+        }
+        
+
+    },[obsrvTab])
 
     //사이드 위치 조정 on
     useEffect(()=>{

@@ -65,7 +65,7 @@ const EnvironmentLandCover = () => {
                             <tr>
                                 <td>1</td>
                                 <td>127.5055, 36.414621, 127.50965, 36.410489 </td>
-                                <td>17,242 ㎡</td>
+                                <td>145,963 ㎡</td>
                             </tr>
                             </tbody>
                         </table>

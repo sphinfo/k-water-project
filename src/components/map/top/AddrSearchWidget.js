@@ -35,7 +35,7 @@ const AddrSearchWidget = () => {
 
     const changeAddr = async(event)=>{
         let lonlat = G$cartesianToLongLat(event.detail)
-        const responseA = await request(`http://api.vworld.kr/req/address?service=address&request=getAddress&version=2.0&crs=epsg:4326&point=${lonlat.longitude},${lonlat.latitude}&format=json&type=both&zipcode=true&simple=false&key=${MapManager._vworld_key}`);
+        const responseA = await request(`/vworld/req/address?service=address&request=getAddress&version=2.0&crs=epsg:4326&point=${lonlat.longitude},${lonlat.latitude}&format=json&type=both&zipcode=true&simple=false&key=${MapManager._vworld_key}`);
         if(responseA.data.response.result){
             setAddr(responseA.data.response.result[0].text)
         }

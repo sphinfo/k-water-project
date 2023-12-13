@@ -9,7 +9,7 @@ import pin2 from "@images/point-icon-2.svg"
 import { G$4326to3857, G$RandomId, G$getDateType, G$removeLayer } from "@gis/util";
 import useEnhancedEffect from "@mui/material/utils/useEnhancedEffect";
 import SafetyChartConfig from "@gis/config/SafetyChartConfig";
-import { SAFETY_CLICK_MODE } from "@redux/actions";
+import { LOADING, SAFETY_CLICK_MODE } from "@redux/actions";
 import BaseGrid from "@common/grid/BaseGrid";
 import { Cartesian3, Cartographic, Ellipsoid, WebMercatorProjection } from "cesium";
 import { getSafetyCompResult } from "@common/axios/safety";
@@ -130,9 +130,10 @@ const SafetyL4CompWidget = () => {
         if(selectFeature){
             let coord = G$4326to3857(selectFeature.clickPosition.longitude, selectFeature.clickPosition.latitude)
             let id = select4Level ? select4Level.id : select3Level.id
-            console.info(id)
+            dispatch({type: LOADING, loading: true})
             getSafetyCompResult({y:parseFloat(selectFeature.clickPosition.latitude), x:parseFloat(selectFeature.clickPosition.longitude), id: Number(id)}).then((response)=>{
 
+                dispatch({type: LOADING, loading: false})
                 let datas = []
                 let cols = []
                 if(response.result.data.data.length > 0){
