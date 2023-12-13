@@ -131,7 +131,7 @@ const SafetyL4CompWidget = () => {
             let coord = G$4326to3857(selectFeature.clickPosition.longitude, selectFeature.clickPosition.latitude)
             let id = select4Level ? select4Level.id : select3Level.id
             console.info(id)
-            getSafetyCompResult({y:parseFloat(coord.y), x:parseFloat(coord.x), id: Number(id)}).then((response)=>{
+            getSafetyCompResult({y:parseFloat(selectFeature.clickPosition.latitude), x:parseFloat(selectFeature.clickPosition.longitude), id: Number(id)}).then((response)=>{
 
                 let datas = []
                 let cols = []
@@ -213,6 +213,9 @@ const SafetyL4CompWidget = () => {
         }
     }
 
+    const [avgP1, setAvgP1] = useState(0)
+    const [avgP2, setAvgP2] = useState(0)
+
     //테이블 데이터 생성및 추가
     const setTableData = () =>{
         
@@ -228,6 +231,27 @@ const SafetyL4CompWidget = () => {
         })
         
         const tableDatas = createTableDatas( chartInfoRef.current.labels, p1, p2 )
+
+        let aa = 0
+        if(p1.length > 0){
+            p1.map((val)=>{
+                aa += val
+            })    
+            aa = (aa/p1.length).toFixed(3)
+        }
+        setAvgP1(aa)
+
+
+        let bb = 0
+        if(p2.length > 0){
+            
+            p2.map((val)=>{
+                bb += val
+            })    
+            bb = (bb/p2.length).toFixed(3)
+        }
+        setAvgP2(bb)
+        
         gridRef.current.provider = tableDatas
 
     }
@@ -250,6 +274,7 @@ const SafetyL4CompWidget = () => {
         }
     }
 
+
     return (
         <div className="content-body">
             <div className="content-col-group">
@@ -257,17 +282,20 @@ const SafetyL4CompWidget = () => {
                     <div className="content-row">
                         <div className="panel-box">
                             <div className="number-dashboard">
-                                <div className="nd-item">
+                                {/**
+                                 * <div className="nd-item">
                                     <h4 className="nd-item-title">지역 평균 변위 속도(cm/y)</h4>
-                                    <div className="nd-item-body">0.0507</div>
+                                    <div className="nd-item-body">-</div>
                                 </div>
+                                 */}
+                                
                                 <div className="nd-item">
                                     <h4 className="nd-item-title">P1 평균 변위 속도(cm/y)</h4>
-                                    <div className="nd-item-body">-</div>
+                                    <div className="nd-item-body">{avgP1}</div>
                                 </div>
                                 <div className="nd-item">
                                     <h4 className="nd-item-title">P2 평균 변위 속도(cm/y)</h4>
-                                    <div className="nd-item-body">-</div>
+                                    <div className="nd-item-body">{avgP2}</div>
                                 </div>
                             </div>
                         </div>

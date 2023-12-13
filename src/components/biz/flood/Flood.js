@@ -186,9 +186,9 @@ const Flood = () => {
                     title:'피복 분류', 
                     datas: [{label:'목지', color:'#35783B'}
                         ,{label:'수체', color:'#557BDF'}
-                        ,{label:'빌딩', color:'#DD59B2'}
-                        ,{label:'초지', color:'#A1F8A5'}
-                        ,{label:'나지', color:'#F3AC50'}
+                        ,{label:'건물', color:'#DD59B2'}
+                        ,{label:'초지', color:'#F3AC50'}
+                        ,{label:'나지', color:'#A1F8A5'}
                 ]} 
             })
 

@@ -45,7 +45,7 @@ class SafetyOverlay {
         // widget-body div 요소 생성
         const widgetBody = document.createElement('div')
         widgetBody.className = 'map-popup-box-body'
-        widgetBody.textContent = `LON ${coord.lonDms} lAT ${coord.latDms}`
+        widgetBody.textContent = `LON ${coord.lonDms} LAT ${coord.latDms}`
 
         // 요소들을 구조에 맞게 조립
         //widgetHeader.appendChild(title);

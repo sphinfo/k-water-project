@@ -20,8 +20,6 @@ const example = [
   {name:'DESC', date: '23.11.10~23.11.16', main:'SBAS', mainName: '(분산산란체)', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
 ]
 
-const displaceLevelData = {name:'변위등급', store:'Safety', layer: '20231114_SAFETY_YONGDAM', checked: false}
-
 const SafetyResult = () => {
     
     const dispatch = useDispatch()
@@ -52,6 +50,7 @@ const SafetyResult = () => {
     //3레벨이 해제되면 변위등급도 OFF
     useEffect(()=>{
       setLevelButton(false)
+      //setDisplaceLevelData
     },[select3Level, select4Level])
 
     //변위등급 변화
@@ -153,7 +152,7 @@ const SafetyResult = () => {
 
       //선택이 해제되었으면 reset / 선택이 되었으면 select3level reduce 전송
       if (!selectedItem.checked) {
-          dispatch({ type: SAFETY_DETAIL_RESET });
+          dispatch({ type: SAFETY_RESET_LAYER });
       } else {
           dispatch({ type: SAFETY_SELECT_RESULT, select3Level: selectedItem })
       }
@@ -200,7 +199,7 @@ const SafetyResult = () => {
                 <div className="list-info-wrap">
                   <p className="list-info">{obj.groupNm}</p>
                   <p className="list-info">{obj.category}</p>
-                  <p className="list-info">{`${obj.satellite}`}</p>
+                  <p className="list-info">{`${obj.category === 'L3TDA1' ? '고정산란체' : obj.category === 'L3TDA2' ? '분산산란체' : ''}`}</p>
                   <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
                 </div>
               </div>

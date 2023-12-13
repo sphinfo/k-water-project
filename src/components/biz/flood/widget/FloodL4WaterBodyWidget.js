@@ -23,7 +23,7 @@ const FloodL4WaterBodyWidget = () => {
 
     const chartRef = useRef()
     const chartInfoRef = useRef({
-        labels: ['목지','수체','건물','초지','나지'],
+        labels: ['목지','수체','건물','나지','초지'],
         datasets: [],
     })
 

@@ -5,6 +5,8 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from "@mui/material/IconButton";
+import { getDroughtObsIndex } from "@common/axios/drought";
+import { G$getDateType } from "@gis/util";
 
 /**
  * 가뭄 활용주제도 - 가뭄지수
@@ -21,26 +23,19 @@ const DroughtObsrvIndex = () => {
 
     //차트 dataRef
     const chartInfoRef = useRef({
-        labels: ['21-10-01','21-10-02','21-10-03','21-10-04','21-10-05','21-10-06','21-10-07','21-10-08','21-10-09','21-10-10'],
+        labels: [],
         datasets: [],
     })
 
-    const columns = [
-        {accessor: 'date', Header: '해갈 시점', width: 120, align: 'center'},
-        {accessor: 'SWDI', Header: 'SWDI', width: 200, align: 'center'},
-        {accessor: 'precipitation', Header: '강우량', width: 200, align: 'center'},
-    ]
 
     const columns2 = [
         {accessor: 'date', Header: '해갈 시점', width: 120, align: 'center'},
-        {accessor: 'SWDI', Header: 'SWDI', width: 200, align: 'center'},
+        {accessor: 'swdi', Header: 'SWDI', width: 200, align: 'center'},
     ]
 
     //테이블 ref
-    const gridRef = useRef({})
     const grid2Ref = useRef({})
     //데이터 ref
-    const rows = useMemo(()=>{ return [  ] },[])
     const rows2 = useMemo(()=>{ return [  ] },[])
 
     useEffect(()=>{
@@ -134,45 +129,71 @@ const DroughtObsrvIndex = () => {
 
             //*******API*************/
 
-            chartInfoRef.current.datasets = []
-            let dataset = DroughtObsrvIndexConfig
+            //GET /api/drought/getSoilSWDIStatistics
+            getDroughtObsIndex({code:selectObs.properties.code}).then((response)=>{
 
-            let label = []  //날짜 x 축
-            let swdi = [] // 실측 토양 수분
-            let precipitation = [] // 강우량
+                if(response.result.data.length > 0){
+
+                    //obj.date = G$getDateType(obj.createdAt.substring(0,8)) 
+                    chartInfoRef.current.datasets = []
+                    //let dataset = DroughtObsrvIndexConfig
+
+                    let label = []  //날짜 x 축
+                    let swdi = [] // 실측 토양 수분
+                    let precipitation = [] // 강우량
+                    
+                    let avg = 0
+                    let avg2 = 0
+
+                    response.result.data.map((obj)=>{
+                        
+                        if(obj.createdAt){
+                            obj.date = G$getDateType(obj.createdAt.substring(0,8)) 
+                            label.push(obj.date)
+                        }
+                        
+                        
+                        swdi.push(obj.swdi  === '' ? NaN : Number(obj.swdi))
+                        obj.swdi = Number(obj.swdi).toFixed(4)
+                        precipitation.push(obj.precipitation  === '' ? NaN : Number(obj.precipitation))
+
+                    })
+
+                    chartInfoRef.current.labels = label
+    
+                    chartInfoRef.current.datasets.push({
+                        label: 'SWDI',
+                        type: 'line',
+                        yAxisID: 'y1',
+                        pointRadius: 1,
+                        borderWidth: 1,
+                        borderColor: '#54A6E7',
+                        backgroundColor: '#54A6E7',
+                        data:swdi,
+                    })
+
+                    chartInfoRef.current.datasets.push({
+                        label: '강우량',
+                        type: 'bar',
+                        yAxisID: 'y2', 
+                        borderColor: '#6A58A1',
+                        backgroundColor: '#6A58A1',
+                        data: precipitation,
+                    })
+
+                    chartRef.current.provider = chartInfoRef.current
+
+                    grid2Ref.current.provider = response.result.data
+
+                    
+                    
+                }
+
+                
+
+            })
+
             
-
-            dataset.map((obj)=>{
-                label.push(obj.date)
-                swdi.push(obj.SWDI  === '' ? NaN : Number(obj.SWDI))
-                precipitation.push(obj.precipitation  === '' ? NaN : Number(obj.precipitation))
-            })
-            
-            chartInfoRef.current.labels = label
-
-            chartInfoRef.current.datasets.push({
-                label: 'SWDI',
-                type: 'line',
-                yAxisID: 'y1',
-                pointRadius: 1,
-                borderWidth: 1,
-                borderColor: '#54A6E7',
-                backgroundColor: '#54A6E7',
-                data:swdi,
-            })
-
-            chartInfoRef.current.datasets.push({
-                label: '강우량',
-                type: 'bar',
-                yAxisID: 'y2', 
-                borderColor: '#6A58A1',
-                backgroundColor: '#6A58A1',
-                data: precipitation,
-            })
-
-            chartRef.current.provider = chartInfoRef.current
-
-            grid2Ref.current.provider = dataset
             //gridRef.current.provider = dataset
 
         }
