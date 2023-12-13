@@ -76,7 +76,7 @@ const Environment = () => {
       //xmin: 127.13132143969365, ymin: 37.124692874903765, xmax: 127.21297046703523, ymax: 37.15921662499071
       //floodWaterLevelLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})
       
-      l3aeLayer.current._addFeature({xmin: 125.91287239770594, ymin: 33.13214078423106, xmax: 126.97424130801869, ymax: 33.60135814408788, properties:{id:G$RandomId()}})
+      //l3aeLayer.current._addFeature({xmin: 125.91287239770594, ymin: 33.13214078423106, xmax: 126.97424130801869, ymax: 33.60135814408788, properties:{id:G$RandomId()}})
     }else{
       environmentLayer.current.remove()
     }
