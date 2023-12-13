@@ -16,6 +16,7 @@ const SafetyOptions = () => {
                 {name:'운문댐', code:'UNMUN'},
                 {name:'영천댐', code:'YEONGCHEON'},
                 {name:'사연댐', code:'SAYEON'},
+                {name:'주암댐', code:'JUAM'},
                 {name:'소양강댐', code:'SOYANG'}
             ]
         // },{
@@ -47,7 +48,7 @@ const SafetyOptions = () => {
             name:'시설,사면', 
             code: 'SI',
             items: [
-                {name:'논산천제방', code:'b1'},
+                {name:'논산천제방', code:'NONSAN'},
                 {name:'정선 세대터널', code:'b7'},
             ]
         }

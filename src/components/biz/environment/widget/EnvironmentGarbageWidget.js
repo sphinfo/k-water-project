@@ -13,7 +13,7 @@ import { G$normalizeWithColors } from "@gis/util";
 
 const colorType = [
     { index: 0, rgb: [255, 255, 255] },
-    { index: 1, rgb: [128, 0, 128] },
+    { index: 1, rgb: [56, 5, 120] },
 ]
 const EnvironmentLandCover = () => {
 

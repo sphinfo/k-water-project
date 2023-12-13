@@ -24,7 +24,7 @@ const EnvironmentOptions = () => {
             name:'보', 
             code: 'BO',
             items: [
-                {name:'세종보', code:'b1'},
+                {name:'세종보', code:'SEJONG'},
                 {name:'창녕함안보', code:'CHANGNYEONG'}
             ]
         },
@@ -41,15 +41,15 @@ const EnvironmentOptions = () => {
             items: [
                 {name:'미호강', code:'MIHOCHEON'},
             ]
-        },{
-            name: '지역',
-            code: 'AREA',
-            items: [
-                {name:'충청', code:'ar3'},
-                {name:'경상', code:'ar5'},
-                {name:'전라', code:'ar4'},
-                {name:'강원', code:'ar2'},
-            ]
+        // },{
+        //     name: '지역',
+        //     code: 'AREA',
+        //     items: [
+        //         {name:'충청', code:'ar3'},
+        //         {name:'경상', code:'ar5'},
+        //         {name:'전라', code:'ar4'},
+        //         {name:'강원', code:'ar2'},
+        //     ]
           }
     ])
 
