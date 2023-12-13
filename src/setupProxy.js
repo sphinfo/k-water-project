@@ -23,16 +23,6 @@ module.exports = function (app) {
 		})
 	)
 
-	app.use(
-		createProxyMiddleware('/mapVworld',{
-			target: 'https://map.vworld.kr/',
-			changeOrigin: true,
-            pathRewrite: {
-                '^/mapVworld': ''
-            }
-		})
-	)
-
 
 	app.use(
 		createProxyMiddleware('/api',{
