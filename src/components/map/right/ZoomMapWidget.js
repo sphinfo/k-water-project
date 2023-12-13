@@ -14,15 +14,10 @@ const ZoomMapWidget = () => {
     
     const home = () =>{
         G$flyToPoint([127.61790470489117,36.52505158669595], 850000)
+
+        console.info(MapManager.map.imageryLayers)
     }
 
-    // const add = () =>{
-    //     MapManager.terrainLoad()
-    // }
-
-    const AddrSearchWidget = (id) =>{
-        G$addWidget(id)
-    }
 
     return (
         <ul className="map-widget-vertical-block map-basic-style">

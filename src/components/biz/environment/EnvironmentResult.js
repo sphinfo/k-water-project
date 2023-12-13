@@ -50,7 +50,7 @@ const EnvironmentResult = () => {
                 let resultList = []
                 response.result.data.map((obj)=>{
 
-                  let store = obj.dataType
+                  let store = obj.dataType.toLowerCase()
                   let layer = obj.name
 
                  /* <div className="img-box" >

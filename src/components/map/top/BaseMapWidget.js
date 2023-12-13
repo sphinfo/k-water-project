@@ -1,6 +1,5 @@
 import MapManager from '@gis/MapManager';
 import { G$changeMapLayer } from '@gis/util';
-import { WebMapTileServiceImageryProvider } from 'cesium';
 import React, { useEffect, useState } from 'react';
 import mapBasic from '../../../resources/images/map-basic-bg.png';
 import mapSatellite from '../../../resources/images/map-satellite-bg.png';
