@@ -137,4 +137,16 @@ button{
   &.btn-map-data {
     box-shadow: $box-shadow;
   }
+
+  &.btn-map-view {
+    border: 1px solid $line;
+  }
+}
+
+label.MuiFormControlLabel-root {
+  margin: 0;
+
+  .MuiFormControlLabel-label {
+    font-size: 13px;
+  }
 }

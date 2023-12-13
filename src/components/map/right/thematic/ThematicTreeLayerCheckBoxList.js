@@ -1,6 +1,6 @@
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import { TreeItem, TreeView } from "@mui/lab";
-import {Checkbox, SvgIcon} from "@mui/material";
+import {Checkbox, SvgIcon, FormControlLabel} from "@mui/material";
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -195,13 +195,19 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
             >
               <div className="box-header">
                 <h2 className="box-title">레이어</h2>
-                <Checkbox
-                    checked={selectAll}
-                    onChange={handleSelectAll}
-                    tabIndex={-1}
-                    disableRipple
-                    className={'check-box'}
-                />
+                  <FormControlLabel
+                      label="전체"
+                      control={
+                          <Checkbox
+                              checked={selectAll}
+                              onChange={handleSelectAll}
+                              tabIndex={-1}
+                              disableRipple
+                              className={'check-box'}
+                          />
+                      }
+                  />
+
               </div>
                 {state.layerList.map((obj)=> renderTree(obj) )}
             </TreeView >
