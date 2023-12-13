@@ -168,8 +168,8 @@ const FloodL4WaterLevel = () => {
                         </div>
                     </div>
                 </div>
-                <div className="content-row">
-                    <div className="panel-box">
+                <div className="content-row height-100">
+                    <div className="panel-box height-100">
                         <BaseChart width={'100%'} height={230} ref={chartRef} data={chartInfoRef} chartType={'Line'}/>
                     </div>
                 </div>
