@@ -25,19 +25,52 @@ const BaseLegendgGradientWidget2 = (props) => {
     return (
         <>
 
-        <div className="map_widget map-basic-style"  >
+        <div className="map_widget map-basic-style">
             <dl className="widget-box legend-gradient">
                 <dt className="widget-header"><h4 className="widget-title">{title}</h4></dt>
                 <dd className="widget-body">
-                    {datas && datas.length > 3 ? (
-                      <div className="widget-legend-chip"
-                           style={{background: `linear-gradient(90deg, ${datas[0]} 0%, ${datas[1]} 25.52%, ${datas[2]} 52.08%, ${datas[3]} 77.08%, ${datas[4]} 100%)`}}>
-                      </div>
-                    ) : null}
-                    <ul className="widget-legend-unit">
-                        <li>{min}</li>
-                        <li>{max}</li>
-                    </ul>
+                    <table className="table-basic table-tooltip">
+                        <colgroup>
+                            <col style="width: 20%"/>
+                            <col style="width: 20%"/>
+                            <col style="width: 20%"/>
+                            <col style="width: 20%"/>
+                            <col style="width: 20%"/>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>
+                                <span className="table-legend-chip" style="background-color: rgb(0, 176, 80)"></span>
+                                <span>정상</span>
+                            </th>
+                            <th>
+                                <span className="table-legend-chip" style="background-color: rgb(255, 241, 113)"></span>
+                                <span>관심</span>
+                            </th>
+                            <th>
+                                <span className="table-legend-chip" style="background-color: rgb(255, 183, 80)"></span>
+                                <span>주의</span>
+                            </th>
+                            <th>
+                                <span className="table-legend-chip" style="background-color: rgb(237, 115, 110)"></span>
+                                <span>경계</span>
+                            </th>
+                            <th>
+                                <span className="table-legend-chip" style="rgb(92, 5, 5)"></span>
+                                <span>심각</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>0 초과</td>
+                            <td>-0.5  0.0</td>
+                            <td>-1.0 ~ -0.5</td>
+                            <td>-1.5 ~ -1.0</td>
+                            <td>-1.5 이하</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </dd>
             </dl>
         </div>

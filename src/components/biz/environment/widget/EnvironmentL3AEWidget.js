@@ -28,14 +28,57 @@ const EnvironmentL3AEWidget = () => {
 
 
     return (
-        <>
 
-            <div className={"content-body"}>
-                <div className="content-row">
-                    
+        <div className="content-body">
+            <div className="content-row">
+                <div className="panel-box">
+                    <div className="number-dashboard number-dashboard-min">
+                        <div className="nd-item">
+                            <h4 className="nd-item-title">전체 녹조 면적</h4>
+                            <div className="nd-item-body">87,242㎡</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </>
+            <div className="content-row">
+                <div className="panel-box">
+                    <div className="table-wrap" style={{height: 360, overflowY: 'auto'}}>
+                        <table className="table-basic">
+                            <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>위/경도</th>
+                                <th>녹조 면적</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>LON ‘135” 23’42” LAT 23”10’13”</td>
+                                <td>17,242 ㎡</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>LON ‘135” 23’42” LAT 23”10’13”</td>
+                                <td>17,242 ㎡</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>LON ‘135” 23’42” LAT 23”10’13”</td>
+                                <td>17,242 ㎡</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>LON ‘135” 23’42” LAT 23”10’13”</td>
+                                <td>17,242 ㎡</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     )
 }
 

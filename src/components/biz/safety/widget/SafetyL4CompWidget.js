@@ -241,25 +241,50 @@ const SafetyL4CompWidget = () => {
     }
 
     return (
-        <>
-            <div style={{display: 'flex'}}>
-                <div className="content-row">
-                    <div className="content-row-header">
-                        <h2 className={"content-row-title"}>그래프</h2>
+        <div className="content-body">
+            <div className="content-col-group">
+                <div className="content-col">
+                    <div className="content-row">
+                        <div className="panel-box">
+                            <div className="number-dashboard">
+                                <div className="nd-item">
+                                    <h4 className="nd-item-title">지역 평균 변위 속도(cm/y)</h4>
+                                    <div className="nd-item-body">0.0507</div>
+                                </div>
+                                <div className="nd-item">
+                                    <h4 className="nd-item-title">P1 평균 변위 속도(cm/y)</h4>
+                                    <div className="nd-item-body">-</div>
+                                </div>
+                                <div className="nd-item">
+                                    <h4 className="nd-item-title">P2 평균 변위 속도(cm/y)</h4>
+                                    <div className="nd-item-body">-</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="panel-box mb-0">
-                        <BaseChart width={260} height={270} ref={chartRef} chartType={'Line'} title={''}/>
+
+                    <div className="content-row">
+                        <div className="panel-box">
+                            <BaseChart width={'100%'} height={300} ref={chartRef} chartType={'Line'} title={''}/>
+                        </div>
                     </div>
                 </div>
-                <div className="content-row" style={{height: 360, overflowY: 'auto'}}>
-                    <div className="content-row-header">
-                        <h2 className={"content-row-title"}>변위속도 자료</h2>
+
+                <div className="content-col">
+                    <div className="content-row">
+                        <div className="panel-box">
+                            <div className="panel-box-header">
+                                <h4 className="panel-box-title">변위속도 자료</h4>
+                            </div>
+                            <div className="table-wrap" style={{height: 360, overflowY: 'auto'}}>
+                                <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'}/>
+                            </div>
+                        </div>
                     </div>
-                    <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'} />
                 </div>
             </div>
-            
-        </>
+
+        </div>
     )
 }
 

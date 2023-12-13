@@ -846,6 +846,10 @@
   width: 100%;
   min-width: 400px;
 
+  &.number-dashboard-min {
+    min-width: 300px;
+  }
+
   .nd-item {
     display: flex;
     flex-direction: column;
@@ -1684,6 +1688,7 @@
   &.table-tooltip{
     table-layout: fixed;
     width: 100%;
+    min-width: unset;
     border-radius: 6px;
     overflow: hidden;
     > thead > tr > th,
@@ -1697,6 +1702,13 @@
       font-size: 12px;
       text-align: center;
       font-weight: 600;
+
+      .table-legend-chip {
+        display: block;
+        width: 40px;
+        height: 10px;
+      }
+
       &:not(:last-of-type){
         border-right: 1px solid $grey-200;
       }

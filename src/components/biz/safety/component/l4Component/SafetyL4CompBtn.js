@@ -31,9 +31,14 @@ const SafetyL4CompBtn = () => {
 
     return (
         <>
-            <div style={{position: 'fixed', top: 50, left: 400, width: 200, height: 50, backgroundColor: 'white', display: compLayerClick ? 'none' : displaceLevel ? 'none' : ''}}>
-                <button onClick={()=>{dispatch({type: SAFETY_CLICK_MODE, compLayerClick: true})}}>지점 비교분석</button>
-            </div>
+            <button className="btn btn-float"
+                    style={{display: compLayerClick ? 'none' : displaceLevel ? 'none' : ''}}
+                    onClick={()=>{
+                        dispatch({type: SAFETY_CLICK_MODE, compLayerClick: true})
+                    }}
+            >
+                지점 비교분석
+            </button>
         </>
     )
 }

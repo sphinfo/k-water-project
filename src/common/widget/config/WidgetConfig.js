@@ -144,7 +144,7 @@ const LegendWWidgetConfig = {
     'BaseLegendgGradientWidget2': {
         title: 'BaseLegendGradientWidget',
         legend: true,
-        style: {  position:'absolute'},
+        style: { position:'absolute', bottom: '150px'},
         instance: widgets.BaseLegendgGradientWidget2
     },
     

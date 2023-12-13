@@ -141,6 +141,13 @@ button{
   &.btn-map-view {
     border: 1px solid $line;
   }
+
+  &.btn-float {
+    box-shadow: $box-shadow;
+    position: absolute;
+    left: 364px;
+    top: 10px;
+  }
 }
 
 label.MuiFormControlLabel-root {

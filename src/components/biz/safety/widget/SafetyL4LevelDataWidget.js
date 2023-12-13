@@ -19,13 +19,23 @@ const SafetyL4LevelDataWidget = () => {
     },[selectFeature])
 
     return (
-        <>
-            <div>
-                <h4>선택지점 변위 등급</h4>
-                 {selectFeature && selectFeature.properties.GRAY_INDEX}
-                 {`안전`}
+        <div className="content-body">
+            <div className="content-row">
+                <div className="panel-box">
+                    <div className="number-dashboard number-dashboard-min">
+                        <div className="nd-item">
+                            <h4 className="nd-item-title">선택지점 변위 등급</h4>
+                            <div
+                                className="nd-item-body">{selectFeature && selectFeature.properties.GRAY_INDEX}</div>
+                        </div>
+                        <div className="nd-item">
+                            <h4 className="nd-item-title"></h4>
+                            <div className="nd-item-body">{`안전`}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </>
+        </div>
     )
 }
 
