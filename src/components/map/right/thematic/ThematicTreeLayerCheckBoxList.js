@@ -32,6 +32,15 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
   }, [selectedNodes]);
 
 
+    //전체선택
+    const [selectAll, setSelectAll] = useState(false)
+    const handleSelectAll = () => {
+        setSelectAll(!selectAll);
+        const allIds = state.layerList.reduce((acc, obj) => getAllIds(obj, acc), []);
+        setSelectedNodes(selectAll ? [] : allIds);
+        visibleLayers(allIds, !selectAll);
+    }
+
   function getAllIds(node, idList = []) {
       idList.push(node.id)
       if (node.children) {
@@ -98,7 +107,6 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
                     layerInfo.instance.setVisible(visible)
                 }else{
                     layerInfo.instance = new BaseWmsImageLayer(layerInfo.store, layerInfo.id, null, false)
-                    //layerInfo.instance.setOpacity(0.4)
                 }
             }
         })
@@ -106,11 +114,12 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
 
   }
 
-  const changeOpacity = (event, nodes) =>{
-      if(nodes.instance){
-        nodes.instance.setOpacity(event.target.value / 10)
-      }
-  }
+  
+//   const changeOpacity = (event, nodes) =>{
+//       if(nodes.instance){
+//         nodes.instance.setOpacity(event.target.value / 10)
+//       }
+//   }
 
   const renderTree = (nodes) => (
       <TreeItem
@@ -129,17 +138,6 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
                       onClick={(event) => handleNodeSelect(event, nodes.id)}
                   />
                   <span>{nodes.name}</span>
-                  
-                  {/*{!nodes.children ? ( <input */}
-                  {/*    style={{float: 'right', marginTop: 10, marginRight: 10}} */}
-                  {/*    type="range"*/}
-                  {/*    min={0} */}
-                  {/*    max={10} */}
-                  {/*    defaultValue={10}*/}
-                  {/*    onClick={(event)=>{event.stopPropagation()}}*/}
-                  {/*    onChange={(event)=> changeOpacity(event, nodes)}*/}
-                  {/*/> */}
-                  {/*) : null}*/}
               </>
           }
       >
@@ -198,9 +196,11 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
               <div className="box-header">
                 <h2 className="box-title">레이어</h2>
                 <Checkbox
-                  tabIndex={-1}
-                  disableRipple
-                  className={'check-box'}
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                    tabIndex={-1}
+                    disableRipple
+                    className={'check-box'}
                 />
               </div>
                 {state.layerList.map((obj)=> renderTree(obj) )}

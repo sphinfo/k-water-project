@@ -40,7 +40,6 @@ const EnvironmentL4 = () => {
         }else{
             G$removeWidget('EnvironmentLandCoverWidget')
             G$addWidget('EnvironmentGarbageWidget')
-
         }
 
     },[selectEnvironmentLayer])

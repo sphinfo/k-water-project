@@ -23,6 +23,7 @@ const widgets = {
     //환경
     EnvironmentLandCoverWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentLandCoverWidget')),
     EnvironmentGarbageWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentGarbageWidget')),
+    EnvironmentL3AEWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentL3AEWidget')),
 };
 
 /* widget */
@@ -107,7 +108,12 @@ const WidgetConfig = {
         // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.EnvironmentGarbageWidget
     },
-
+    'EnvironmentL3AEWidget': {
+        title: '녹조 정보',
+        // style: { top: 0, left: 380, height: 800, position:'absolute'},
+        instance: widgets.EnvironmentL3AEWidget
+    },
+    
     
 
 

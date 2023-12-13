@@ -5,7 +5,7 @@ import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray } from "@gis/util";
 import EnvironmentResultTab from "./EnvironmentResultTab";
-import { ENV_SELECT_BOX, ENV_SELECT_LAYER } from "@redux/actions";
+import { ENV_RESET, ENV_SELECT_BOX, ENV_SELECT_LAYER } from "@redux/actions";
 import { Button } from "@mui/material";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import { getL3Layers } from "@common/axios/common";
@@ -34,6 +34,7 @@ const EnvironmentResult = () => {
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
 
+      dispatch({type:ENV_RESET})
       //*******API*************/
 
       if(text.name !== ''){
