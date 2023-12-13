@@ -123,7 +123,6 @@ const Drought = () => {
         if(selectDroughtLayer){
             const {store, layer} = selectDroughtLayer
             droughtLayer.current.changeParameters({store:store, layerId:layer})
-            droughtLayer.current.setOpacity(0.5)
             //범례 on
             G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:10, max: 25, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
             G$addWidget('BaseLegendgGradientWidget2', { params: {title:'토양수분', min:10, max: 25, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})

@@ -118,7 +118,6 @@ const Safety = () => {
 
             const {store, layer} = displaceLevel
             safetyDisplaceLevelLayerRef.current.changeParameters({store:store, layerId:layer})
-            safetyDisplaceLevelLayerRef.current.setOpacity(0.5)
             GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
 
         }else{
@@ -155,7 +154,6 @@ const Safety = () => {
 
             const {store, layer} = select3Level
             safety3LevelLayerRef.current.changeParameters({store:store, layerId:layer})
-            safety3LevelLayerRef.current.setOpacity(0.5)
             
             //callback 레이어로 추가
             GisLayerClickTool.addLayer(bizName, [`${store.toLowerCase()}:${layer}`])
@@ -183,7 +181,6 @@ const Safety = () => {
         if(select4Level){
             const {store, layer} = select4Level
             safety4LevelLayerRef.current.changeParameters({store:store, layerId:layer})
-            safety4LevelLayerRef.current.setOpacity(0.5)
             GisLayerClickTool.addLayer(bizName, [`${store.toLowerCase()}:${layer}`])
 
         }else{
