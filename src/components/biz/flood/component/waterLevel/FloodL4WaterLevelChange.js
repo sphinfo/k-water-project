@@ -153,15 +153,40 @@ const FloodL4WaterLevel = () => {
 
     return (
         <>
-            <div className="content-row-header">
-                <h2 className="content-row-title">수위 변화 그래프</h2>
+            <div className="content-col">
+                <div className="content-row">
+                    <div className="panel-box">
+                        <div className="number-dashboard">
+                            <div className="nd-item text-blue">
+                                <h4 className="nd-item-title">지점 평균수위</h4>
+                                <div className="nd-item-body">0.0507</div>
+                            </div>
+                            <div className="nd-item">
+                                <h4 className="nd-item-title">실측/모의 잔차 평균</h4>
+                                <div className="nd-item-body">0.0421</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="content-row">
+                    <div className="panel-box">
+                        <BaseChart width={'100%'} height={230} ref={chartRef} data={chartInfoRef} chartType={'Line'}/>
+                    </div>
+                </div>
             </div>
-            <div className="panel-box">
-                <BaseChart width={260} height={230} ref={chartRef} data={chartInfoRef} chartType={'Line'}/>
+
+            <div className="content-col">
+                <div className="content-row">
+                    <div className="panel-box">
+                        <div className="table-wrap" style={{width: 350, height: 360, overflowY: 'auto'}}>
+                            <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'}/>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-            <div className="panel-box" style={{height: 360, overflowY: 'auto'}}>
-                <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'} />
-            </div>
+
+
         </>
     )
 }

@@ -45,9 +45,20 @@ button{
   height: 6px;
 }
 
+.font-500 {
+  font-weight: 500;
+}
+
+.font-600 {
+  font-weight: 600;
+}
+
 .text-blue{
   color: $primary;
-  font-weight: 500;
+}
+
+.text-green {
+  color: #1acb21;
 }
 
 .text-grey{

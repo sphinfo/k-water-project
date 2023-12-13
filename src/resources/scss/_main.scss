@@ -534,6 +534,16 @@
   }
 }
 
+.switch-wrap {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+
+  > span {
+    font-size: 13px;
+  }
+}
+
 .float-box-switch{
   &.css-julti5-MuiSwitch-root{
     width: 40px;
@@ -825,6 +835,7 @@
   align-items: center;
   padding: 10px 0;
   width: 100%;
+  min-width: 400px;
 
   .nd-item {
     display: flex;
@@ -835,6 +846,7 @@
     flex: 1 0 0;
     border-right: 1px solid rgba(255,255,255,0.2);
     white-space: nowrap;
+    gap: 6px;
 
     &:last-child {
       border-right: 0;
@@ -1306,6 +1318,14 @@
   }
 }
 
+.content-col-group {
+  display: flex;
+
+  .content-col {
+    border-right: 1px solid $white-alpha-20;
+  }
+}
+
 .content-row{
   padding: 15px 12px 0;
   position: relative;
@@ -1323,6 +1343,13 @@
       gap: 5px;
     }
   }
+
+  .content-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   &.empty-wrap{
     height: 80%;
   }
@@ -1501,6 +1528,20 @@
   }
 }
 
+.table-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  table {
+    caption {
+      text-align: left;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+  }
+}
+
 .table-basic {
   table-layout: auto;
   border-collapse: collapse;
@@ -1588,7 +1629,7 @@
 
   &.panel-box-table {
     border-radius: 10px;
-    overflow: hidden;
+    min-width: 300px;
 
     tbody > tr {
       > th {

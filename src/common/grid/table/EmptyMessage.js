@@ -3,7 +3,7 @@ import {memo} from "react";
 const EmptyMessage = ({message=''}) => {
 	return (
 		<tr>
-			<td>
+			<td colSpan={3}>
 				{message}
 			</td>
 		</tr>

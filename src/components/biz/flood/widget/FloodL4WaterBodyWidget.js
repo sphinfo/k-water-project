@@ -77,7 +77,7 @@ const FloodL4WaterBodyWidget = () => {
 
     return (
         <>
-            <div className={"content-body"}>
+            <div className="content-body">
                 <div className="content-row">
                     <div className="panel-box">
                         <div className="number-dashboard">

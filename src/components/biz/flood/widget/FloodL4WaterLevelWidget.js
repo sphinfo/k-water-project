@@ -27,23 +27,32 @@ const FloodL4WaterLevelWidget = () => {
         <>  
             <div className="content-body">
 
-                <div>
-                    수위분석
-                    <Switch className="float-box-switch" checked={levelChange} onClick={()=>{setLevelChange(!levelChange)}}></Switch>
-                    수위변화
+                <div className="content-row">
+                    <div className="content-top">
+                        <div className="info-message">
+                            위성 계측 상 <span className="text-green font-500">정상 수위 상태</span>입니다.
+                            <small className="ml-5">(23.12.15 18:00 관측데이터)</small>
+                        </div>
+                        <div className="switch-wrap">
+                            <span>수위분석</span>
+                            <Switch className="float-box-switch" checked={levelChange} onClick={() => {
+                                setLevelChange(!levelChange)
+                            }}></Switch>
+                            <span>수위변화</span>
+                        </div>
+                    </div>
                 </div>
-                
-                
 
-              {/* 수위변화 OFF : 수위분석 */}
-              <div className="content-row" style={{display: levelChange ? 'none' : ''}}>
-                <FloodL4WaterLevelArea />
-              </div>
-                
-              {/* 수위변화 ON : 수위변화 그래프 */}
-              <div className="content-row" style={{display: !levelChange ? 'none' : ''}}>
-                <FloodL4WaterLevelChange />
-              </div>
+                {/* 수위변화 OFF : 수위분석 */}
+                <div className="content-col-group" style={{display: levelChange ? 'none' : ''}}>
+                    <FloodL4WaterLevelArea/>
+                </div>
+
+                {/* 수위변화 ON : 수위변화 그래프 */}
+                <div className="content-col-group" style={{display: !levelChange ? 'none' : ''}}>
+                    <FloodL4WaterLevelChange/>
+                </div>
+
             </div>
         </>
     )
