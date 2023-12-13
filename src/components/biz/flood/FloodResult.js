@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$flyToPoint } from "@gis/util";
+import { G$BaseSelectBoxArray, G$flyToPoint, G$getDateType } from "@gis/util";
 import { FLOOD_RESET, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, LOADING } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
 import { Button } from "@mui/material";
@@ -56,7 +56,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                   let layer = obj.name
                   let group = 'WaterBody'
                   let groupNm = '수체탐지'
-                  let categoryNm = obj.category === 'L3WBA1' ? 'AI 알고리즘' : obj.category === 'L3WBA2' ? '물리' : obj.category
+                  let categoryNm = obj.category === 'L3WBA1' ? 'AI 알고리즘' : obj.category === 'L3WBA2' ? '물리 기반' : obj.category
                   resultList.push({...obj, store, layer, group, categoryNm, groupNm})
                 })
 
@@ -66,7 +66,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                   waterObsList.map((obj)=>{
                     if(obj.name.indexOf(text.code) > 0){
                       //수위 지점 따로 추가 해야함 ( 관측소 정보 가져온데이터와 비교 하여 있으면 표출 )
-                      resultList.push({krNm: text.name, group: 'WaterLevel',groupNm: '지점수위', category: '3WL', satellite: 'Sentinel 1',code: text.code, ...obj})
+                      resultList.push({krNm: text.name, group: 'WaterLevel',groupNm: '지점수위', category: 'L3WL', satellite: 'Sentinel 1',code: text.code, ...obj})
                     }
                   })
                 }
@@ -186,8 +186,8 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                     <div className="list-info-wrap">
                       <p className="list-info">{obj.groupNm}</p>
                       <p className="list-info">{obj.category}</p>
-                      <p className="list-info">{`${obj.satellite}|${obj.categoryNm}`}</p>
-                      <p className="list-info">{`${obj.startedAt}~${obj.endedAt}`}</p>
+                      <p className="list-info">{`${obj.satellite} | ${obj.categoryNm}`}</p>
+                      <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
                     </div>
                   </>
                 }

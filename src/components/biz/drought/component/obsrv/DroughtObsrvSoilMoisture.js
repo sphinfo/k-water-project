@@ -1,7 +1,7 @@
 import BaseChart from "@common/chart/BaseChart";
 import DroughtObsrvMoistureConfig from "@gis/config/DroughtObsrvMoistureConfig";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import BaseGrid from "@common/grid/BaseGrid";
 import { getDroughtObsMoisture } from "@common/axios/drought";
 import { G$getDateType } from "@gis/util";
@@ -30,7 +30,7 @@ const DroughtObsrv = () => {
     //데이터 ref
     const rows = useMemo(()=>{ return [  ] },[])
     const columns = [
-        {accessor: 'date', Header: '관측일자', width: 120, align: 'center'},
+        {accessor: 'date', Header: '관측 일자', width: 120, align: 'center'},
         {accessor: 'precipitation', Header: '모의 토양 수분 (vol.%)', width: 200, align: 'center'},
         {accessor: 'obs', Header: '실측 토양 수분 (vol.%)', width: 200, align: 'center'},
     ]
@@ -114,6 +114,8 @@ const DroughtObsrv = () => {
 
     }, [])
 
+    const [avg, setAvg] = useState(0)
+    const [avg2, setAvg2] = useState(0)
 
     //DroughtObsrvMoistureConfig
     //지점이 선택되었을시 토양수분 API로 가져온후 차트에 데이터 매핑 ( 현재 API x )
@@ -131,6 +133,9 @@ const DroughtObsrv = () => {
                     let obs = [] // 실측 토양 수분
                     let sim = [] //모의 토양 수분
 
+                    let avg = 0
+                    let avg2 = 0
+
                     response.result.data.map((obj)=>{
                         
                         obj.date = G$getDateType(obj.createdAt.substring(0,8)) 
@@ -139,7 +144,18 @@ const DroughtObsrv = () => {
                         precipitation.push(obj.precipitation  === '' ? NaN : Number(obj.precipitation))
                         obs.push(obj.obs  === '' ? NaN : Number(obj.obs))
                         sim.push(obj.sim  === '' ? NaN : Number(obj.sim))
+
+                        obj.obs = Number(obj.obs).toFixed(2)
+                        obj.precipitation = Number(obj.precipitation).toFixed(2)
+
+                        avg += Number(obj.obs)
+                        avg2 += (Number(obj.precipitation) - Number(obj.precipitation))
+
+                        
                     })
+
+                    setAvg(avg / response.result.data.length)
+                    setAvg2(avg2 / response.result.data.length)
 
                     //강우(bar)        /실측토양수분/모의토양수분
                     //precipitation   /obs        /sim
@@ -200,12 +216,12 @@ const DroughtObsrv = () => {
                     <div className="panel-box">
                         <div className="number-dashboard">
                             <div className="nd-item">
-                                <h4 className="nd-item-title">관측소 평균 토양 수분</h4>
-                                <div className="nd-item-body">0.0507 vol.%</div>
+                                <h4 className="nd-item-title">관측소 평균 토양 수분(vol.%)</h4>
+                                <div className="nd-item-body">{avg.toFixed(2)} </div>
                             </div>
                             <div className="nd-item">
-                                <h4 className="nd-item-title">실측/모의 잔차 평균</h4>
-                                <div className="nd-item-body">0.0421</div>
+                                <h4 className="nd-item-title">실측/모의 잔차 평균(vol.%)</h4>
+                                <div className="nd-item-body">{avg2.toFixed(2)}</div>
                             </div>
                         </div>
                     </div>
@@ -214,7 +230,7 @@ const DroughtObsrv = () => {
                 <div className="content-row">
                     <div className="panel-box">
                         <div className="chart-unit-warp">
-                            <span className="chart-unit">토양 수분</span>
+                            <span className="chart-unit">토양 수분(vol.%)</span>
                             <span className="chart-unit">강우량(mm)</span>
                         </div>
                         <BaseChart width={420} height={260} ref={chartRef} chartType={'Line'} title={''}/>

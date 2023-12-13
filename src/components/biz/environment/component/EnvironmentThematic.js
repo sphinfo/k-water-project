@@ -43,7 +43,7 @@ const EnvironmentThematic = () => {
             }
             return { ...item, checked: false };
         })
-        select4Level ? dispatch({type:ENV_LANDCOVER_DETECTION, landCoverDetection: select4Level}) : dispatch({type:ENV_LANDCOVER_DETECTION, landCoverDetection: false})
+        select4Level ? dispatch({type:ENV_LANDCOVER_DETECTION, p: select4Level}) : dispatch({type:ENV_LANDCOVER_DETECTION, landCoverDetection: false})
         setThematicList(newList);
     }
 

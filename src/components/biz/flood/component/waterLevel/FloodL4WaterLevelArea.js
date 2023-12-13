@@ -40,7 +40,6 @@ const FloodL4WaterLevelArea = () => {
     useEffect(()=>{
 
         //*******API*************/
-
         chartRef.current.updateOptions = {
             layout: {
                 padding: -8
@@ -79,16 +78,17 @@ const FloodL4WaterLevelArea = () => {
                         /**저수위 */
                         minLine: {
                             type: 'line',
-                            borderColor: '#FFFA8A',
+                            borderColor: '#ffe88a',
                             yMin: 1,
                             yMax: 1,
                             borderWidth: 2,
                             label: {
                                 display: true,
-                                backgroundColor: '#FFFA8A',
+                                backgroundColor: '#ffe88a',
                                 borderRadius: 5,
                                 rotation: 'auto',
                                 position: 'start',
+                                content: '저수위',
                                 font: {
                                     size: 12,
                                 }
@@ -107,6 +107,7 @@ const FloodL4WaterLevelArea = () => {
                                 borderRadius: 5,
                                 rotation: 'auto',
                                 position: 'start',
+                                content: '만수위',
                                 font: {
                                     size: 12,
                                 }
@@ -125,6 +126,7 @@ const FloodL4WaterLevelArea = () => {
                                 borderRadius: 5,
                                 rotation: 'auto',
                                 position: 'start',
+                                content: '위성수위 ( ' +selectWaterLevel.properties.value.toFixed(2)+ 'm )',
                                 font: {
                                     size: 12,
                                 }
@@ -182,15 +184,17 @@ const FloodL4WaterLevelArea = () => {
                         <div className="number-dashboard">
                             <div className="nd-item text-blue">
                                 <h4 className="nd-item-title">위성 수위(EL.m)</h4>
-                                <div className="nd-item-body">252.60</div>
+                                <div className="nd-item-body">{selectWaterLevel && selectWaterLevel.properties.value.toFixed(2)}</div>
                             </div>
                             <div className="nd-item">
                                 <h4 className="nd-item-title">현 수위(EL.m)</h4>
-                                <div className="nd-item-body">257.90</div>
+                                <div className="nd-item-body">{satationInfo && satationInfo.value2}</div>
                             </div>
                             <div className="nd-item">
                                 <h4 className="nd-item-title">계측 차이(EL.m)</h4>
-                                <div className="nd-item-body">3.70</div>
+                                <div className="nd-item-body">{
+                                    selectWaterLevel && satationInfo && ( Number(satationInfo.value2) - Number(selectWaterLevel.properties.value)).toFixed(2)
+                                }</div>
                             </div>
                         </div>
                     </div>
@@ -214,20 +218,20 @@ const FloodL4WaterLevelArea = () => {
                                 </colgroup>
                                 <tbody>
                                 <tr>
-                                    <th>위성 수위<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
+                                    <th>높이<span className="unit-th">(m)</span></th>
+                                    <td>{satationInfo && satationInfo.a0}</td>
                                 </tr>
                                 <tr>
-                                    <th>현 수위<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
+                                    <th>길이<span className="unit-th">(m)</span></th>
+                                    <td>{satationInfo && satationInfo.a1}</td>
                                 </tr>
                                 <tr>
-                                    <th>만 수위<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
+                                    <th>정상표고<span className="unit-th">(EL.m)</span></th>
+                                    <td>{satationInfo && satationInfo.a2}</td>
                                 </tr>
                                 <tr>
-                                    <th>저 수위<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
+                                    <th>제적<span className="unit-th">(천㎥)</span></th>
+                                    <td>{satationInfo && satationInfo.a3}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -240,12 +244,12 @@ const FloodL4WaterLevelArea = () => {
                                 </colgroup>
                                 <tbody>
                                 <tr>
-                                    <th>유역면적<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
+                                    <th>유역면적<span className="unit-th">(㎢)</span></th>
+                                    <td>{satationInfo && satationInfo.b0}</td>
                                 </tr>
                                 <tr>
-                                    <th>연간용수공급용량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
+                                    <th>연간용수공급용량<span className="unit-th">(백만㎥)</span></th>
+                                    <td>{satationInfo && satationInfo.b1}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -258,40 +262,40 @@ const FloodL4WaterLevelArea = () => {
                                 </colgroup>
                                 <tbody>
                                 <tr>
-                                    <th>저수면적<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
+                                    <th>저수면적<span className="unit-th">(㎢)</span></th>
+                                    <td>{satationInfo && satationInfo.c0}</td>
                                 </tr>
                                 <tr>
-                                    <th>총 저수량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
+                                    <th>계획홍수위<span className="unit-th">(EL.m)</span></th>
+                                    <td>{satationInfo && satationInfo.c1}</td>
                                 </tr>
                                 <tr>
-                                    <th>유효저수량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.efstr}</td>
+                                    <th>상시만수위<span className="unit-th">(EL.m)</span></th>
+                                    <td>{satationInfo && satationInfo.c2}</td>
                                 </tr>
                                 <tr>
-                                    <th>저수면적<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
+                                    <th>홍수기제한수위<span className="unit-th">(EL.m)</span></th>
+                                    <td>{satationInfo && satationInfo.c3}</td>
                                 </tr>
                                 <tr>
-                                    <th>총 저수량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
+                                    <th>월류정표고<span className="unit-th">(EL.m)</span></th>
+                                    <td>{satationInfo && satationInfo.c4}</td>
                                 </tr>
                                 <tr>
-                                    <th>유효저수량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.efstr}</td>
+                                    <th>저수위<span className="unit-th">(EL.m)</span></th>
+                                    <td>{satationInfo && satationInfo.c5}</td>
                                 </tr>
                                 <tr>
-                                    <th>저수면적<span className="unit-th">(EL.m)</span></th>
-                                    <td>-</td>
+                                    <th>총저수용량<span className="unit-th">(백만㎥)</span></th>
+                                    <td>{satationInfo && satationInfo.c6}</td>
                                 </tr>
                                 <tr>
-                                    <th>총 저수량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.ttlst}</td>
+                                    <th>유효저수량<span className="unit-th">(백만㎥)</span></th>
+                                    <td>{satationInfo && satationInfo.c7}</td>
                                 </tr>
                                 <tr>
-                                    <th>유효저수량<span className="unit-th">(EL.m)</span></th>
-                                    <td>{selectWaterLevel && selectWaterLevel.properties.efstr}</td>
+                                    <th>홍수조절용량<span className="unit-th">(백만㎥)</span></th>
+                                    <td>{satationInfo && satationInfo.c8}</td>
                                 </tr>
                                 </tbody>
                             </table>

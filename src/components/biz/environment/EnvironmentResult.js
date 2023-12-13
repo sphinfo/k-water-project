@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray } from "@gis/util";
+import { G$BaseSelectBoxArray, G$getDateType } from "@gis/util";
 import EnvironmentResultTab from "./EnvironmentResultTab";
 import { ENV_RESET, ENV_RESET_LAYER, ENV_SELECT_BOX, ENV_SELECT_LAYER } from "@redux/actions";
 import { Button } from "@mui/material";
@@ -163,7 +163,7 @@ const EnvironmentResult = () => {
                 <p className="list-info">{obj.categoryNm}</p>
                 <p className="list-info">{obj.category}</p>
                 <p className="list-info">{`${obj.satellite}`}</p>
-                <p className="list-info">{`${obj.startedAt}${obj.endedAt ? '~'+obj.endedAt : ''}`}</p>
+                <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
               </div>
             </div>
           </ListItemButton>

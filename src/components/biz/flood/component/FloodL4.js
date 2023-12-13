@@ -29,7 +29,17 @@ const FloodL4 = () => {
     },[])
 
 
-    
+    {/* 수위 선택시 pooup widget 생성 */}
+    useEffect(()=>{
+
+        if(selectWaterLevel){
+            console.info(selectWaterLevel)
+            G$addWidget('FloodL4WaterLevelWidget')
+        }else{
+            G$removeWidget('FloodL4WaterLevelWidget')
+        }
+
+    },[selectWaterLevel])
 
 
     return (

@@ -3,13 +3,15 @@ import { Switch } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { FLOOD_DAMAGE_LAYER } from "@redux/actions";
 import BaseChart from "@common/chart/BaseChart";
-import { G$paramWidget } from "@gis/util";
+import { G$arrayGetMinMax, G$paramWidget, G$setNumberFixedKomma } from "@gis/util";
+import FloodChangeDataConfig from "@gis/config/FloodChangeDataConfig";
+import FloodL4ChartConfig from "@gis/config/FloodL4ChartConfig";
 
 /**
  * 홍수 - 수체 ( 활용주제도 )
  */
 
-const sample = {store:'WaterBody', layer: '20230718T21water_GS_RGB000102'}
+const indexName = {0:'수체', 1:'초지', 2:'목지', 3:'나지', 4:'건물'}
 
 const FloodL4WaterBodyWidget = () => {
 
@@ -22,8 +24,12 @@ const FloodL4WaterBodyWidget = () => {
     const chartRef = useRef()
     const chartInfoRef = useRef({
         labels: ['목지','수체','건물','초지','나지'],
-        datasets: [50,150,100,130,60],
+        datasets: [],
     })
+
+    const [max, setMax] = useState('')
+    const [min, setMin] = useState('')
+    const [maxArea, setMaxArea] = useState(0)
 
     //widget 이 닫힐때 주제도 침수피해 off
     useEffect(()=>{
@@ -36,40 +42,73 @@ const FloodL4WaterBodyWidget = () => {
 
         if(selectFloodDamageLayer){
 
-            chartRef.current.updateOptions = {
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                },
-                scales: {
-                    'y': {
-                        title: {
-                            display: true,
-                            text: "Area(m2)",
-                            font: {
-                              size: 10,
-                            },
+            console.info()
+            let data = FloodL4ChartConfig[`${selectFloodDamageLayer.filename}`]
+
+            if(data && data.length>0){
+
+                let datas = [data[2],data[0],data[4],data[1],data[3]]
+                setMaxArea(G$setNumberFixedKomma(data[5]))
+
+                setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(datas).min]} - ${G$setNumberFixedKomma(datas[G$arrayGetMinMax(datas).min])}`)
+                setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(datas).max]} - ${G$setNumberFixedKomma(datas[G$arrayGetMinMax(datas).max])}`)
+                //['목지','수체','건물','초지','나지']
+
+                chartRef.current.updateOptions = {
+                    plugins: {
+                        legend: {
+                            display: false
                         },
+                    },
+                    scales: {
+                        'y': {
+                            title: {
+                                display: true,
+                                text: "Area(m2)",
+                                font: {
+                                size: 10,
+                                },
+                            },
+                        }
+                    },
+                    yAxes:{
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.2)',
+                        },
+                        ticks:{
+                            color: 'rgba(255, 255, 255, 0.9)',
+                            fontSize: 12,
+                        }
+                    },
+                    xAxes: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.2)',
+                        },
+                        ticks:{
+                            color: 'rgba(255, 255, 255, 0.9)',
+                            fontSize: 12,
+                        }
                     }
-                },
+                }
+
+                chartInfoRef.current.datasets = []
+
+                
+                //chartInfoRef.current.labels = label
+
+                chartInfoRef.current.datasets.push({
+                    type: 'bar',
+                    borderColor: ['#35783B', '#557BDF', '#DD59B2', '#A1F8A5', '#F3AC50'],
+                    backgroundColor: ['#35783B', '#557BDF', '#DD59B2', '#A1F8A5', '#F3AC50'],
+                    data: datas,
+                    barThickness: 18,
+                    maxBarThickness: 25
+                })
+
+                chartRef.current.provider = chartInfoRef.current
+
             }
-
-            chartInfoRef.current.datasets = []
-
-            //let label = []  //날짜 x 축
-            let datas = [50,150,100,130,60]
             
-            //chartInfoRef.current.labels = label
-
-            chartInfoRef.current.datasets.push({
-                type: 'bar',
-                borderColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-                data: datas,
-            })
-
-            chartRef.current.provider = chartInfoRef.current
         }
 
     }, [selectFloodDamageLayer])
@@ -83,18 +122,18 @@ const FloodL4WaterBodyWidget = () => {
                         <div className="number-dashboard">
                             <div className="nd-item">
                                 <h4 className="nd-item-title">전체면적(㎡)</h4>
-                                <div className="nd-item-body">1,000k</div>
+                                <div className="nd-item-body">{maxArea}</div>
                             </div>
                             <div className="nd-item">
                                 <h4 className="nd-item-title">최대 피해 면적(㎡)</h4>
                                 <div className="nd-item-body">
-                                    <span className="text-naji">나지</span> 380k
+                                    <span className="text">{max}</span>
                                 </div>
                             </div>
                             <div className="nd-item">
                                 <h4 className="nd-item-title">최소 피해 면적(㎡)</h4>
                                 <div className="nd-item-body">
-                                    <span className="text-mokji">목지</span> 30k
+                                    <span className="text">{min}</span>
                                 </div>
                             </div>
                         </div>

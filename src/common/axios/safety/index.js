@@ -29,14 +29,14 @@ const getSafetyCompResult = async (props) => {
     const {params={}} = props
     const { request } = createAxios();
     const result = await request({
-        url: SafetyConfig.GET_DISPLACE_LAYER,
+        url: SafetyConfig.GET_SAFETY_COMP_RESULT,
         method: 'GET',
         params: params
     })
     props = { ...props, result: result };
     return props;
 }
-//GET_SAFETY_COMP_RESULT
+//
 
 
 export {

@@ -109,6 +109,26 @@ class MapManager {
 
     }
 
+    _mapLabel(type=false){
+        if(type){
+            let subMap = null
+            let subOption = this._vwroldLayer['Hybrid']
+
+            subMap = this.addImageLayer(
+                new WebMapTileServiceImageryProvider({
+                    url : `http://api.vworld.kr/req/wmts/1.0.0/${this._vworld_key}/${subOption.layer}/{TileMatrix}/{TileRow}/{TileCol}.${subOption.tileType}`,
+                    layer : 'Hybrid',
+                    style : 'default',
+                    tileMatrixSetID: 'EPSG:900913',
+                    maximumLevel: 19,
+                    credit : new Credit('VWorld Korea')
+            }))
+            subMap.id = 'Hybrid'
+        }else{
+            this.removeLayer(this.getImageryLayersById('Hybrid'))
+        }
+    }
+
     _changeBaseMap(type=null) {
         if(type){
 
@@ -154,7 +174,8 @@ class MapManager {
             //     this.map.imageryLayers.lower(this._baseMapLayer)
             // }
             
-            
+            this.map.imageryLayers.lower(this._baseMapLayer)
+
             return this._baseMapLayer
         }else{
             return null
@@ -233,7 +254,7 @@ class MapManager {
                 this._map.imageryLayers.remove(layer)
             }else{
                 //레이어를 지우기전에 entity를 비워주기 ( 가끔 비워지지가 않는 오류 생김 )
-                layer.entities.removeAll()
+                //layer.entities.removeAll()
                 this._map.dataSources.remove(layer)
             }
         }

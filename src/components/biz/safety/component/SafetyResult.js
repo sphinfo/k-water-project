@@ -4,7 +4,7 @@ import { SAFETY_CLICK_MODE, SAFETY_DETAIL_RESET, SAFETY_RESET_LAYER, SAFETY_SELE
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray } from "@gis/util";
+import { G$BaseSelectBoxArray, G$getDateType } from "@gis/util";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import Button from "@mui/material/Button";
 import { getSafety3LevelResult, getSafetydisplaceResult } from "@common/axios/safety";
@@ -201,7 +201,7 @@ const SafetyResult = () => {
                   <p className="list-info">{obj.groupNm}</p>
                   <p className="list-info">{obj.category}</p>
                   <p className="list-info">{`${obj.satellite}`}</p>
-                  <p className="list-info">{`${obj.startedAt}~${obj.endedAt}`}</p>
+                  <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
                 </div>
               </div>
             </ListItemButton>
@@ -234,7 +234,7 @@ const SafetyResult = () => {
                           <p className="list-info">{displaceLevelData.groupNm}</p>
                           <p className="list-info">{displaceLevelData.category}</p>
                           <p className="list-info">{`${displaceLevelData.satellite}`}</p>
-                          <p className="list-info">{`${displaceLevelData.startedAt}~${displaceLevelData.endedAt}`}</p>
+                          <p className="list-info">{`${G$getDateType(displaceLevelData.startedAt)}${displaceLevelData.endedAt ? '~'+G$getDateType(displaceLevelData.endedAt) : ''}`}</p>
                       </div>
                     </div>
                   </ListItemButton>

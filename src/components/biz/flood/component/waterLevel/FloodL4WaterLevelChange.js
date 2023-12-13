@@ -7,6 +7,7 @@ import FloodChangeDataConfig from "@gis/config/FloodChangeDataConfig";
 import FloodADD from "@gis/config/flood/FloodWaterLevelChartDatas";
 import FloodWaterLevelChartDatas from "@gis/config/flood/FloodWaterLevelChartDatas";
 import BaseGrid from "@common/grid/BaseGrid";
+import { G$getDateType, G$sortArrayObject } from "@gis/util";
 
 
 const FloodL4WaterLevel = () => {
@@ -28,7 +29,7 @@ const FloodL4WaterLevel = () => {
     //데이터 ref
     const rows = useMemo(()=>{ return [  ] },[])
     const columns = [
-        {accessor: 'Date', Header: '관측일자', width: 120, align: 'center'},
+        {accessor: 'Date', Header: '관측 일자', width: 120, align: 'center'},
         {accessor: 'estWl', Header: '실제 계측 수위', width: 200, align: 'center'},
         {accessor: 'obsWl', Header: '위성 계측 수위', width: 200, align: 'center'},
     ]
@@ -89,6 +90,9 @@ const FloodL4WaterLevel = () => {
 
     }, [])
 
+    const [avg, setAvg] = useState(0)
+    const [avg2, setAvg2] = useState(0)
+
     //수위 레이어 선택이 되었을시
     useEffect(()=>{
 
@@ -107,12 +111,28 @@ const FloodL4WaterLevel = () => {
             let estWl = [] //위성기반 계측수위
             let obsWl = [] //실제계측수위
 
+
+            let avg = 0
+            let avg2 = 0
+            
+
             if(sampleDatas && sampleDatas.length > 0){
                 sampleDatas.map((obj)=>{
-                    date.push(obj.Date)
+                    date.push(G$getDateType(obj.Date))
                     estWl.push(obj.estWl  === '' ? NaN : Number(obj.estWl))
                     obsWl.push(obj.obsWl  === '' ? NaN : Number(obj.obsWl))
+
+                    obj.estWl = Number(obj.estWl).toFixed(2)
+                    obj.obsWl = Number(obj.obsWl).toFixed(2)
+
+                    avg += Number(obj.estWl)
+                    avg2 += (Number(obj.estWl) - Number(obj.obsWl))
+
+                    obj.Date = G$getDateType(obj.Date)
                 })
+
+                setAvg(avg / sampleDatas.length)
+                setAvg2(avg2 / sampleDatas.length)
             }
             
 
@@ -140,7 +160,9 @@ const FloodL4WaterLevel = () => {
             chartInfoRef.current.labels = date
 
             //Table
-            gridRef.current.provider = sampleDatas
+            gridRef.current.provider = G$sortArrayObject(sampleDatas, 'Date', false)
+
+            
             
             //chart
             chartRef.current.provider = chartInfoRef.current
@@ -158,12 +180,12 @@ const FloodL4WaterLevel = () => {
                     <div className="panel-box">
                         <div className="number-dashboard">
                             <div className="nd-item text-blue">
-                                <h4 className="nd-item-title">지점 평균수위</h4>
-                                <div className="nd-item-body">0.0507</div>
+                                <h4 className="nd-item-title">지점 평균수위(m)</h4>
+                                <div className="nd-item-body">{avg.toFixed(2)}</div>
                             </div>
                             <div className="nd-item">
-                                <h4 className="nd-item-title">실측/모의 잔차 평균</h4>
-                                <div className="nd-item-body">0.0421</div>
+                                <h4 className="nd-item-title">실측/모의 잔차 평균(m)</h4>
+                                <div className="nd-item-body">{avg2.toFixed(2)}</div>
                             </div>
                         </div>
                     </div>

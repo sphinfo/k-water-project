@@ -49,6 +49,10 @@ const G$changeMapLayer = (type=null) =>{
     }
 }
 
+const G$changeMapLabelLayer = (type=false) =>{
+    MapManager._mapLabel(type)
+}
+
 //point를 ?x? 격자 생성 (long, lat, 50x50 = 50)
 const G$pointToPolygon = (lon, lat, size)=>{
     const gridSize = size/2
@@ -519,6 +523,38 @@ const G$4326to3857 = (longitude, latitude, height=0) =>{
     return webMercatorProjection.project(cartographicPosition)
 }
 
+const G$arrayGetMinMax = (arr=[]) =>{
+
+    let min = 0
+    let max = 0
+    
+    if(arr.length > 0){
+
+        let minValue = arr[0];
+        let minIndex = 0;
+        let maxValue = arr[0];
+        let maxIndex = 0;
+
+        for (let i = 1; i < arr.length; i++) {
+            if (arr[i] < minValue) {
+                minValue = arr[i];
+                minIndex = i;
+            }
+
+            if (arr[i] > maxValue) {
+                maxValue = arr[i];
+                maxIndex = i;
+            }
+        }
+
+        min = minIndex
+        max = maxIndex
+    }
+
+
+    return {min, max}
+}
+
 export {
     G$addLayer,
     G$removeLayer,
@@ -529,6 +565,7 @@ export {
     G$pointToGrid,
     
     G$changeMapLayer,
+    G$changeMapLabelLayer,
 
     G$polygonToCentroid,
     G$calculatePolygonArea,
@@ -569,4 +606,5 @@ export {
     G$makeFormDataParam,
 
     G$4326to3857,
+    G$arrayGetMinMax,
 }

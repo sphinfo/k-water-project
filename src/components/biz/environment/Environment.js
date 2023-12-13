@@ -44,6 +44,10 @@ const Environment = () => {
     l3aeLayer.current = new BasePolygonEntityCollection({name:'l3aeLayer'})
     
 
+    //			
+
+    l3aeLayer.current._addFeature({xmin: 127.505519, ymin: 36.41462133, xmax: 127.5096512, ymax: 36.41048908, properties:{id:G$RandomId()}})
+    
     return()=>{
         //환경 레이어 삭제
         G$removeLayer(environmentLayer.current.layer)
@@ -57,6 +61,7 @@ const Environment = () => {
 
         //범례 삭제
         G$removeWidget('BaseLegendWidget')
+        G$removeWidget('BaseLegendgGradientWidget')
 
         //전역변수 리셋
         dispatch({type:ENV_RESET})
@@ -99,7 +104,6 @@ const Environment = () => {
 
   //범례 change 이벤트
   useEffect(()=>{
-
     if(selectEnvironmentLayer.group === 'LandCover'){
       G$addWidget('BaseLegendWidget', { 
         params: {
@@ -111,8 +115,10 @@ const Environment = () => {
                 ,{label:'나지', color:'#F3AC50'}
         ]} 
       })
-    }else{
+      G$removeWidget('BaseLegendgGradientWidget')
+    }else if(selectEnvironmentLayer.group === 'Garbage'){
       G$removeWidget('BaseLegendWidget')
+      G$addWidget('BaseLegendgGradientWidget', { params: {title:'녹조', min:0, max: 1, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
     }
     
 

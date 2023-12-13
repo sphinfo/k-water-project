@@ -1,5 +1,5 @@
 import MapManager from '@gis/MapManager';
-import { G$changeMapLayer } from '@gis/util';
+import { G$changeMapLabelLayer, G$changeMapLayer } from '@gis/util';
 import React, { useEffect, useState } from 'react';
 import mapBasic from '../../../resources/images/map-basic-bg.png';
 import mapSatellite from '../../../resources/images/map-satellite-bg.png';
@@ -8,6 +8,7 @@ import {Checkbox, FormControlLabel} from "@mui/material";
 const BaseMapWidget = () => {
 
     const [mapType, setMapType] = useState('Satellite')
+    const [mapLabel, setMapLabel] = useState(false)
 
 
     useEffect(()=>{
@@ -15,6 +16,12 @@ const BaseMapWidget = () => {
         G$changeMapLayer(mapType)
 
     },[mapType])
+
+    useEffect(()=>{
+
+        G$changeMapLabelLayer(mapLabel)
+
+    },[mapLabel])
     
     return (
         <div className="map-view-tab-wrap">
@@ -25,6 +32,8 @@ const BaseMapWidget = () => {
                      label="라벨"
                      control={
                          <Checkbox
+                             checked={mapLabel}
+                             onClick={()=>{setMapLabel(!mapLabel)}}
                              tabIndex={-1}
                              disableRipple
                              className={'check-box'}

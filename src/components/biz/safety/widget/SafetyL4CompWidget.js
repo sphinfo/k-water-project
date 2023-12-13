@@ -41,7 +41,7 @@ const SafetyL4CompWidget = () => {
     //데이터 ref
     const rows = useMemo(()=>{ return [  ] },[])
     const columns = [
-        {accessor: 'date', Header: '관측일자', width: 120, align: 'center'},
+        {accessor: 'date', Header: '관측 일자', width: 120, align: 'center'},
         {accessor: 'p1', Header: '변위속도 (p1)', width: 200, align: 'center'},
         {accessor: 'p2', Header: '변위속도 (p2)', width: 200, align: 'center'},
     ]

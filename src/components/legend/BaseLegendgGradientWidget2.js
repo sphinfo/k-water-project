@@ -6,17 +6,6 @@ const BaseLegendgGradientWidget2 = (props) => {
 
     const {params, ...other} = props
     const [title, setTitle] = useState('')
-    const [datas, setDatas] = useState([])
-    const [max, setMax] = useState(0)
-    const [min, setMin] = useState(0)
-
-    useEffect(()=>{
-        setTitle(params.title)
-        setDatas(toJS(params.datas));
-        setMin(params.min)
-        setMax(params.max)
-
-    },[params.title, params.datas, params.min, params.max])
 
     // useEffect(()=>{
     //     console.info(datas)
@@ -31,32 +20,32 @@ const BaseLegendgGradientWidget2 = (props) => {
                 <dd className="widget-body">
                     <table className="table-basic table-tooltip">
                         <colgroup>
-                            <col style="width: 20%"/>
-                            <col style="width: 20%"/>
-                            <col style="width: 20%"/>
-                            <col style="width: 20%"/>
-                            <col style="width: 20%"/>
+                            <col style={{width: "20%"}}/>
+                            <col style={{width: "20%"}}/>
+                            <col style={{width: "20%"}}/>
+                            <col style={{width: "20%"}}/>
+                            <col style={{width: "20%"}}/>
                         </colgroup>
                         <thead>
                         <tr>
                             <th>
-                                <span className="table-legend-chip" style="background-color: rgb(0, 176, 80)"></span>
+                                <span className="table-legend-chip" style={{backgroundColor: "rgb(0, 176, 80)"}}></span>
                                 <span>정상</span>
                             </th>
                             <th>
-                                <span className="table-legend-chip" style="background-color: rgb(255, 241, 113)"></span>
+                                <span className="table-legend-chip" style={{backgroundColor: "rgb(255, 241, 113)"}}></span>
                                 <span>관심</span>
                             </th>
                             <th>
-                                <span className="table-legend-chip" style="background-color: rgb(255, 183, 80)"></span>
+                                <span className="table-legend-chip" style={{backgroundColor: "rgb(255, 183, 80)"}}></span>
                                 <span>주의</span>
                             </th>
                             <th>
-                                <span className="table-legend-chip" style="background-color: rgb(237, 115, 110)"></span>
+                                <span className="table-legend-chip" style={{backgroundColor: "rgb(237, 115, 110)"}}></span>
                                 <span>경계</span>
                             </th>
                             <th>
-                                <span className="table-legend-chip" style="rgb(92, 5, 5)"></span>
+                                <span className="table-legend-chip" style={{backgroundColor: "rgb(92, 5, 5)"}}></span>
                                 <span>심각</span>
                             </th>
                         </tr>

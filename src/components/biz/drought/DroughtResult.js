@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray } from "@gis/util";
+import { G$BaseSelectBoxArray, G$getDateType } from "@gis/util";
 import { DROUGHT_RESET, DROUGHT_RESET_LAYER, DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER } from "@redux/actions";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -159,7 +159,7 @@ const DroughtResult = () => {
                   <p className="list-info">{obj.groupNm}</p>
                   <p className="list-info">{obj.category}</p>
                   <p className="list-info">{`${obj.satellite}`}</p>
-                  <p className="list-info">{`${obj.startedAt}~${obj.endedAt}`}</p>
+                  <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
                 </div>
               </div>
             </ListItemButton>
