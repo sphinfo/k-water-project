@@ -25,7 +25,6 @@ class SaftyLevelChartDataSource extends CustomDataSource {
 		const color = ['BLUE', 'YELLOW', 'RED']
 		const rand = Math.floor(Math.random() * color.length)
 
-		console.info(color[rand])
 		// 파이 차트 데이터 및 옵션을 설정합니다.
 		var chartData = {
 			datasets: [{

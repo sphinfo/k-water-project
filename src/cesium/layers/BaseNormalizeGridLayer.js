@@ -47,7 +47,6 @@ class BaseNormalizeGridLayer extends CustomDataSource {
 			name: this.id,
 			properties: properties
 		})
-		console.info(gridPolygon)
 		this.entities.add(gridPolygon);
 	}
 	

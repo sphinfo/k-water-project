@@ -2,16 +2,11 @@ import BaseChart from "@common/chart/BaseChart";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import pin from "@images/point-icon.png"
-import IconButton from '@mui/material/IconButton';
 import pin1 from "@images/point-icon-1.svg"
 import pin2 from "@images/point-icon-2.svg"
-import { G$4326to3857, G$RandomId, G$getDateType, G$removeLayer } from "@gis/util";
-import useEnhancedEffect from "@mui/material/utils/useEnhancedEffect";
-import SafetyChartConfig from "@gis/config/SafetyChartConfig";
+import { G$RandomId, G$getDateType, G$removeLayer } from "@gis/util";
 import { LOADING, SAFETY_CLICK_MODE } from "@redux/actions";
 import BaseGrid from "@common/grid/BaseGrid";
-import { Cartesian3, Cartographic, Ellipsoid, WebMercatorProjection } from "cesium";
 import { getSafetyCompResult } from "@common/axios/safety";
 
 const SafetyL4CompWidget = () => {
@@ -104,6 +99,7 @@ const SafetyL4CompWidget = () => {
         return()=>{
             G$removeLayer(safetyPinLayer.current.layer)
             dispatch({type: SAFETY_CLICK_MODE, compLayerClick: false})
+            dispatch({type: LOADING, loading: false})
         }
 
     },[])
@@ -128,7 +124,7 @@ const SafetyL4CompWidget = () => {
     //grid 레이어가 선택이 되면 pinlayer 추가
     useEffect(()=>{
         if(selectFeature){
-            let coord = G$4326to3857(selectFeature.clickPosition.longitude, selectFeature.clickPosition.latitude)
+            //let coord = G$4326to3857(selectFeature.clickPosition.longitude, selectFeature.clickPosition.latitude)
             let id = select4Level ? select4Level.id : select3Level.id
             dispatch({type: LOADING, loading: true})
             getSafetyCompResult({y:parseFloat(selectFeature.clickPosition.latitude), x:parseFloat(selectFeature.clickPosition.longitude), id: Number(id)}).then((response)=>{

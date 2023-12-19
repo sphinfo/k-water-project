@@ -55,8 +55,7 @@ class GisDrawTool {
     //마우스 클릭 이벤트
     async _onClick(type, event) {
         const ray = this.map.camera.getPickRay(event.position)
-        const earthPosition = this.map.scene.globe.pick(ray, this.map.scene);
-        console.info(earthPosition)
+        const earthPosition = this.map.scene.globe.pick(ray, this.map.scene)
         if (defined(earthPosition)) {
             if (activeShapePoints.length === 0) {
                 floatingPoint = this.createPoint(earthPosition);

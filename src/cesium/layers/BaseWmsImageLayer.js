@@ -6,10 +6,11 @@ import { Rectangle, WebMapServiceImageryProvider, WebMercatorTilingScheme } from
  */
 class BaseWmsImageLayer {
 
-	constructor(store, layerId, cqlFIlter=null, fly=true) {
+	constructor(store, layerId, cqlFIlter=null, fly=true, visible=true) {
 
 		//지도이동
 		this.fly = fly
+		this.visible = visible
 
 		//레이어 props 설정
 		this.props = {
@@ -48,16 +49,15 @@ class BaseWmsImageLayer {
 			this.props.wmsParameters = {...this.props.wmsParameters, CQL_FILTER:this.props.cqlFilter}
 		}
 		
-		console.info(this.props)
 		//지도추가
 		this.layer = MapManager.addImageLayer(
 			new WebMapServiceImageryProvider({
 				url: this.props.wmsUrl,
 				layers: `${this.props.store.toLowerCase()}:${this.props.layerId}`,
 				parameters: this.props.wmsParameters,
-				// tilingScheme: new WebMercatorTilingScheme(),
-            	// rectangle: Rectangle.fromDegrees(-180.0, -90.0, 180.0, 90.0)
 		}))
+
+		
 
 		// 변경된 이미지 레이어 설정 ( Geoserver 사용 store:layer )
 		this.layer.id = `${this.props.store.toLowerCase()}:${this.props.layerId}`

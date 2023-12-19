@@ -19,8 +19,6 @@ class VWorldAddressSearch{
 	const { request, get } = createAxios();
 	
 
-    // /vworld/req/search?service=search&request=search&version=2.0&size=10&page=${page}&query=${encodeURIComponent(query)}&type=place&format=json&errorformat=json&key=${this.apiKey}
-
     const url = `/vworld/req/search?service=search&request=search&version=2.0&size=1000&query=${encodeURIComponent(query)}&type=place&format=json&errorformat=json&key=${this.apiKey}`
 
     //주소
@@ -32,47 +30,21 @@ class VWorldAddressSearch{
 
     try {
 
-      let response = await request(url);
-      //let responseA
-      //let responseR
-      
+      let response = await request(url)
 
-      // if(!searchType || searchType === 'addr'){
-      //   responseA = await request(urlA);
-      // }
-      
-      // if(!searchType || searchType === 'road'){
-      //   responseR = await request(urlR);
-      // }
-
-      const data = response ? response.data : null;
-      const status = response ? response.status : null;
-      // const dataA = responseA ? responseA.data : null;
-      // const statusA = responseA ? responseA.status : null;
-      // const dataR = responseR ? responseR.data : null;
-      // const statusR = responseR ? responseR.status : null;
-      
-      
-
-      //if (statusA === 200 || statusR === 200) {
+      const data = response ? response.data : null
+      const status = response ? response.status : null
       if (status === 200) {
 
-        // const resultDatas = {
-        //   addr: dataA, 
-        //   road: dataR
-        // }
-
         const resultDatas = data
-
-        console.info(resultDatas)
         return resultDatas
       } else {
         // API 응답이 실패한 경우에 대한 처리
-        return null;
+        return null
       }
     } catch (error) {
       // API 요청이 실패한 경우에 대한 처리
-      return null;
+      return null
     }
   }
 }

@@ -1,10 +1,8 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Switch } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { G$addWidget,G$removeWidget } from "@gis/util";
-import {DROUGHT_OBSRV_TAB, FLOOD_DAMAGE_LAYER} from "@redux/actions";
-
-const sample = {store:'WaterBody', layer: '20230718T21water_GS_RGB000102'}
+import {DROUGHT_OBSRV_TAB } from "@redux/actions";
 
 const DroughtObsrvThematic = () => {
 

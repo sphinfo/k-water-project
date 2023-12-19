@@ -1,7 +1,7 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FLOOD_DAMAGE_LAYER, FLOOD_RESET, FLOOD_SELECT_WATER_LEVEL, SET_SIDE_PANEL } from "@redux/actions";
-import { G$addWidget, G$flyToPoint, G$paramWidget, G$removeLayer, G$removeWidget } from "@gis/util";
+import { G$addWidget, G$paramWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import WaterLevelOverlay from "@gis/util/overlay/WaterLevelOverlay";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
@@ -101,7 +101,6 @@ const Flood = () => {
                 })
             }
 
-            console.info(obsList)
             //지점정보 저장
             setWaterObsList(obsList)
         })
@@ -114,6 +113,11 @@ const Flood = () => {
             G$removeLayer(floodLayer.current.layer)
             G$removeLayer(floodDamageLayer.current.layer)
             G$removeLayer(floodWaterLevelLayer.current.layer)
+
+            if(floodWaterLevelLayer.current.hoverHandler){
+                floodWaterLevelLayer.current.hoverHandler.destroy()
+                floodWaterLevelLayer.current.hoverHandler = undefined
+            }
 
             //레이어 클릭 callback 비활성화
             GisLayerClickTool.destroyBiz(bizName)
@@ -143,31 +147,13 @@ const Flood = () => {
                 floodLayer.current.setOpacity(0.5)
                 //수위 레이어 삭제
                 floodWaterLevelLayer.current.show = false
-                //floodWaterLevelLayer.current.entities.removeAll()
             }else if(group === 'WaterLevel'){ // 수위
                 floodWaterLevelLayer.current.show = true
-                //floodWaterLevelLayer.current.entities.removeAll()
-                
-                /*obsList.map((properties)=>{
-                    //text
-                    if(properties.name === text.code){
-                        zoom = properties
-                    }
-                    floodWaterLevelLayer.current._addFeature({lng:properties.lon, lat:properties.lat, properties, hover: true})
-                })
-                if(zoom){
-                    G$flyToPoint([zoom.lon, zoom.lat], 46000)
-                }*/
-
                 //수체 레이어 삭제
                 floodLayer.current.remove()
-
             }
         }else{
-
-            //floodWaterLevelLayer.current.entities.removeAll()
             floodLayer.current.remove()
-            
         }
 
     },[selectFloodLayer])
@@ -178,19 +164,10 @@ const Flood = () => {
      * 침수피해지도 ON / OFF
      */
     useEffect(()=>{
-
         if(selectFloodDamageLayer){
+            floodLayer.current.show = false
             //침수피해 범례 on
-            G$addWidget('BaseLegendWidget', { 
-                params: {
-                    title:'피복 분류', 
-                    datas: [{label:'목지', color:'#35783B'}
-                        ,{label:'수체', color:'#557BDF'}
-                        ,{label:'건물', color:'#DD59B2'}
-                        ,{label:'초지', color:'#F3AC50'}
-                        ,{label:'나지', color:'#A1F8A5'}
-                ]} 
-            })
+            G$addWidget('BaseLegendWidget', { params: { title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'수체', color:'#557BDF'},{label:'건물', color:'#DD59B2'},{label:'초지', color:'#F3AC50'},{label:'나지', color:'#A1F8A5'}]} })
 
             const {store, layer} = selectFloodDamageLayer
             floodDamageLayer.current.changeParameters({store:store, layerId:layer})

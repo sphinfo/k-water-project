@@ -84,8 +84,6 @@ class BaseGeoserverAxios {
                 y: Math.floor(clickPosition.y),
             }
 
-            console.info(params)
-
             const response = await this.axios.get(url, {params}, this.config);
 
             return response;

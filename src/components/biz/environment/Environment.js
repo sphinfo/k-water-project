@@ -106,34 +106,15 @@ const Environment = () => {
 
   },[landCoverDetection])
 
-  //사이드 위치 조정 on
-  // useEffect(()=>{
-  //   selectEnvironmentLayer && selectEnvironmentLayer.store === 'LandCover' ? dispatch({type: SET_SIDE_PANEL, panelSide: true}) : dispatch({type: SET_SIDE_PANEL, panelSide: false})
-  // },[selectEnvironmentLayer])
-
-
   //범례 change 이벤트
   useEffect(()=>{
     if(selectEnvironmentLayer.group === 'LandCover'){
-      G$addWidget('BaseLegendWidget', { 
-        params: {
-            title:'피복 분류', 
-            datas: [{label:'수체', color:'#557BDF'}
-              ,{label:'나지', color:'#F3AC50'}
-              ,{label:'초지', color:'#A1F8A5'}    
-              ,{label:'목지', color:'#35783B'}
-              ,{label:'건물', color:'#DD59B2'}
-              
-                
-        ]} 
-      })
+      G$addWidget('BaseLegendWidget', { params: { title:'피복 분류', datas: [{label:'수체', color:'#557BDF'} ,{label:'나지', color:'#F3AC50'} ,{label:'초지', color:'#A1F8A5'} ,{label:'목지', color:'#35783B'} ,{label:'건물', color:'#DD59B2'}]} })
       G$removeWidget('BaseLegendgGradientWidget')
     }else if(selectEnvironmentLayer.group === 'Garbage'){
       G$removeWidget('BaseLegendWidget')
       G$addWidget('BaseLegendgGradientWidget', { params: {title:'녹조', min:0, max: 1, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
     }
-    
-
 
   },[selectEnvironmentLayer])
 

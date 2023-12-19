@@ -1,8 +1,6 @@
 import { lazy } from 'react';
 
 const widgets = {
-    TestWidget: lazy(() => import('@components/biz/test/TestWidget')),
-    TestChartWidget: lazy(() => import('@components/biz/test/TestChartWidget')),
 
     //안전
     SafetyDisplaceSpeedWidget: lazy(() => import('@components/biz/safety/widget/SafetyDisplaceSpeedWidget')),
@@ -24,26 +22,16 @@ const widgets = {
     //환경
     EnvironmentLandCoverWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentLandCoverWidget')),
     EnvironmentGarbageWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentGarbageWidget')),
+    EnvironmentGreenWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentGreenWidget')),
     EnvironmentL3AEWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentL3AEWidget')),
 };
 
 /* widget */
 const WidgetConfig = {
-    'TestWidget': {
-        title: '테스트용 위젯',
-        style: { top: 70, left: 380, width: 1000, height: 550, position:'absolute', backgroundColor: 'white'},
-        instance: widgets.TestWidget
-    },
-    'TestChartWidget': {
-        title: '테스트용 차트 위젯',
-        style: { top: 70, left: 350, position:'absolute'},
-        instance: widgets.TestChartWidget
-    },
 
     
     'SafetyDisplaceSpeedWidget': {
         title: '변위 속도 위젯',
-        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.SafetyDisplaceSpeedWidget
     },
 
@@ -55,14 +43,12 @@ const WidgetConfig = {
     //홍수 - 수체 - 침수 피해 분석
     'FloodL4WaterBodyWidget': {
         title: '침수 피해 분석',
-        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.FloodL4WaterBodyWidget
     },
 
     //홍수 - 수위 - 지점선택
     'FloodL4WaterLevelWidget': {
         title: '수위 분석',
-        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.FloodL4WaterLevelWidget
     },
     
@@ -73,7 +59,6 @@ const WidgetConfig = {
      */
     'DroughtObsrvWidget': {
         title: '토양 수분 분석',
-        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.DroughtObsrvWidget
     },
 
@@ -83,12 +68,10 @@ const WidgetConfig = {
      */
     'SafetyL4CompWidget': {
         title: '지점별 변위 속도 비교',
-        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.SafetyL4CompWidget
     },
     'SafetyL4LevelDataWidget': {
         title: '변위 등급',
-        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.SafetyL4LevelDataWidget
     },
     
@@ -101,18 +84,15 @@ const WidgetConfig = {
 
     'EnvironmentLandCoverWidget': {
         title: '수변 피복 분석',
-        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.EnvironmentLandCoverWidget
     },
     'EnvironmentGarbageWidget': {
         title: '부유물 정보',
-        // style: { top: 0, left: 380, height: 800, position:'absolute'},
         instance: widgets.EnvironmentGarbageWidget
     },
-    'EnvironmentL3AEWidget': {
+    'EnvironmentGreenWidget': {
         title: '녹조 정보',
-        // style: { top: 0, left: 380, height: 800, position:'absolute'},
-        instance: widgets.EnvironmentL3AEWidget
+        instance: widgets.EnvironmentGreenWidget
     },
     
     
@@ -154,3 +134,4 @@ export default {
     ...WidgetConfig,
     ...LegendWWidgetConfig,
 }
+

@@ -101,11 +101,9 @@ const FloodL4WaterLevel = () => {
 
 
         //*******API*************/
-
         //수위 지점 select get Feature
         if(selectWaterLevel){
             let sampleDatas = FloodWaterLevelChartDatas[selectWaterLevel.properties.name]
-            //const random = Math.floor(Math.random() * sampleDatas.length)
 
             let date = []  //날짜
             let estWl = [] //위성기반 계측수위

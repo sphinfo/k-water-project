@@ -86,8 +86,6 @@ class GisDrawTool {
 		        let cartesian = this.map.scene.globe.pick(this.map.camera.getPickRay(clickEvent.position), this.map.scene);
                 
                 cartesian = {...{x:pickedLocation.x, y:pickedLocation.y}, ...cartesian }
-                console.info(pickedLocation)
-                console.info(cartesian)
                 this.map.entities.add({
                     position: cartesian,
                     point: {

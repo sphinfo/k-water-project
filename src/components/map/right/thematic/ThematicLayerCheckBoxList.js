@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { TreeItem, TreeView } from "@mui/lab";
 import { Checkbox } from "@mui/material";
 import { useSelector } from "react-redux";
@@ -13,9 +13,6 @@ const ThematicLayerCheckBoxList = ({}, ref) => {
     const state = useSelector(state => state.layer)
 
     const [selectedNodes, setSelectedNodes] = useState([]);
-    useEffect(() => {
-        console.info(selectedNodes);
-    }, [selectedNodes]);
 
     //체크박스 클릭
     const handleNodeSelect = (event, node) => {
@@ -27,7 +24,6 @@ const ThematicLayerCheckBoxList = ({}, ref) => {
 
         // 임시 로직 새로 만들기 instance 등록하고 기존에 만들어놨으면 instacne 다시 만들지 않게 수정하기
         if(event.target.checked){
-          console.info(node.id)
           new BaseWmsImageLayer(node.store, node.id)
         }else{
           G$removeLayer(`${node.store}:${node.id}`)

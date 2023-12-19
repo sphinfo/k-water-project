@@ -1,13 +1,11 @@
 import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_DETAIL_SEARCH_TAB_TYPE, SET_SIDE_PANEL, SAFETY_CLICK_MODE } from "@redux/actions";
+import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET, SET_SIDE_PANEL, SAFETY_CLICK_MODE } from "@redux/actions";
 import { G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
-
 import SafetyOptions from "./component/SafetyOptions";
 import SafetyResult from "./component/SafetyResult";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
-import BaseNormalizeGridLayer from "@gis/layers/BaseNormalizeGridLayer";
 import SafetyL4 from "./component/l4Component/SafetyL4";
 import SafetyOverlay from "@gis/util/overlay/SafetyOverlay";
 
@@ -247,11 +245,10 @@ const Safety = () => {
             }else{
                 //3레벨이 켜져있는경우
                 if(select3Level){
-                    G$addWidget('BaseLegendgGradientWidget', { 
-                        //params: {title:select3Level.main === 'PSI' ? '고정산란체 - L3TD-A1' : '분란산란체 - L3TD-A2', 
+                    G$addWidget('BaseLegendgGradientWidget', {
                         params: {title:'변위 속도(cm/year)', 
                         min:-0.3, 
-                        max: 3, 
+                        max: 0.3, 
                         datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}})
 
                 }

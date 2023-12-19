@@ -17,9 +17,9 @@ const FloodL4WaterBodyWidget = () => {
 
     const dispatch = useDispatch()
     /**
-     * selectFloodDamageLayer : 침수피해지도 
+     * selectFloodDamageLayer : 침수피해지도 레이어
      */
-    const { selectFloodDamageLayer, selectWaterLevel } = useSelector(state => state.flood)
+    const { selectFloodDamageLayer } = useSelector(state => state.flood)
 
     const chartRef = useRef()
     const chartInfoRef = useRef({
@@ -91,9 +91,6 @@ const FloodL4WaterBodyWidget = () => {
                 }
 
                 chartInfoRef.current.datasets = []
-
-                
-                //chartInfoRef.current.labels = label
 
                 chartInfoRef.current.datasets.push({
                     type: 'bar',

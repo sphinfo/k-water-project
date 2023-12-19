@@ -54,7 +54,7 @@ const EnvironmentResult = () => {
                   let store = obj.dataType.toLowerCase()
                   let layer = obj.name
 
-                  let group = obj.category === 'L3GA' ? 'Garbage' : obj.category === 'L3AE' ? 'Garbage': obj.category === 'L3AL' ? 'Garbage' : obj.category === 'L3LCA1' ? 'LandCover' : obj.category === 'L3LCA2' ? 'LandCover' : 'a'
+                  let group = obj.category === 'L3GA' ? 'Garbage' : obj.category === 'L3AE' ? 'Green': obj.category === 'L3AL' ? 'Garbage' : obj.category === 'L3LCA1' ? 'LandCover' : obj.category === 'L3LCA2' ? 'LandCover' : 'a'
                   let categoryNm = obj.category === 'L3GA' ? '부유물' : obj.category === 'L3AE' ? '녹조 농도' : obj.category === 'L3AL' ? '녹조 탐지' : obj.category === 'L3LCA1' ? '수변피복' : obj.category === 'L3LCA2' ? '수변피복' : 'b'
                   let groupNm = obj.category === 'L3GA' ? '부유물' : obj.category === 'L3AE' ? '녹조 농도' : obj.category === 'L3AL' ? '녹조 탐지' : obj.category === 'L3LCA1' ? 'AI 알고리즘' : obj.category === 'L3LCA2' ? '광학자료' : 'c'
 
@@ -65,7 +65,6 @@ const EnvironmentResult = () => {
                 //environmentResultTab
                 const groupArray = G$BaseSelectBoxArray(resultList, 'group')
                 const resultArray = groupArray.grouped
-                console.info(resultArray)
                 setLayerList(resultArray)
               }else{
                 setLayerList([])

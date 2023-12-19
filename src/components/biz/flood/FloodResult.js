@@ -9,16 +9,6 @@ import FloodResultTab from "./FloodResultTab";
 import { Button } from "@mui/material";
 import { getL3Layers } from "@common/axios/common";
 
-
-//sample 데이터
-const example = [
-  {name:'DATA1',  date: '23.11.10~23.11.16', main:'AI 알고리즘', checked: false, store:'WaterBody', layer: '20230718T21water_GS_RGB000102'},
-  {name:'DATA2', date: '23.11.10~23.11.16', main:'물리적 특성', checked: false, store:'WaterBody', layer: '20230718T21water_GS_landuse_RGB000102' },
-  {name:'DATA1', date: '23.11.10~23.11.16', main:'', checked: false, store:'WaterBody', layer: '20230723T21water_JL_RGB000102' },
-  {name:'DATA1',  date: '23.11.10~23.11.16', main:'수위', checked: false, store:'WaterLevel', layer: '',},
-]
-
-
 const FloodResult = ({waterObsList=[], ...props}) => {
     
     const dispatch = useDispatch()
@@ -45,7 +35,6 @@ const FloodResult = ({waterObsList=[], ...props}) => {
           if (text.code && text.code !== '') {
             //*******API************* getL3Layers: 레벨3 결과값/
             let params = {type:'flood', level: 'L3', location: text.code, from: startDate, to: endDate}
-            
 
             getL3Layers(params).then((response) => {
               if(response.result.data.length > 0){

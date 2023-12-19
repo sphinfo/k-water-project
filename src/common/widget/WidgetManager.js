@@ -104,7 +104,6 @@ class WidgetManager {
             const idx = this._getInstanceIndex(widgetId);
             if (idx > -1) {
                 const [removeWidget] = this._instances.splice(idx, 1);
-                console.info(removeWidget)
             }
             this._widgetMessage(widgetId, CLOSE_MSG);
         } else {

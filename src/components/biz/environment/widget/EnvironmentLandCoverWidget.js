@@ -1,7 +1,6 @@
 import BaseChart from "@common/chart/BaseChart";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import img from "@images/Safety-20231114_L4TD_YONGDAM_UD.jpg"
 import { G$arrayGetMinMax, G$normalizeWithColors, G$setNumberFixedKomma } from "@gis/util";
 
 /**
@@ -32,12 +31,14 @@ const EnvironmentLandCover = () => {
     const [min, setMin] = useState('')
     const [maxArea, setMaxArea] = useState(0)
 
+    const [colorGrids, setColorGrid] = useState([])
+
     //레이어 변경시 reset
     useEffect(()=>{
 
         if(selectEnvironmentLayer){
 
-            //*******API*************/
+            //*******API*************/ 수변피복 차트 데이터
             const {data} = text
 
             if(data && data.length > 0){
@@ -76,9 +77,6 @@ const EnvironmentLandCover = () => {
     
                 chartInfoRef.current.datasets = []
     
-    
-                //chartInfoRef.current.labels = label
-    
                 chartInfoRef.current.datasets.push({
                     type: 'bar',
                     borderColor: ['#557BDF','#F3AC50', '#A1F8A5','#35783B', '#DD59B2'],
@@ -90,17 +88,50 @@ const EnvironmentLandCover = () => {
 
             }
 
+            //*******API*************/ 수변피복 색상표 데이터
+            /** ex) [[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5]]
+             * 배열 합치기 [1,2,3,4,5,1,2,3,4,5....]
+             */
+
+            let sampleArray = [[0,2,3,4,5],[1,0,3,4,5],[1,2,0,4,5],[1,2,3,0,5],[1,2,3,4,0]]
+            setColorGrid([].concat(...sampleArray))
+            
+            console.info(G$arrayGetMinMax(sampleArray))
+            //console.info(G$normalizeWithColors({value:1079300, min:0, max:4669400, type:colorType}))
+
+
+
+
             
         }
 
     },[selectEnvironmentLayer])
 
 
+    const renderColorGrid = (value=0) =>{
+
+        const min = Math.min(...colorGrids)
+        const max = Math.max(...colorGrids)
+
+        return(
+            <>  
+                {
+                    value === 0 &&
+                    <div className={`chart-item no-item`}> {""}</div>
+                }
+                {
+                    value !== 0 &&
+                    <div className={`chart-item`} style={{backgroundColor: `#${G$normalizeWithColors({value, min:min, max:max, type:colorType}).hex}`}}> {value} </div>
+                }
+            </>
+        )
+    }
+
+
     return (
         <>
 
             <div className={"content-body"}>
-
                 <div className="content-col-group">
                     <div className="content-col">
                         <div className="content-row">
@@ -136,11 +167,11 @@ const EnvironmentLandCover = () => {
                         </div>
                     </div>
 
-                    <div className="content-col" style={{display: landCoverDetection ? '' : 'none'}}>
+
+
+                    <div className="content-col" style={{display: colorGrids.length > 0 ? '' : 'none'}}>
                         <div className="content-row">
-                        <img style={{width:500, height:440}} src={text.img} />
-                            {/** 
-                             * <div className="panel-box">
+                            <div className="panel-box">
                                 <div className="heatmap-chart-wrap">
                                     <div className="heatmap-chart">
                                         <div className="chart-axis-wrap">
@@ -168,11 +199,16 @@ const EnvironmentLandCover = () => {
                                         </div>
 
                                         <div className="chart-item-group">
-                                            <div className="chart-item no-item">136.30</div>
-                                            <div className="chart-item" ></div>
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item">136.30</div>
+
+                                            {colorGrids && colorGrids.length > 0 &&
+                                                colorGrids.map((value) => renderColorGrid(value))
+                                            }
+
+                                            {/* <div className="chart-item no-item"></div>
+                                            <div className="chart-item" style={{backgroundColor: `#${G$normalizeWithColors({value:1079300, min:0, max:4669400, type:colorType}).hex}`}}>136.30</div>
+                                            <div className="chart-item" style={{backgroundColor: `#${G$normalizeWithColors({value:879300, min:0, max:4669400, type:colorType}).hex}`}}>136.30</div>
+                                            <div className="chart-item" style={{backgroundColor: `#${G$normalizeWithColors({value:179300, min:0, max:4669400, type:colorType}).hex}`}}>136.30</div>
+                                            <div className="chart-item" style={{backgroundColor: `#${G$normalizeWithColors({value:4279300, min:0, max:4669400, type:colorType}).hex}`}}>136.30</div>
 
 
                                             <div className="chart-item">136.30</div>
@@ -200,14 +236,11 @@ const EnvironmentLandCover = () => {
                                             <div className="chart-item">136.30</div>
                                             <div className="chart-item">136.30</div>
                                             <div className="chart-item">136.30</div>
-                                            <div className="chart-item no-item"></div>
+                                            <div className="chart-item no-item"></div> */}
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
-                            */}
                             
                         </div>
                     </div>

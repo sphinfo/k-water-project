@@ -18,7 +18,8 @@ const EnvironmentResultTab = () => {
           <div className="form-control">
             <Tabs className="toggle-btn-wrap" disableRipple={true} fullWidth={true} exclusive value={environmentResultTab} onChange={(e, v)=>{dispatch({type: ENV_RESULT_TAB, environmentResultTab: v})}}>
                 <Tab className="tab-item" value={"LandCover"} label={"수변피복"}></Tab>
-                <Tab className="tab-item" value={"Garbage"} label={"부유물∙녹조"}></Tab>
+                <Tab className="tab-item" value={"Garbage"} label={"부유물"}></Tab>
+                <Tab className="tab-item" value={"Green"} label={"녹조"}></Tab>
             </Tabs>
           </div>
           </div>

@@ -11,6 +11,7 @@ import {
   DROUGHT_RESET,
   DROUGHT_RESULT_TAB,
   DROUGHT_RESET_LAYER,
+  DROUGHT_SELECT_LAYERS,
 } from './actions';
 
 const initialState = {
@@ -54,6 +55,9 @@ function droughtReducer(state = initialState, action) {
 
     case DROUGHT_SELECT_LAYER:
       return { ...state, selectDroughtLayer: action.selectDroughtLayer}
+
+    case DROUGHT_SELECT_LAYERS:
+      return { ...state, selectDroughtLayers: action.selectDroughtLayer}
 
     //대상지역 selectbox 
     case DROUGHT_SELECT_BOX:

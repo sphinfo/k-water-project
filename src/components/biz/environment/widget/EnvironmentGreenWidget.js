@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 /**
- * 환경 부우물 레이어 선택
+ * 환경 녹조 레이어 선택
  */
-const EnvironmentGarbageWidget = () => {
 
+const EnvironmentGreenWidget = () => {
     /**
      * selectEnvironmentLayer: 수변피복 레이어 선택
      */
@@ -16,7 +15,7 @@ const EnvironmentGarbageWidget = () => {
     useEffect(()=>{
 
         if(selectEnvironmentLayer){
-            /**부유물 데이터 api*/
+            /**녹조 데이터 api*/
         }
 
     },[selectEnvironmentLayer])
@@ -28,7 +27,7 @@ const EnvironmentGarbageWidget = () => {
                 <div className="panel-box">
                     <div className="number-dashboard number-dashboard-min">
                         <div className="nd-item">
-                            <h4 className="nd-item-title">전체 부유물 면적</h4>
+                            <h4 className="nd-item-title">전체 녹조 면적</h4>
                             <div className="nd-item-body">145,963 ㎡</div>
                         </div>
                     </div>
@@ -42,7 +41,7 @@ const EnvironmentGarbageWidget = () => {
                             <tr>
                                 <th>No.</th>
                                 <th>BBOX (minX, minY, maxX, maxY )</th>
-                                <th>부유물 면적</th>
+                                <th>녹조 면적</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -60,4 +59,4 @@ const EnvironmentGarbageWidget = () => {
     )
 }
 
-export default React.memo(EnvironmentGarbageWidget);
+export default React.memo(EnvironmentGreenWidget);

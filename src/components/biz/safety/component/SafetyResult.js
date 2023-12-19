@@ -1,24 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_CLICK_MODE, SAFETY_DETAIL_RESET, SAFETY_RESET_LAYER, SAFETY_SELECT_BOX, SAFETY_SELECT_DISPLACE_LEVEL, SAFETY_SELECT_RESULT } from "@redux/actions";
+import { SAFETY_CLICK_MODE, SAFETY_RESET_LAYER, SAFETY_SELECT_BOX, SAFETY_SELECT_DISPLACE_LEVEL, SAFETY_SELECT_RESULT } from "@redux/actions";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$getDateType } from "@gis/util";
-import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import Button from "@mui/material/Button";
-import { getSafety3LevelResult, getSafetydisplaceResult } from "@common/axios/safety";
 import { getL3Layers } from "@common/axios/common";
 import dayjs from "dayjs";
-//Safety-20231114_L4TD_YONGDAM_UD.jpg
-
-//sample 데이터
-const example = [
-  {name:'ASC',  date: '23.11.10~23.11.16', main:'PSI', mainName: '(고정산란체)', checked: false, store:'Safety', layer: 'L3TD_A2_YONGDAM_ASC'},
-  {name:'DESC', date: '23.11.10~23.11.16', main:'PSI', mainName: '(고정산란체)', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
-  {name:'ASC',  date: '23.11.10~23.11.16', main:'SBAS', mainName: '(분산산란체)', checked: false, store:'Safety', layer: 'L3TD_A2_YONGDAM_ASC'},
-  {name:'DESC', date: '23.11.10~23.11.16', main:'SBAS', mainName: '(분산산란체)', checked: false, store:'safety', layer: 'L3TD_A2_YONGDAM_DSC' },
-]
 
 const SafetyResult = () => {
     

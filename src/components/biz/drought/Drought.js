@@ -8,9 +8,7 @@ import pin from "@images/map-icon-dr.svg"
 import pin2 from "@images/map-icon-dr-clicked.svg"
 import { G$addWidget, G$randomCoordinates, G$removeLayer, G$removeWidget } from "@gis/util";
 import { DROUGHT_RESET, DROUGHT_SELECT_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
-import DroughtObsrv from "./component/DroughtL4";
 import DroughtOverlay from "@gis/util/overlay/DroughtOverlay";
-import DroughtObsrvConfig from "@gis/config/DroughtObsrvConfig";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import DroughtL4 from "./component/DroughtL4";
 import { getDroughtObs } from "@common/axios/drought";
@@ -26,7 +24,6 @@ const Drought = () => {
      * selectDroughtLayer : 가뭄 메인 레이어
      */
     const { bizName, selectObs, selectDroughtLayer, obsrvTab } = useSelector(state => state.drought)
-    const { panelVisible } = useSelector(state => state.main)
 //
 
     //가뭄 레이어 ( 3L )
@@ -80,12 +77,9 @@ const Drought = () => {
         //가뭄 메인 레이어 L4
         droughtL4Layer.current = new BaseWmsImageLayer('drought','')
 
-        //let samplePoint = G$randomCoordinates(100)
-
         //*******API*************/
         //let obsList = DroughtObsrvConfig
         getDroughtObs().then((response) => {
-            console.info(response)
             if(response.result.data.length > 0){
                 response.result.data.map((obj)=>{
                     droughtObsrvLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})

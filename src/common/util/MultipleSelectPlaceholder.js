@@ -31,7 +31,6 @@ const MultipleSelectPlaceholder = ({options=[], }) => {
   const handleChange = (event) => {
     const { target: { value }, } = event;
 
-    console.info(value)
     setPositionName( typeof value === 'string' ? value.split(',') : value, );
   };
 

@@ -234,7 +234,6 @@ const G$pointsToLowest = (positions) =>{
         }
     }
 
-    console.info(lowestPoint)
     return lowestPoint;
 
 }
@@ -262,7 +261,11 @@ const G$normalizeWithColors = ({value=0, min=-12, max=13, type='jet', nshades=30
     })
 
     const normalized = (value - min) / (max - min)
-    const index = Math.floor(normalized * colormap.length)
+    
+    let index = Math.floor(normalized * colormap.length-1)
+    if(index < 0){
+        index = 0
+    }
 
     let hex = colormap[index].replace(/^#/, '')
     const bigint = parseInt(hex, 16)

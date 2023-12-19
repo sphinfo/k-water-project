@@ -1,7 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "chartjs-plugin-annotation";
-import Tabs from "@mui/material/Tabs";
 import { Switch } from "@mui/material";
 import FloodL4WaterLevelArea from "../component/waterLevel/FloodL4WaterLevelArea";
 import FloodL4WaterLevelChange from "../component/waterLevel/FloodL4WaterLevelChange";
@@ -13,7 +11,22 @@ const FloodL4WaterLevelWidget = () => {
     const dispatch = useDispatch()
     const {  selectWaterLevel } = useSelector(state => state.flood)
 
+    const [time, setTime] = useState("")
+
     useEffect(()=>{
+
+        const currentTime = new Date();
+        const options = {
+            timeZone: 'Asia/Seoul', // 한국 시간대
+            year: 'numeric',
+            month: 'long', // 월을 긴 형식으로 표시 (예: "1월" 대신 "January")
+            day: 'numeric',
+            hour12: false, // 24시간 형식 사용
+            hour: '2-digit',
+            minute: '2-digit',
+        }
+        setTime(currentTime.toLocaleTimeString('EUC-KR', options))
+
         return () =>{
             selectWaterLevel.entity.billboard.image = pin
             dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: false})
@@ -31,7 +44,7 @@ const FloodL4WaterLevelWidget = () => {
                     <div className="content-top">
                         <div className="info-message">
                             위성 계측 상 <span className="text-green font-500">정상 수위 상태</span>입니다.
-                            <small className="ml-5">(23.12.15 18:00 관측데이터)</small>
+                            <small className="ml-5">({time} 관측데이터)</small>
                         </div>
                         <div className="switch-wrap">
                             <span>수위분석</span>

@@ -1,20 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
-import { Switch, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { FLOOD_DAMAGE_LAYER, SAFETY_SELECT_4_LEVEL, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
+import React, {useEffect, useState} from "react";
+import { Switch } from "@mui/material";
+import { FLOOD_DAMAGE_LAYER } from "@redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import img from "@images/Safety-20231114_L4TD_YONGDAM_UD.jpg"
-import BaseChart from "@common/chart/BaseChart";
-import "chartjs-plugin-annotation";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import { G$addWidget, G$getDateType, G$removeWidget, G$setNumberFixedKomma } from "@gis/util";
-import FloodWaterLevelChartDatas from "@gis/config/flood/FloodWaterLevelChartDatas";
+import { G$addWidget, G$removeWidget } from "@gis/util";
 import { getL4Layers } from "@common/axios/common";
-
-const sample = {store:'WaterBody', layer: '20230718T21water_GS_RGB000102'}
 
 const FloodL4WaterBodyThematic = () => {
 
