@@ -8,6 +8,8 @@ import Sidebar from "./left/Sidebar";
 import TimeZoneWidget from "./top/TimeZoneWidget";
 import ThematicWidget from "./right/ThematicWidget";
 import CircularProgress from '@mui/material/CircularProgress';
+import logo01 from "@images/logo01.png"
+import logo02 from "@images/logo02.png"
 import { useSelector } from "react-redux";
 
 
@@ -17,6 +19,10 @@ const MapControl = () =>{
 
     return (
         <>
+            <div className="title-logo">
+                <h1>수자원위성 표출 시스템</h1>
+                <p>Korea Water Resources  Satellite Visualization System</p>
+            </div>
             <Sidebar />  {/* left menu */}
 
             <div className="loading" style={{display: loading ? '' : 'none'}} >
@@ -41,7 +47,14 @@ const MapControl = () =>{
                 </div>
             </div>
 
-            <div className="logo-box"></div>
+            <div className="logo-box">
+                <div className="logo logo01">
+                    <img src={logo01} alt="환경부 로고"/>
+                </div>
+                <div className="logo logo02">
+                    <img src={logo02} alt="수자원공사 로고"/>
+                </div>
+            </div>
         </>
     )
 }
