@@ -26,10 +26,15 @@ const bfsSearch = (graph, targetId) => {
 /* tree layer 관리 */
 const ThematicTreeLayerCheckBoxList = ({}, ref) => {
   const state = useSelector(state => state.layer)
-  const [selectedNodes, setSelectedNodes] = useState([]);
+  const [selectedNodes, setSelectedNodes] = useState(['WKMBBSN', 'W_NATL']);
   useEffect(() => {
-      //console.info(selectedNodes);
+      console.info(selectedNodes);
   }, [selectedNodes]);
+
+  //초기 세팅
+  useEffect(()=>{
+    visibleLayers(['WKMBBSN','W_NATL'], true)
+  },[])
 
 
     //전체선택
@@ -99,6 +104,7 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
 
   //레이어 on/off *instance(레이어) 없으면 생성 / 있으면 visible 
   const visibleLayers = (layerIds, visible) =>{
+    console.info(layerIds, visible)
     if(layerIds.length > 0){
         layerIds.map((id)=>{
             let layerInfo = bfsSearch(state.layerList, id)
@@ -114,12 +120,6 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
 
   }
 
-  
-//   const changeOpacity = (event, nodes) =>{
-//       if(nodes.instance){
-//         nodes.instance.setOpacity(event.target.value / 10)
-//       }
-//   }
 
   const renderTree = (nodes) => (
       <TreeItem
@@ -131,7 +131,6 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
               <>
                   <Checkbox
                       checked={selectedNodes.indexOf(nodes.id) !== -1}
-                      //indeterminate={/*하위아이템이 체크되면 부모아이템에 별도의 표시를 주는 옵션..*/ 0 && (nodes.id) }
                       tabIndex={-1}
                       disableRipple
                       className={'check-box'}

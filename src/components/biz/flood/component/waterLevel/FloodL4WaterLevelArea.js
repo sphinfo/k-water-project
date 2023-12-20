@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import BaseChart from "@common/chart/BaseChart";
 import "chartjs-plugin-annotation";
 import FloodWaterLevelStationDataConfig from "@gis/config/FloodWaterLevelStationDataConfig";
+import dayjs from "dayjs";
+import { getObsWl } from "@common/axios/flood";
 
 
 const FloodL4WaterLevelArea = () => {
@@ -20,6 +22,8 @@ const FloodL4WaterLevelArea = () => {
         backgroundColor: '#C5DCFF'
     })
 
+    const [realWl ,setRealWl] = useState()
+
     //** 샘플 데이터 에서 수위 정보 추출 */
     useEffect(()=>{
 
@@ -30,6 +34,14 @@ const FloodL4WaterLevelArea = () => {
             stationInfos.map((obj)=>{
                 if(properties.name.indexOf(obj.name) > -1){
                     setStationInfo(obj)
+
+                    let date = dayjs().add(-1, 'day').format('YYYYMMDD')
+                    let params = {obscd:obj.obscd, startdt: date, enddt: date, output: 'json'}
+                    getObsWl(params).then((response)=>{
+                        if(response.result.list.length > 0){
+                            setRealWl(Number(response.result.list[0].wl))
+                        }
+                    })
                 }
             })
         }
@@ -65,7 +77,7 @@ const FloodL4WaterLevelArea = () => {
                             borderColor: 'rgba(255, 0, 0, 0)',
                             backgroundColor: 'rgba(255, 0, 0, 0)',
                             yMin: 0,
-                            yMax: 8,
+                            yMax: satationInfo.c2,
                             borderWidth: 1,
                         },                
                         /**현수위 */
@@ -73,14 +85,14 @@ const FloodL4WaterLevelArea = () => {
                             type: 'box',
                             backgroundColor: '#32CD32',
                             yMin: 0,
-                            yMax: 3,
+                            yMax: realWl,
                         },
                         /**저수위 */
                         minLine: {
                             type: 'line',
                             borderColor: '#ffe88a',
-                            yMin: 1,
-                            yMax: 1,
+                            yMin: satationInfo.c5,
+                            yMax: satationInfo.c5,
                             borderWidth: 2,
                             label: {
                                 display: true,
@@ -99,8 +111,8 @@ const FloodL4WaterLevelArea = () => {
                             type: 'line',
                             borderColor: '#E83233',
                             borderWidth: 2,
-                            yMin: 5,
-                            yMax: 5,
+                            yMin: satationInfo.c2,
+                            yMax: satationInfo.c2,
                             label: {
                                 display: true,
                                 backgroundColor: '#E83233',
@@ -117,8 +129,8 @@ const FloodL4WaterLevelArea = () => {
                         sateLine: {
                             type: 'line',
                             borderColor: '#A3D0F3',
-                            yMin: 2,
-                            yMax: 2,
+                            yMin: selectWaterLevel.properties.value.toFixed(2),
+                            yMax: selectWaterLevel.properties.value.toFixed(2),
                             borderWidth: 2,
                             label: {
                                 display: true,
@@ -172,7 +184,7 @@ const FloodL4WaterLevelArea = () => {
 
         }
 
-    }, [])
+    }, [realWl, selectWaterLevel])
 
   
 
@@ -188,12 +200,12 @@ const FloodL4WaterLevelArea = () => {
                             </div>
                             <div className="nd-item">
                                 <h4 className="nd-item-title">현 수위(EL.m)</h4>
-                                <div className="nd-item-body">{satationInfo && satationInfo.value2}</div>
+                                <div className="nd-item-body">{realWl !== 0 ? realWl : '-'}</div>
                             </div>
                             <div className="nd-item">
                                 <h4 className="nd-item-title">계측 차이(EL.m)</h4>
                                 <div className="nd-item-body">{
-                                    selectWaterLevel && satationInfo && ( Number(satationInfo.value2) - Number(selectWaterLevel.properties.value)).toFixed(2)
+                                    selectWaterLevel && satationInfo && ( Number(realWl) - Number(selectWaterLevel.properties.value)).toFixed(2)
                                 }</div>
                             </div>
                         </div>

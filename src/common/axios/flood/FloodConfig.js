@@ -3,4 +3,6 @@
 
 export default {
     GET_FLOOD_OBS: `/api/flood/getObservatory`,
+    GET_FLOOD_WATER_BODY_CHART: `/api/statistics/getFloodStatistics`,
+    GET_OBS_WL: `/wamis/wkw/wl_dtdata`,
 };

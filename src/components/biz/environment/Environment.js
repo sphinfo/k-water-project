@@ -106,6 +106,8 @@ const Environment = () => {
 
   },[landCoverDetection])
 
+
+  //
   //범례 change 이벤트
   useEffect(()=>{
     if(selectEnvironmentLayer.group === 'LandCover'){
@@ -113,7 +115,10 @@ const Environment = () => {
       G$removeWidget('BaseLegendgGradientWidget')
     }else if(selectEnvironmentLayer.group === 'Garbage'){
       G$removeWidget('BaseLegendWidget')
-      G$addWidget('BaseLegendgGradientWidget', { params: {title:'녹조', min:0, max: 1, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+      G$addWidget('BaseLegendgGradientWidget', { params: {title:'부유물 농도', min:0, max: 300, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+    }else if(selectEnvironmentLayer.group === 'Green'){
+      G$removeWidget('BaseLegendWidget')
+      G$addWidget('BaseLegendgGradientWidget', { params: {title:'녹조 농도 (mg/m3)', min:0, max: 300, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
     }
 
   },[selectEnvironmentLayer])

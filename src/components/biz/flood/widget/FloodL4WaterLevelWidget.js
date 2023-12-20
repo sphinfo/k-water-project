@@ -48,9 +48,7 @@ const FloodL4WaterLevelWidget = () => {
                         </div>
                         <div className="switch-wrap">
                             <span>수위분석</span>
-                            <Switch className="float-box-switch" checked={levelChange} onClick={() => {
-                                setLevelChange(!levelChange)
-                            }}></Switch>
+                            <Switch className="float-box-switch" checked={levelChange} onClick={() => {setLevelChange(!levelChange)}}></Switch>
                             <span>수위변화</span>
                         </div>
                     </div>

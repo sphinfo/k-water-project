@@ -167,7 +167,8 @@ const Flood = () => {
         if(selectFloodDamageLayer){
             floodLayer.current.show = false
             //침수피해 범례 on
-            G$addWidget('BaseLegendWidget', { params: { title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'수체', color:'#557BDF'},{label:'건물', color:'#DD59B2'},{label:'초지', color:'#F3AC50'},{label:'나지', color:'#A1F8A5'}]} })
+            G$addWidget('BaseLegendWidget', { params: { title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'초지', color:'#A1F8A5'},{label:'나지', color:'#F3AC50'}]} })
+            //G$addWidget('BaseLegendWidget', { params: { title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'수체', color:'#557BDF'},{label:'건물', color:'#DD59B2'},{label:'초지', color:'#F3AC50'},{label:'나지', color:'#A1F8A5'}]} })
 
             const {store, layer} = selectFloodDamageLayer
             floodDamageLayer.current.changeParameters({store:store, layerId:layer})

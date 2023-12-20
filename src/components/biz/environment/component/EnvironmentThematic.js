@@ -52,8 +52,8 @@ const EnvironmentThematic = () => {
     //4레벨 Switch 버튼 render
     const renderResult = (item, i) =>{
         return (
-            <div className="switch-list-item">
-                <span className="switch-label">{item.name}</span>
+            <div className="switch-list-item" key={`item-${i}`}>
+                <span className="switch-label" key={`label-${i}`}>{item.name}</span>
                 <Switch
                     checked={item.checked}
                     onClick={(e) => handleSwitchChange(i)}
@@ -75,7 +75,6 @@ const EnvironmentThematic = () => {
                 <div className="widget-body">
                     <div className="switch-list">
                         {thematicList.length > 0 && thematicList.map((obj, i) => renderResult(obj, i))}
-
                     </div>
                 </div>
             </div>

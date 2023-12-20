@@ -99,7 +99,7 @@ const SafetyL4Result = () => {
               className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
               selected={true}
               disableTouchRipple={true}
-              button={true}
+              button={"true"}
               color={'primary'}
               onClick={(e) => selectButton(i)}
             >

@@ -12,14 +12,14 @@ const FloodOptions = () => {
             name:'댐', 
             code:'DAM',
             items: [ 
-                {name:'용담댐', code:'YONGDAM'},//code:'YDD'},//
+                {name:'용담댐', code:'YONGDAM',obscd:"3008690"},
                 {name:'황강댐', code:'HWANGGANG'},
                 {name:'임남댐', code:'IMNAM'},
-                {name:'대청댐', code:'DAECHEONG'},//code:'DC'},//
-                {name:'안동댐', code:'ANDONG'},//code:'ADD'},//
-                {name:'운문댐', code:'UNMUN'},
-                {name:'영천댐', code:'YEONGCHEON'},
-                {name:'사연댐', code:'SAYEON'},
+                {name:'대청댐', code:'DAECHEONG',obscd:"3008690"},
+                {name:'안동댐', code:'ANDONG',obscd:"2001685"},
+                {name:'운문댐', code:'UNMUN',obscd:"2021620"},
+                {name:'영천댐', code:'YEONGCHEON',obscd:"2012615"},
+                {name:'사연댐', code:'SAYEON',obscd:"2201625"},
             ]
         // },{
         //   name: '지역',

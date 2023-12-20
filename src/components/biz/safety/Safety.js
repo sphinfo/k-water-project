@@ -247,8 +247,8 @@ const Safety = () => {
                 if(select3Level){
                     G$addWidget('BaseLegendgGradientWidget', {
                         params: {title:'변위 속도(cm/year)', 
-                        min:-0.3, 
-                        max: 0.3, 
+                        min:-3, 
+                        max: 3, 
                         datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}})
 
                 }

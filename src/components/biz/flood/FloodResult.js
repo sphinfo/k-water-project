@@ -133,8 +133,8 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     const renderResult = (obj, i) =>(
       <>
         {obj.length > 0 &&
-          <div className="content-row" style={{display: obj[0].group === floodResultTab ? '' : 'none'}}>
-              <div className="content-list-wrap">
+          <div className="content-row" key={`result-${i}`} style={{display: obj[0].group === floodResultTab ? '' : 'none'}}>
+              <div className="content-list-wrap" key={`wrap-${i}`} >
                   <h4 className="content-list-title" key={i}>{obj[0].main}</h4>
                   <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
                       {
@@ -159,7 +159,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
               className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
               selected={true}
               disableTouchRipple={true}
-              button={true}
+              button={"true"}
               color={'primary'}
               onClick={() => checkboxChange(i, i2)}
             >

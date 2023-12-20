@@ -39,7 +39,7 @@ class WidgetManager {
 
     /*  */
     _widgetMessage(widgetId, msg) {
-        console.warn(`${msg} : ${widgetId}`);
+        console.info(`${msg} : ${widgetId}`);
     }
 
     _getInstanceIndex(widgetId) {

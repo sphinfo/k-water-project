@@ -34,4 +34,14 @@ module.exports = function (app) {
 		})
 	)
 
+	app.use(
+		createProxyMiddleware('/wamis',{
+			target: 'http://www.wamis.go.kr:8080/wamis/openapi/',
+			changeOrigin: true,
+			pathRewrite: {
+				'^/wamis': ''
+			}
+		})
+	)
+
 };

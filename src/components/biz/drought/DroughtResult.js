@@ -114,8 +114,8 @@ const DroughtResult = () => {
     const renderResult = (obj, i) =>(
         <>
             {obj.length > 0 &&
-                <div className="content-row" style={{display: obj[0].group === selectResultTab ? '' : 'none'}}>
-                    <div className="content-list-wrap">
+                <div className="content-row" key={`result-${i}`}  style={{display: obj[0].group === selectResultTab ? '' : 'none'}}>
+                    <div className="content-list-wrap" key={`wrap-${i}`} >
                         <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
                             {
                                 obj.map((item, i2) => (
@@ -139,7 +139,7 @@ const DroughtResult = () => {
               className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
               selected={true}
               disableTouchRipple={true}
-              button={true}
+              button={"true"}
               color={'primary'}
               onClick={() => checkboxChange(i, i2)}
             >
@@ -176,7 +176,7 @@ const DroughtResult = () => {
             <div className="content-row">
               {layerList.length > 0 &&
                 <div className="form-control">
-                  <Tabs className={"toggle-btn-wrap"} exclusive fullWidth={true} value={selectResultTab} onChange={(e, v)=>{dispatch({type: DROUGHT_RESULT_TAB, selectResultTab: v})}}>
+                  <Tabs className={"toggle-btn-wrap"} value={selectResultTab} onChange={(e, v)=>{dispatch({type: DROUGHT_RESULT_TAB, selectResultTab: v})}}>
                     <Tab className={"tab-item"} label={'물리'} value={'A1'}></Tab>
                     <Tab className={"tab-item"} label={'강우'} value={'A2'}></Tab>
                     <Tab className={"tab-item"} label={'토양'} value={'A3'}></Tab>

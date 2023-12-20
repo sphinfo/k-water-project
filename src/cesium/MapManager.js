@@ -24,40 +24,6 @@ class MapManager {
     // Map 를 생성하여 반환한다.
     createMap(target, options = {}) {
 
-        var layers ={ Base:{layer : 'Base', tileType : 'png'}, 
-                    gray: {layer : 'gray', tileType : 'png'},
-                    midnight: {layer : 'midnight', tileType : 'png'},
-                    Hybrid : {layer : 'Hybrid', tileType : 'png'},
-                    Satellite: {layer : 'Satellite', tileType : 'jpeg'} }
-
-        //var selLayer = layers['Hybrid'];
-        //var selLayer2 = layers['Satellite'];
-
-        //let vworld_key = 'B9A40D30-8F5B-3141-839A-DAA04BB600F0'
-
-        // var vworld = new WebMapTileServiceImageryProvider({
-        //     url : `http://api.vworld.kr/req/wmts/1.0.0/${vworld_key}/${selLayer.layer}/{TileMatrix}/{TileRow}/{TileCol}.${selLayer.tileType}`,
-        //     layer : 'Base',
-        //     style : 'default',
-        //     tileMatrixSetID: 'EPSG:900913',
-        //     maximumLevel: 19,
-        //     credit : new Credit('VWorld Korea')
-        // });
-
-        // var vworld2 = new WebMapTileServiceImageryProvider({
-        //     url : `http://api.vworld.kr/req/wmts/1.0.0/${vworld_key}/${selLayer2.layer}/{TileMatrix}/{TileRow}/{TileCol}.${selLayer2.tileType}`,
-        //     layer : 'Base',
-        //     style : 'default',
-        //     tileMatrixSetID: 'EPSG:900913',
-        //     maximumLevel: 19,
-        //     credit : new Credit('VWorld Korea')
-        // });
-
-        //let mapLayer = 
-        
-        
-        //Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYTU0NmIyMS1hYTEwLTQyOTctYTE4OC01ZGY1YmRjM2E1NWEiLCJpZCI6MTY5ODQxLCJpYXQiOjE2OTYzODIxNjF9.W5XfR-n6gkphDtD7sUbkTfpBX4A5jbddFk_Ok1BSV6A'
-
         this._map = new Viewer(target, {
             homeButton: false,
             sceneModePicker: false,
@@ -67,11 +33,9 @@ class MapManager {
             selectionIndicator: false,
             trackedEntity : false,
             infoBox: false,
-            skyAtmosphere : false
+            skyAtmosphere : false,
+            baseLayer: Cesium.ImageryLayer.fromProviderAsync(Cesium.ArcGisMapServerImageryProvider.fromBasemapType(Cesium.ArcGisBaseMapType.SATELLITE))            
         });
-
-        
-        //this._map.imageryLayers.addImageryProvider(vworld2)
 
         const targetLongitude = 127.61790470489117
         const targetLatitude = 36.52505158669595
@@ -85,8 +49,7 @@ class MapManager {
             duration: 3, // 애니메이션 지속 시간 (초)
         });
 
-
-        this._changeBaseMap('Satellite')
+        //this._changeBaseMap('Satellite')
         
         this.map.screenSpaceEventHandler.removeInputAction(ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
         var animationContainer = document.querySelector('.cesium-viewer-animationContainer');
@@ -137,44 +100,28 @@ class MapManager {
                 this.removeLayer(this.getImageryLayersById('Hybrid'))
             }
             
-            let option = this._vwroldLayer[type]
-
-            this._baseMapLayer = this.addImageLayer(
-                new WebMapTileServiceImageryProvider({
-                    url : `http://api.vworld.kr/req/wmts/1.0.0/${this._vworld_key}/${option.layer}/{TileMatrix}/{TileRow}/{TileCol}.${option.tileType}`,
-                    layer : 'Base',
-                    style : 'default',
-                    tileMatrixSetID: 'EPSG:900913',
-                    maximumLevel: 19,
-                    credit : new Credit('VWorld Korea')
-            }))
-            this._baseMapLayer.id = 'baseMap'
             this._baseMapType = type
 
-            // if(this.map){
+            //위성맵일시 arcgis map으로 변경
+            if(type === 'Satellite'){
+                this._map.imageryLayers.get(0).show = true
+            }else{
+                this._map.imageryLayers.get(0).show = false
+                let option = this._vwroldLayer[type]
+                this._baseMapLayer = this.addImageLayer(
+                    new WebMapTileServiceImageryProvider({
+                        url : `http://api.vworld.kr/req/wmts/1.0.0/${this._vworld_key}/${option.layer}/{TileMatrix}/{TileRow}/{TileCol}.${option.tileType}`,
+                        layer : 'Base',
+                        style : 'default',
+                        tileMatrixSetID: 'EPSG:900913',
+                        maximumLevel: 19,
+                        credit : new Credit('VWorld Korea')
+                }))
+                this._baseMapLayer.id = 'baseMap'
+                //this._map.imageryLayers.lower(this._baseMapLayer)
+                this._map.imageryLayers.lowerToBottom(this._baseMapLayer)
 
-            //     if(type === 'Satellite'){
-
-            //         let subMap = null
-            //         let subOption = this._vwroldLayer['Hybrid']
-
-            //         subMap = this.addImageLayer(
-            //             new WebMapTileServiceImageryProvider({
-            //                 url : `http://api.vworld.kr/req/wmts/1.0.0/${this._vworld_key}/${subOption.layer}/{TileMatrix}/{TileRow}/{TileCol}.${subOption.tileType}`,
-            //                 layer : 'Hybrid',
-            //                 style : 'default',
-            //                 tileMatrixSetID: 'EPSG:900913',
-            //                 maximumLevel: 19,
-            //                 credit : new Credit('VWorld Korea')
-            //         }))
-            //         subMap.id = 'Hybrid'
-            //         this.map.imageryLayers.lower(subMap)
-            //     }
-
-            //     this.map.imageryLayers.lower(this._baseMapLayer)
-            // }
-            
-            this.map.imageryLayers.lower(this._baseMapLayer)
+            }
 
             return this._baseMapLayer
         }else{

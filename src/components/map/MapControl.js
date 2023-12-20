@@ -20,7 +20,7 @@ const MapControl = () =>{
     return (
         <>
             <div className="title-logo">
-                <h1>수자원위성 표출 시스템</h1>
+                <h1>수자원위성 활용산출물 통합 표출시스템</h1>
                 <p>Korea Water Resources  Satellite Visualization System</p>
             </div>
             <Sidebar />  {/* left menu */}

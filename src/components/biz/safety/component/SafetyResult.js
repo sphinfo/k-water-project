@@ -152,8 +152,8 @@ const SafetyResult = () => {
     const renderResult = (obj, i) =>(
         <>
             {obj.length > 0 &&
-                <div className="content-row">
-                    <div className="content-list-wrap">
+                <div className="content-row" key={`result-${i}`} >
+                    <div className="content-list-wrap" key={`wrap-${i}`} >
                         {/** <h4 className="content-list-title">{obj[0].groupNm}</h4> */}
                         <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
                             {
@@ -172,10 +172,12 @@ const SafetyResult = () => {
 
     const renderItem = (obj, i, i2) => (
         <>
-          <ListItem key={i2} selected={true}>
+          <ListItem key={i2} selected={true} >
             <ListItemButton
+              key={`listBtn-${i}`}
               className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
               selected={true}
+              button={"true"}
               disableTouchRipple={true}
               color={'primary'}
               onClick={() => checkboxChange(i, i2)}
@@ -209,6 +211,7 @@ const SafetyResult = () => {
                   <ListItemButton
                     className={`content-list-item ${levelButton ? 'item-on' : ''}`}
                     selected={true}
+                    button={"true"}
                     disableTouchRipple={true}
                     color={'primary'}
                     onClick={()=>{setLevelButton(!levelButton)}}

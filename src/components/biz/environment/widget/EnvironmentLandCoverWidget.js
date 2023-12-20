@@ -61,7 +61,13 @@ const EnvironmentLandCover = () => {
                     },
                     scales: {
                         'x': {
-    
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.2)',
+                            },
+                            ticks:{
+                                color: 'rgba(255, 255, 255, 0.9)',
+                                fontSize: 12,
+                            }
                         },
                         'y': {
                             title: {
@@ -71,7 +77,14 @@ const EnvironmentLandCover = () => {
                                   size: 10,
                                 },
                             },
-                        }
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.2)',
+                            },
+                            ticks:{
+                                color: 'rgba(255, 255, 255, 0.9)',
+                                fontSize: 12,
+                            }
+                        },
                     },
                 }
     
@@ -108,7 +121,7 @@ const EnvironmentLandCover = () => {
     },[selectEnvironmentLayer])
 
 
-    const renderColorGrid = (value=0) =>{
+    const renderColorGrid = (value=0, i) =>{
 
         const min = Math.min(...colorGrids)
         const max = Math.max(...colorGrids)
@@ -121,7 +134,7 @@ const EnvironmentLandCover = () => {
                 }
                 {
                     value !== 0 &&
-                    <div className={`chart-item`} style={{backgroundColor: `#${G$normalizeWithColors({value, min:min, max:max, type:colorType}).hex}`}}> {value} </div>
+                    <div className={`chart-item`} key={`item-${i}`} style={{backgroundColor: `#${G$normalizeWithColors({value, min:min, max:max, type:colorType}).hex}`}}> {value} </div>
                 }
             </>
         )
@@ -199,44 +212,9 @@ const EnvironmentLandCover = () => {
                                         </div>
 
                                         <div className="chart-item-group">
-
                                             {colorGrids && colorGrids.length > 0 &&
-                                                colorGrids.map((value) => renderColorGrid(value))
+                                                colorGrids.map((value, i) => renderColorGrid(value, i))
                                             }
-
-                                            {/* <div className="chart-item no-item"></div>
-                                            <div className="chart-item" style={{backgroundColor: `#${G$normalizeWithColors({value:1079300, min:0, max:4669400, type:colorType}).hex}`}}>136.30</div>
-                                            <div className="chart-item" style={{backgroundColor: `#${G$normalizeWithColors({value:879300, min:0, max:4669400, type:colorType}).hex}`}}>136.30</div>
-                                            <div className="chart-item" style={{backgroundColor: `#${G$normalizeWithColors({value:179300, min:0, max:4669400, type:colorType}).hex}`}}>136.30</div>
-                                            <div className="chart-item" style={{backgroundColor: `#${G$normalizeWithColors({value:4279300, min:0, max:4669400, type:colorType}).hex}`}}>136.30</div>
-
-
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item no-item"></div>
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item">136.30</div>
-
-
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item no-item"></div>
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item">136.30</div>
-
-
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item no-item"></div>
-                                            <div className="chart-item">136.30</div>
-
-
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item">136.30</div>
-                                            <div className="chart-item no-item"></div> */}
                                         </div>
                                     </div>
                                 </div>
