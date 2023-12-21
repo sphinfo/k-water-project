@@ -174,8 +174,8 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                     </div>
                     <div className="list-info-wrap">
                       <p className="list-info">{obj.groupNm}</p>
-                      <p className="list-info">{obj.category}</p>
-                      <p className="list-info">{`${obj.satellite} | ${obj.categoryNm}`}</p>
+                      <p className="list-info">{`${obj.category} | ${obj.categoryNm}`}</p>
+                      <p className="list-info">{obj.satellite}</p>
                       <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
                     </div>
                   </>

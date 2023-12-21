@@ -10,12 +10,12 @@ const SafetyOptions = () => {
             name:'댐', 
             code:'DAM',
             items: [
-                {name:'용담댐', code:'YONGDAM'},
-                {name:'대청댐', code:'DAECHEONG'},
-                {name:'안동댐', code:'ANDONG'},
-                {name:'운문댐', code:'UNMUN'},
-                {name:'영천댐', code:'YEONGCHEON'},
-                {name:'사연댐', code:'SAYEON'},
+                {name:'용담댐', code:'YONGDAM', x:35.9449283, y:127.5246387, z: 35000},
+                {name:'대청댐', code:'DAECHEONG', x:36.4775000, y:127.4808330, z: 35000},
+                {name:'안동댐', code:'ANDONG', x:36.5848765, y:128.7739109, z: 35000},
+                {name:'운문댐', code:'UNMUN', x:35.7240461, y:128.9271935, z: 35000},
+                {name:'영천댐', code:'YEONGCHEON', x:36.0637638, y:129.0142288, z: 35000},
+                {name:'사연댐', code:'SAYEON', x:35.5800118, y:129.1957466, z: 35000},
                 {name:'주암댐', code:'JUAM'},
                 {name:'소양강댐', code:'SOYANG'}
             ]

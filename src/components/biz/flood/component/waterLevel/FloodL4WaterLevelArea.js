@@ -31,11 +31,12 @@ const FloodL4WaterLevelArea = () => {
         
         if(selectWaterLevel){
             const {properties} = selectWaterLevel
+            console.info(properties)
             stationInfos.map((obj)=>{
                 if(properties.name.indexOf(obj.name) > -1){
                     setStationInfo(obj)
 
-                    let date = dayjs().add(-1, 'day').format('YYYYMMDD')
+                    let date = dayjs(properties.date).format('YYYYMMDD')
                     let params = {obscd:obj.obscd, startdt: date, enddt: date, output: 'json'}
                     getObsWl(params).then((response)=>{
                         if(response.result.list.length > 0){
@@ -50,6 +51,11 @@ const FloodL4WaterLevelArea = () => {
 
     /** 초기설정 **/
     useEffect(()=>{
+
+        let wl = 0 
+        if(selectWaterLevel){
+            wl = selectWaterLevel.properties.value.toFixed(2)
+        }
 
         //*******API*************/
         chartRef.current.updateOptions = {
@@ -129,8 +135,8 @@ const FloodL4WaterLevelArea = () => {
                         sateLine: {
                             type: 'line',
                             borderColor: '#A3D0F3',
-                            yMin: selectWaterLevel.properties.value.toFixed(2),
-                            yMax: selectWaterLevel.properties.value.toFixed(2),
+                            yMin: wl,
+                            yMax: wl,
                             borderWidth: 2,
                             label: {
                                 display: true,
@@ -138,7 +144,7 @@ const FloodL4WaterLevelArea = () => {
                                 borderRadius: 5,
                                 rotation: 'auto',
                                 position: 'start',
-                                content: '위성수위 ( ' +selectWaterLevel.properties.value.toFixed(2)+ 'm )',
+                                content: '위성수위 ( ' +wl+ 'm )',
                                 font: {
                                     size: 12,
                                 }

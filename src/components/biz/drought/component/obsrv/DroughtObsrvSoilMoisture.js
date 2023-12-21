@@ -31,7 +31,7 @@ const DroughtObsrv = () => {
     const rows = useMemo(()=>{ return [  ] },[])
     const columns = [
         {accessor: 'date', Header: '관측 일자', width: 120, align: 'center'},
-        {accessor: 'precipitation', Header: '모의 토양 수분 (vol.%)', width: 200, align: 'center'},
+        {accessor: 'sim', Header: '모의 토양 수분 (vol.%)', width: 200, align: 'center'},
         {accessor: 'obs', Header: '실측 토양 수분 (vol.%)', width: 200, align: 'center'},
     ]
 
@@ -143,13 +143,13 @@ const DroughtObsrv = () => {
                         label.push(obj.date)
                         precipitation.push(obj.precipitation  === '' ? NaN : Number(obj.precipitation))
                         obs.push(obj.obs  === '' ? NaN : Number(obj.obs))
-                        sim.push(obj.sim  === '' ? NaN : Number(obj.sim))
+                        sim.push(obj.sim  === 0 ? NaN : Number(obj.sim))
 
                         obj.obs = Number(obj.obs).toFixed(2)
                         obj.precipitation = Number(obj.precipitation).toFixed(2)
 
                         avg += Number(obj.obs)
-                        avg2 += (Number(obj.precipitation) - Number(obj.precipitation))
+                        avg2 += (Number(obj.obs) - Number(obj.sim))
 
                         
                     })
@@ -186,8 +186,8 @@ const DroughtObsrv = () => {
                         label: '모의 토양 수분',
                         type: 'line',
                         yAxisID: 'y1',
-                        pointRadius: 1,
-                        borderWidth: 1,
+                        pointRadius: 2,
+                        borderWidth: 0,
                         borderColor: '#FF9933',
                         backgroundColor: '#FF9933',
                         data:sim,
@@ -195,7 +195,9 @@ const DroughtObsrv = () => {
 
                     
 
-                    gridRef.current.provider = response.result.data
+                    let gridDatas = response.result.data.sort((a, b) => (a.createdAt < b.createdAt) ? 1 : -1)
+                    
+                    gridRef.current.provider = gridDatas
 
                     chartRef.current.provider = chartInfoRef.current
 

@@ -8,6 +8,7 @@ import FloodADD from "@gis/config/flood/FloodWaterLevelChartDatas";
 import FloodWaterLevelChartDatas from "@gis/config/flood/FloodWaterLevelChartDatas";
 import BaseGrid from "@common/grid/BaseGrid";
 import { G$getDateType, G$sortArrayObject } from "@gis/util";
+import { getFloodWaterLevelChart } from "@common/axios/flood";
 
 
 const FloodL4WaterLevel = () => {
@@ -29,9 +30,9 @@ const FloodL4WaterLevel = () => {
     //데이터 ref
     const rows = useMemo(()=>{ return [  ] },[])
     const columns = [
-        {accessor: 'Date', Header: '관측 일자', width: 120, align: 'center'},
-        {accessor: 'estWl', Header: '실제 계측 수위', width: 200, align: 'center'},
-        {accessor: 'obsWl', Header: '위성 계측 수위', width: 200, align: 'center'},
+        {accessor: 'createdAt', Header: '관측 일자', width: 120, align: 'center'},
+        {accessor: 'estimatedElev', Header: '실제 계측 수위', width: 200, align: 'center'},
+        {accessor: 'referenceElev', Header: '위성 계측 수위', width: 200, align: 'center'},
     ]
 
     /** 초기설정 **/
@@ -103,67 +104,76 @@ const FloodL4WaterLevel = () => {
         //*******API*************/
         //수위 지점 select get Feature
         if(selectWaterLevel){
-            let sampleDatas = FloodWaterLevelChartDatas[selectWaterLevel.properties.name]
+            let params = {id:selectWaterLevel.properties.id}
+            getFloodWaterLevelChart(params).then((response)=>{
+                if(response.result.data.length > 0){
 
-            let date = []  //날짜
-            let estWl = [] //위성기반 계측수위
-            let obsWl = [] //실제계측수위
+                    let datas = response.result.data
+                    let date = []  //날짜
+                    let estWl = [] //위성기반 계측수위
+                    let obsWl = [] //실제계측수위
 
 
-            let avg = 0
-            let avg2 = 0
-            
+                    let avg = 0
+                    let avg2 = 0
+                    
 
-            if(sampleDatas && sampleDatas.length > 0){
-                sampleDatas.map((obj)=>{
-                    date.push(G$getDateType(obj.Date))
-                    estWl.push(obj.estWl  === '' ? NaN : Number(obj.estWl))
-                    obsWl.push(obj.obsWl  === '' ? NaN : Number(obj.obsWl))
+                    datas.map((obj)=>{
+                        obj.createdAt = obj.createdAt.substring(0,8)
+                        date.push(G$getDateType(obj.createdAt))
+                        estWl.push(obj.estimatedElev  === '' ? NaN : Number(obj.estimatedElev))
+                        obsWl.push(obj.referenceElev  === '' ? NaN : Number(obj.referenceElev))
 
-                    obj.estWl = Number(obj.estWl).toFixed(2)
-                    obj.obsWl = Number(obj.obsWl).toFixed(2)
+                        obj.estimatedElev = Number(obj.estimatedElev).toFixed(2)
+                        obj.referenceElev = Number(obj.referenceElev).toFixed(2)
 
-                    avg += Number(obj.estWl)
-                    avg2 += (Number(obj.estWl) - Number(obj.obsWl))
+                        avg += Number(obj.estimatedElev)
+                        avg2 += (Number(obj.estimatedElev) - Number(obj.referenceElev)) < 0 ? -(Number(obj.estimatedElev) - Number(obj.referenceElev)) : (Number(obj.estimatedElev) - Number(obj.referenceElev))
 
-                    obj.Date = G$getDateType(obj.Date)
-                })
+                        obj.createdAt = G$getDateType(obj.createdAt)
+                    })
 
-                setAvg(avg / sampleDatas.length)
-                setAvg2(avg2 / sampleDatas.length)
-            }
-            
+                    setAvg(avg / datas.length)
+                    setAvg2(avg2 / datas.length)
 
-            chartInfoRef.current.datasets.push({
-                tension: 0.4,
-                data:estWl,
-                label: '위성 기반 계측 수위',
-                pointRadius: 1,
-                borderWidth: 1,
-                borderColor: '#FF9933',
-                backgroundColor: '#FF9933',
+                    
+
+                    chartInfoRef.current.datasets.push({
+                        tension: 0.4,
+                        data:estWl,
+                        label: '위성 기반 계측 수위',
+                        pointRadius: 1,
+                        borderWidth: 1,
+                        borderColor: '#FF9933',
+                        backgroundColor: '#FF9933',
+                    })
+
+                    //차트 data push
+                    chartInfoRef.current.datasets.push({
+                        tension: 0.4,
+                        data: obsWl,
+                        label: '실제 계측 수위',
+                        pointRadius: 1,
+                        borderWidth: 1,
+                        borderColor: '#54A6E7',
+                        backgroundColor: '#54A6E7',
+                    })
+
+                    chartInfoRef.current.labels = date
+
+                    //Table
+                    gridRef.current.provider =  G$sortArrayObject(datas, 'id', true)
+
+                    
+                    
+                    //chart
+                    chartRef.current.provider = chartInfoRef.current
+
+
+                }
             })
 
-            //차트 data push
-            chartInfoRef.current.datasets.push({
-                tension: 0.4,
-                data: obsWl,
-                label: '실제 계측 수위',
-                pointRadius: 1,
-                borderWidth: 1,
-                borderColor: '#54A6E7',
-                backgroundColor: '#54A6E7',
-            })
-
-            chartInfoRef.current.labels = date
-
-            //Table
-            gridRef.current.provider = G$sortArrayObject(sampleDatas, 'Date', false)
-
             
-            
-            //chart
-            chartRef.current.provider = chartInfoRef.current
         }
 
 

@@ -57,8 +57,8 @@ const FloodL4WaterBodyWidget = () => {
                     let datas = [data[2].area,data[4].area,data[1].area,data[3].area]
                     setMaxArea(G$setNumberFixedKomma((data[2].area+data[4].area+data[1].area+data[3].area)))
     
-                    setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(datas).min]} - ${G$setNumberFixedKomma(datas[G$arrayGetMinMax(datas).min])}`)
-                    setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(datas).max]} - ${G$setNumberFixedKomma(datas[G$arrayGetMinMax(datas).max])}`)
+                    setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(datas).min]}  ${G$setNumberFixedKomma(datas[G$arrayGetMinMax(datas).min])}`)
+                    setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(datas).max]}  ${G$setNumberFixedKomma(datas[G$arrayGetMinMax(datas).max])}`)
                     //['목지','수체','건물','초지','나지']
     
                     chartRef.current.updateOptions = {

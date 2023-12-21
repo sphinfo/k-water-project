@@ -49,8 +49,8 @@ class SafetyOverlay {
 
         // 요소들을 구조에 맞게 조립
         //widgetHeader.appendChild(title);
-        widgetHeader.appendChild(iconButton)
-        widgetBox.appendChild(widgetHeader)
+        //widgetHeader.appendChild(iconButton)
+        //widgetBox.appendChild(widgetHeader)
         widgetBox.appendChild(widgetBody)
         overlay.appendChild(widgetBox)
 

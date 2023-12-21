@@ -6,7 +6,7 @@ import DroughtResult from "./DroughtResult";
 import DroughtOptions from "./DroughtOptions";
 import pin from "@images/map-icon-dr.svg"
 import pin2 from "@images/map-icon-dr-clicked.svg"
-import { G$addWidget, G$randomCoordinates, G$removeLayer, G$removeWidget } from "@gis/util";
+import { G$addWidget, G$flyToPoint, G$randomCoordinates, G$removeLayer, G$removeWidget } from "@gis/util";
 import { DROUGHT_RESET, DROUGHT_SELECT_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
 import DroughtOverlay from "@gis/util/overlay/DroughtOverlay";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
@@ -23,7 +23,7 @@ const Drought = () => {
      * selectObs : 선택된 관측소 정보
      * selectDroughtLayer : 가뭄 메인 레이어
      */
-    const { bizName, selectObs, selectDroughtLayer, obsrvTab } = useSelector(state => state.drought)
+    const { bizName, selectObs, selectDroughtLayer, obsrvTab, text } = useSelector(state => state.drought)
 //
 
     //가뭄 레이어 ( 3L )
@@ -127,9 +127,16 @@ const Drought = () => {
         if(selectDroughtLayer){
             const {store, layer} = selectDroughtLayer
             droughtLayer.current.changeParameters({store:store, layerId:layer})
+
+            // if(text.name.indexOf('댐') > -1){
+            //     if(text.x && text.y && text.z){
+            //         G$flyToPoint([text.y, text.x], text.z)
+            //     }
+            // }
+
             //범례 on
-            G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:10, max: 25, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
-            //G$addWidget('BaseLegendgGradientWidget2', { params: {title:'토양수분', min:10, max: 25, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+            G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:-3, max: 3, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+
             //지점 on
             droughtObsrvLayer.current.show = true
 

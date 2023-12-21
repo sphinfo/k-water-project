@@ -1,7 +1,7 @@
 import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET, SET_SIDE_PANEL, SAFETY_CLICK_MODE } from "@redux/actions";
-import { G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
+import { G$addWidget, G$flyToPoint, G$removeLayer, G$removeWidget } from "@gis/util";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import SafetyOptions from "./component/SafetyOptions";
 import SafetyResult from "./component/SafetyResult";
@@ -24,8 +24,7 @@ const Safety = () => {
      * select4Level : 표출데이터 선택
      * displaceLevel : 변위등릅 레이어 선택
      */
-    const {bizName, select3Level, select4Level, displaceLevel, compLayerClick} = useSelector(state => state.safety)
-    const { panelVisible } = useSelector(state => state.main)
+    const {bizName, select3Level, select4Level, displaceLevel, compLayerClick, text} = useSelector(state => state.safety)
 
     {/** 안전3레벨 / 안전4레벨 / 변위등급 ( 데이터가 있는한 정적인 레이어 ) */}
     //안전 3레벨 레이어 생성
@@ -65,10 +64,10 @@ const Safety = () => {
     useEffect(()=>{
 
         //안전 3레벨 레이어 생성
-        safety3LevelLayerRef.current = new BaseWmsImageLayer('Safety','')
+        safety3LevelLayerRef.current = new BaseWmsImageLayer('Safety','','',false)
 
         //안전 4레벨 레이어 생성 wms로 될거같음
-        safety4LevelLayerRef.current = new BaseWmsImageLayer('Safety','')
+        safety4LevelLayerRef.current = new BaseWmsImageLayer('Safety','','',false)
 
         //변위 등급 레이어 생성
         safetyDisplaceLevelLayerRef.current = new BaseWmsImageLayer('Safety','')
@@ -159,6 +158,12 @@ const Safety = () => {
             const {store, layer} = select3Level
             safety3LevelLayerRef.current.changeParameters({store:store, layerId:layer})
             
+            if(text.name.indexOf('댐') > -1){
+                if(text.x && text.y && text.z){
+                    G$flyToPoint([text.y, text.x], text.z)
+                }
+            }
+            
             //callback 레이어로 추가
             GisLayerClickTool.addLayer(bizName, [`${store.toLowerCase()}:${layer}`])
             //console.info(safety3LevelLayerRef.current)
@@ -185,6 +190,13 @@ const Safety = () => {
         if(select4Level){
             const {store, layer} = select4Level
             safety4LevelLayerRef.current.changeParameters({store:store, layerId:layer})
+            
+            if(text.name.indexOf('댐') > -1){
+                if(text.x && text.y && text.z){
+                    G$flyToPoint([text.y, text.x], text.z)
+                }
+            }
+
             GisLayerClickTool.addLayer(bizName, [`${store.toLowerCase()}:${layer}`])
 
         }else{
@@ -247,8 +259,8 @@ const Safety = () => {
                 if(select3Level){
                     G$addWidget('BaseLegendgGradientWidget', {
                         params: {title:'변위 속도(cm/year)', 
-                        min:-3, 
-                        max: 3, 
+                        min:-5, 
+                        max: 5, 
                         datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}})
 
                 }

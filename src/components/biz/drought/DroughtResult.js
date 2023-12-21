@@ -46,7 +46,7 @@ const DroughtResult = () => {
                   let layer = obj.name
                   let group = obj.category.indexOf('A1') > 0 ? 'A1' : obj.category.indexOf('A2') > 0 ? 'A2' : obj.category.indexOf('A3') > 0 ? 'A3' : ''
                   let groupNm = '토양수분'
-                  let categoryNm = obj.category.indexOf('A1') > 0 ? '물리' : obj.category.indexOf('A2') > 0 ? '강우' : obj.category.indexOf('A3') > 0 ? '토양' : ''
+                  let categoryNm = obj.category.indexOf('A1') > 0 ? '물리모형' : obj.category.indexOf('A2') > 0 ? '강우자료' : obj.category.indexOf('A3') > 0 ? '토양특성' : ''
                   resultList.push({...obj, store, layer, group, categoryNm, groupNm})
                 })
 
@@ -150,7 +150,7 @@ const DroughtResult = () => {
                 </div>
                 <div className="list-info-wrap">
                   <p className="list-info">{obj.groupNm}</p>
-                  <p className="list-info">{obj.category}</p>
+                  <p className="list-info">{`${obj.category} | ${obj.categoryNm}`}</p>
                   <p className="list-info">{`${obj.satellite}`}</p>
                   <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
                 </div>

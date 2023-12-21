@@ -34,12 +34,12 @@ const EnvironmentL4 = () => {
             G$removeWidget('EnvironmentGarbageWidget')
             G$removeWidget('EnvironmentGreenWidget')
         }else if(selectEnvironmentLayer.group === 'Green'){
-            G$addWidget('EnvironmentGreenWidget')
+            //G$addWidget('EnvironmentGreenWidget')
             G$removeWidget('EnvironmentLandCoverWidget')
-            G$removeWidget('EnvironmentGarbageWidget')            
+            //G$removeWidget('EnvironmentGarbageWidget')            
         }else if(selectEnvironmentLayer.group === 'Garbage'){
-            G$addWidget('EnvironmentGarbageWidget')
-            G$removeWidget('EnvironmentGreenWidget')
+            //G$addWidget('EnvironmentGarbageWidget')
+            //G$removeWidget('EnvironmentGreenWidget')
             G$removeWidget('EnvironmentLandCoverWidget')
         }
 

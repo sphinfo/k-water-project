@@ -5,6 +5,8 @@ import FloodL4WaterLevelArea from "../component/waterLevel/FloodL4WaterLevelArea
 import FloodL4WaterLevelChange from "../component/waterLevel/FloodL4WaterLevelChange";
 import { FLOOD_SELECT_WATER_LEVEL } from "@redux/actions";
 import pin from "@images/map-icon-st.svg"
+import dayjs from "dayjs";
+import FloodWaterLevelStationDataConfig from "@gis/config/FloodWaterLevelStationDataConfig";
 
 const FloodL4WaterLevelWidget = () => {
 
@@ -12,26 +14,40 @@ const FloodL4WaterLevelWidget = () => {
     const {  selectWaterLevel } = useSelector(state => state.flood)
 
     const [time, setTime] = useState("")
+    const [levelType, setLevelType] = useState('')
 
     useEffect(()=>{
-
-        const currentTime = new Date();
-        const options = {
-            timeZone: 'Asia/Seoul', // 한국 시간대
-            year: 'numeric',
-            month: 'long', // 월을 긴 형식으로 표시 (예: "1월" 대신 "January")
-            day: 'numeric',
-            hour12: false, // 24시간 형식 사용
-            hour: '2-digit',
-            minute: '2-digit',
-        }
-        setTime(currentTime.toLocaleTimeString('EUC-KR', options))
 
         return () =>{
             selectWaterLevel.entity.billboard.image = pin
             dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: false})
         }
+
     },[])
+
+    useEffect(()=>{
+
+        if(selectWaterLevel){
+            const {properties} = selectWaterLevel
+            setTime(dayjs(properties.date).format('YYYY년 MM월 DD일'))
+
+            let stationInfos = FloodWaterLevelStationDataConfig
+            stationInfos.map((obj)=>{
+                if(properties.name.indexOf(obj.name) > -1){
+                    //저수위
+                    if(Number(obj.c5) > properties.value){
+                        setLevelType('저')
+                    }else if(Number(obj.c2) > properties.value && Number(obj.c5) < properties.value){
+                        setLevelType('정상')
+                    }else{
+                        setLevelType('만')
+                    }
+                }
+            })
+            //properties.value
+        }
+
+    },[selectWaterLevel])
 
     //수위변화 on off
     const [levelChange, setLevelChange] = useState(false)
@@ -43,7 +59,7 @@ const FloodL4WaterLevelWidget = () => {
                 <div className="content-row">
                     <div className="content-top">
                         <div className="info-message">
-                            위성 계측 상 <span className="text-green font-500">정상 수위 상태</span>입니다.
+                            위성 계측 상 <span className="text font-500">{levelType}수위 상태</span>입니다.
                             <small className="ml-5">({time} 관측데이터)</small>
                         </div>
                         <div className="switch-wrap">

@@ -50,8 +50,8 @@ const EnvironmentLandCover = () => {
 
                 setMaxArea(area)
 
-                setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]} - ${G$setNumberFixedKomma(data[G$arrayGetMinMax(data).min], 0)}`)
-                setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]} - ${G$setNumberFixedKomma(data[G$arrayGetMinMax(data).max], 0)}`)
+                setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]}  ${G$setNumberFixedKomma(data[G$arrayGetMinMax(data).min], 0)}`)
+                setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]}  ${G$setNumberFixedKomma(data[G$arrayGetMinMax(data).max], 0)}`)
 
                 chartRef.current.updateOptions = {
                     plugins: {
@@ -106,15 +106,8 @@ const EnvironmentLandCover = () => {
              * 배열 합치기 [1,2,3,4,5,1,2,3,4,5....]
              */
 
-            let sampleArray = [[0,2,3,4,5],[1,0,3,4,5],[1,2,0,4,5],[1,2,3,0,5],[1,2,3,4,0]]
-            setColorGrid([].concat(...sampleArray))
-            
-            console.info(G$arrayGetMinMax(sampleArray))
-            //console.info(G$normalizeWithColors({value:1079300, min:0, max:4669400, type:colorType}))
-
-
-
-
+            //let sampleArray = [[0,2,3,4,5],[1,0,3,4,5],[1,2,0,4,5],[1,2,3,0,5],[1,2,3,4,0]]
+            //setColorGrid([].concat(...sampleArray))
             
         }
 
@@ -182,7 +175,7 @@ const EnvironmentLandCover = () => {
 
 
 
-                    <div className="content-col" style={{display: colorGrids.length > 0 ? '' : 'none'}}>
+                    {/* <div className="content-col" style={{display: colorGrids.length > 0 ? '' : 'none'}}>
                         <div className="content-row">
                             <div className="panel-box">
                                 <div className="heatmap-chart-wrap">
@@ -221,7 +214,7 @@ const EnvironmentLandCover = () => {
                             </div>
                             
                         </div>
-                    </div>
+                    </div> */}
 
                 </div>
 

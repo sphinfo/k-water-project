@@ -1,7 +1,7 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FLOOD_DAMAGE_LAYER, FLOOD_RESET, FLOOD_SELECT_WATER_LEVEL, SET_SIDE_PANEL } from "@redux/actions";
-import { G$addWidget, G$paramWidget, G$removeLayer, G$removeWidget } from "@gis/util";
+import { G$addWidget, G$flyToPoint, G$paramWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import WaterLevelOverlay from "@gis/util/overlay/WaterLevelOverlay";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
@@ -79,9 +79,9 @@ const Flood = () => {
     useEffect(()=>{
 
         //홍수 - 수체 레이어 (3level)
-        floodLayer.current = new BaseWmsImageLayer('flood','')
+        floodLayer.current = new BaseWmsImageLayer('flood','', '', false)
         //홍수 - 수체 - 변화탐지 레이어  (4level)
-        floodDamageLayer.current = new BaseWmsImageLayer('flood','')
+        floodDamageLayer.current = new BaseWmsImageLayer('flood','', '', false)
 
         //홍수 - 수위 Point Wfs
         floodWaterLevelLayer.current = new BaseEntityCollection({name:'floodWaterLevelLayer', image: pin, overlay: new WaterLevelOverlay()})
@@ -145,6 +145,13 @@ const Flood = () => {
                 //수체 레이어 그리기
                 floodLayer.current.changeParameters({store:store, layerId:layer})
                 floodLayer.current.setOpacity(0.5)
+                
+                if(text.name.indexOf('댐') > -1){
+                    if(text.x && text.y && text.z){
+                        G$flyToPoint([text.y, text.x], text.z)
+                    }
+                }
+
                 //수위 레이어 삭제
                 floodWaterLevelLayer.current.show = false
             }else if(group === 'WaterLevel'){ // 수위
@@ -167,12 +174,12 @@ const Flood = () => {
         if(selectFloodDamageLayer){
             floodLayer.current.show = false
             //침수피해 범례 on
-            G$addWidget('BaseLegendWidget', { params: { title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'초지', color:'#A1F8A5'},{label:'나지', color:'#F3AC50'}]} })
-            //G$addWidget('BaseLegendWidget', { params: { title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'수체', color:'#557BDF'},{label:'건물', color:'#DD59B2'},{label:'초지', color:'#F3AC50'},{label:'나지', color:'#A1F8A5'}]} })
-
+            G$addWidget('BaseLegendWidget', { params: { title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}]} })
+            
             const {store, layer} = selectFloodDamageLayer
             floodDamageLayer.current.changeParameters({store:store, layerId:layer})
             floodDamageLayer.current.setOpacity(0.5)
+
         }else{
             floodDamageLayer.current.remove()
             G$removeWidget('BaseLegendWidget')

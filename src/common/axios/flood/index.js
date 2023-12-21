@@ -52,9 +52,27 @@ const getFloodWaterBodyChart = async (props={}) => {
     }
 }
 
+/**수위 - 수위변화 차트 */
+const getFloodWaterLevelChart = async (props={}) => {
+    try{
+        const { request } = createAxios();
+        const result = await request({
+            url: FloodConfig.GET_FLOOD_WATER_LEVEL_CHART,
+            params: props,
+            method: 'GET',
+        })
+        props = { ...props, result: result.data };
+        return props;
+
+    }catch(error){
+        return {message:'error', result:{data:[]}}
+    }
+}
+
 
 export {
     getFloodObs,
     getFloodWaterBodyChart,
+    getFloodWaterLevelChart,
     getObsWl,
 }

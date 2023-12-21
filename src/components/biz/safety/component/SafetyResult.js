@@ -189,8 +189,8 @@ const SafetyResult = () => {
                 </div>
                 <div className="list-info-wrap">
                   <p className="list-info">{obj.groupNm}</p>
-                  <p className="list-info">{obj.category}</p>
-                  <p className="list-info">{`${obj.category === 'L3TDA1' ? '고정산란체' : obj.category === 'L3TDA2' ? '분산산란체' : ''}`}</p>
+                  <p className="list-info">{`${obj.category} | ${obj.category === 'L3TDA1' ? '고정산란체' : obj.category === 'L3TDA2' ? '분산산란체' : ''}`}</p>
+                  <p className="list-info">{`${obj.satellite}`}</p>
                   <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
                 </div>
               </div>

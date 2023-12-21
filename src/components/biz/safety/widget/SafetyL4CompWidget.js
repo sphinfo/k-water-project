@@ -112,8 +112,8 @@ const SafetyL4CompWidget = () => {
         for (let i = 0; i < minLength; i++) {
             const newObj = {
                 date: dates[i] ? dates[i] : '',
-                p1: p1[i] ? p1[i] : '',
-                p2: p2[i] ? p2[i] : ''
+                p1: p1[i] ? p1[i].toFixed(3) : '',
+                p2: p2[i] ? p2[i].toFixed(3) : ''
             };
             result.push(newObj);
         }
@@ -227,7 +227,7 @@ const SafetyL4CompWidget = () => {
             }
         })
         
-        const tableDatas = createTableDatas( chartInfoRef.current.labels, p1, p2 )
+        let tableDatas = createTableDatas( chartInfoRef.current.labels, p1, p2 )
 
         let aa = 0
         if(p1.length > 0){
@@ -238,10 +238,8 @@ const SafetyL4CompWidget = () => {
         }
         setAvgP1(aa)
 
-
         let bb = 0
         if(p2.length > 0){
-            
             p2.map((val)=>{
                 bb += val
             })    
@@ -249,6 +247,7 @@ const SafetyL4CompWidget = () => {
         }
         setAvgP2(bb)
         
+        tableDatas = tableDatas.sort((a, b) => (a.date < b.date) ? 1 : -1)
         gridRef.current.provider = tableDatas
 
     }

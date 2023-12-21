@@ -4,11 +4,9 @@ import EnvironmentResult from "./EnvironmentResult";
 import { useDispatch, useSelector } from "react-redux";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import { G$RandomId, G$addWidget, G$flyToExtent, G$flyToPoint, G$removeLayer, G$removeWidget } from "@gis/util";
-import { ENV_RESET, SET_SIDE_PANEL } from "@redux/actions";
+import { ENV_RESET } from "@redux/actions";
 import EnvironmentL4 from "./component/EnvironmentL4";
-import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import BasePolygonEntityCollection from "@gis/layers/BasePolygonEntityCollection";
-import { Cartesian3, Rectangle } from "cesium";
 
 /* 환경 */
 const Environment = () => {
@@ -36,13 +34,13 @@ const Environment = () => {
   useEffect(()=>{
 
     //환경 메인 레이어
-    environmentLayer.current = new BaseWmsImageLayer('','',null, false)
+    environmentLayer.current = new BaseWmsImageLayer('','','', false)
 
     //변화탐지 레이어
-    landCoverDetectionLayer.current = new BaseWmsImageLayer('','',null, false)
+    landCoverDetectionLayer.current = new BaseWmsImageLayer('','')
 
-    //녹조 레이어
-    l3aeLayer.current = new BasePolygonEntityCollection({name:'l3aeLayer'})
+    //녹조 레이어 임시
+    //l3aeLayer.current = new BasePolygonEntityCollection({name:'l3aeLayer'})
     
     
     return()=>{
@@ -53,7 +51,7 @@ const Environment = () => {
         G$removeLayer(landCoverDetectionLayer.current.layer)
 
         //녹조레이어 삭제
-        G$removeLayer(l3aeLayer.current.layer)
+        //G$removeLayer(l3aeLayer.current.layer)
 
 
         //범례 삭제
@@ -69,22 +67,26 @@ const Environment = () => {
 
     //변화탐지 레이어 삭제
     landCoverDetectionLayer.current.remove()
-    l3aeLayer.current.entities.removeAll()
+    //l3aeLayer.current.entities.removeAll()
 
     if(selectEnvironmentLayer){
       const {store, layer} = selectEnvironmentLayer
       environmentLayer.current.changeParameters({store:store, layerId:layer})
 
-      
+      if(text.name.indexOf('댐') > -1){
+          if(text.x && text.y && text.z){
+              G$flyToPoint([text.y, text.x], text.z)
+          }
+      }
       
       if(selectEnvironmentLayer.group === 'LandCover'){
         const {xmin, xmax, ymin, ymax} = text
-        l3aeLayer.current._addFeature({xmin: xmin, ymin: ymin, xmax: xmax, ymax: ymax, properties:{id:G$RandomId()}})
+        //l3aeLayer.current._addFeature({xmin: xmin, ymin: ymin, xmax: xmax, ymax: ymax, properties:{id:G$RandomId()}})
         G$flyToPoint([xmin,ymin],103000)
 
 
       }else if(selectEnvironmentLayer.group === 'Garbage'){
-        l3aeLayer.current._addFeature({xmin: 127.505519, ymin: 36.41462133, xmax: 127.5096512, ymax: 36.41048908, properties:{id:G$RandomId()}})
+        //l3aeLayer.current._addFeature({xmin: 127.505519, ymin: 36.41462133, xmax: 127.5096512, ymax: 36.41048908, properties:{id:G$RandomId()}})
         G$flyToPoint([127.505519,36.41462133],8000)
       }
 
@@ -118,7 +120,8 @@ const Environment = () => {
       G$addWidget('BaseLegendgGradientWidget', { params: {title:'부유물 농도', min:0, max: 300, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
     }else if(selectEnvironmentLayer.group === 'Green'){
       G$removeWidget('BaseLegendWidget')
-      G$addWidget('BaseLegendgGradientWidget', { params: {title:'녹조 농도 (mg/m3)', min:0, max: 300, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+      G$addWidget('BaseLegendgGradientWidget', { params: {title:'녹조 농도 (mg/m3)', min:0, max: 300, datas:['#1E90FF', '#87CEFA', '#FAFAD2', '#FFA500', '#FF0000']}})
+
     }
 
   },[selectEnvironmentLayer])

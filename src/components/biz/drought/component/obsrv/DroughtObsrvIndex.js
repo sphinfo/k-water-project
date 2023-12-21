@@ -179,8 +179,6 @@ const DroughtObsrvIndex = () => {
                         }
                     })
 
-                    
-
                     chartInfoRef.current.labels = label
     
                     chartInfoRef.current.datasets.push({
@@ -205,7 +203,8 @@ const DroughtObsrvIndex = () => {
 
                     chartRef.current.provider = chartInfoRef.current
 
-                    grid2Ref.current.provider = response.result.data
+                    let gridDatas = response.result.data.sort((a, b) => (a.createdAt < b.createdAt) ? 1 : -1)
+                    grid2Ref.current.provider = gridDatas
 
                     
                     
