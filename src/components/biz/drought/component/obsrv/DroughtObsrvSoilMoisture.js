@@ -147,6 +147,7 @@ const DroughtObsrv = () => {
 
                         obj.obs = Number(obj.obs).toFixed(2)
                         obj.precipitation = Number(obj.precipitation).toFixed(2)
+                        obj.sim = Number(obj.sim).toFixed(2)
 
                         avg += Number(obj.obs)
                         avg2 += (Number(obj.obs) - Number(obj.sim))
