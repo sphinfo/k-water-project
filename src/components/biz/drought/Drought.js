@@ -135,7 +135,7 @@ const Drought = () => {
             // }
 
             //범례 on
-            G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:-3, max: 3, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+            G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
 
             //지점 on
             droughtObsrvLayer.current.show = true
