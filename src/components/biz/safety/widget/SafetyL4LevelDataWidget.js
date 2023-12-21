@@ -15,7 +15,14 @@ const SafetyL4LevelDataWidget = () => {
 
     //click mode가 on 되면 비교 widget 띄우기
     useEffect(()=>{
-        dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: false})
+
+        if(selectFeature){
+            console.info(selectFeature)
+        }
+
+        return()=>{
+            dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: false})    
+        }
     },[])
 
     return (

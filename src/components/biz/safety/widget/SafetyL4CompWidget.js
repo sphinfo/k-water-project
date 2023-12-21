@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import pin1 from "@images/point-icon-1.svg"
 import pin2 from "@images/point-icon-2.svg"
 import { G$RandomId, G$getDateType, G$removeLayer } from "@gis/util";
-import { LOADING, SAFETY_CLICK_MODE } from "@redux/actions";
+import { LOADING, SAFETY_CLICK_MODE, SAFETY_SELETE_FEATURE } from "@redux/actions";
 import BaseGrid from "@common/grid/BaseGrid";
 import { getSafetyCompResult } from "@common/axios/safety";
 
@@ -157,6 +157,7 @@ const SafetyL4CompWidget = () => {
         safetyPinLayer.current.entities.removeAll()
         chartRef.current.provider = chartInfoRef.current.datasets = []
         gridRef.current.provider = []
+        dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: false})
     },[select4Level, select3Level, displaceLevel])
 
 

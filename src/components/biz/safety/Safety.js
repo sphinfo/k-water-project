@@ -24,7 +24,7 @@ const Safety = () => {
      * select4Level : 표출데이터 선택
      * displaceLevel : 변위등릅 레이어 선택
      */
-    const {bizName, select3Level, select4Level, displaceLevel, compLayerClick, text} = useSelector(state => state.safety)
+    const {bizName, select3Level, select4Level, displaceLevel, compLayerClick, text, selectFeature} = useSelector(state => state.safety)
 
     {/** 안전3레벨 / 안전4레벨 / 변위등급 ( 데이터가 있는한 정적인 레이어 ) */}
     //안전 3레벨 레이어 생성
@@ -52,10 +52,12 @@ const Safety = () => {
 
             //변위등급이 켜져 있는 경우 ovelay 
             if(displaceLevel){
+
+                G$addWidget('SafetyL4LevelDataWidget')
+
                 const {clickPosition, properties} = features[0]
                 dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: features[0]})
 
-                console.info(clickPosition)
                 overlayRef.current._addOverlay(clickPosition.longitude, clickPosition.latitude, properties)
             }
         }
@@ -102,6 +104,14 @@ const Safety = () => {
         }
 
     },[])
+
+    useEffect(()=>{
+
+        if(!selectFeature){
+            overlayRef.current.removeAll()
+        }
+
+    },[selectFeature])
 
 
     /* 변위등급 on / off */
