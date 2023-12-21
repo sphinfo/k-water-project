@@ -80,6 +80,8 @@ const SafetyResult = () => {
                   let groupNm = obj.level === 'L3' ? '변위탐지' : '변위등급'
                   let categoryNm = obj.category.indexOf('L3TD_A1') > 0 ? '고정산란체' : obj.category.indexOf('L3TD_A2') > 0 ? '분산산란체' : ''
                   
+                  //satellite
+                  obj.satellite = obj.satellite === "S1X" ? "S1A" : obj.satellite
 
                   if(obj.level === 'L3'){
                     resultList.push({...obj, store, layer, group, categoryNm, groupNm})
