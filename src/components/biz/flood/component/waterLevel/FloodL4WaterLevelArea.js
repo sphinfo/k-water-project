@@ -31,11 +31,9 @@ const FloodL4WaterLevelArea = () => {
         
         if(selectWaterLevel){
             const {properties} = selectWaterLevel
-            console.info(properties)
             stationInfos.map((obj)=>{
                 if(properties.name.indexOf(obj.name) > -1){
                     setStationInfo(obj)
-
                     let date = dayjs(properties.date).format('YYYYMMDD')
                     let params = {obscd:obj.obscd, startdt: date, enddt: date, output: 'json'}
                     getObsWl(params).then((response)=>{

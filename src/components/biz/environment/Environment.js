@@ -79,16 +79,16 @@ const Environment = () => {
           }
       }
       
-      if(selectEnvironmentLayer.group === 'LandCover'){
-        const {xmin, xmax, ymin, ymax} = text
-        //l3aeLayer.current._addFeature({xmin: xmin, ymin: ymin, xmax: xmax, ymax: ymax, properties:{id:G$RandomId()}})
-        G$flyToPoint([xmin,ymin],103000)
+      // if(selectEnvironmentLayer.group === 'LandCover'){
+      //   //const {xmin, xmax, ymin, ymax} = text
+      //   //l3aeLayer.current._addFeature({xmin: xmin, ymin: ymin, xmax: xmax, ymax: ymax, properties:{id:G$RandomId()}})
+      //   //G$flyToPoint([xmin,ymin],103000)
 
 
-      }else if(selectEnvironmentLayer.group === 'Garbage'){
-        //l3aeLayer.current._addFeature({xmin: 127.505519, ymin: 36.41462133, xmax: 127.5096512, ymax: 36.41048908, properties:{id:G$RandomId()}})
-        G$flyToPoint([127.505519,36.41462133],8000)
-      }
+      // }else if(selectEnvironmentLayer.group === 'Garbage'){
+      //   //l3aeLayer.current._addFeature({xmin: 127.505519, ymin: 36.41462133, xmax: 127.5096512, ymax: 36.41048908, properties:{id:G$RandomId()}})
+      //   //G$flyToPoint([127.505519,36.41462133],8000)
+      // }
 
       //
 
