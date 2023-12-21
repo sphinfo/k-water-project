@@ -117,9 +117,11 @@ const Environment = () => {
       G$removeWidget('BaseLegendgGradientWidget')
     }else if(selectEnvironmentLayer.group === 'Garbage'){
       G$removeWidget('BaseLegendWidget')
-      G$addWidget('BaseLegendgGradientWidget', { params: {title:'부유물 농도', min:0, max: 300, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+      G$removeWidget('BaseLegendgGradientWidget')
+      G$addWidget('BaseLegendgGradientWidget', { params: {title:'부유물 농도', min:0, max: 300, datas:['#1E90FF', '#87CEFA', '#FAFAD2', '#FFA500', '#FF0000']}})
     }else if(selectEnvironmentLayer.group === 'Green'){
       G$removeWidget('BaseLegendWidget')
+      G$removeWidget('BaseLegendgGradientWidget')
       G$addWidget('BaseLegendgGradientWidget', { params: {title:'녹조 농도 (mg/m3)', min:0, max: 300, datas:['#1E90FF', '#87CEFA', '#FAFAD2', '#FFA500', '#FF0000']}})
 
     }
