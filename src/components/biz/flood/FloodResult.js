@@ -236,7 +236,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                     return renderResult(obj, i)
                   }
                 })}
-                {wbCnt === 0 && <div> 데이터가 존재하지 않습니다. </div>}
+                {wbCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
               </TabPanel>
               <TabPanel value={"WaterLevel"} style={{display: layerList.length === 0 ? 'none': ''}}>
                 {layerList.length > 0 && layerList.map((obj, i)=> {
@@ -244,7 +244,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                     return renderResult(obj, i)
                   }
                 })}
-                {wlCnt === 0 && <div> 데이터가 존재하지 않습니다. </div>}
+                {wlCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
               </TabPanel>
             </TabContext>
             
