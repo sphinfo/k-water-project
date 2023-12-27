@@ -10,6 +10,7 @@ import Tab from '@mui/material/Tab';
 import { Button } from "@mui/material";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import { getL3Layers } from "@common/axios/common";
+import { TabContext, TabPanel } from "@mui/lab";
 
 
 const DroughtResult = () => {
@@ -24,9 +25,17 @@ const DroughtResult = () => {
     //debouncing timer
     const [timer, setTimer] = useState(null);
 
+    const [a1Cnt, setA1Cnt] = useState(0)
+    const [a2Cnt, setA2Cnt] = useState(0)
+    const [a3Cnt, setA3Cnt] = useState(0)
+
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
       dispatch({type:DROUGHT_RESET_LAYER})
+      setA1Cnt(0)
+      setA2Cnt(0)
+      setA3Cnt(0)
+
       if(text.name !== ''){
         
         if (timer) {
@@ -48,6 +57,16 @@ const DroughtResult = () => {
                   let groupNm = '토양수분'
                   let categoryNm = obj.category.indexOf('A1') > 0 ? '물리모형' : obj.category.indexOf('A2') > 0 ? '강우자료' : obj.category.indexOf('A3') > 0 ? '토양특성' : ''
                   resultList.push({...obj, store, layer, group, categoryNm, groupNm})
+                })
+
+                resultList.map((obj)=>{
+                  if(obj.group === 'A1'){
+                    setA1Cnt(prevCount => prevCount + 1)
+                  }else if(obj.group === 'A2'){
+                    setA2Cnt(prevCount => prevCount + 1)
+                  }else if(obj.group === 'A3'){
+                    setA3Cnt(prevCount => prevCount + 1)
+                  }
                 })
 
                 const groupArray = G$BaseSelectBoxArray(resultList, 'group')
@@ -114,7 +133,7 @@ const DroughtResult = () => {
     const renderResult = (obj, i) =>(
         <>
             {obj.length > 0 &&
-                <div className="content-row" key={`result-${i}`}  style={{display: obj[0].group === selectResultTab ? '' : 'none'}}>
+                <div className="content-row" key={`result-${i}`} >
                     <div className="content-list-wrap" key={`wrap-${i}`} >
                         <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
                             {
@@ -185,7 +204,38 @@ const DroughtResult = () => {
               }
               
             </div>
-            {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))}
+            {/* {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))} */}
+
+            <TabContext value={selectResultTab} >
+
+              <TabPanel value={"A1"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                {layerList.length > 0 && layerList.map((obj, i)=> {
+                  if(obj[0].group === 'A1'){
+                    return renderResult(obj, i)
+                  }
+                })}
+                {a1Cnt === 0 && <div> 데이터가 존재하지 않습니다. </div>}
+              </TabPanel>
+
+              <TabPanel value={"A2"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                {layerList.length > 0 && layerList.map((obj, i)=> {
+                  if(obj[0].group === 'A2'){
+                    return renderResult(obj, i)
+                  }
+                })}
+                {a2Cnt === 0 && <div> 데이터가 존재하지 않습니다. </div>}
+              </TabPanel>
+
+              <TabPanel value={"A3"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                {layerList.length > 0 && layerList.map((obj, i)=> {
+                  if(obj[0].group === 'A3'){
+                    return renderResult(obj, i)
+                  }
+                })}
+                {a3Cnt === 0 && <div> 데이터가 존재하지 않습니다. </div>}
+              </TabPanel>
+            </TabContext>
+
           </div>
         </>
     )

@@ -26,7 +26,7 @@ const bfsSearch = (graph, targetId) => {
 /* tree layer 관리 */
 const ThematicTreeLayerCheckBoxList = ({}, ref) => {
   const state = useSelector(state => state.layer)
-  const [selectedNodes, setSelectedNodes] = useState(['WKMBBSN', 'W_NATL']);
+  const [selectedNodes, setSelectedNodes] = useState(['WKMBBSN', 'W_NATL','river','water']);
   useEffect(() => {
       console.info(selectedNodes);
   }, [selectedNodes]);
@@ -78,6 +78,28 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
       );
   }
 
+  const updateParentNodes = (node, selected) => {
+    if (node.parent) {
+      const parentNode = bfsSearch(state.layerList, node.parent);
+      const siblings = parentNode.children || [];
+      const isAllSiblingsSelected = siblings.every((sibling) =>
+        selectedNodes.includes(sibling.id)
+      );
+
+      if (selected && !selectedNodes.includes(parentNode.id)) {
+        setSelectedNodes((prevSelectedNodes) => [...prevSelectedNodes, parentNode.id]);
+        visibleLayers([parentNode.id], true);
+        updateParentNodes(parentNode, true);
+      } else if (!selected && isAllSiblingsSelected) {
+        setSelectedNodes((prevSelectedNodes) =>
+          prevSelectedNodes.filter((id) => id !== parentNode.id)
+        );
+        visibleLayers([parentNode.id], false);
+        updateParentNodes(parentNode, false);
+      }
+    }
+  }
+
   //체크박스 클릭
   const handleNodeSelect = (event, nodeId) => {
 
@@ -99,6 +121,11 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
         visibleLayers(ToBeChecked, true)
         setSelectedNodes((prevSelectedNodes) => [...prevSelectedNodes].concat(ToBeChecked) );
       }
+
+
+
+      updateParentNodes(bfsSearch(state.layerList, nodeId), event.target.checked);
+
   };
 
 

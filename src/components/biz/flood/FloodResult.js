@@ -8,6 +8,7 @@ import { FLOOD_RESET, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, L
 import FloodResultTab from "./FloodResultTab";
 import { Button } from "@mui/material";
 import { getL3Layers } from "@common/axios/common";
+import { TabContext, TabPanel } from "@mui/lab";
 
 const FloodResult = ({waterObsList=[], ...props}) => {
     
@@ -21,10 +22,16 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     const [noData, setNoData] = useState(false)
 
     //debouncing timer
-    const [timer, setTimer] = useState(null);
+    const [timer, setTimer] = useState(null)
+
+    const [wbCnt, setWbCnt] = useState(0)
+    const [wlCnt, setWlCnt] = useState(0)
+
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
       dispatch({type:FLOOD_RESET_LAYER})
+      setWbCnt(0)
+      setWlCnt(0)
       //*******API*************/
       if(text.code !== ''){
         if (timer) {
@@ -33,9 +40,9 @@ const FloodResult = ({waterObsList=[], ...props}) => {
 
         const delayRequest = setTimeout(() => {
           if (text.code && text.code !== '') {
-            //*******API************* getL3Layers: 레벨3 결과값/
-            let params = {type:'flood', level: 'L3', location: text.code, from: startDate, to: endDate}
+            
 
+            let params = {type:'flood', level: 'L3', location: text.code, from: startDate, to: endDate}
             getL3Layers(params).then((response) => {
               if(response.result.data.length > 0){
                 let resultList = []
@@ -59,6 +66,15 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                     }
                   })
                 }
+
+
+                resultList.map((obj)=>{
+                  if(obj.group === 'WaterBody'){
+                    setWbCnt(prevCount => prevCount + 1)
+                  }else if(obj.group === 'WaterLevel'){
+                    setWlCnt(prevCount => prevCount + 1)
+                  }
+                })
 
                 const groupArray = G$BaseSelectBoxArray(resultList, 'store')
                 const resultArray = groupArray.grouped
@@ -133,7 +149,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     const renderResult = (obj, i) =>(
       <>
         {obj.length > 0 &&
-          <div className="content-row" key={`result-${i}`} style={{display: obj[0].group === floodResultTab ? '' : 'none'}}>
+          <div className="content-row" key={`result-${i}`} >
               <div className="content-list-wrap" key={`wrap-${i}`} >
                   <h4 className="content-list-title" key={i}>{obj[0].main}</h4>
                   <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
@@ -211,8 +227,28 @@ const FloodResult = ({waterObsList=[], ...props}) => {
               </div>
             }
 
-            {layerList.length > 0 && <FloodResultTab />}
-            {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))}
+            
+            <TabContext value={floodResultTab} >
+              {layerList.length > 0 && <FloodResultTab />}
+              <TabPanel value={"WaterBody"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                {layerList.length > 0 && layerList.map((obj, i)=> {
+                  if(obj[0].group === 'WaterBody'){
+                    return renderResult(obj, i)
+                  }
+                })}
+                {wbCnt === 0 && <div> 데이터가 존재하지 않습니다. </div>}
+              </TabPanel>
+              <TabPanel value={"WaterLevel"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                {layerList.length > 0 && layerList.map((obj, i)=> {
+                  if(obj[0].group === 'WaterLevel'){
+                    return renderResult(obj, i)
+                  }
+                })}
+                {wlCnt === 0 && <div> 데이터가 존재하지 않습니다. </div>}
+              </TabPanel>
+            </TabContext>
+            
+            
           </div>
         </>
     )
