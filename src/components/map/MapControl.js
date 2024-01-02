@@ -40,6 +40,10 @@ const MapControl = () =>{
                     <ThematicWidget/> {/* 주제도 */}
                     <MeasureMapWidget/> {/* 측정 */}
                     <ZoomMapWidget/> {/* 줌 */}
+
+                    <div className="map-compass" style={{transform: "rotate(0deg)"}}>
+                        <div className="map-compass-pin"></div>
+                    </div>
                 </div>
                 <div className="map_ctrl_btm">
                     {/*<MapPositionWidget/>  현재 위치 주소 */}

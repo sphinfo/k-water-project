@@ -40,6 +40,8 @@
   display: flex;
   flex-direction: column;
   row-gap: 7px;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .map_ctrl_left{
@@ -255,13 +257,15 @@
   }
 }
 
-.map-widget-vertical-block{
+.map-widget-vertical-block {
   display: flex;
   flex-direction: column;
   background-color: $black-navy;
   justify-content: center;
   align-items: center;
   padding: 2px;
+  width: 34px;
+
   .map-right-bt{
     width: 28px;
     height: 28px;
@@ -2428,5 +2432,25 @@
     font-size: 12px;
     line-height: 1.5;
     font-weight: 400;
+  }
+}
+
+.map-compass {
+  width: 44px;
+  height: 44px;
+  background-image: url("data:image/svg+xml,%3Csvg width='44' height='44' viewBox='0 0 44 44' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 44C34.1503 44 44 34.1503 44 22C44 9.84974 34.1503 0 22 0C9.84974 0 0 9.84974 0 22C0 34.1503 9.84974 44 22 44Z' fill='%231B242B' fill-opacity='0.9'/%3E%3Ccircle cx='22' cy='22' r='15.95' stroke='white' stroke-opacity='0.2' stroke-width='0.1'/%3E%3Cpath d='M23.2007 3V6.0468L21.3676 3H20V8.27331H21.3385V5.2265L23.1716 8.27331H24.5392V3H23.2007Z' fill='%239CA3AF'/%3E%3Cpath d='M37.1488 22.9794V22.0126L39.5639 22.0419V20.9287H37.1488V20.0498H39.9131V18.8779H35.7812V24.1512H40.0003V22.9794H37.1488Z' fill='%239CA3AF'/%3E%3Cpath d='M20.582 40.811C21.0365 41.1446 21.5915 41.3101 22.1532 41.2797C22.7014 41.3096 23.244 41.155 23.6953 40.8402C23.8818 40.7026 24.0322 40.5213 24.1336 40.312C24.235 40.1028 24.2843 39.8718 24.2773 39.6391C24.2773 38.8579 23.8214 38.3598 22.9097 38.145L21.8913 37.9106C21.5713 37.8227 21.4258 37.6763 21.4258 37.4419C21.4302 37.3827 21.4483 37.3255 21.4786 37.2746C21.5089 37.2237 21.5506 37.1807 21.6004 37.1489C21.741 37.0653 21.9027 37.0246 22.0659 37.0317C22.5606 37.0317 22.7933 37.2075 22.8515 37.6177H24.1027C24.0984 37.3911 24.0439 37.1683 23.9432 36.9655C23.8426 36.7628 23.6982 36.5853 23.5208 36.4458C23.0983 36.1397 22.586 35.985 22.0659 36.0064C21.5346 35.9655 21.0067 36.1218 20.582 36.4458C20.4211 36.5879 20.2934 36.764 20.2079 36.9615C20.1224 37.159 20.0812 37.373 20.0873 37.5884C20.0873 38.3208 20.5238 38.8188 21.3676 39.0239L22.3569 39.229C22.5236 39.2668 22.6817 39.3364 22.8224 39.434C22.8615 39.4717 22.8921 39.5173 22.9122 39.5678C22.9323 39.6183 22.9413 39.6726 22.9388 39.727C22.9388 40.0492 22.706 40.225 22.1823 40.225C21.6004 40.225 21.2803 39.9907 21.2803 39.5219H20C19.9992 39.7663 20.0508 40.0079 20.1513 40.2304C20.2517 40.4528 20.3986 40.6509 20.582 40.811Z' fill='%239CA3AF'/%3E%3Cpath d='M8.70304 18.8779L8.12109 21.2216L7.88831 22.4228L7.71373 21.2216L7.18999 18.8779H5.90971L5.41506 21.1923L5.21138 22.4521L4.94951 21.2216L4.36756 18.8779H3L4.51305 24.1512H5.85152L6.52075 20.7822L7.24818 24.1512H8.55755L10.0706 18.8779H8.70304Z' fill='%239CA3AF'/%3E%3C/svg%3E%0A");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+  filter: drop-shadow(0 0 8px rgba(0,0,0,0.4));
+  margin-top: 5px;
+
+  .map-compass-pin {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: 16px 24px;
+    background-position: center;
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='24' viewBox='0 0 16 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg filter='url(%23filter0_d_705_2529)'%3E%3Cpath d='M7.79252 4L4 12.0005H11.585L7.79252 4Z' fill='%23EF4444'/%3E%3Cpath d='M4 12L7.79252 20.0005L11.585 12H4Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3Cfilter id='filter0_d_705_2529' x='0' y='0' width='15.5859' height='24.001' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E%3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E%3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E%3CfeOffset/%3E%3CfeGaussianBlur stdDeviation='2'/%3E%3CfeComposite in2='hardAlpha' operator='out'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0'/%3E%3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_705_2529'/%3E%3CfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_705_2529' result='shape'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E%0A");
   }
 }
