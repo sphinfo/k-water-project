@@ -1,26 +1,20 @@
 import React, { forwardRef, useRef, useState } from 'react';
 import { memo } from 'react';
 import { useImperativeHandle } from 'react';
-import Pagination from '@common/util/Pagination';
 import { G$flyToPoint } from '@gis/util';
-import VWorldAddressSearch from '@biz/addr/VWorldAddressSearch';
-import EmptyMessage from '@common/util/EmptyMessage';
 
 const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
 
   const [result, setResult] = useState([])
-  const [total, setTotal] = useState(0)
 
   /* 주소 컴포넌트 */
   const addrComponent = (obj, i) => {
     const {road, parcel} = obj.address
-    //let bldNm = obj.BLD_NM
     
 
     //주소이동 click handle
     const handleClick = () => {
       goToPlace({x:obj.point.x, y:obj.point.y})
-      //addPlace(Number(obj.point.x), Number(obj.point.y))
     };
 
     return (
@@ -30,7 +24,10 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
             {obj.title}
           </dt>
           <dd className={"address-item-sub"}>
-            {parcel}
+          <span className={"road-tag"}>구분</span>{obj.category}
+          </dd>
+          <dd className={"address-item-sub"}>
+            <span className={"road-tag"}>주소</span>{parcel}
           </dd>
           <dd className={"address-item-sub"}>
             <span className={"road-tag"}>도로명</span>{road}
@@ -46,6 +43,16 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
       G$flyToPoint([Number(point.x), Number(point.y)], 4000)
   }
 
+  const removeDuplicates = (array, comparer)=>{
+    return array.filter((item, index, self) =>
+        index === self.findIndex((t) => comparer(t, item))
+    )
+  }
+
+  const comparer = (a, b)=> {
+    return a.address.parcel === b.address.parcel
+  }
+
 
   // 레퍼런스 API
   useImperativeHandle(ref, () => ({
@@ -53,15 +60,21 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
     set provider (datas) {
       if(datas){
         if(datas)
-          setTotal(datas.response.record.total)
+          //setTotal(datas.response.record.total)
           if(!datas.response.result){
             setResult([])
           }else{
-            setResult(datas.response.result.items)
+
+            let uniqueArray = []
+            if(datas.response.result.items.length > 0 ){
+              uniqueArray = removeDuplicates(datas.response.result.items, comparer)
+            }
+
+            setResult(uniqueArray)
           }
           
       }else{
-        setTotal(0)
+        //setTotal(0)
         setResult([])
       }
     }

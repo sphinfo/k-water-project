@@ -91,9 +91,19 @@ export default class CesiumMap {
             var east = Math.toDegrees(currentExtent.east)
             var north = Math.toDegrees(currentExtent.north)
 
-            console.info(`bbox : xmin: ${west}, ymin: ${south}, xmax: ${east}, ymax: ${north}`)
+            //console.info(`bbox : xmin: ${west}, ymin: ${south}, xmax: ${east}, ymax: ${north}`)
 
         });
+
+        me.map.camera.changed.addEventListener(function() {
+            // 변경된 heading 값 가져오기
+            const heading = me.map.camera.heading
+            let adjustedHeading = (heading * (180 / Math.PI)) % 360
+            if (adjustedHeading < 0) {
+                adjustedHeading += 360
+            }
+            EventBus.dispatch(new CustomEvent(MapEvents.headingChange, { detail: {heading:adjustedHeading.toFixed(0) }}))
+          });
 
 
         handler.setInputAction((event)=>{

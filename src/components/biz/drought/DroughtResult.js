@@ -214,7 +214,7 @@ const DroughtResult = () => {
                     return renderResult(obj, i)
                   }
                 })}
-                {a1Cnt === 0 && <div> 데이터가 존재하지 않습니다. </div>}
+                {a1Cnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
               </TabPanel>
 
               <TabPanel value={"A2"} style={{display: layerList.length === 0 ? 'none': ''}}>
@@ -223,7 +223,7 @@ const DroughtResult = () => {
                     return renderResult(obj, i)
                   }
                 })}
-                {a2Cnt === 0 && <div> 데이터가 존재하지 않습니다. </div>}
+                {a2Cnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
               </TabPanel>
 
               <TabPanel value={"A3"} style={{display: layerList.length === 0 ? 'none': ''}}>
@@ -232,7 +232,7 @@ const DroughtResult = () => {
                     return renderResult(obj, i)
                   }
                 })}
-                {a3Cnt === 0 && <div> 데이터가 존재하지 않습니다. </div>}
+                {a3Cnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
               </TabPanel>
             </TabContext>
 
