@@ -49,6 +49,8 @@ export default class CesiumMap {
 
         let me = this
 
+        let isMoving = false
+
         var handler = new ScreenSpaceEventHandler(this.map.scene.canvas);
         var delayInterval = 50
         var lastMouseMoveTime = 0
@@ -66,14 +68,32 @@ export default class CesiumMap {
                     let longitude = Math.toDegrees(cartographic.longitude);
                     let latitude = Math.toDegrees(cartographic.latitude);
                     // event bus 활용
-                    EventBus.dispatch(new CustomEvent(MapEvents.mouseMove, { detail: {longitude:longitude, latitude:latitude }}));
-                }
+                    EventBus.dispatch(new CustomEvent(MapEvents.mouseMove, { detail: {longitude:longitude, latitude:latitude }}))
+                }                
             }
             
-        }, ScreenSpaceEventType.MOUSE_MOVE);
+        }, ScreenSpaceEventType.MOUSE_MOVE)
+
+        /* heading 변화 감지 이동 끝났을때만 있어서 일단 interval 적용 */
+        var lastHeading = me.map.scene.camera.heading
+        setInterval(function() {
+            var currentHeading = me.map.scene.camera.heading
+            if (currentHeading !== lastHeading) {
+                lastHeading = currentHeading
+                let adjustedHeading = (lastHeading * (180 / Math.PI)) % 360
+                if (adjustedHeading < 0) {
+                    adjustedHeading += 360
+                }
+                EventBus.dispatch(new CustomEvent(MapEvents.headingChange, { detail: {heading:adjustedHeading.toFixed(0) }}))
+            }
+        }, 100);
+
 
         //map move end
         me.map.camera.moveEnd.addEventListener( async ()=>{
+
+            console.info('change')
+
             var cameraPositionCartesian = me.map.camera.position;
             EventBus.dispatch(new CustomEvent(MapEvents.mapMoveEnd, { detail: cameraPositionCartesian }));
             EventBus.dispatch(new CustomEvent(MapEvents.mapMoveEnd2, { detail: cameraPositionCartesian }));
@@ -92,18 +112,9 @@ export default class CesiumMap {
             var north = Math.toDegrees(currentExtent.north)
 
             //console.info(`bbox : xmin: ${west}, ymin: ${south}, xmax: ${east}, ymax: ${north}`)
-
         });
 
-        me.map.camera.changed.addEventListener(function() {
-            // 변경된 heading 값 가져오기
-            const heading = me.map.camera.heading
-            let adjustedHeading = (heading * (180 / Math.PI)) % 360
-            if (adjustedHeading < 0) {
-                adjustedHeading += 360
-            }
-            EventBus.dispatch(new CustomEvent(MapEvents.headingChange, { detail: {heading:adjustedHeading.toFixed(0) }}))
-          });
+        
 
 
         handler.setInputAction((event)=>{

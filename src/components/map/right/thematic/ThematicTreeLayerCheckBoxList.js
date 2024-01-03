@@ -1,4 +1,5 @@
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
+import { G$addWidget, G$removeWidget } from "@gis/util";
 import { TreeItem, TreeView } from "@mui/lab";
 import {Checkbox, SvgIcon, FormControlLabel} from "@mui/material";
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
@@ -131,17 +132,30 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
 
   //레이어 on/off *instance(레이어) 없으면 생성 / 있으면 visible 
   const visibleLayers = (layerIds, visible) =>{
-    console.info(layerIds, visible)
     if(layerIds.length > 0){
         layerIds.map((id)=>{
             let layerInfo = bfsSearch(state.layerList, id)
             if(!layerInfo.children){
                 if(layerInfo.instance){
                     layerInfo.instance.setVisible(visible)
+
+                    
                 }else{
-                    layerInfo.instance = new BaseWmsImageLayer(layerInfo.store, layerInfo.id, null, false)
+                    if(visible){
+                      layerInfo.instance = new BaseWmsImageLayer(layerInfo.store, layerInfo.id, null, false)
+                    }
                 }
             }
+
+            //범례 존재시 범례 on // off
+            if(layerInfo.legend){
+              if(visible){
+                G$addWidget('BaseLegendWidget', layerInfo.legend)
+              }else{
+                G$removeWidget('BaseLegendWidget')
+              }
+            }
+
         })
     }
 

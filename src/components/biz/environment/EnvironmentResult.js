@@ -9,6 +9,7 @@ import { ENV_RESET, ENV_RESET_LAYER, ENV_SELECT_BOX, ENV_SELECT_LAYER } from "@r
 import { Button } from "@mui/material";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import { getL3Layers } from "@common/axios/common";
+import { TabContext, TabPanel } from "@mui/lab";
 
 
 //sample 데이터
@@ -31,11 +32,17 @@ const EnvironmentResult = () => {
     //debouncing timer
     const [timer, setTimer] = useState(null);
 
+    const [garbageCnt, setGarbageCnt] = useState(0)
+    const [greenCnt, setGreenCnt] = useState(0)
+    const [landCoverCnt, setLandCoverCnt] = useState(0)
+
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
 
       dispatch({type:ENV_RESET_LAYER})
-      //*******API*************/
+      setGarbageCnt(0)
+      setGreenCnt(0)
+      setLandCoverCnt(0)
 
       if(text.name !== ''){
         
@@ -60,6 +67,16 @@ const EnvironmentResult = () => {
 
                   resultList.push({...obj, store, layer, group, groupNm, categoryNm})
 
+                })
+
+                resultList.map((obj)=>{
+                  if(obj.group === 'Garbage'){
+                    setGarbageCnt(prevCount => prevCount + 1)
+                  }else if(obj.group === 'Green'){
+                    setGreenCnt(prevCount => prevCount + 1)
+                  }else if(obj.group === 'LandCover'){
+                    setLandCoverCnt(prevCount => prevCount + 1)
+                  }
                 })
 
                 //environmentResultTab
@@ -182,8 +199,34 @@ const EnvironmentResult = () => {
               </div>
             }  
 
-            {layerList.length > 0 && <EnvironmentResultTab />}
-            {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))}
+            <TabContext value={environmentResultTab} >
+              {layerList.length > 0 && <EnvironmentResultTab />}
+              <TabPanel value={"LandCover"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                {layerList.length > 0 && layerList.map((obj, i)=> {
+                  if(obj[0].group === 'LandCover'){
+                    return renderResult(obj, i)
+                  }
+                })}
+                {landCoverCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
+              </TabPanel>
+              <TabPanel value={"Garbage"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                {layerList.length > 0 && layerList.map((obj, i)=> {
+                  if(obj[0].group === 'Garbage'){
+                    return renderResult(obj, i)
+                  }
+                })}
+                {garbageCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
+              </TabPanel>
+              <TabPanel value={"Green"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                {layerList.length > 0 && layerList.map((obj, i)=> {
+                  if(obj[0].group === 'Green'){
+                    return renderResult(obj, i)
+                  }
+                })}
+                {greenCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
+              </TabPanel>
+            </TabContext>
+
           </div>
         </>
     )

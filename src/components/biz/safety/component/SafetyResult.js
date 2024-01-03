@@ -27,6 +27,8 @@ const SafetyResult = () => {
     //변위등급 데이터
     const [displaceLevelData, setDisplaceLevelData] = useState(false)
 
+    const [message, setMessage] = useState("연구대상 지역을 선택해주세요")
+
     //변위등급 레이어 on / off
     useEffect(()=>{
       levelButton ? dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: displaceLevelData}) : dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: false})
@@ -39,15 +41,8 @@ const SafetyResult = () => {
     //3레벨이 해제되면 변위등급도 OFF
     useEffect(()=>{
       setLevelButton(false)
-      //setDisplaceLevelData
     },[select3Level, select4Level])
 
-    //변위등급 변화
-    // useEffect(()=>{
-    //     if(select4Level){
-    //       setLevelButton(false)
-    //     }
-    // },[select4Level])
 
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
@@ -96,12 +91,14 @@ const SafetyResult = () => {
                 setLayerList(resultArray)
               }else{
                 setLayerList([])
+                setMessage("데이터가 존재하지 않습니다.")
               }
 
             })
             
           } else {
             setLayerList([])
+            setMessage("데이터가 존재하지 않습니다.")
           }
         }, 1000)
   
@@ -246,7 +243,7 @@ const SafetyResult = () => {
         layerList.length === 0 &&
           <div className="content-row empty-wrap">
             <div className="empty-message">
-              <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
+              <h3 className="empty-text">{message}</h3>
               <Button className="btn empty-btn" onClick={()=>{{dispatch({type:SAFETY_SELECT_BOX, selectBox: !selectBox})}}}>지역검색</Button>
             </div>
           </div>

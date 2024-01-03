@@ -21,7 +21,6 @@ const WidgetConatiner = (props) => {
                                 let {
                                     title,
                                     subTitle,
-                                    style,
                                     legend,
                                 } = widget;
 
@@ -34,7 +33,6 @@ const WidgetConatiner = (props) => {
                                             title,
                                             subTitle,
                                             legend,
-                                            ...style
                                         }}
                                         props={widget.props}
                                     >

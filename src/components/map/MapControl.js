@@ -11,6 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import logo01 from "@images/logo01.png"
 import logo02 from "@images/logo02.png"
 import { useSelector } from "react-redux";
+import CompassWidget from "./right/CompassWidget";
 
 
 const MapControl = () =>{
@@ -40,10 +41,8 @@ const MapControl = () =>{
                     <ThematicWidget/> {/* 주제도 */}
                     <MeasureMapWidget/> {/* 측정 */}
                     <ZoomMapWidget/> {/* 줌 */}
-
-                    <div className="map-compass" style={{transform: "rotate(0deg)"}}>
-                        <div className="map-compass-pin"></div>
-                    </div>
+                    <CompassWidget /> {/*나침반*/}
+                    
                 </div>
                 <div className="map_ctrl_btm">
                     {/*<MapPositionWidget/>  현재 위치 주소 */}

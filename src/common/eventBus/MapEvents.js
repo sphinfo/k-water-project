@@ -5,6 +5,8 @@ const MapEvents = {
     removeLayer: 'remove_Layer',
     //지도 위에서 마우스가 움직일때
     mouseMove: 'mouse_move',
+    //방위각이 변경되었을때
+    headingChange: 'heading_change',
     //지도 이동 end
     mapMoveEnd: 'map_move_end',
     //지도 이동 end

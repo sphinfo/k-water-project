@@ -279,13 +279,6 @@ const SafetyL4CompWidget = () => {
                     <div className="content-row">
                         <div className="panel-box">
                             <div className="number-dashboard">
-                                {/**
-                                 * <div className="nd-item">
-                                    <h4 className="nd-item-title">지역 평균 변위 속도(cm/y)</h4>
-                                    <div className="nd-item-body">-</div>
-                                </div>
-                                 */}
-                                
                                 <div className="nd-item">
                                     <h4 className="nd-item-title">P1 평균 변위 속도(cm/y)</h4>
                                     <div className="nd-item-body">{avgP1}</div>
