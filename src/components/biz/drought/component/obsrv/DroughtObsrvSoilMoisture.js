@@ -35,6 +35,8 @@ const DroughtObsrv = () => {
         {accessor: 'obs', Header: '실측 토양 수분 (vol.%)', width: 200, align: 'center'},
     ]
 
+    const [loading, setLoading] = useState(false)
+
     useEffect(()=>{
 
         chartRef.current.updateOptions = {
@@ -98,6 +100,7 @@ const DroughtObsrv = () => {
                     },
                 },
                 x: {
+                    display:true,
                     grid: {
                         display: false//격자 제거
                     },
@@ -105,8 +108,8 @@ const DroughtObsrv = () => {
                         autoSkip: true,
                         crossAlign: 'near',
                         maxTicksLimit: 5, //x축 tick 제거
-                        maxRotation: 120,
-                        minRotation: -180
+                        maxRotation: 0,
+                        minRotation: 0
                     }
                 }
             }

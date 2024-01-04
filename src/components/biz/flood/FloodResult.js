@@ -221,7 +221,8 @@ const FloodResult = ({waterObsList=[], ...props}) => {
               layerList.length === 0 &&
               <div className="content-row empty-wrap">
                 <div className="empty-message">
-                  <h3 className="empty-text">{noData ? '데이터가 존재하지 않습니다.' : '연구대상 지역을 선택해주세요'}</h3>
+                  <h3 className="empty-text">{noData ? '데이터가 존재하지 않습니다. ' : '연구대상 지역을 선택해주세요'}</h3>
+                  {noData && <><br/> <h3 className="empty-text">{"연구 대상 지역 또는 기간을 변경해주세요."}</h3> </>}
                   <Button className="btn empty-btn" onClick={()=>{{dispatch({type:FLOOD_SELECT_BOX, selectBox: !selectBox})}}}>지역검색</Button>
                 </div>
               </div>
@@ -236,7 +237,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                     return renderResult(obj, i)
                   }
                 })}
-                {wbCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
+                {wbCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
               </TabPanel>
               <TabPanel value={"WaterLevel"} style={{display: layerList.length === 0 ? 'none': ''}}>
                 {layerList.length > 0 && layerList.map((obj, i)=> {
@@ -244,7 +245,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                     return renderResult(obj, i)
                   }
                 })}
-                {wlCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
+                {wlCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
               </TabPanel>
             </TabContext>
             

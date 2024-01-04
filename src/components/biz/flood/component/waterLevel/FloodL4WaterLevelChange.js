@@ -200,6 +200,9 @@ const FloodL4WaterLevel = () => {
                 </div>
                 <div className="content-row height-100">
                     <div className="panel-box height-100">
+                        <div className="chart-unit-warp">
+                            <span className="chart-unit">수위</span>
+                        </div>
                         <BaseChart width={'100%'} height={230} ref={chartRef} data={chartInfoRef} chartType={'Line'}/>
                     </div>
                 </div>

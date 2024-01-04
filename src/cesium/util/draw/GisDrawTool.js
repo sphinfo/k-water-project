@@ -144,13 +144,12 @@ class GisDrawTool {
             ellipse: {
                 semiMinorAxis: radius,
                 semiMajorAxis: radius,
-                material: Color.BLUE.withAlpha(0.2),
+                material: Color.PURPLE.withAlpha(0.2),
                 heightReference: HeightReference.CLAMP_TO_GROUND,
             },
         })
 
         if (activeShapePoints.length > 1) {
-
             const line = this.map.entities.add({
                 polyline: {
                     positions: [activeShapePoints[0], activeShapePoints[activeShapePoints.length - 1]],

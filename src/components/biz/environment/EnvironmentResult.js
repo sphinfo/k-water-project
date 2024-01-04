@@ -207,7 +207,7 @@ const EnvironmentResult = () => {
                     return renderResult(obj, i)
                   }
                 })}
-                {landCoverCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
+                {landCoverCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
               </TabPanel>
               <TabPanel value={"Garbage"} style={{display: layerList.length === 0 ? 'none': ''}}>
                 {layerList.length > 0 && layerList.map((obj, i)=> {
@@ -215,7 +215,7 @@ const EnvironmentResult = () => {
                     return renderResult(obj, i)
                   }
                 })}
-                {garbageCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
+                {garbageCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
               </TabPanel>
               <TabPanel value={"Green"} style={{display: layerList.length === 0 ? 'none': ''}}>
                 {layerList.length > 0 && layerList.map((obj, i)=> {
@@ -223,7 +223,7 @@ const EnvironmentResult = () => {
                     return renderResult(obj, i)
                   }
                 })}
-                {greenCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. </div>}
+                {greenCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
               </TabPanel>
             </TabContext>
 

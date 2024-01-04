@@ -8,6 +8,7 @@ import { G$RandomId, G$getDateType, G$removeLayer } from "@gis/util";
 import { LOADING, SAFETY_CLICK_MODE, SAFETY_SELETE_FEATURE } from "@redux/actions";
 import BaseGrid from "@common/grid/BaseGrid";
 import { getSafetyCompResult } from "@common/axios/safety";
+import { CircularProgress } from "@mui/material";
 
 const SafetyL4CompWidget = () => {
 
@@ -41,6 +42,7 @@ const SafetyL4CompWidget = () => {
         {accessor: 'p2', Header: '변위속도 (p2)', width: 200, align: 'center'},
     ]
     
+    const [loading, setLoading] = useState(false)
 
     //지점 pin 레이어
     const safetyPinLayer = useRef()
@@ -99,7 +101,8 @@ const SafetyL4CompWidget = () => {
         return()=>{
             G$removeLayer(safetyPinLayer.current.layer)
             dispatch({type: SAFETY_CLICK_MODE, compLayerClick: false})
-            dispatch({type: LOADING, loading: false})
+            setLoading(false)
+            //dispatch({type: LOADING, loading: false})
         }
 
     },[])
@@ -126,10 +129,12 @@ const SafetyL4CompWidget = () => {
         if(selectFeature){
             //let coord = G$4326to3857(selectFeature.clickPosition.longitude, selectFeature.clickPosition.latitude)
             let id = select4Level ? select4Level.id : select3Level.id
-            dispatch({type: LOADING, loading: true})
+            //dispatch({type: LOADING, loading: true})
+            setLoading(true)
             getSafetyCompResult({y:parseFloat(selectFeature.clickPosition.latitude), x:parseFloat(selectFeature.clickPosition.longitude), id: Number(id)}).then((response)=>{
 
-                dispatch({type: LOADING, loading: false})
+                setLoading(false)
+                //dispatch({type: LOADING, loading: false})
                 let datas = []
                 let cols = []
                 if(response.result.data.data.length > 0){
@@ -276,6 +281,7 @@ const SafetyL4CompWidget = () => {
         <div className="content-body">
             <div className="content-col-group">
                 <div className="content-col">
+                    
                     <div className="content-row">
                         <div className="panel-box">
                             <div className="number-dashboard">
@@ -293,18 +299,25 @@ const SafetyL4CompWidget = () => {
 
                     <div className="content-row">
                         <div className="panel-box">
+                        <div className="chart-unit-warp">
+                            <span className="chart-unit">변위속도(cm/y)</span>
+                        </div>
                             <BaseChart width={'100%'} height={300} ref={chartRef} chartType={'Line'} title={''}/>
                         </div>
                     </div>
                 </div>
 
                 <div className="content-col">
+                    <div className="loading" style={{ width: '100%', height:'100%', display: loading ? '' : 'none'}} >
+                        <CircularProgress color="primary" size={50} thickness={4} />
+                    </div>
                     <div className="content-row height-100">
                         <div className="panel-box height-100">
                             <div className="panel-box-header">
                                 <h4 className="panel-box-title">변위속도 자료</h4>
                             </div>
                             <div className="table-wrap" style={{minHeight: '360px', height: '100%', overflowY: 'auto'}}>
+                                
                                 <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'}/>
                             </div>
                         </div>

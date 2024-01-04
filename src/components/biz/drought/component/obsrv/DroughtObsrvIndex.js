@@ -128,17 +128,11 @@ const DroughtObsrvIndex = () => {
         
         if(selectObs){
 
-
-            //*******API*************/
-
-            //GET /api/drought/getSoilSWDIStatistics
             getDroughtObsIndex({code:selectObs.properties.code}).then((response)=>{
 
                 if(response.result.data.length > 0){
 
-                    //obj.date = G$getDateType(obj.createdAt.substring(0,8)) 
                     chartInfoRef.current.datasets = []
-                    //let dataset = DroughtObsrvIndexConfig
 
                     let label = []  //날짜 x 축
                     let swdi = [] // 실측 토양 수분
@@ -205,17 +199,10 @@ const DroughtObsrvIndex = () => {
 
                     let gridDatas = response.result.data.sort((a, b) => (a.createdAt < b.createdAt) ? 1 : -1)
                     grid2Ref.current.provider = gridDatas
-
-                    
                     
                 }
 
-                
-
             })
-
-            
-            //gridRef.current.provider = dataset
 
         }
 
@@ -264,33 +251,6 @@ const DroughtObsrvIndex = () => {
 
                     </div>
                 </div>
-            </div>
-            <div style={{display: 'flex'}}>
-
-
-                {/* <div className="content-row">
-                    <div className="content-row-header">
-                        <h2 className={"content-row-title"}>강우 해갈 데이터
-                            <Tooltip placement="right-start" title={
-                                <React.Fragment>
-                                    <div className="tooltip-content-wrap">
-                                        <h5 className="tooltip-title">강우 해갈(drought relief)의 정의</h5>
-                                        <p className="tooltip-content">
-                                            1. 가뭄 판단 기준 심각 단계 7일 이상 <br/>
-                                            2. 가뭄 판단 기준 정상 단계 15일 지속
-                                        </p>
-                                    </div>
-                                </React.Fragment>
-                            }>
-                                <IconButton className={'tooltip-icon'}></IconButton>
-                            </Tooltip>
-                        </h2>
-                    </div>
-
-                    <div className="panel-box" style={{height: 360, overflowY: 'auto'}}>
-                        <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'} />
-                    </div>
-                </div> */}
             </div>
             
         </>
