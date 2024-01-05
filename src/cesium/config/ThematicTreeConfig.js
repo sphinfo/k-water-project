@@ -38,7 +38,7 @@ const ThematicTreeConfig = [
                 parent: 'adm'
             },{
                 store: 'administrative_district',
-                id: 'EMP_CSS',
+                id: 'emd',
                 name: '읍면동',
                 parent: 'adm'
             },{
