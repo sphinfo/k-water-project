@@ -105,8 +105,6 @@ class MapManager {
 
     _test(){
 
-        console.info(this._map.imageryLayers._layers)
-
     }
 
     _mapLabel(type=false){

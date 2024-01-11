@@ -2,7 +2,7 @@ import MapManager from "@gis/MapManager"
 import {Cartesian2, Cartesian3, SceneTransforms, defined} from "cesium"
 
 /* 공통 html 오버레이  */
-class BaseOverlay {
+class BaseGeoOverlay {
 
     overlays = []
 
@@ -88,4 +88,4 @@ class BaseOverlay {
     }
 }
 
-export default BaseOverlay
+export default BaseGeoOverlay

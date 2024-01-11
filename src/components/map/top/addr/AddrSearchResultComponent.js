@@ -26,10 +26,10 @@ const AddrSearchResultComponent = ({type, addrSearchText, addPlace}, ref) => {
           <dd className={"address-item-sub"}>
           <span className={"road-tag"}>구분</span>{obj.category}
           </dd>
-          <dd className={"address-item-sub"}>
+          <dd className={"address-item-sub"} style={{display: parcel ? '' : 'none'}}>
             <span className={"road-tag"}>주소</span>{parcel}
           </dd>
-          <dd className={"address-item-sub"}>
+          <dd className={"address-item-sub"} style={{display: road ? '' : 'none'}}>
             <span className={"road-tag"}>도로명</span>{road}
           </dd>
         </dl>

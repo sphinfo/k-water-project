@@ -24,7 +24,7 @@ const ThematicLayerCheckBoxList = ({}, ref) => {
 
         // 임시 로직 새로 만들기 instance 등록하고 기존에 만들어놨으면 instacne 다시 만들지 않게 수정하기
         if(event.target.checked){
-          new BaseWmsImageLayer(node.store, node.id)
+          new BaseWmsImageLayer({store:node.store, layerId:node.id})
         }else{
           G$removeLayer(`${node.store}:${node.id}`)
         }

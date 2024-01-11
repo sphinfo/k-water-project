@@ -7,10 +7,6 @@ const BaseLegendgGradientWidget2 = (props) => {
     const {params, ...other} = props
     const [title, setTitle] = useState('')
 
-    // useEffect(()=>{
-    //     console.info(datas)
-    // },[datas])
-
     return (
         <>
 

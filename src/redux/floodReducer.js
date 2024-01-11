@@ -11,6 +11,7 @@ import {
   FLOOD_RESET,
   FLOOD_SELECT_BOX,
   FLOOD_RESET_LAYER,
+  FLOOD_SET_LAYERS,
 } from './actions';
 
 const initialState = {
@@ -30,6 +31,9 @@ const initialState = {
   selectWaterLevel: false,
 
   selectBox: 'off', //대상지역
+
+  //레이어관리
+  layers: {}
 
 };
 
@@ -60,6 +64,15 @@ function floodReducer(state = initialState, action) {
     //대상지역 selectbox 
     case FLOOD_SELECT_BOX:
       return { ...state, selectBox: action.selectBox}
+
+    case FLOOD_SET_LAYERS:
+
+      //setType true => add / false => remove
+      if(action.setType){
+        
+      }
+
+      return {...state}
 
     //초기화
     case FLOOD_RESET:

@@ -18,10 +18,6 @@ const BaseLegendGradientWidget = (props) => {
 
     },[params.title, params.datas, params.min, params.max])
 
-    // useEffect(()=>{
-    //     console.info(datas)
-    // },[datas])
-
     return (
         <>
 

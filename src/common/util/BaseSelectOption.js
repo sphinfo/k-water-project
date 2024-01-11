@@ -59,7 +59,7 @@ const BaseSelectOption = ({ provider = [], changeItem, ...other}, ref) => {
       </AccordionSummary>
       <AccordionDetails className="search-bed-item-wrap">
         <List>
-        {option.items.map((item) => (
+        {option.items && option.items.map((item) => (
           <ListItem
             color={'primary'}
             button={true}

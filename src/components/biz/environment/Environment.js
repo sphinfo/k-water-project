@@ -34,10 +34,10 @@ const Environment = () => {
   useEffect(()=>{
 
     //환경 메인 레이어
-    environmentLayer.current = new BaseWmsImageLayer('','','', false)
+    environmentLayer.current = new BaseWmsImageLayer({store:'', layerId: '', fly:false})
 
     //변화탐지 레이어
-    landCoverDetectionLayer.current = new BaseWmsImageLayer('','')
+    landCoverDetectionLayer.current = new BaseWmsImageLayer({store:'',layerId:''})
 
     //녹조 레이어 임시
     //l3aeLayer.current = new BasePolygonEntityCollection({name:'l3aeLayer'})

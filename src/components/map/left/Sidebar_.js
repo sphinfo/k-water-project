@@ -16,9 +16,6 @@ const Sidebar = () => {
 
 
   useEffect(()=>{
-    //G$removeLayerForId('WaterBody:수체_샘플데이터')
-    //G$addLayer(gArbageLayer.current)
-    //console.info(mode)
   },[mode])
 
   return (

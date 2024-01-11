@@ -4,7 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$getDateType } from "@gis/util";
-import { DROUGHT_RESET, DROUGHT_RESET_LAYER, DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER } from "@redux/actions";
+import { DROUGHT_CLEAR_LAEYRS, DROUGHT_RESET, DROUGHT_RESET_LAYER, DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER, DROUGHT_SET_LAYERS } from "@redux/actions";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Button } from "@mui/material";
@@ -32,6 +32,7 @@ const DroughtResult = () => {
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
       dispatch({type:DROUGHT_RESET_LAYER})
+      dispatch({type:DROUGHT_CLEAR_LAEYRS})    
       setA1Cnt(0)
       setA2Cnt(0)
       setA3Cnt(0)
@@ -90,8 +91,6 @@ const DroughtResult = () => {
       }
     },[text, startDate, endDate])
 
-    
-
     // 초기화
     useEffect(()=>{
         setLayerList([])
@@ -111,11 +110,13 @@ const DroughtResult = () => {
                   if (innerIndex === j) {
                       return { ...item, checked: !item.checked };
                   }
-                  return { ...item, checked: false }; // 기존 선택 해제
+                  return { ...item } 
+                  //return { ...item, checked: false }; // 기존 선택 해제
               });
               return updatedSubArray;
           }
-          return subArray.map(item => ({ ...item, checked: false })); // 다른 항목들의 선택 해제
+          return subArray.map(item => ({ ...item }))
+          //return subArray.map(item => ({ ...item, checked: false })); // 다른 항목들의 선택 해제
       });
       setLayerList(updatedList);
 
@@ -123,8 +124,12 @@ const DroughtResult = () => {
       const selectedItem = updatedList[outerIndex][innerIndex];
 
       //선택이 되었으면 layerItem 전송 / 선택이 해제되었으면 false
-      let value = !selectedItem.checked ? false : selectedItem
-      dispatch({ type: DROUGHT_SELECT_LAYER, selectDroughtLayer: value });
+      //let value = !selectedItem.checked ? false : selectedItem
+      //dispatch({ type: DROUGHT_SELECT_LAYER, selectDroughtLayer: value })
+
+      //reducer에게 레이어 info 전달
+      dispatch({ type: DROUGHT_SET_LAYERS, layerInfo: selectedItem, setType: selectedItem.checked })
+
 
     }
 

@@ -66,13 +66,14 @@ const Safety = () => {
     useEffect(()=>{
 
         //안전 3레벨 레이어 생성
-        safety3LevelLayerRef.current = new BaseWmsImageLayer('Safety','','',false)
+        
+        safety3LevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:'',fly:false})
 
         //안전 4레벨 레이어 생성 wms로 될거같음
-        safety4LevelLayerRef.current = new BaseWmsImageLayer('Safety','','',false)
+        safety4LevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:'',fly:false})
 
         //변위 등급 레이어 생성
-        safetyDisplaceLevelLayerRef.current = new BaseWmsImageLayer('Safety','')
+        safetyDisplaceLevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:''})
 
         //레이어 클릭 callback 등록
         GisLayerClickTool.addBiz(bizName, layerSelectRef, [])

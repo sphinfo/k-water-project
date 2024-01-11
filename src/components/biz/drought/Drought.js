@@ -7,12 +7,13 @@ import DroughtOptions from "./DroughtOptions";
 import pin from "@images/map-icon-dr.svg"
 import pin2 from "@images/map-icon-dr-clicked.svg"
 import { G$addWidget, G$flyToPoint, G$randomCoordinates, G$removeLayer, G$removeWidget } from "@gis/util";
-import { DROUGHT_RESET, DROUGHT_SELECT_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
+import { DROUGHT_CLEAR_LAEYRS, DROUGHT_RESET, DROUGHT_SELECT_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
 import DroughtOverlay from "@gis/util/overlay/DroughtOverlay";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import DroughtL4 from "./component/DroughtL4";
 import { getDroughtObs } from "@common/axios/drought";
 import { getL4Layers } from "@common/axios/common";
+import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
 
 const Drought = () => {
 
@@ -22,8 +23,9 @@ const Drought = () => {
      * bizName : 메뉴 명 ( 공통으로 reducer에 사용될 예정 )
      * selectObs : 선택된 관측소 정보
      * selectDroughtLayer : 가뭄 메인 레이어
+     * layers: 등록 레이어
      */
-    const { bizName, selectObs, selectDroughtLayer, obsrvTab, text } = useSelector(state => state.drought)
+    const { bizName, selectObs, selectDroughtLayer, obsrvTab, layers } = useSelector(state => state.drought)
 //
 
     //가뭄 레이어 ( 3L )
@@ -65,6 +67,8 @@ const Drought = () => {
         }
     },[selectObs])
 
+    
+
     /* 초기 세팅 사항 */
     useEffect(()=>{
 
@@ -72,10 +76,10 @@ const Drought = () => {
         droughtObsrvLayer.current = new BaseEntityCollection({name:'droughtObsrvLayer', image: pin, overlay: new DroughtOverlay()})
 
         //가뭄 메인 레이어
-        droughtLayer.current = new BaseWmsImageLayer('drought','')
+        //droughtLayer.current = new BaseWmsImageLayer({store:'drought',layerId:''})
 
         //가뭄 메인 레이어 L4
-        droughtL4Layer.current = new BaseWmsImageLayer('drought','')
+        //droughtL4Layer.current = new BaseWmsImageLayer({store:'drought',layerId:''})
 
         //*******API*************/
         //let obsList = DroughtObsrvConfig
@@ -86,6 +90,7 @@ const Drought = () => {
                 })
             }
         })
+        
         droughtObsrvLayer.current.show = false
 
         //레이어 클릭 callback 등록
@@ -106,11 +111,13 @@ const Drought = () => {
             }
 
             //가뭄 레이어 삭제
-            G$removeLayer(droughtLayer.current.layer)
-            G$removeLayer(droughtL4Layer.current.layer)
+            //G$removeLayer(droughtLayer.current.layer)
+            //G$removeLayer(droughtL4Layer.current.layer)
 
             //가뭄 reducer 초기화
             dispatch({type:DROUGHT_RESET})
+            dispatch({type:DROUGHT_CLEAR_LAEYRS})
+            
 
             G$removeWidget('BaseLegendgGradientWidget')
             G$removeWidget('BaseLegendgGradientWidget2')
@@ -118,64 +125,70 @@ const Drought = () => {
 
     },[])
 
+    const [layerIdx, setLayerIdx] = useState(0)
+    useEffect(()=>{
+        let layerCnt = Object.keys(layers).length
+        setLayerIdx(layerCnt)
+        //레이어가 켜저 있으면 지점 on
+        if(layerCnt > 0){
+            droughtObsrvLayer.current.show = true
+            G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+        }else{
+            droughtObsrvLayer.current.show = false
+            G$removeWidget('BaseLegendgGradientWidget')
+        }
+    },[layers])
+
 
     //가뭄 레이어 선택되었을때
-    useEffect(()=>{
+    // useEffect(()=>{
 
-        droughtL4Layer.current.remove()
+    //     droughtL4Layer.current.remove()
         
-        if(selectDroughtLayer){
-            const {store, layer} = selectDroughtLayer
-            droughtLayer.current.changeParameters({store:store, layerId:layer})
+    //     if(selectDroughtLayer){
+    //         const {store, layer} = selectDroughtLayer
+    //         droughtLayer.current.changeParameters({store:store, layerId:layer})
 
-            // if(text.name.indexOf('댐') > -1){
-            //     if(text.x && text.y && text.z){
-            //         G$flyToPoint([text.y, text.x], text.z)
-            //     }
-            // }
+    //         //범례 on
+    //         G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
 
-            //범례 on
-            G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+    //         //지점 on
+    //         droughtObsrvLayer.current.show = true
 
-            //지점 on
-            droughtObsrvLayer.current.show = true
+    //     }else{
+    //         //가뭄 off
+    //         droughtLayer.current.remove()
+    //         //지점 off
+    //         droughtObsrvLayer.current.show = false
+    //         //범례 off
+    //         G$removeWidget('BaseLegendgGradientWidget')
+    //         G$removeWidget('BaseLegendgGradientWidget2')
+    //     }
 
-        }else{
-            //가뭄 off
-            droughtLayer.current.remove()
-            //지점 off
-            droughtObsrvLayer.current.show = false
-            //범례 off
-            G$removeWidget('BaseLegendgGradientWidget')
-            G$removeWidget('BaseLegendgGradientWidget2')
-        }
+    // },[selectDroughtLayer])
 
-    },[selectDroughtLayer])
+    // useEffect(()=>{
 
-    useEffect(()=>{
-
-        if(obsrvTab === 'index'){
-            if(selectDroughtLayer){
-                const {id} = selectDroughtLayer
-                getL4Layers({id:id}).then((response)=>{
-                    if(response.result.data.length > 0){
-                        let store = response.result.data[0].dataType.toLowerCase()
-                        let layer = response.result.data[0].name
-                        droughtL4Layer.current.changeParameters({store:store, layerId:layer})
-                    }
-                })
-            }
-        }else{
-            droughtL4Layer.current.remove()
-        }
-        
-
-    },[obsrvTab])
+    //     if(obsrvTab === 'index'){
+    //         if(selectDroughtLayer){
+    //             const {id} = selectDroughtLayer
+    //             getL4Layers({id:id}).then((response)=>{
+    //                 if(response.result.data.length > 0){
+    //                     let store = response.result.data[0].dataType.toLowerCase()
+    //                     let layer = response.result.data[0].name
+    //                     droughtL4Layer.current.changeParameters({store:store, layerId:layer})
+    //                 }
+    //             })
+    //         }
+    //     }else{
+    //         droughtL4Layer.current.remove()
+    //     }
+    //},[obsrvTab])
 
     //사이드 위치 조정 on
-    useEffect(()=>{
-        selectObs ? dispatch({type: SET_SIDE_PANEL, panelSide: true}) : dispatch({type: SET_SIDE_PANEL, panelSide: false})
-    },[selectObs])
+    // useEffect(()=>{
+    //     selectObs ? dispatch({type: SET_SIDE_PANEL, panelSide: true}) : dispatch({type: SET_SIDE_PANEL, panelSide: false})
+    // },[selectObs])
 
     return (
         <>
@@ -185,8 +198,18 @@ const Drought = () => {
             {/* 결과결과 영역 */}
             <DroughtResult />
 
+            {layerIdx}
+            {
+                layerIdx > 0 && 
+                (
+                    <div className="side-content">
+                        <BaseSelectExpUnt baseName={'Drought'}/>
+                    </div>
+                )
+            }
+
             {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
-            {selectObs && (
+            {layerIdx > 0 && (
                 <div className="side-content">
                     <DroughtL4/>
                 </div>

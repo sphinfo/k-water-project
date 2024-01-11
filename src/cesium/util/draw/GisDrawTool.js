@@ -194,7 +194,6 @@ class GisDrawTool {
     drawShape(positionData, draw) {
         let shape;
         if (drawingMode === 'line' || drawingMode === 'circle') {
-            console.info(positionData)
             shape = this.map.entities.add({
                         polyline: {
                             positions: drawingMode === 'line' ? positionData : [activeShapePoints[0], activeShapePoints[activeShapePoints.length-1]],

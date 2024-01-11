@@ -76,19 +76,6 @@ class GisLayerClickTool {
 						}
 					}
 
-					//map click entity position properties  (WFS)
-					// const pickedObject = MapManager.map.scene.pick(event.position);
-					// if (defined(pickedObject) && defined(pickedObject.id)) {
-					// 	const pickedEntity = pickedObject.id
-
-					// 	//biz에 등록된 레이어 명칭만 callback에 담기
-					// 	layers.map((layerId)=>{
-					// 		if(layerId === pickedEntity.name){
-					// 			features.push({id: pickedEntity.name, properties: pickedEntity.properties.getValue(''), clickPosition: event.position})
-					// 		}
-					// 	})
-					// }
-
 					// wms promis
 					let wmsPromises = []
 

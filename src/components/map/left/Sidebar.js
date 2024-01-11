@@ -90,7 +90,6 @@ export default function Sidebar() {
   }, [value]);
 
   useEffect(()=>{
-    //console.info(value)
 
   },[value])
 

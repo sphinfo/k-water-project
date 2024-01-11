@@ -17,7 +17,6 @@ const SafetyL4LevelDataWidget = () => {
     useEffect(()=>{
 
         if(selectFeature){
-            console.info(selectFeature)
         }
 
         return()=>{

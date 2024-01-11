@@ -29,7 +29,6 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
   const state = useSelector(state => state.layer)
   const [selectedNodes, setSelectedNodes] = useState(['WKMBBSN', 'W_NATL','river','water']);
   useEffect(() => {
-      console.info(selectedNodes);
   }, [selectedNodes]);
 
   //초기 세팅
@@ -142,7 +141,7 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
                     
                 }else{
                     if(visible){
-                      layerInfo.instance = new BaseWmsImageLayer(layerInfo.store, layerInfo.id, null, false)
+                      layerInfo.instance = new BaseWmsImageLayer({store:layerInfo.store, layerId:layerInfo.id, fly:false})
                     }
                 }
             }

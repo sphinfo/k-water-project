@@ -1,15 +1,15 @@
 //주제도 config 
 const ThematicTreeConfig = [
-
   {
       "id": "water",
       "name": "유역도",
+      expUse: true, //표출단위 선택에서 사용할지 안할지
       "children": [
           {
               store: 'watershed_map',
               id: 'WKMBBSN',
               name: '대권역',
-              parent: 'water'
+              parent: 'water',
           },{
               store: 'watershed_map',
               id: 'WKMMBSN',
@@ -25,6 +25,7 @@ const ThematicTreeConfig = [
   },{
       "id": "adm",
       "name": "행정구역",
+      expUse: true,
       "children": [
             {
                 store: 'administrative_district',
@@ -51,6 +52,7 @@ const ThematicTreeConfig = [
     },{
         "id": "river",
         "name": "하천망도",
+        expUse: true,
         "children": [
             {
                 store: 'river_network',
@@ -72,6 +74,7 @@ const ThematicTreeConfig = [
     },{
         id: 'FS_IJ100',
         name: "토지피복도",
+        expUse: false,
         store: 'thematic_map',
         legend: { params: { title:'토지 피복도 범례', datas: [{label:'시가지', color:'#ff0000'} ,{label:'농업지역', color:'#eee907'} ,{label:'산림지역', color:'#2a4b2d'} ,{label:'초지', color:'#399926'} ,{label:'습지', color:'#7c227e'} ,{label:'나지', color:'#59ceca'} ,{label:'수역', color:'#0602fa'}]} }
     }

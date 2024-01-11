@@ -44,8 +44,6 @@ const FloodL4WaterBodyWidget = () => {
 
         if(selectFloodDamageLayer){
 
-            console.info(selectFloodDamageLayer.id)
-            let data = FloodL4ChartConfig[`${selectFloodDamageLayer.filename}`]
             //getFloodWaterBodyChart
             let params = {id: selectFloodDamageLayer.id}
             getFloodWaterBodyChart(params).then((response)=>{

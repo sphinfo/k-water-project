@@ -16,7 +16,6 @@ const BaseLegendWidget = (props) => {
     },[params.title, params.datas])
 
     useEffect(()=>{
-        console.info(datas)
     },[datas])
 
     return (

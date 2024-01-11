@@ -11,12 +11,17 @@ class BaseEntityCollection extends CustomDataSource {
 
 	constructor(props) {
 
-		super(props.name)
-		this.id = props.name
+		//name:'floodWaterLevelLayer', image: pin, overlay: new WaterLevelOverlay()
+
+		const {name, image, overlay} = props
+
+
+		super(name)
+		this.id = name
 		this.type = 'datasource'
-		this.baseImage = props.image ? props.image : water
+		this.baseImage = image ? image : water
 		this.layer = this
-		this.overlay = props.overlay ? props.overlay : null
+		this.overlay = overlay ? overlay : null
 		G$addLayer(this)
 	}
 
@@ -40,7 +45,7 @@ class BaseEntityCollection extends CustomDataSource {
 			},
 			properties: {...properties, lon:lng, lat: lat},
 			name: this.id,
-			id: properties.id ? properties.id : null
+			//id: properties.id ? properties.id : null
 		});
 
 		this.entities.add(pointEntity)

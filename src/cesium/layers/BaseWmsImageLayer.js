@@ -1,27 +1,35 @@
+import BaseGeoserverAxios from "@common/axios/BaseGeoserverAxios";
 import MapManager from "@gis/MapManager";
-import { G$addLayer, G$flyToExtent, G$removeLayerForId } from "@gis/util";
-import { Rectangle, WebMapServiceImageryProvider, WebMercatorTilingScheme } from "cesium";
+import { G$addLayer, G$cartesianToLongLat, G$flyToExtent, G$removeLayerForId } from "@gis/util";
+import { debounce } from "@mui/material";
+import { Rectangle, ScreenSpaceEventHandler, ScreenSpaceEventType, WebMapServiceImageryProvider, WebMercatorTilingScheme, defined } from "cesium";
 /**
  *  공동 WMS 레이어 Class 
  */
 class BaseWmsImageLayer {
 
-	constructor(store, layerId, cqlFIlter=null, fly=true, visible=true) {
+	constructor(params) {
+
+		let {store, layerId, cqlFIlter=null, fly=true, visible=true, info={}, overlay=null, subId=''} = params
 
 		//지도이동
 		this.fly = fly
 		this.visible = visible
+		this._axios = new BaseGeoserverAxios()
 
 		//레이어 props 설정
 		this.props = {
 			store
 			,layerId
 			,cqlFIlter
+			,overlay
 			,wmsUrl: `/waterGeo/${store.toLowerCase()}/wms`
 			,wmsParameters: {
 				format: 'image/png',
 				transparent: true, //투명도
-			}
+			},
+			subId
+			,...info
 		}
 		
 		//layerId와 store가 있는지 확인
@@ -60,8 +68,12 @@ class BaseWmsImageLayer {
 		
 
 		// 변경된 이미지 레이어 설정 ( Geoserver 사용 store:layer )
-		this.layer.id = `${this.props.store.toLowerCase()}:${this.props.layerId}`
+		this.layer.id = `${this.props.subId}${this.props.store.toLowerCase()}:${this.props.layerId}`
 		
+		if(this.props.overlay){
+			this._createHoverHandler()
+		}
+
 		// 이동
 		if(this.fly){
 			this._flyToExtent()
@@ -74,6 +86,11 @@ class BaseWmsImageLayer {
 		if (this.layer) {
 			G$removeLayerForId(this.layer.id)
 			this.layer=null
+		}
+		if(this.hoverHandler){
+			this.props.overlay.removeAll()
+			this.hoverHandler.destroy()
+			this.hoverHandler = undefined
 		}
 	}
 
@@ -150,6 +167,38 @@ class BaseWmsImageLayer {
 		});
 
 	}
+
+	//mouse이벤트 생성 ( 추후 공통 으로 overlay 작업 필수 )
+	_createHoverHandler() {
+        if (!this.hoverHandler) {
+            const mouseMoveAction = async (movement) => {
+
+				this._axios.getFeaturePosition(this.props.store, this.props.layerId, 'cql', this.props.wmsUrl, movement.endPosition).then((response)=>{
+					if(response.data.features.length > 0){
+						const ray = MapManager.map.camera.getPickRay(movement.endPosition)
+						const newPosition = MapManager.map.scene.globe.pick(ray, MapManager.map.scene)
+						
+						this.props.overlay._addOverlay({coord: G$cartesianToLongLat(newPosition), features:response.data.features[0]})
+					}
+				})
+
+				// let wmsPromises = []
+				// wmsPromises.push(this._axios.getFeaturePosition(this.props.store, this.props.layerId, 'cql', this.props.wmsUrl, movement.endPosition))
+				// const wmsResults = await Promise.all(wmsPromises);
+				// 	wmsResults.map((wmsObj)=>{
+				// 		if(wmsObj.data.features.length > 0){
+				// 			const ray = MapManager.map.camera.getPickRay(movement.endPosition)
+            	// 			const newPosition = MapManager.map.scene.globe.pick(ray, MapManager.map.scene)
+							
+				// 			this.props.overlay._addOverlay({coord: G$cartesianToLongLat(newPosition), features:wmsObj.data.features[0]})
+				// 		}
+				// 	})
+            };
+
+            this.hoverHandler = new ScreenSpaceEventHandler(MapManager.map.canvas)
+            this.hoverHandler.setInputAction(debounce(mouseMoveAction, 5), ScreenSpaceEventType.MOUSE_MOVE)
+        }
+    }
 }
 
 export default BaseWmsImageLayer;
