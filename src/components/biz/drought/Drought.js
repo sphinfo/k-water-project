@@ -185,11 +185,6 @@ const Drought = () => {
     //     }
     //},[obsrvTab])
 
-    //사이드 위치 조정 on
-    // useEffect(()=>{
-    //     selectObs ? dispatch({type: SET_SIDE_PANEL, panelSide: true}) : dispatch({type: SET_SIDE_PANEL, panelSide: false})
-    // },[selectObs])
-
     return (
         <>
             {/* 검색조건 영역   ex) 공토영역이 될듯 ? ( 검색 TEXT, 기간 설정 등.. )*/}
@@ -198,7 +193,7 @@ const Drought = () => {
             {/* 결과결과 영역 */}
             <DroughtResult />
 
-            {layerIdx}
+            {/* 표출 단위 선택 영역 */}
             {
                 layerIdx > 0 && 
                 (
