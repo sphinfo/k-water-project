@@ -10,16 +10,22 @@ const ThematicTreeConfig = [
               id: 'WKMBBSN',
               name: '대권역',
               parent: 'water',
+              nameCol: 'BBSNNM',
+              valCol: 'BBSNCD'
           },{
               store: 'watershed_map',
               id: 'WKMMBSN',
               name: '중권역',
-              parent: 'water'
+              parent: 'water',
+              nameCol: 'MBSNNM',
+              valCol: 'MBSNCD'
           },{
               store: 'watershed_map',
               id: 'WKMSBSN',
               name: '표준유역',
-              parent: 'water'
+              parent: 'water',
+              nameCol: 'SBSNNM',
+              valCol: 'SBSNCD'
           }
       ]
   },{
@@ -31,22 +37,30 @@ const ThematicTreeConfig = [
                 store: 'administrative_district',
                 id: 'ctprvn',
                 name: '시도',
-                parent: 'adm'
+                parent: 'adm',
+                nameCol: 'CTP_KOR_NM',
+                valCol: 'CTPRVN_CD'
             },{
                 store: 'administrative_district',
                 id: 'sig',
                 name: '시군구',
-                parent: 'adm'
+                parent: 'adm',
+                nameCol: 'SIG_KOR_NM',
+                valCol: 'SIG_CD'
             },{
                 store: 'administrative_district',
                 id: 'emd',
                 name: '읍면동',
-                parent: 'adm'
+                parent: 'adm',
+                nameCol: 'EMD_KOR_NM',
+                valCol: 'EMD_CD'
             },{
                 store: 'administrative_district',
                 id: 'li',
                 name: '동리',
-                parent: 'adm'
+                parent: 'adm',
+                nameCol: 'LI_KOR_NM',
+                valCol: 'LI_CD'
             }
       ]
     },{
@@ -58,17 +72,23 @@ const ThematicTreeConfig = [
                 store: 'river_network',
                 id: 'W_NATL',
                 name: '국가하천',
-                parent: 'river'
+                parent: 'river',
+                nameCol: 'NAME2',
+                valCol: 'CODE2'
             },{
                 store: 'river_network',
                 id: 'W_FRST',
                 name: '구지방1급하천',
-                parent: 'river'
+                parent: 'river',
+                nameCol: 'NAME1',
+                valCol: 'CODE1'
             },{
                 store: 'river_network',
                 id: 'W_SCND',
                 name: '구지방2급하천',
-                parent: 'river'
+                parent: 'river',
+                nameCol: 'RIV_NAM_1',
+                valCol: 'RIV_CD_1'
             }
         ]
     },{

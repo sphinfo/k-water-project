@@ -10,7 +10,7 @@ class BaseWmsImageLayer {
 
 	constructor(params) {
 
-		let {store, layerId, cqlFIlter=null, fly=true, visible=true, info={}, overlay=null, subId=''} = params
+		let {store, layerId, cqlFIlter=null, fly=true, visible=true, info={}, overlay=null, subId='', col=null} = params
 
 		//지도이동
 		this.fly = fly
@@ -27,8 +27,9 @@ class BaseWmsImageLayer {
 			,wmsParameters: {
 				format: 'image/png',
 				transparent: true, //투명도
-			},
-			subId
+			}
+			,subId
+			,col
 			,...info
 		}
 		
@@ -178,7 +179,7 @@ class BaseWmsImageLayer {
 						const ray = MapManager.map.camera.getPickRay(movement.endPosition)
 						const newPosition = MapManager.map.scene.globe.pick(ray, MapManager.map.scene)
 						
-						this.props.overlay._addOverlay({coord: G$cartesianToLongLat(newPosition), features:response.data.features[0]})
+						this.props.overlay._addOverlay({coord: G$cartesianToLongLat(newPosition), features:response.data.features[0], col:this.props.col})
 					}
 				})
 

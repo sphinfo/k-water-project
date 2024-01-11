@@ -16,7 +16,7 @@ const BaseSelectExpUnt = (props) => {
 
     useEffect(()=>{
 
-        let expArray = [{name:'테스트 베드', id:'test', checked: true, children:[{name: '테스트 베드', parent:'test', checked:true}]}]
+        let expArray = [{name:'테스트 베드', id:'test', checked: true, children:[{name: '테스트 베드', id:'test', parent:'test', checked:true}]}]
         ThematicTreeConfig.map((thematicObj)=>{
             if(thematicObj.expUse){
                 expArray.push(thematicObj)
@@ -33,17 +33,24 @@ const BaseSelectExpUnt = (props) => {
 
     
     const setLayer = (item)=>{
-        console.info(item)
         if(item){
-            selectLayerRef.current.changeParameters({store:item.store, layerId:item.id})
+            selectLayerRef.current.changeParameters({store:item.store, layerId:item.id, col:item.nameCol})
         }else{
             selectLayerRef.current.remove()
         }
     }
 
     const [selectedParent, setSelectedParent] = useState('테스트 베드')
-    const [childrenButtons, setChildrenButtons] = useState([])
+    //const [childrenButtons, setChildrenButtons] = useState([])
+    const [selectButton, setSelectButton] = useState('')
 
+    const renderButton = (item) => {
+        return item.children.map((child) => (
+          <button key={child.id} style={{display: selectedParent === child.parent ? '' : 'none', color: selectButton === child.id ? 'yellow' : 'white'}} onClick={() => handleButtonClick(child)}>
+            {child.name}
+          </button>
+        ))
+    }
 
     const handleParentChange = (event) => {
         const selectedParentId = event.target.value
@@ -51,21 +58,13 @@ const BaseSelectExpUnt = (props) => {
     
         if (selectedData) {
           setSelectedParent(selectedParentId)
-          const children = selectedData.children.map(child => (
-            <button key={child.id} onClick={() => handleButtonClick(child)}>
-              {child.name}
-            </button>
-          ));
-          setChildrenButtons(children)
-        } else {
-          setSelectedParent('')
-          setChildrenButtons([])
         }
     }
 
     const handleButtonClick = (child) => {
+        setSelectButton(child.id)
         setLayer(child)
-    };
+    }
 
     return (
         <div className="widget widget-toggle">
@@ -73,6 +72,7 @@ const BaseSelectExpUnt = (props) => {
                 <div className="widget-header">
                     <h4 className="widget-title">표츌 단위 선택</h4>
                 </div>
+                {selectedParent}
                 <div className="widget-body">
                     <select value={selectedParent} onChange={handleParentChange}>
                         {
@@ -83,7 +83,12 @@ const BaseSelectExpUnt = (props) => {
                     </select>
                 </div>
                 <div>
-                    {childrenButtons}
+                    {
+                        expList.map((item)=>{
+                            return renderButton(item)
+                        })
+                    }
+                    {/*childrenButtons*/}
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@ class BaseOverlay {
 
 	async _addOverlay(props) {
 
-        const {coord=null, features={}} = props
+        const {coord=null, col=null, features={}} = props
         
         if(features.id === this.baseInfo){
             return
@@ -40,7 +40,10 @@ class BaseOverlay {
         // h4 요소 생성
         const title = document.createElement('h4')
         title.className = 'map-popup-box-title'
-        title.textContent = `${features.properties.SIG_KOR_NM}`
+        if(col){
+            title.textContent = `${features.properties[col]}`
+        }
+        
 
         // 요소들을 구조에 맞게 조립
         widgetHeader.appendChild(title)
@@ -50,18 +53,20 @@ class BaseOverlay {
 
         if(coord){
 
-            var polygonCoordinates = features.geometry.coordinates[0][0]
-            const outline = MapManager.map.entities.add({
-                polyline: {
-                    positions: Cartesian3.fromDegreesArray([
-                        ...[].concat(...polygonCoordinates) // flatten array
-                    ]),
-                    width: 5,
-                    material: Color.RED
-                }
+            features.geometry.coordinates.map((coords)=>{
+
+                const outline = MapManager.map.entities.add({
+                    polyline: {
+                        positions: Cartesian3.fromDegreesArray([...[].concat(...coords[0])]),
+                        width: 5,
+                        material: Color.RED
+                    }
+                })
+                this.polyline.push(outline)
+
             })
 
-            this.polyline.push(outline)
+            
 
             /* 해당좌표로 오버레이 html 위치 지정 */
             var catresian3 = Cartesian3.fromDegrees(coord.longitude, coord.latitude, 0)
