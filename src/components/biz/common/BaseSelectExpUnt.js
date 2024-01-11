@@ -45,7 +45,7 @@ const BaseSelectExpUnt = (props) => {
 
     const renderButton = (item) => {
         return item.children.map((child) => (
-          <button className={`btn btn-round ${selectButton === child.id ? 'active' : ''}`} key={child.id} style={{display: selectedParent === child.parent ? '' : 'none'}} onClick={() => handleButtonClick(child)}>
+          <button className={`btn btn-widget ${selectButton === child.id ? 'active' : ''}`} key={child.id} style={{display: selectedParent === child.parent ? '' : 'none'}} onClick={() => handleButtonClick(child)}>
             {child.name}
           </button>
         ))
