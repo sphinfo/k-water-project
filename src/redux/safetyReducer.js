@@ -15,8 +15,12 @@ import {
   SAFETY_SELECT_DISPLACE_LEVEL,
   SAFETY_SELECT_BOX,
   SAFETY_RESET_LAYER,
+  SAFETY_SET_LAYERS,
+  SAFETY_CLEAR_LAEYRS,
 } from './actions';
 import safetyLayers from '@gis/layers/safety/safetyLayers';
+import BaseWmsImageLayer from '@gis/layers/BaseWmsImageLayer';
+import { G$removeLayer } from '@gis/util';
 
 const initialState = {
   bizName: 'Safety',
@@ -46,7 +50,7 @@ const initialState = {
   //검색박스 ON / OFF
   selectBox : 'off',
   
-  //safetyLayers: new safetyLayers()
+  layers: {}
 };
 
 function safetyReducer(state = initialState, action) {
@@ -99,8 +103,49 @@ function safetyReducer(state = initialState, action) {
     case SAFETY_SELECT_BOX:
       return { ...state, selectBox: action.selectBox}
 
+    case SAFETY_SET_LAYERS:
+      //setType true => add / false => remove
+      let layerId = `${action.layerInfo.store}:${action.layerInfo.layer}`
+      if(action.setType){
+        //layer Instace 가 없을시 
+        if(!state.layers[layerId]){
+          const updateLayers = {
+            ...state.layers,
+            [layerId]: new BaseWmsImageLayer({store:action.layerInfo.store, layerId:action.layerInfo.layer, info:action.layerInfo}),
+          }
+          return {...state, layers:updateLayers}
+        }
+      }else{
+        const updatedLayers = { ...state.layers }
+        if (updatedLayers[layerId]) {
+          G$removeLayer(updatedLayers[layerId].layer)
+          delete updatedLayers[layerId]
+          return { ...state, layers: updatedLayers }
+        }
+      }
+
+    //레이어 clear
+    case SAFETY_CLEAR_LAEYRS:
+      let layerIds = Object.keys(state.layers)
+      if(layerIds.length > 0){
+        layerIds.map((layerId) => {
+          G$removeLayer(state.layers[layerId].layer)
+          delete state.layers[layerId]
+        })
+      }
+      return {...state }
+
+
     //초기화
     case SAFETY_DETAIL_RESET:
+      let layerIdss = Object.keys(state.layers)
+      if(layerIdss.length > 0){
+        layerIdss.map((layerId) => {
+          G$removeLayer(state.layers[layerId].layer)
+          delete state.layers[layerId]
+        })
+      }
+
       return { ...state, 
         ...initialState
       }

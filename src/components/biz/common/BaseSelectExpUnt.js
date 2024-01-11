@@ -66,7 +66,7 @@ const BaseSelectExpUnt = (props) => {
     }
 
     return (
-        <div className="widget widget-toggle" style={{bottom: 155}}>
+        <div className="widget widget-toggle">
             <div className="widget-box">
                 <div className="widget-header">
                     <h4 className="widget-title">표츌 단위 선택</h4>

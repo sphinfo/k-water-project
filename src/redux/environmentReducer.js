@@ -10,7 +10,11 @@ import {
   ENV_SELECT_BOX,
   ENV_RESET,
   ENV_RESET_LAYER,
+  ENV_SET_LAYERS,
+  ENV_CLEAR_LAEYRS,
 } from './actions';
+import { G$removeLayer } from '@gis/util';
+import BaseWmsImageLayer from '@gis/layers/BaseWmsImageLayer';
 
 const initialState = {
   bizName: 'Environment',
@@ -28,7 +32,9 @@ const initialState = {
   landCoverDetection: false,
 
   //대상지역 selectbox
-  selectBox: 'off'
+  selectBox: 'off',
+  
+  layers: {}
 };
 
 function environmentReducer(state = initialState, action) {
@@ -56,8 +62,53 @@ function environmentReducer(state = initialState, action) {
     case ENV_SELECT_BOX:
       return { ...state, selectBox: action.selectBox}
 
+
+      
+    case ENV_SET_LAYERS:
+
+      //setType true => add / false => remove
+      let layerId = `${action.layerInfo.store}:${action.layerInfo.layer}`
+      if(action.setType){
+        //layer Instace 가 없을시 
+        if(!state.layers[layerId]){
+          const updateLayers = {
+            ...state.layers,
+            [layerId]: new BaseWmsImageLayer({store:action.layerInfo.store, layerId:action.layerInfo.layer, info:action.layerInfo}),
+          }
+          return {...state, layers:updateLayers}
+        }
+      }else{
+        const updatedLayers = { ...state.layers }
+        if (updatedLayers[layerId]) {
+          G$removeLayer(updatedLayers[layerId].layer)
+          delete updatedLayers[layerId]
+          return { ...state, layers: updatedLayers }
+        }
+      }
+
+    //레이어 clear
+    case ENV_CLEAR_LAEYRS:
+      let layerIds = Object.keys(state.layers)
+      if(layerIds.length > 0){
+        layerIds.map((layerId) => {
+          G$removeLayer(state.layers[layerId].layer)
+          delete state.layers[layerId]
+        })
+      }
+      return {...state }
+
+
+    //초기화
     case ENV_RESET:
-      return  { ...state, 
+      let layerIdss = Object.keys(state.layers)
+      if(layerIdss.length > 0){
+        layerIdss.map((layerId) => {
+          G$removeLayer(state.layers[layerId].layer)
+          delete state.layers[layerId]
+        })
+      }
+
+      return { ...state, 
         ...initialState
       }
 

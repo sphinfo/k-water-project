@@ -17,7 +17,7 @@ const FloodL4 = () => {
      * selectFloodLayer : 홍수 4LEVEL 선택 레이어 
      * selectWaterLevel: 홍수 수위 지점 선택
      */
-    const { selectFloodLayer, selectWaterLevel } = useSelector(state => state.flood)
+    const { selectWaterLevel } = useSelector(state => state.flood)
 
     //수위 지점 선택 초기화
     useEffect(()=>{
@@ -43,22 +43,7 @@ const FloodL4 = () => {
 
     return (
         <>
-            {/* 수체 선택시 */}
-            {
-                selectFloodLayer && selectFloodLayer.group === 'WaterBody' && 
-                <>
-                    <FloodL4WaterBodyThematic />
-                    <BaseOragDataInfo a={true} b={true}/>
-                </>
-            }
-
-            {/* 수위 선택시 */}
-            {
-                selectWaterLevel && selectFloodLayer.group === 'WaterLevel' && 
-                <>
-                    <BaseOragDataInfo a={true}/>
-                </>
-            }
+            <FloodL4WaterBodyThematic />
         </>
     )
 }

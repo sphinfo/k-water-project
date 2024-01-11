@@ -14,7 +14,7 @@ const FloodL4WaterBodyThematic = () => {
     /**
      * selectWaterLevel: 수위 지점 정보
      */
-    const { selectFloodDamageLayer, layers } = useSelector(state => state.flood)
+    const { selectFloodDamageLayer, selectFloodLayer } = useSelector(state => state.flood)
 
 
     //닫힐때 침수피해 레이어 초기화
@@ -27,10 +27,10 @@ const FloodL4WaterBodyThematic = () => {
 
     useEffect(()=>{
 
-        if(Object.keys(layers).length === 1){
-            let id = layers[Object.keys(layers)[0]].props.id
+        if(selectFloodLayer){
+
             //*******API*************  4레벨 침시피해지도 가져오기/
-            getL4Layers({id:id}).then((response)=>{
+            getL4Layers({id:selectFloodLayer.id}).then((response)=>{
                 if(response.result.data.length > 0){
                     let store = response.result.data[0].dataType
                     let layer = response.result.data[0].name
@@ -42,7 +42,7 @@ const FloodL4WaterBodyThematic = () => {
 
         }
 
-    },[layers])
+    },[selectFloodLayer])
 
   
     useEffect(()=>{

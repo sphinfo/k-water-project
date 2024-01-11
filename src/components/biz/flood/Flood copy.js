@@ -12,7 +12,6 @@ import pin from "@images/map-icon-st.svg"
 import pin2 from "@images/map-icon-st-clicked.svg"
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import { getFloodObs } from "@common/axios/flood";
-import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
 
 /* 홍수 */
 const Flood = () => {
@@ -24,7 +23,7 @@ const Flood = () => {
      * selectFloodLayer : 홍수 - 수체 레이어 선택
      * selectFloodDamageLayer : 홍수 - 수체 - 침수피해 레이어 선택
      */
-    const { bizName, selectFloodLayer, selectFloodDamageLayer, selectWaterLevel, text, floodResultTab, layers } = useSelector(state => state.flood)
+    const { bizName, selectFloodLayer, selectFloodDamageLayer, selectWaterLevel, text, floodResultTab } = useSelector(state => state.flood)
 
     //홍수 - 수체 레이어 (3level)
     const floodLayer = useRef()
@@ -63,13 +62,7 @@ const Flood = () => {
             }
             
         }
-    }))
-
-    const [layerIdx, setLayerIdx] = useState(0)
-    useEffect(()=>{
-        let layerCnt = Object.keys(layers).length
-        setLayerIdx(layerCnt)
-    },[layers])
+    }));
 
     
     //수위 선택되면 chart widget 생성
@@ -85,11 +78,14 @@ const Flood = () => {
     /* 초기 세팅 사항 */
     useEffect(()=>{
 
+        //홍수 - 수체 레이어 (3level)
+        
+        floodLayer.current = new BaseWmsImageLayer({store:'flood', layerId:'', fly: false})
+        //홍수 - 수체 - 변화탐지 레이어  (4level)
+        floodDamageLayer.current = new BaseWmsImageLayer({store:'flood',layerId:'', fly: false})
+
         //홍수 - 수위 Point Wfs
         floodWaterLevelLayer.current = new BaseEntityCollection({name:'floodWaterLevelLayer', image: pin, overlay: new WaterLevelOverlay()})
-
-        //홍수 - 4레벨
-        floodDamageLayer.current = new BaseWmsImageLayer({store:'flood', fly: false})
 
         //레이어 클릭 callback 등록
         GisLayerClickTool.addBiz(bizName, layerSelectRef, ['floodWaterLevelLayer'])
@@ -114,6 +110,9 @@ const Flood = () => {
             //범례 삭제
             G$removeWidget('BaseLegendWidget')
 
+            //홍수 레이어 삭제
+            G$removeLayer(floodLayer.current.layer)
+            G$removeLayer(floodDamageLayer.current.layer)
             G$removeLayer(floodWaterLevelLayer.current.layer)
 
             if(floodWaterLevelLayer.current.hoverHandler){
@@ -131,11 +130,50 @@ const Flood = () => {
     },[])
 
     /**
+     * 수체 레이어 on / off
+     */
+    useEffect(()=>{
+
+        //수체 레이어가 변경될시 4레벨 레이어 ( 침수지도 ) off
+        dispatch({type:FLOOD_DAMAGE_LAYER, selectFloodDamageLayer: false})
+        //수위 레이어 선택 초기화
+        dispatch({type:FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: false})
+
+        if(selectFloodLayer){
+            const {store, group, layer} = selectFloodLayer
+            
+            if(group === 'WaterBody'){ // 수체
+                //수체 레이어 그리기
+                floodLayer.current.changeParameters({store:store, layerId:layer})
+                floodLayer.current.setOpacity(0.5)
+                
+                if(text.name.indexOf('댐') > -1){
+                    if(text.x && text.y && text.z){
+                        G$flyToPoint([text.y, text.x], text.z)
+                    }
+                }
+
+                //수위 레이어 삭제
+                floodWaterLevelLayer.current.show = false
+            }else if(group === 'WaterLevel'){ // 수위
+                floodWaterLevelLayer.current.show = true
+                //수체 레이어 삭제
+                floodLayer.current.remove()
+            }
+        }else{
+            floodLayer.current.remove()
+        }
+
+    },[selectFloodLayer])
+
+
+
+    /**
      * 침수피해지도 ON / OFF
      */
     useEffect(()=>{
         if(selectFloodDamageLayer){
-            //floodLayer.current.show = false
+            floodLayer.current.show = false
             //침수피해 범례 on
             G$addWidget('BaseLegendWidget', { params: { title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}]} })
             
@@ -144,38 +182,30 @@ const Flood = () => {
             floodDamageLayer.current.setOpacity(0.5)
 
         }else{
-            
-
             floodDamageLayer.current.remove()
             G$removeWidget('BaseLegendWidget')
         }
     },[selectFloodDamageLayer])
 
+    //사이드 위치 조정 on
+    useEffect(()=>{
+        selectFloodLayer ? dispatch({type: SET_SIDE_PANEL, panelSide: true}) : dispatch({type: SET_SIDE_PANEL, panelSide: false})
+    },[selectFloodLayer])
 
     useEffect(()=>{
+
         if(floodResultTab === 'WaterBody'){
-            //floodLayer.current.setVisible(true)
-            visibleLayers(true)
+            floodLayer.current.setVisible(true)
             floodDamageLayer.current.setVisible(true)
             floodWaterLevelLayer.current.show = false
 
         }else if(floodResultTab === 'WaterLevel'){
-            //floodLayer.current.setVisible(false)
-            visibleLayers(false)
+            floodLayer.current.setVisible(false)
             floodDamageLayer.current.setVisible(false)
             floodWaterLevelLayer.current.show = true
         }
 
     },[floodResultTab])
-
-    const visibleLayers = (visible=true) =>{
-        if(Object.keys(layers).length > 0){
-            Object.keys(layers).map((layerId)=>{
-                layers[layerId].layer.show = visible
-            })
-        }
-    }
-    
 
     return (
         <>
@@ -187,17 +217,7 @@ const Flood = () => {
             {/* 홍수 3레벨 레이어 선택되었을시 ( 활용주제도 open )*/}
 
 
-            {/* 표출 단위 선택 영역 */}
-            {
-                layerIdx > 1 && 
-                (
-                    <div className="side-content">
-                        <BaseSelectExpUnt baseName={'Flood'}/>
-                    </div>
-                )
-            }
-
-            {layerIdx === 1 && (
+            {selectFloodLayer && (
                 <div className="side-content">
                     <FloodL4/>
                 </div>

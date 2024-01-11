@@ -4,7 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$flyToPoint, G$getDateType } from "@gis/util";
-import { FLOOD_RESET, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, LOADING } from "@redux/actions";
+import { FLOOD_RESET, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, FLOOD_SET_LAYERS, LOADING } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
 import { Button } from "@mui/material";
 import { getL3Layers } from "@common/axios/common";
@@ -129,18 +129,21 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                   if (innerIndex === j) {
                       return { ...item, checked: !item.checked };
                   }
-                  return { ...item, checked: false }; // 기존 선택 해제
+                  return { ...item }; // 기존 선택 해제
               });
               return updatedSubArray;
           }
-          return subArray.map(item => ({ ...item, checked: false })); // 다른 항목들의 선택 해제
+          return subArray.map(item => ({ ...item })); // 다른 항목들의 선택 해제
       });
       setLayerList(updatedList);
 
       //이벤트 발생 위치 확인후 
-      const selectedItem = updatedList[outerIndex][innerIndex];
-      let value = !selectedItem.checked ? false : selectedItem
-      dispatch({ type: FLOOD_SELECT_LAYER, selectFloodLayer: value });
+      const selectedItem = updatedList[outerIndex][innerIndex]
+      //수위 지점 제외
+      if(selectedItem.group !== 'WaterLevel'){
+        dispatch({ type: FLOOD_SET_LAYERS, layerInfo: selectedItem, setType: selectedItem.checked })
+      }
+      
 
     }
 

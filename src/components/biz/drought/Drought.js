@@ -75,9 +75,6 @@ const Drought = () => {
         //가뭄 관측소 레이어 생성
         droughtObsrvLayer.current = new BaseEntityCollection({name:'droughtObsrvLayer', image: pin, overlay: new DroughtOverlay()})
 
-        //가뭄 메인 레이어
-        //droughtLayer.current = new BaseWmsImageLayer({store:'drought',layerId:''})
-
         //가뭄 메인 레이어 L4
         //droughtL4Layer.current = new BaseWmsImageLayer({store:'drought',layerId:''})
 
@@ -139,34 +136,6 @@ const Drought = () => {
         }
     },[layers])
 
-
-    //가뭄 레이어 선택되었을때
-    // useEffect(()=>{
-
-    //     droughtL4Layer.current.remove()
-        
-    //     if(selectDroughtLayer){
-    //         const {store, layer} = selectDroughtLayer
-    //         droughtLayer.current.changeParameters({store:store, layerId:layer})
-
-    //         //범례 on
-    //         G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
-
-    //         //지점 on
-    //         droughtObsrvLayer.current.show = true
-
-    //     }else{
-    //         //가뭄 off
-    //         droughtLayer.current.remove()
-    //         //지점 off
-    //         droughtObsrvLayer.current.show = false
-    //         //범례 off
-    //         G$removeWidget('BaseLegendgGradientWidget')
-    //         G$removeWidget('BaseLegendgGradientWidget2')
-    //     }
-
-    // },[selectDroughtLayer])
-
     // useEffect(()=>{
 
     //     if(obsrvTab === 'index'){
@@ -193,19 +162,10 @@ const Drought = () => {
             {/* 결과결과 영역 */}
             <DroughtResult />
 
-            {/* 표출 단위 선택 영역 */}
-            {
-                layerIdx > 0 && 
-                (
-                    <div className="side-content">
-                        <BaseSelectExpUnt baseName={'Drought'}/>
-                    </div>
-                )
-            }
-
             {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
             {layerIdx > 0 && (
                 <div className="side-content">
+                    <BaseSelectExpUnt baseName={'Drought'}/>
                     <DroughtL4/>
                 </div>
             )}
