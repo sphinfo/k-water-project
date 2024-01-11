@@ -647,6 +647,8 @@
   &.widget-toggle {
     left: 10px;
     bottom: 55px;
+    min-width: 220px;
+    width: max-content;
 
     .widget-body {
       padding: 10px;
@@ -700,6 +702,9 @@
     padding: 10px;
     width: 100%;
     border-bottom: 1px solid $line-light;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     .widget-title {
       font-size: 14px;
@@ -1253,6 +1258,20 @@
 .btn-wrap {
   display: flex;
   gap: 5px;
+}
+
+.widget-btn-wrap {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+
+  .btn {
+    flex: 1 0 auto;
+    background-color: transparent;
+    border: 1px solid $line;
+    padding: 8px 10px;
+    text-align: center;
+  }
 }
 
 .btn-icon {
@@ -2078,6 +2097,14 @@
       }
     }
   }
+}
+
+.select-control {
+  border-radius: 8px;
+  background-color: #384550;
+  padding: 6px 8px;
+  color: #fff;
+  border: none;
 }
 
 .MuiDayCalendar-weekContainer{

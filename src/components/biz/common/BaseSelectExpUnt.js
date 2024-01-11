@@ -52,7 +52,7 @@ const BaseSelectExpUnt = (props) => {
         if (selectedData) {
           setSelectedParent(selectedParentId)
           const children = selectedData.children.map(child => (
-            <button key={child.id} onClick={() => handleButtonClick(child)}>
+            <button className="btn btn-round" key={child.id} onClick={() => handleButtonClick(child)}>
               {child.name}
             </button>
           ));
@@ -72,9 +72,7 @@ const BaseSelectExpUnt = (props) => {
             <div className="widget-box">
                 <div className="widget-header">
                     <h4 className="widget-title">표츌 단위 선택</h4>
-                </div>
-                <div className="widget-body">
-                    <select value={selectedParent} onChange={handleParentChange}>
+                    <select className="select-control" value={selectedParent} onChange={handleParentChange}>
                         {
                             expList.map(item => (
                                 <option key={item.id} value={item.id}>{item.name}</option>
@@ -82,8 +80,10 @@ const BaseSelectExpUnt = (props) => {
                         }
                     </select>
                 </div>
-                <div>
-                    {childrenButtons}
+                <div className="widget-body">
+                    <div className="widget-btn-wrap">
+                        {childrenButtons}
+                    </div>
                 </div>
             </div>
         </div>
