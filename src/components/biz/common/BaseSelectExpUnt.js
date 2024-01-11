@@ -33,20 +33,19 @@ const BaseSelectExpUnt = (props) => {
 
     
     const setLayer = (item)=>{
-        if(item){
+        if(item && item.id !== 'test'){
             selectLayerRef.current.changeParameters({store:item.store, layerId:item.id, col:item.nameCol})
         }else{
             selectLayerRef.current.remove()
         }
     }
 
-    const [selectedParent, setSelectedParent] = useState('테스트 베드')
-    //const [childrenButtons, setChildrenButtons] = useState([])
-    const [selectButton, setSelectButton] = useState('')
+    const [selectedParent, setSelectedParent] = useState('test')
+    const [selectButton, setSelectButton] = useState('test')
 
     const renderButton = (item) => {
         return item.children.map((child) => (
-          <button key={child.id} style={{display: selectedParent === child.parent ? '' : 'none', color: selectButton === child.id ? 'yellow' : 'white'}} onClick={() => handleButtonClick(child)}>
+          <button className={`btn btn-round ${selectButton === child.id ? 'active' : ''}`} key={child.id} style={{display: selectedParent === child.parent ? '' : 'none'}} onClick={() => handleButtonClick(child)}>
             {child.name}
           </button>
         ))
@@ -67,14 +66,11 @@ const BaseSelectExpUnt = (props) => {
     }
 
     return (
-        <div className="widget widget-toggle">
+        <div className="widget widget-toggle" style={{bottom: 155}}>
             <div className="widget-box">
                 <div className="widget-header">
                     <h4 className="widget-title">표츌 단위 선택</h4>
-                </div>
-                {selectedParent}
-                <div className="widget-body">
-                    <select value={selectedParent} onChange={handleParentChange}>
+                    <select className={'select-control'} value={selectedParent} onChange={handleParentChange}>
                         {
                             expList.map(item => (
                                 <option key={item.id} value={item.id}>{item.name}</option>
@@ -82,13 +78,14 @@ const BaseSelectExpUnt = (props) => {
                         }
                     </select>
                 </div>
-                <div>
-                    {
-                        expList.map((item)=>{
-                            return renderButton(item)
-                        })
-                    }
-                    {/*childrenButtons*/}
+                <div className="widget-body">
+                    <div className="widget-btn-wrap">
+                        {
+                            expList.map((item)=>{
+                                return renderButton(item)
+                            })
+                        }
+                    </div>
                 </div>
             </div>
         </div>
