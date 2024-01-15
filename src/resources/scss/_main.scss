@@ -658,16 +658,18 @@
 
   &.disabled {
     position: relative;
+    overflow: hidden;
 
     &::after {
       content: '';
       position: absolute;
       width: 100%;
       height: 100%;
-      background-color: #666;
+      background-color: #888;
       top: 0;
-      opacity: 0.2;
+      opacity: 0.4;
       cursor: not-allowed;
+      filter: blur(1px);
     }
   }
 
