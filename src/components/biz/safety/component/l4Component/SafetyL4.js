@@ -10,10 +10,13 @@ const SafetyL4 = () => {
 
     return (
         <>
+          <div className="side-content-top">
             <SafetyL4CompBtn />
+          </div>
+          <div className="side-content-bottom">
             <SafetyL4Thematic />
             <BaseOragDataInfo a={true} b={true}/>
-            
+          </div>
         </>
     )
 }

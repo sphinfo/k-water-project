@@ -37,7 +37,7 @@ const SafetyL4CompBtn = () => {
                         dispatch({type: SAFETY_CLICK_MODE, compLayerClick: true})
                     }}
             >
-                지점 비교분석
+                <i className="mdi mdi-chart-line"></i>지점 비교분석
             </button>
         </>
     )

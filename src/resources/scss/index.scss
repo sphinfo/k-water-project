@@ -145,8 +145,7 @@ button{
   &.btn-float {
     box-shadow: $box-shadow;
     position: absolute;
-    left: 10px;
-    top: 10px;
+    top: 0;
     white-space: nowrap;
   }
 }
