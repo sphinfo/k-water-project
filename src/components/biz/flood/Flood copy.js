@@ -79,10 +79,9 @@ const Flood = () => {
     useEffect(()=>{
 
         //홍수 - 수체 레이어 (3level)
-        
-        floodLayer.current = new BaseWmsImageLayer({store:'flood', layerId:'', fly: false})
+        floodLayer.current = new BaseWmsImageLayer('flood','', '', false)
         //홍수 - 수체 - 변화탐지 레이어  (4level)
-        floodDamageLayer.current = new BaseWmsImageLayer({store:'flood',layerId:'', fly: false})
+        floodDamageLayer.current = new BaseWmsImageLayer('flood','', '', false)
 
         //홍수 - 수위 Point Wfs
         floodWaterLevelLayer.current = new BaseEntityCollection({name:'floodWaterLevelLayer', image: pin, overlay: new WaterLevelOverlay()})
@@ -95,7 +94,7 @@ const Flood = () => {
         //*******API************* 초기 지점 데이터 가져오기/
         getFloodObs().then((response) => {
             let obsList = []
-            if(response.result.data.length > 0){
+            if(response?.result?.data?.length > 0){
                 response.result.data.map((obj)=>{
                     obsList.push(obj)
                     floodWaterLevelLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})

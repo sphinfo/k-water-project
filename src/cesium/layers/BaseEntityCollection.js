@@ -45,7 +45,7 @@ class BaseEntityCollection extends CustomDataSource {
 			},
 			properties: {...properties, lon:lng, lat: lat},
 			name: this.id,
-			//id: properties.id ? properties.id : null
+			id: properties.id ? properties.id : null
 		});
 
 		this.entities.add(pointEntity)

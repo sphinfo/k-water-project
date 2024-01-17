@@ -28,17 +28,19 @@ const FloodL4WaterBodyThematic = () => {
     useEffect(()=>{
 
         if(Object.keys(layers).length === 1){
-            let id = layers[Object.keys(layers)[0]].props.id
+            /*let id = layers[Object.keys(layers)[0]].props.id
             //*******API*************  4레벨 침시피해지도 가져오기/
             getL4Layers({id:id}).then((response)=>{
-                if(response.result.data.length > 0){
+                if(response?.result?.data?.length > 0){
                     let store = response.result.data[0].dataType
                     let layer = response.result.data[0].name
                     setLayerInfo({...response.result.data[0], store, layer})
                 }else{
                     setLayerInfo(false)
                 }
-            })
+            })*/
+
+            setLayerInfo({store:'flood', layer:'20231221122222_flood_L4FL_koFU_DAECHEONG-DAEJEON-MIHO', id:151})
 
         }
 
@@ -48,7 +50,7 @@ const FloodL4WaterBodyThematic = () => {
     useEffect(()=>{
 
         if(selectFloodDamageLayer){
-            G$addWidget('FloodL4WaterBodyWidget')
+            G$addWidget('FloodL4WaterBodyWidget', {}, {subTitle: '11'})
         }else{
             G$removeWidget('FloodL4WaterBodyWidget')
         }

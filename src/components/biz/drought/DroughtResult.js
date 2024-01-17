@@ -18,7 +18,7 @@ const DroughtResult = () => {
     const dispatch = useDispatch()
 
     // 가뭄 검색조건
-    const { text, startDate, endDate, selectBox, selectResultTab } = useSelector(state => state.drought)
+    const { searchOn, text, startDate, endDate, selectBox, selectResultTab } = useSelector(state => state.drought)
 
     const [layerList, setLayerList] = useState([])
 
@@ -37,18 +37,19 @@ const DroughtResult = () => {
       setA2Cnt(0)
       setA3Cnt(0)
 
-      if(text.name !== ''){
+      if(searchOn && text.length > 0){
         
         if (timer) {
           clearTimeout(timer)
         }
         const delayRequest = setTimeout(() => {
-          if (text.code && text.code !== '') {
+          if (text.length > 0) {
 
-            //*******API************* getL3Layers: 레벨3 결과값/
-            let params = {type:'drought', level: 'L3', location: text.code, from: startDate, to: endDate}
+            let location = text.map(item => item.code).join(',')
+
+            let params = {type:'drought', level: 'L3', location: location, from: startDate, to: endDate}
             getL3Layers(params).then((response) => {
-              if(response.result.data.length > 0){
+              if(response?.result?.data?.length > 0){
                 let resultList = []
                 response.result.data.map((obj)=>{
 
@@ -89,7 +90,7 @@ const DroughtResult = () => {
       }else{
         setLayerList([])
       }
-    },[text, startDate, endDate])
+    },[searchOn, startDate, endDate])
 
     // 초기화
     useEffect(()=>{

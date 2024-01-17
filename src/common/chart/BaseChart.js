@@ -105,7 +105,7 @@ const BaseChart = (props, ref) => {
 				ctx.textBaseline = "middle";
 				ctx.font = "13px Arial";
 				ctx.fillStyle = "rgba(255,255,255,0.5)";
-				ctx.fillText("확인가능한 데이터가 없습니다.", width / 2, height / 2);
+				ctx.fillText("", width / 2, height / 2);
 				ctx.restore();
 			  }
 			},

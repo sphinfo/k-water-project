@@ -30,15 +30,15 @@ const FloodL4WaterLevelArea = () => {
         let stationInfos = FloodWaterLevelStationDataConfig
         
         if(selectWaterLevel){
-            const {properties} = selectWaterLevel
+            const {name, date} = selectWaterLevel
             stationInfos.map((obj)=>{
-                if(properties.name.indexOf(obj.name) > -1){
+                if(name.indexOf(obj.name) > -1){
                     setStationInfo(obj)
-                    let date = dayjs(properties.date).format('YYYYMMDD')
-                    let params = {obscd:obj.obscd, startdt: date, enddt: date, output: 'json'}
+                    let paramDate = dayjs(date).format('YYYYMMDD')
+                    let params = {obscd:obj.obscd, startdt: paramDate, enddt: paramDate, output: 'json'}
                     getObsWl(params).then((response)=>{
-                        if(response.result.list.length > 0){
-                            setRealWl(Number(response.result.list[0].wl))
+                        if(response?.result?.list?.length > 0){
+                            setRealWl(Number(response?.result?.list[0].wl))
                         }
                     })
                 }
@@ -52,7 +52,7 @@ const FloodL4WaterLevelArea = () => {
 
         let wl = 0 
         if(selectWaterLevel){
-            wl = selectWaterLevel.properties.value.toFixed(2)
+            wl = selectWaterLevel.value.toFixed(2)
         }
 
         //*******API*************/
@@ -200,7 +200,7 @@ const FloodL4WaterLevelArea = () => {
                         <div className="number-dashboard">
                             <div className="nd-item text-blue">
                                 <h4 className="nd-item-title">위성 수위(EL.m)</h4>
-                                <div className="nd-item-body">{selectWaterLevel && selectWaterLevel.properties.value.toFixed(2)}</div>
+                                <div className="nd-item-body">{selectWaterLevel && selectWaterLevel.value.toFixed(2)}</div>
                             </div>
                             <div className="nd-item">
                                 <h4 className="nd-item-title">현 수위(EL.m)</h4>
@@ -209,7 +209,7 @@ const FloodL4WaterLevelArea = () => {
                             <div className="nd-item">
                                 <h4 className="nd-item-title">계측 차이(EL.m)</h4>
                                 <div className="nd-item-body">{
-                                    selectWaterLevel && satationInfo && ( Number(realWl) - Number(selectWaterLevel.properties.value)).toFixed(2)
+                                    selectWaterLevel && satationInfo && ( Number(realWl) - Number(selectWaterLevel.value)).toFixed(2)
                                 }</div>
                             </div>
                         </div>

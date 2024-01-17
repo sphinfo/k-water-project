@@ -12,8 +12,6 @@ import { getFloodWaterBodyChart } from "@common/axios/flood";
  * 홍수 - 수체 ( 활용주제도 )
  */
 
-const indexName = {0:'수체', 1:'초지', 2:'목지', 3:'나지', 4:'건물'}
-
 const FloodL4WaterBodyWidget = () => {
 
     const dispatch = useDispatch()
@@ -24,7 +22,6 @@ const FloodL4WaterBodyWidget = () => {
 
     const chartRef = useRef()
     const chartInfoRef = useRef({
-        //labels: ['목지','수체','건물','나지','초지'],
         labels: ['목지','건물','나지','초지'],
         datasets: [],
     })
@@ -43,21 +40,16 @@ const FloodL4WaterBodyWidget = () => {
     useEffect(()=>{
 
         if(selectFloodDamageLayer){
-
-            //getFloodWaterBodyChart
             let params = {id: selectFloodDamageLayer.id}
             getFloodWaterBodyChart(params).then((response)=>{
-                if(response.result.data.length > 0){
+                if(response?.result?.data?.length > 0){
 
                     let data = response.result.data
-
-                    //let datas = [data[2],data[0],data[4],data[1],data[3]]
                     let datas = [data[2].area,data[4].area,data[1].area,data[3].area]
                     setMaxArea(G$setNumberFixedKomma((data[2].area+data[4].area+data[1].area+data[3].area)))
     
                     setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(datas).min]}  ${G$setNumberFixedKomma(datas[G$arrayGetMinMax(datas).min])}`)
                     setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(datas).max]}  ${G$setNumberFixedKomma(datas[G$arrayGetMinMax(datas).max])}`)
-                    //['목지','수체','건물','초지','나지']
     
                     chartRef.current.updateOptions = {
                         plugins: {
@@ -100,8 +92,6 @@ const FloodL4WaterBodyWidget = () => {
     
                     chartInfoRef.current.datasets.push({
                         type: 'bar',
-                        // borderColor: ['#35783B', '#557BDF', '#DD59B2', '#A1F8A5', '#F3AC50'],
-                        // backgroundColor: ['#35783B', '#557BDF', '#DD59B2', '#A1F8A5', '#F3AC50'],
                         borderColor: ['#35783B', '#DD59B2', '#F3AC50', '#A1F8A5'],
                         backgroundColor: ['#35783B', '#DD59B2', '#F3AC50', '#A1F8A5'],
                         data: datas,
@@ -110,12 +100,8 @@ const FloodL4WaterBodyWidget = () => {
                     })
     
                     chartRef.current.provider = chartInfoRef.current
-    
                 }
             })
-
-            
-            
         }
 
     }, [selectFloodDamageLayer])

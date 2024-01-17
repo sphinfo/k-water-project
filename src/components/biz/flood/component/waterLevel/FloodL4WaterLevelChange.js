@@ -104,9 +104,9 @@ const FloodL4WaterLevel = () => {
         //*******API*************/
         //수위 지점 select get Feature
         if(selectWaterLevel){
-            let params = {id:selectWaterLevel.properties.id}
+            let params = {name:selectWaterLevel.name}
             getFloodWaterLevelChart(params).then((response)=>{
-                if(response.result.data.length > 0){
+                if(response?.result?.data?.length > 0){
 
                     let datas = response.result.data
                     let date = []  //날짜

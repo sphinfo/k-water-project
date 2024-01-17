@@ -1,7 +1,7 @@
 import { G$makeFormDataParam } from "@gis/util";
 import createAxios from "../creatAxios";
 import CommonConfig from "./CommonConfig";
-
+import FloodConfig from "../flood/FloodConfig";
 
 
 const getL3Layers = async (props={}) => {

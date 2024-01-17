@@ -143,7 +143,7 @@ const FloodL4WaterLevel = () => {
         if(selectWaterLevel){
             setLeveltChange(false)
 
-            let sampleDatas = FloodWaterLevelChartDatas[selectWaterLevel.properties.name]
+            let sampleDatas = FloodWaterLevelChartDatas[selectWaterLevel.name]
 
             let date = []  //날짜
             let estWl = [] //위성기반 계측수위
@@ -200,7 +200,7 @@ const FloodL4WaterLevel = () => {
                 </div>
                 <div className="panel-box info-head">
                     <div className="panel-box-header box-title">
-                        <h3 className="panel-box-title">{selectWaterLevel && selectWaterLevel.properties.title}</h3>
+                        <h3 className="panel-box-title">{selectWaterLevel && selectWaterLevel.title}</h3>
                     </div>
                     <div className="table-frame-wrap">
                     <div className="frame-thead">
@@ -208,9 +208,9 @@ const FloodL4WaterLevel = () => {
                         <div className="frame-th">위성 계측 수위</div>
                     </div>
                     <div className="frame-tbody">
-                        {/* <div className="frame-td">{selectWaterLevel && G$getDateType(selectWaterLevel.properties.date)}</div> */}
+                        {/* <div className="frame-td">{selectWaterLevel && G$getDateType(selectWaterLevel.date)}</div> */}
                         <div className="frame-td">{selectWaterLevel && G$getDateType(minDate)+'~'+ G$getDateType(maxDate)}</div>
-                        <div className="frame-td">{selectWaterLevel && G$setNumberFixedKomma(avg, 1)}<span className="unit">{selectWaterLevel && selectWaterLevel.properties.unit}</span></div>
+                        <div className="frame-td">{selectWaterLevel && G$setNumberFixedKomma(avg, 1)}<span className="unit">{selectWaterLevel && selectWaterLevel.unit}</span></div>
                     </div>
                     </div>
                 </div>

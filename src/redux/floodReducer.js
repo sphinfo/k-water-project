@@ -13,6 +13,7 @@ import {
   FLOOD_RESET_LAYER,
   FLOOD_SET_LAYERS,
   FLOOD_CLEAR_LAEYRS,
+  FLOOD_SEARCH_ON,
 } from './actions';
 import BaseWmsImageLayer from '@gis/layers/BaseWmsImageLayer';
 import { G$removeLayer } from '@gis/util';
@@ -36,7 +37,10 @@ const initialState = {
   selectBox: 'off', //대상지역
 
   //레이어관리
-  layers: {}
+  layers: {},
+
+  //검색시작 ( 지점 selectbox 닫히면 true / 열리면 false * 선택중 * )
+  searchOn: false,
 
 };
 
@@ -67,6 +71,9 @@ function floodReducer(state = initialState, action) {
     //대상지역 selectbox 
     case FLOOD_SELECT_BOX:
       return { ...state, selectBox: action.selectBox}
+
+    case FLOOD_SEARCH_ON:
+      return { ...state, searchOn: action.searchOn}
 
     case FLOOD_SET_LAYERS:
       //setType true => add / false => remove

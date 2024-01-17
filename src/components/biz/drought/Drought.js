@@ -81,7 +81,7 @@ const Drought = () => {
         //*******API*************/
         //let obsList = DroughtObsrvConfig
         getDroughtObs().then((response) => {
-            if(response.result.data.length > 0){
+            if(response?.result?.data?.length > 0){
                 response.result.data.map((obj)=>{
                     droughtObsrvLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})
                 })
@@ -142,7 +142,7 @@ const Drought = () => {
     //         if(selectDroughtLayer){
     //             const {id} = selectDroughtLayer
     //             getL4Layers({id:id}).then((response)=>{
-    //                 if(response.result.data.length > 0){
+    //                 if(response?.result?.data?.length > 0){
     //                     let store = response.result.data[0].dataType.toLowerCase()
     //                     let layer = response.result.data[0].name
     //                     droughtL4Layer.current.changeParameters({store:store, layerId:layer})
@@ -165,7 +165,11 @@ const Drought = () => {
             {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
             {layerIdx > 0 && (
                 <div className="side-content">
-                    <BaseSelectExpUnt baseName={'Drought'}/>
+                    {
+                        obsrvTab === 'soilMoisture' &&
+                        <BaseSelectExpUnt baseName={'Drought'}/>
+                    }
+                    
                     <DroughtL4/>
                 </div>
             )}

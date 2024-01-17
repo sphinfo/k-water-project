@@ -31,7 +31,7 @@ const DroughtObsrv = () => {
     const rows = useMemo(()=>{ return [  ] },[])
     const columns = [
         {accessor: 'date', Header: '관측 일자', width: 120, align: 'center'},
-        {accessor: 'sim', Header: '모의 토양 수분 (vol.%)', width: 200, align: 'center'},
+        {accessor: 'simGrid', Header: '모의 토양 수분 (vol.%)', width: 200, align: 'center'},
         {accessor: 'obs', Header: '실측 토양 수분 (vol.%)', width: 200, align: 'center'},
     ]
 
@@ -82,6 +82,8 @@ const DroughtObsrv = () => {
                           size: 10,
                         },
                     },
+                    min: 0,
+                    max: 60
                     
                 },
                 'y2': {
@@ -98,6 +100,8 @@ const DroughtObsrv = () => {
                           size: 10,
                         },
                     },
+                    min: 0,
+                    max: 600
                 },
                 x: {
                     display:true,
@@ -129,7 +133,7 @@ const DroughtObsrv = () => {
             chartInfoRef.current.datasets = []
 
             getDroughtObsMoisture({code:selectObs.properties.code}).then((response)=>{
-                if(response.result.data.length > 0){
+                if(response?.result?.data?.length > 0){
 
                     let label = []  //날짜 x 축
                     let precipitation = [] // 강우량
@@ -147,10 +151,13 @@ const DroughtObsrv = () => {
                         precipitation.push(obj.precipitation  === '' ? NaN : Number(obj.precipitation))
                         obs.push(obj.obs  === '' ? NaN : Number(obj.obs))
                         sim.push(obj.sim  === 0 ? NaN : Number(obj.sim))
+                        obj.simGrid = obj.sim === 0 ? '-' : Number(obj.sim).toFixed(2)
 
                         obj.obs = Number(obj.obs).toFixed(2)
                         obj.precipitation = Number(obj.precipitation).toFixed(2)
                         obj.sim = Number(obj.sim).toFixed(2)
+
+                        
 
                         avg += Number(obj.obs)
                         avg2 += (Number(obj.obs) - Number(obj.sim))
@@ -158,8 +165,8 @@ const DroughtObsrv = () => {
                         
                     })
 
-                    setAvg(avg / response.result.data.length)
-                    setAvg2(avg2 / response.result.data.length)
+                    setAvg(avg / (response?.result?.data?.length))
+                    setAvg2(avg2 / (response?.result?.data?.length))
 
                     //강우(bar)        /실측토양수분/모의토양수분
                     //precipitation   /obs        /sim
@@ -175,6 +182,18 @@ const DroughtObsrv = () => {
                         data: precipitation,
                     })
                     
+                    
+                    chartInfoRef.current.datasets.push({
+                        label: '모의 토양 수분',
+                        type: 'line',
+                        yAxisID: 'y1',
+                        pointRadius: 2,
+                        borderWidth: 0,
+                        borderColor: '#000000',
+                        backgroundColor: '#ff3333',
+                        data:sim,
+                    })
+
                     chartInfoRef.current.datasets.push({
                         label: '실측 토양 수분',
                         type: 'line',
@@ -186,16 +205,6 @@ const DroughtObsrv = () => {
                         data:obs,
                     })
 
-                    chartInfoRef.current.datasets.push({
-                        label: '모의 토양 수분',
-                        type: 'line',
-                        yAxisID: 'y1',
-                        pointRadius: 2,
-                        borderWidth: 0,
-                        borderColor: '#FF9933',
-                        backgroundColor: '#FF9933',
-                        data:sim,
-                    })
 
                     
 

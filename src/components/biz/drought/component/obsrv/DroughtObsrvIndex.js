@@ -130,7 +130,7 @@ const DroughtObsrvIndex = () => {
 
             getDroughtObsIndex({code:selectObs.properties.code}).then((response)=>{
 
-                if(response.result.data.length > 0){
+                if(response?.result?.data?.length > 0){
 
                     chartInfoRef.current.datasets = []
 

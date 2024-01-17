@@ -14,7 +14,7 @@ const SafetyResult = () => {
     const dispatch = useDispatch()
 
     // 안전 검색조건
-    const { text, selectBox, select4Level, select3Level } = useSelector(state => state.safety)
+    const { text, selectBox, select4Level, select3Level, searchOn } = useSelector(state => state.safety)
 
     const [layerList, setLayerList] = useState([])
 
@@ -49,22 +49,25 @@ const SafetyResult = () => {
 
       dispatch({type:SAFETY_RESET_LAYER})
 
-      if(text.name !== ''){
+      if(searchOn && text.length > 0){
 
         if (timer) {
           clearTimeout(timer)
         }
 
         const delayRequest = setTimeout(() => {
-          if (text.code && text.code !== '') {
+          if (text.length > 0) {
             
             //변위 등급 초기화
             setDisplaceLevelData(false)
+
+            let location = text.map(item => item.code).join(',')
+
             //*******API************* getL3Layers: 레벨3 결과값/
-            let params = {type:'safety', level: 'L3', location: text.code, from:dayjs().format('YYYYMMDD'), to:dayjs().format('YYYYMMDD')}
+            let params = {type:'safety', level: 'L3', location: location, from:dayjs().format('YYYYMMDD'), to:dayjs().format('YYYYMMDD')}
             getL3Layers(params).then((response) => {
               
-              if(response.result.data.length > 0){
+              if(response?.result?.data?.length > 0){
 
                 let resultList = []
                 response.result.data.map((obj)=>{
@@ -109,7 +112,7 @@ const SafetyResult = () => {
         setLayerList([])
       }
       
-    },[text])
+    },[searchOn])
     
     
 

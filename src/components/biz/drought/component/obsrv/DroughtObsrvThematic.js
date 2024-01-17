@@ -40,7 +40,7 @@ const DroughtObsrvThematic = () => {
                     <div className="switch-list">
                         <div className="switch-list-item">
                             <span className="switch-label">가뭄지수</span>
-                            <Switch className="float-box-switch" disabled checked={obsIndexTab} onClick={() => {
+                            <Switch className="float-box-switch" checked={obsIndexTab} onClick={() => {
                                 setObsIndexTab(!obsIndexTab)
                             }}></Switch>
                         </div>

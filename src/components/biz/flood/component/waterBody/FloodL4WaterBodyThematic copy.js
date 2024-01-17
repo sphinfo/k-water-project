@@ -31,7 +31,7 @@ const FloodL4WaterBodyThematic = () => {
 
             //*******API*************  4레벨 침시피해지도 가져오기/
             getL4Layers({id:selectFloodLayer.id}).then((response)=>{
-                if(response.result.data.length > 0){
+                if(response?.result?.data?.length > 0){
                     let store = response.result.data[0].dataType
                     let layer = response.result.data[0].name
                     setLayerInfo({...response.result.data[0], store, layer})

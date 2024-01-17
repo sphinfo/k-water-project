@@ -17,6 +17,7 @@ import {
   SAFETY_RESET_LAYER,
   SAFETY_SET_LAYERS,
   SAFETY_CLEAR_LAEYRS,
+  SAFETY_SEARCH_ON,
 } from './actions';
 import safetyLayers from '@gis/layers/safety/safetyLayers';
 import BaseWmsImageLayer from '@gis/layers/BaseWmsImageLayer';
@@ -50,7 +51,9 @@ const initialState = {
   //검색박스 ON / OFF
   selectBox : 'off',
   
-  layers: {}
+  layers: {},
+
+  searchOn: false
 };
 
 function safetyReducer(state = initialState, action) {
@@ -102,6 +105,9 @@ function safetyReducer(state = initialState, action) {
     //대상지역 selectbox 
     case SAFETY_SELECT_BOX:
       return { ...state, selectBox: action.selectBox}
+
+    case SAFETY_SEARCH_ON:
+      return { ...state, searchOn: action.searchOn}
 
     case SAFETY_SET_LAYERS:
       //setType true => add / false => remove

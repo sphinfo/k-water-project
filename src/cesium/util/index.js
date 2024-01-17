@@ -2,6 +2,7 @@ import { Cartesian3, Cartographic, Color, Ellipsoid, Math as MathC, PolygonGraph
 import createColormap from "colormap";
 import MapManager from "../MapManager";
 import MainWidgetManager from "@common/widget/WidgetManager";
+import SelectBoxConfig from "@gis/config/SelectBoxConfig";
 
 /* 레이어 추가 */
 const G$addLayer = (l) =>{
@@ -400,8 +401,8 @@ const G$flyToPoint= (point, zoom, pitch) =>{
 
 
 /* 위젯 추가 */
-const G$addWidget = (wId,props) =>{
-    MainWidgetManager.add(wId,props);
+const G$addWidget = (wId,props, config) =>{
+    MainWidgetManager.add(wId,props, config);
 }
 
 /* 위젯 닫기 */
@@ -558,6 +559,23 @@ const G$arrayGetMinMax = (arr=[]) =>{
     return {min, max}
 }
 
+const G$selectBoxFilter=(filters=[])=>{
+    return SelectBoxConfig.map(category => {
+        return {
+            ...category,
+            items: category.items.filter(item => filters.includes(item.code))
+        };
+    }).filter(category => category.items.length > 0)
+}
+
+const G$findEngNmFilter=(name=null)=>{
+    return SelectBoxConfig.map(category => {
+        return {
+            items: category.items.filter(item => name.indexOf(item.code) > -1)
+        };
+    }).filter(category => category.items.length > 0)
+}
+
 export {
     G$addLayer,
     G$removeLayer,
@@ -610,4 +628,7 @@ export {
 
     G$4326to3857,
     G$arrayGetMinMax,
+
+    G$selectBoxFilter,
+    G$findEngNmFilter
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FLOOD_DAMAGE_LAYER, FLOOD_RESET, FLOOD_SELECT_WATER_LEVEL, SET_SIDE_PANEL } from "@redux/actions";
+import { FLOOD_RESET, FLOOD_SELECT_WATER_LEVEL } from "@redux/actions";
 import { G$addWidget, G$flyToPoint, G$paramWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import WaterLevelOverlay from "@gis/util/overlay/WaterLevelOverlay";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
@@ -11,7 +11,6 @@ import FloodResult from "./FloodResult";
 import pin from "@images/map-icon-st.svg"
 import pin2 from "@images/map-icon-st-clicked.svg"
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
-import { getFloodObs } from "@common/axios/flood";
 import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
 
 /* 홍수 */
@@ -21,26 +20,24 @@ const Flood = () => {
   
     /**
      * bizName : biz 명칭
-     * selectFloodLayer : 홍수 - 수체 레이어 선택
      * selectFloodDamageLayer : 홍수 - 수체 - 침수피해 레이어 선택
+     * layers: wms 레이어 목록
      */
-    const { bizName, selectFloodLayer, selectFloodDamageLayer, selectWaterLevel, text, floodResultTab, layers } = useSelector(state => state.flood)
+    const { bizName, selectFloodDamageLayer, selectWaterLevel, floodResultTab, layers } = useSelector(state => state.flood)
 
-    //홍수 - 수체 레이어 (3level)
-    const floodLayer = useRef()
     //홍수 - 수체 - 변화탐지 레이어  (4level)
     const floodDamageLayer = useRef()
 
     //홍수 - 수위 Point Wfs
     const floodWaterLevelLayer = useRef()
 
-    const [waterObsList, setWaterObsList] = useState([])
+    //const [waterObsList, setWaterObsList] = useState([])
 
-    const [station, setStation] = useState(false)
+    //const [station, setStation] = useState(false)
 
     /* 레이어 선택 callback Ref */
     const layerSelectRef = useRef();
-    useImperativeHandle(layerSelectRef, ()=>({
+    /*useImperativeHandle(layerSelectRef, ()=>({
         getFeatures(features){
 
             //수위일시 onclick 이벤트 활성화
@@ -63,7 +60,7 @@ const Flood = () => {
             }
             
         }
-    }))
+    }))*/
 
     const [layerIdx, setLayerIdx] = useState(0)
     useEffect(()=>{
@@ -74,41 +71,44 @@ const Flood = () => {
     
     //수위 선택되면 chart widget 생성
     useEffect(()=>{
+        floodWaterLevelLayer.current?.entities.removeAll()
         if(selectWaterLevel){
             G$addWidget('FloodL4WaterLevelWidget')
+            //수위 데이터 선택되면 feature 그리고 이동
+            G$flyToPoint([selectWaterLevel.lng, selectWaterLevel.lat], 46000)
+            floodWaterLevelLayer.current._addFeature({lng:selectWaterLevel.lng, lat:selectWaterLevel.lat, properties:selectWaterLevel, hover: true})
+            G$paramWidget('FloodL4WaterLevelWidget', {subTitle: selectWaterLevel.krNm})
         }else{
             G$removeWidget('FloodL4WaterLevelWidget')
-            setStation(false)
         }
     },[selectWaterLevel])
 
     /* 초기 세팅 사항 */
     useEffect(()=>{
 
-        //홍수 - 수위 Point Wfs
+        //홍수 - 수위 지점 point
         floodWaterLevelLayer.current = new BaseEntityCollection({name:'floodWaterLevelLayer', image: pin, overlay: new WaterLevelOverlay()})
 
-        //홍수 - 4레벨
+        //홍수 - 수체 - 침수피해(l4)
         floodDamageLayer.current = new BaseWmsImageLayer({store:'flood', fly: false})
 
         //레이어 클릭 callback 등록
-        GisLayerClickTool.addBiz(bizName, layerSelectRef, ['floodWaterLevelLayer'])
+        //GisLayerClickTool.addBiz(bizName, layerSelectRef, ['floodWaterLevelLayer'])
         //레이어 클릭 callback 활성화
-        GisLayerClickTool.enable(bizName)
+        //GisLayerClickTool.enable(bizName)
 
         //*******API************* 초기 지점 데이터 가져오기/
-        getFloodObs().then((response) => {
+        /*getFloodObs().then((response) => {
             let obsList = []
-            if(response.result.data.length > 0){
+            if(response?.result?.data?.length > 0){
                 response.result.data.map((obj)=>{
                     obsList.push(obj)
                     floodWaterLevelLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})
                 })
             }
-
             //지점정보 저장
             setWaterObsList(obsList)
-        })
+        })*/
 
         return()=>{
             //범례 삭제
@@ -142,10 +142,7 @@ const Flood = () => {
             const {store, layer} = selectFloodDamageLayer
             floodDamageLayer.current.changeParameters({store:store, layerId:layer})
             floodDamageLayer.current.setOpacity(0.5)
-
         }else{
-            
-
             floodDamageLayer.current.remove()
             G$removeWidget('BaseLegendWidget')
         }
@@ -182,24 +179,30 @@ const Flood = () => {
             {/* 검색조건 영역   ex) 공토영역이 될듯 ? ( 검색 TEXT, 기간 설정 등.. )*/}
             <FloodOptions />
             {/* 결과결과 영역 */}
-            <FloodResult waterObsList={waterObsList}/>
+            {/** <FloodResult waterObsList={waterObsList}/>*/}
+            <FloodResult />
 
             {/* 홍수 3레벨 레이어 선택되었을시 ( 활용주제도 open )*/}
 
 
-            {/* 표출 단위 선택 영역 */}
-            {
-                layerIdx > 1 && 
-                (
-                    <div className="side-content">
-                        <BaseSelectExpUnt baseName={'Flood'}/>
-                    </div>
-                )
-            }
+            
 
-            {layerIdx === 1 && (
+            {layerIdx > 0 && (
                 <div className="side-content">
-                    <FloodL4/>
+                    {/* 표출 단위 선택 영역 */}
+                    {
+                        layerIdx > 0 && !selectFloodDamageLayer &&
+                        (
+                            <BaseSelectExpUnt baseName={'Flood'}/>
+                        )
+                    }
+                    {
+                        layerIdx === 1 && 
+                        (
+                            <FloodL4/>
+                        )
+                    }
+                    
                 </div>
             )}
         </>

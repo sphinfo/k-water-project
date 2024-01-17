@@ -12,6 +12,7 @@ import {
   ENV_RESET_LAYER,
   ENV_SET_LAYERS,
   ENV_CLEAR_LAEYRS,
+  ENV_SEARCH_ON,
 } from './actions';
 import { G$removeLayer } from '@gis/util';
 import BaseWmsImageLayer from '@gis/layers/BaseWmsImageLayer';
@@ -34,7 +35,9 @@ const initialState = {
   //대상지역 selectbox
   selectBox: 'off',
   
-  layers: {}
+  layers: {},
+
+  searchOn: false
 };
 
 function environmentReducer(state = initialState, action) {
@@ -62,7 +65,8 @@ function environmentReducer(state = initialState, action) {
     case ENV_SELECT_BOX:
       return { ...state, selectBox: action.selectBox}
 
-
+    case ENV_SEARCH_ON:
+      return { ...state, searchOn: action.searchOn}
       
     case ENV_SET_LAYERS:
 

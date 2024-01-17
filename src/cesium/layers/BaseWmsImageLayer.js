@@ -182,6 +182,16 @@ class BaseWmsImageLayer {
 						this.props.overlay._addOverlay({coord: G$cartesianToLongLat(newPosition), features:response.data.features[0], col:this.props.col})
 					}
 				})
+            };
+
+            this.hoverHandler = new ScreenSpaceEventHandler(MapManager.map.canvas)
+            this.hoverHandler.setInputAction(debounce(mouseMoveAction, 15), ScreenSpaceEventType.MOUSE_MOVE)
+        }
+    }
+}
+
+export default BaseWmsImageLayer;
+
 
 				// let wmsPromises = []
 				// wmsPromises.push(this._axios.getFeaturePosition(this.props.store, this.props.layerId, 'cql', this.props.wmsUrl, movement.endPosition))
@@ -194,12 +204,3 @@ class BaseWmsImageLayer {
 				// 			this.props.overlay._addOverlay({coord: G$cartesianToLongLat(newPosition), features:wmsObj.data.features[0]})
 				// 		}
 				// 	})
-            };
-
-            this.hoverHandler = new ScreenSpaceEventHandler(MapManager.map.canvas)
-            this.hoverHandler.setInputAction(debounce(mouseMoveAction, 5), ScreenSpaceEventType.MOUSE_MOVE)
-        }
-    }
-}
-
-export default BaseWmsImageLayer;

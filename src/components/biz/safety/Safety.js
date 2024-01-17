@@ -67,10 +67,10 @@ const Safety = () => {
 
         //안전 3레벨 레이어 생성
         
-        safety3LevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:'',fly:false})
+        safety3LevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:''})
 
         //안전 4레벨 레이어 생성 wms로 될거같음
-        safety4LevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:'',fly:false})
+        safety4LevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:''})
 
         //변위 등급 레이어 생성
         safetyDisplaceLevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:''})
@@ -169,11 +169,11 @@ const Safety = () => {
             const {store, layer} = select3Level
             safety3LevelLayerRef.current.changeParameters({store:store, layerId:layer})
             
-            if(text.name.indexOf('댐') > -1){
+            /*if(text.name.indexOf('댐') > -1){
                 if(text.x && text.y && text.z){
                     G$flyToPoint([text.y, text.x], text.z)
                 }
-            }
+            }*/
             
             //callback 레이어로 추가
             GisLayerClickTool.addLayer(bizName, [`${store.toLowerCase()}:${layer}`])

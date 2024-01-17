@@ -14,6 +14,7 @@ import {
   DROUGHT_SELECT_LAYERS,
   DROUGHT_SET_LAYERS,
   DROUGHT_CLEAR_LAEYRS,
+  DROUGHT_SEARCH_ON,
 } from './actions';
 import BaseWmsImageLayer from '@gis/layers/BaseWmsImageLayer';
 import { G$removeLayer } from '@gis/util';
@@ -34,9 +35,9 @@ const initialState = {
   selectBox: 'off', //대상지역
 
   //가뭄 레이어 
-  layers: {}
+  layers: {},
 
-  
+  searchOn:false,
 };
 
 function droughtReducer(state = initialState, action) {
@@ -70,6 +71,8 @@ function droughtReducer(state = initialState, action) {
     case DROUGHT_SELECT_BOX:
       return { ...state, selectBox: action.selectBox}
 
+    case DROUGHT_SEARCH_ON:
+      return { ...state, searchOn: action.searchOn}
 
     case DROUGHT_SET_LAYERS:
 

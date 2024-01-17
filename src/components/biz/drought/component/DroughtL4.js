@@ -24,13 +24,15 @@ const DroughtL4 = () => {
 
     return (
         <>
-            {   selectObs && ( 
-                <>
-                    <DroughtObsrvThematic />
-                    <BaseOragDataInfo a={true}/>
-                </>
-                
-            ) }
+            {   
+                selectObs && 
+                ( 
+                    <>
+                        <DroughtObsrvThematic />
+                        <BaseOragDataInfo a={true}/>
+                    </>
+                ) 
+            }
         </>
     )
 }

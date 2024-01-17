@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$getDateType } from "@gis/util";
 import EnvironmentResultTab from "./EnvironmentResultTab";
-import { ENV_RESET, ENV_RESET_LAYER, ENV_SELECT_BOX, ENV_SELECT_LAYER } from "@redux/actions";
+import { ENV_CLEAR_LAEYRS, ENV_RESET, ENV_RESET_LAYER, ENV_SELECT_BOX, ENV_SELECT_LAYER, ENV_SET_LAYERS } from "@redux/actions";
 import { Button } from "@mui/material";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import { getL3Layers } from "@common/axios/common";
@@ -25,7 +25,7 @@ const EnvironmentResult = () => {
     const dispatch = useDispatch()
 
     // 가뭄 검색조건
-    const { text, startDate, endDate, environmentResultTab, selectBox } = useSelector(state => state.environment)
+    const { searchOn, text, startDate, endDate, environmentResultTab, selectBox } = useSelector(state => state.environment)
 
     const [layerList, setLayerList] = useState([])
 
@@ -44,17 +44,18 @@ const EnvironmentResult = () => {
       setGreenCnt(0)
       setLandCoverCnt(0)
 
-      if(text.name !== ''){
+      if(searchOn && text.length > 0){
         
         if (timer) {
           clearTimeout(timer)
         }
         const delayRequest = setTimeout(() => {
-          if (text.code && text.code !== '') {
+          if (text.length > 0) {
+            let location = text.map(item => item.code).join(',')
             //*******API************* getL3Layers: 레벨3 결과값/
-            let params = {type:'environment', level: 'L3', location: text.code, from: startDate, to: endDate}
+            let params = {type:'environment', level: 'L3', location: location, from: startDate, to: endDate}
             getL3Layers(params).then((response) => {
-              if(response.result.data.length > 0){
+              if(response?.result?.data?.length > 0){
                 let resultList = []
                 response.result.data.map((obj)=>{
 
@@ -100,7 +101,7 @@ const EnvironmentResult = () => {
         setLayerList([])
       }
       
-    },[text, startDate, endDate])
+    },[searchOn, startDate, endDate])
 
     
 
@@ -109,30 +110,33 @@ const EnvironmentResult = () => {
         setLayerList([])
     },[])
 
+    const groupRef = useRef('')
+
     //체크박스 다시 그리기
     const checkboxChange = (outerIndex, innerIndex) =>{
 
       //layerList 전체 데이터
       const updatedList = layerList.map((subArray, i) => {
-
           if (outerIndex === i) {
               const updatedSubArray = subArray.map((item, j) => {
                   if (innerIndex === j) {
-                      return { ...item, checked: !item.checked };
+                      return { ...item, checked: !item.checked }
                   }
-                  return { ...item, checked: false }; // 기존 선택 해제
+                  return { ...item }
               });
-              return updatedSubArray;
+              return updatedSubArray
           }
-          return subArray.map(item => ({ ...item, checked: false })); // 다른 항목들의 선택 해제
+          return subArray.map(item => ({ ...item, checked: false })) // 다른 항목들의 선택 해제
       });
       setLayerList(updatedList);
 
       //이벤트 발생 위치 확인후 
-      const selectedItem = updatedList[outerIndex][innerIndex];
-      let value = !selectedItem.checked ? false : selectedItem
-
-      dispatch({ type: ENV_SELECT_LAYER, selectEnvironmentLayer: value });
+      const selectedItem = updatedList[outerIndex][innerIndex]
+      if(groupRef.current !== selectedItem.group){
+        groupRef.current = selectedItem.group
+        dispatch({ type: ENV_CLEAR_LAEYRS })  
+      }
+      dispatch({ type: ENV_SET_LAYERS, layerInfo: selectedItem, setType: selectedItem.checked })
 
     }
 

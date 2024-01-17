@@ -19,7 +19,7 @@ const FloodL4WaterLevelWidget = () => {
     useEffect(()=>{
 
         return () =>{
-            selectWaterLevel.entity.billboard.image = pin
+            //selectWaterLevel.entity.billboard.image = pin
             dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: false})
         }
 
@@ -28,16 +28,16 @@ const FloodL4WaterLevelWidget = () => {
     useEffect(()=>{
 
         if(selectWaterLevel){
-            const {properties} = selectWaterLevel
-            setTime(dayjs(properties.date).format('YYYY년 MM월 DD일'))
+            const {name, value, date} = selectWaterLevel
+            setTime(dayjs(date).format('YYYY년 MM월 DD일'))
 
             let stationInfos = FloodWaterLevelStationDataConfig
             stationInfos.map((obj)=>{
-                if(properties.name.indexOf(obj.name) > -1){
+                if(name.indexOf(obj.name) > -1){
                     //저수위
-                    if(Number(obj.c5) > properties.value){
+                    if(Number(obj.c5) > value){
                         setLevelType('저')
-                    }else if(Number(obj.c2) > properties.value && Number(obj.c5) < properties.value){
+                    }else if(Number(obj.c2) > value && Number(obj.c5) < value){
                         setLevelType('정상')
                     }else{
                         setLevelType('만')

@@ -28,7 +28,7 @@ class WaterLevelOverlay {
         // h4 요소 생성
         const title = document.createElement('h4')
         title.className = 'map-popup-box-title'
-        title.textContent = `${properties.name}`
+        title.textContent = `${properties.krNm}`
 
         // 요소들을 구조에 맞게 조립
         widgetHeader.appendChild(title)
