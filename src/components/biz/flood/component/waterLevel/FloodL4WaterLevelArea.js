@@ -22,7 +22,7 @@ const FloodL4WaterLevelArea = () => {
         backgroundColor: '#C5DCFF'
     })
 
-    const [realWl ,setRealWl] = useState()
+    const [realWl ,setRealWl] = useState(0)
 
     //** 샘플 데이터 에서 수위 정보 추출 */
     useEffect(()=>{
@@ -209,7 +209,7 @@ const FloodL4WaterLevelArea = () => {
                             <div className="nd-item">
                                 <h4 className="nd-item-title">계측 차이(EL.m)</h4>
                                 <div className="nd-item-body">{
-                                    selectWaterLevel && satationInfo && ( Number(realWl) - Number(selectWaterLevel.value)).toFixed(2)
+                                    selectWaterLevel && satationInfo && realWl !== 0 && ( Number(realWl) - Number(selectWaterLevel.value)).toFixed(2)
                                 }</div>
                             </div>
                         </div>

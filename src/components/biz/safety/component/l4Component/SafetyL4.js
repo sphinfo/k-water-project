@@ -6,15 +6,26 @@ import SafetyL4CompBtn from "./SafetyL4CompBtn";
 /**
  * 안전 활용주제도
  */
-const SafetyL4 = () => {
+const SafetyL4 = ({ mainLayer, ...props}) => {
 
     return (
         <>
           <div className="side-content-top">
-            <SafetyL4CompBtn />
+            <div>{mainLayer?.layerId}</div>
+            {
+              //변위탐지 - 고성산란체 분산산란체 일시
+              (mainLayer?.layerId?.indexOf('L3TDA1') > -1 || mainLayer?.layerId?.indexOf('L3TDA2') > -1) &&
+              <SafetyL4CompBtn />
+            }
+            
           </div>
           <div className="side-content-bottom">
-            <SafetyL4Thematic />
+            {
+              //변위탐지 - 고성산란체 일시 l4 검색
+              mainLayer?.layerId?.indexOf('L3TDA1') > -1 &&
+              <SafetyL4Thematic />
+            }
+            
             <BaseOragDataInfo a={true} b={true}/>
           </div>
         </>

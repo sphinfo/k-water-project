@@ -1,6 +1,6 @@
-import React, { useEffect, useImperativeHandle, useRef } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET, SET_SIDE_PANEL, SAFETY_CLICK_MODE } from "@redux/actions";
+import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET, SET_SIDE_PANEL, SAFETY_CLICK_MODE, SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
 import { G$addWidget, G$flyToPoint, G$removeLayer, G$removeWidget } from "@gis/util";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import SafetyOptions from "./component/SafetyOptions";
@@ -24,17 +24,17 @@ const Safety = () => {
      * select4Level : 표출데이터 선택
      * displaceLevel : 변위등릅 레이어 선택
      */
-    const {bizName, select3Level, select4Level, displaceLevel, compLayerClick, text, selectFeature} = useSelector(state => state.safety)
+    const {bizName, select4Level, displaceLevel, compLayerClick, selectFeature, layers} = useSelector(state => state.safety)
 
     {/** 안전3레벨 / 안전4레벨 / 변위등급 ( 데이터가 있는한 정적인 레이어 ) */}
     //안전 3레벨 레이어 생성
-    const safety3LevelLayerRef = useRef()
+    //const safety3LevelLayerRef = useRef()
 
     //안전 4레벨 레이어 생성
     const safety4LevelLayerRef = useRef()
 
     //변위등급 레이어 생성
-    const safetyDisplaceLevelLayerRef = useRef()
+    //const safetyDisplaceLevelLayerRef = useRef()
 
     const overlayRef = useRef(new SafetyOverlay())
 
@@ -42,38 +42,32 @@ const Safety = () => {
     const layerSelectRef = useRef();
     useImperativeHandle(layerSelectRef, ()=>({
         getFeatures(features){
-            if(compLayerClick){
+            if(layerIdx === 1){
+                if(compLayerClick){
                 
-                if(features[0].properties.GRAY_INDEX){
-                    dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: features[0]})
+                    //변위탐지가 아닐시
+                    if(features[0]?.id?.indexOf('L4DC') === -1){
+                        const featureInfo = {...features[0], ...layers[features[0]?.id]}
+                        dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: featureInfo})
+                    }
+                    
                 }
-                
-            }
 
-            //변위등급이 켜져 있는 경우 ovelay 
-            if(displaceLevel){
-
-                G$addWidget('SafetyL4LevelDataWidget')
-
-                const {clickPosition, properties} = features[0]
-                dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: features[0]})
-
-                overlayRef.current._addOverlay(clickPosition.longitude, clickPosition.latitude, properties)
+                //변위등급이 켜져 있는 경우 ovelay 
+                if(displaceLevel){
+                    G$addWidget('SafetyL4LevelDataWidget')
+                    const {clickPosition, properties} = features[0]
+                    dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: features[0]})
+                    overlayRef.current._addOverlay(clickPosition.longitude, clickPosition.latitude, properties)
+                }
             }
         }
     }));
 
     useEffect(()=>{
 
-        //안전 3레벨 레이어 생성
-        
-        safety3LevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:''})
-
         //안전 4레벨 레이어 생성 wms로 될거같음
         safety4LevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:''})
-
-        //변위 등급 레이어 생성
-        safetyDisplaceLevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:''})
 
         //레이어 클릭 callback 등록
         GisLayerClickTool.addBiz(bizName, layerSelectRef, [])
@@ -82,13 +76,8 @@ const Safety = () => {
 
         return()=>{
 
-            //안전 3레벨 레이어 삭제
-            G$removeLayer(safety3LevelLayerRef.current.layer)
             //안전 4레벨 레이어 삭제
             G$removeLayer(safety4LevelLayerRef.current.layer)
-            //안전 4레벨 레이어 삭제
-            G$removeLayer(safetyDisplaceLevelLayerRef.current.layer)
-            //레이어 클릭 callback 비활성화
             GisLayerClickTool.destroyBiz(bizName)
 
             //조건 리셋
@@ -114,184 +103,72 @@ const Safety = () => {
 
     },[selectFeature])
 
-
-    /* 변위등급 on / off */
+    const [layerIdx, setLayerIdx] = useState(0)
+    const [mainLayer, setMainLayer] = useState(false)
     useEffect(()=>{
+        let layerCnt = Object.keys(layers).length
+        setLayerIdx(layerCnt)
+        setMainLayer(false)
 
+        //click이벤트 초기화
         GisLayerClickTool.resetLayer(bizName)
         dispatch({type: SAFETY_CLICK_MODE, compLayerClick: false})
+        dispatch({type: SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: false})
 
-        if(displaceLevel){
+        //하나만 선택되었을때 레이어 클릭이벤트 활성화
+        if(layerCnt === 1){
+            Object.keys(layers).map((layerId, i)=>{
+                console.info(layers[layerId])
+                const { store, layer, ...other } = layers[layerId]?.props
+                if(i === 0){
+                    //클릭이벤트 등록
+                    GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
+                    setMainLayer(other)
+                    //변위등급이 켜졌을경우 변위등급 widget open ( L4DC 변위등급 )
+                    if(layer.indexOf('L4DC') > -1){
+                        dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: true})
+                        G$addWidget('SafetyL4LevelDataWidget')
+                    }
 
-            //변위등급 위젯 띄우기
-            G$addWidget('SafetyL4LevelDataWidget')
-
-            //변위 등급 선택시 비교탭 off 및 비교클릭이벤트 해제
-            safety3LevelLayerRef.current.setVisible(false)
-            safety4LevelLayerRef.current.setVisible(false)
-
-            const {store, layer} = displaceLevel
-            safetyDisplaceLevelLayerRef.current.changeParameters({store:store, layerId:layer})
-            GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
-
-        }else{
-
-            G$removeWidget('SafetyL4LevelDataWidget')
-            safetyDisplaceLevelLayerRef.current.remove()
-
-            //변위등급을 껏을시 4레벨이 선택되어 있으면 4레벨만 켜기  /  4레벨이 꺼져있으면 3레벨 켜기
-            if(select4Level){
-                const {store, layer} = select4Level
-                GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
-                safety4LevelLayerRef.current.setVisible(true)
-            }else{
-                const {store, layer} = select3Level
-                GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
-                safety3LevelLayerRef.current.setVisible(true)
-            }
-
-            //오버레이 삭제
-            overlayRef.current.removeAll()
-
-            //범례 삭제
-            G$removeWidget('BaseLegendWidget')
-            G$removeWidget('BaseLegendgGradientWidget')
-        }
-
-    },[displaceLevel])
-
-    //안전 3레벨 선택시 레이어 on / off
-    useEffect(()=>{
-        //callback 리셋
-        GisLayerClickTool.resetLayer(bizName)
-        if(select3Level){
-
-            const {store, layer} = select3Level
-            safety3LevelLayerRef.current.changeParameters({store:store, layerId:layer})
-            
-            /*if(text.name.indexOf('댐') > -1){
-                if(text.x && text.y && text.z){
-                    G$flyToPoint([text.y, text.x], text.z)
                 }
-            }*/
-            
-            //callback 레이어로 추가
-            GisLayerClickTool.addLayer(bizName, [`${store.toLowerCase()}:${layer}`])
-            //console.info(safety3LevelLayerRef.current)
-            //3레벨 선택이 되었을시 4레벨 데이터를 가져와야함 2안을 적용했을시 / 1안이 적용되었으면 조건입력후 4레벨 데이터 가져오기 ( SafetyDisplaceLevelTemp )
-
-
+            })
         }else{
-            //3레벨 선택없을시 삭제
-            safety3LevelLayerRef.current.remove()
-
+            G$removeWidget('SafetyL4LevelDataWidget')
         }
-    },[select3Level])
-
-    //안전 4레벨 선택시 레이어 on / off
-    useEffect(()=>{
-
-        //3레벨 레이어 visible off
-        safety3LevelLayerRef.current.setVisible(false)
-
-        //callback 리셋
-        GisLayerClickTool.resetLayer(bizName)
         
-        //4레벨 레이어가 선택되었을시 3레벨 레이어 OFF 
+    },[layers])
+
+
+    //4레벨 레이어 선택되었을시
+    useEffect(()=>{
+        GisLayerClickTool.resetLayer(bizName)
         if(select4Level){
             const {store, layer} = select4Level
             safety4LevelLayerRef.current.changeParameters({store:store, layerId:layer})
-            
-            if(text.name.indexOf('댐') > -1){
-                if(text.x && text.y && text.z){
-                    G$flyToPoint([text.y, text.x], text.z)
-                }
-            }
-
-            GisLayerClickTool.addLayer(bizName, [`${store.toLowerCase()}:${layer}`])
-
+            GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])   
         }else{
-            //4레벨 레이어 지우기
             safety4LevelLayerRef.current.remove()
+        }
 
-            //3레벨 레이어 켜기
-            safety3LevelLayerRef.current.setVisible(true)
+        
+        if(layerIdx > 0){
+            Object.keys(layers).map((layerId, i)=>{
+                const { store, layer, ...other } = layers[layerId]?.props
 
-            let id = safety3LevelLayerRef.current.layer ? safety3LevelLayerRef.current.layer.id : null
-            //3레벨 레이어 click 콜백 켜기
-            if(id){
-                GisLayerClickTool.addLayer(bizName, [safety3LevelLayerRef.current.layer.id])
-            }
+                //4레벨 레이어가 선택이 되면 기존 레이어들은 hide
+                layers[layerId].layer.show = select4Level ? false : true
+                //4레벨이 해제가 되면 3레벨 레이어 클릭이벤트 등록
+                if(layerIdx === 1){
+                    if(!select4Level){
+                        GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
+                    }
+                }
 
-            dispatch({type:SAFETY_SELECT_4_LEVEL_RESET})
+            })
         }
 
     },[select4Level])
 
-
-    //범례 change 이벤트
-    useEffect(()=>{
-
-        G$removeWidget('BaseLegendWidget')
-        G$removeWidget('BaseLegendgGradientWidget')
-        dispatch({type: SAFETY_CLICK_MODE, compLayerClick: false})
-
-
-        //변위등급이 켜져잇는경우 STEP 1
-        if(displaceLevel){
-            //3,4 레벨 범례 off
-
-            //변위등급 범례 on
-            G$addWidget('BaseLegendWidget', { 
-                params: {
-                    title:'L4TD 변위등급', 
-                    datas: [{label:'안전', color:'BLUE'}
-                        ,{label:'보통', color:'GREEN'}
-                        ,{label:'위험', color:'RED'}
-                ]} 
-            })
-        }else{
-
-            G$removeWidget('SafetyL4LevelDataWidget')
-
-            //변위등급 범례 on
-            //3레벨,4레벨 켜져있는경우 ( 4레벨만 on )
-            if(select3Level && select4Level){
-
-                G$addWidget('BaseLegendgGradientWidget', { 
-                    params: {title:'L4TD 시계열변위', 
-                    min:-1, 
-                    max: 1, 
-                    datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}})
-
-                
-            }else{
-                //3레벨이 켜져있는경우
-                if(select3Level){
-                    G$addWidget('BaseLegendgGradientWidget', {
-                        params: {title:'변위 속도(cm/year)', 
-                        min:-5, 
-                        max: 5, 
-                        datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}})
-
-                }
-                
-            }
-
-        }
-
-        if(!select3Level && !select4Level && !displaceLevel){
-            G$removeWidget('BaseLegendgGradientWidget')
-            G$removeWidget('BaseLegendWidget')
-        }
-
-
-    },[select3Level, select4Level, displaceLevel])
-
-    //사이드 위치 조정 on
-    useEffect(()=>{
-        select3Level ? dispatch({type: SET_SIDE_PANEL, panelSide: true}) : dispatch({type: SET_SIDE_PANEL, panelSide: false})
-    },[select3Level])
 
     return (
         <>
@@ -301,10 +178,10 @@ const Safety = () => {
             {/* 결과결과 영역 */}
             <SafetyResult />
 
-            {/* 4레벨 결과 영역 ( 3레벨이 선택되었을시 4레벨창 open )*/}
-            {select3Level && (
+            {/* 4레벨 결과 영역 ( 3레벨이 레이어가 1개 선택되었을시 / 여러개 선택이 되면 레이어 보는 기능 )*/}
+            {layerIdx === 1 && (
                 <div className="side-content">
-                    <SafetyL4/>
+                    <SafetyL4 mainLayer={mainLayer}/>
                 </div>
             )}
         </>

@@ -1,8 +1,26 @@
-import React, {useEffect, useState} from "react"
-import { Switch } from "@mui/material"
-import { SAFETY_SELECT_4_LEVEL, SAFETY_SELECT_4_LEVEL_RESET } from "@redux/actions"
-import { useDispatch, useSelector } from "react-redux"
-import { getL4Layers } from "@common/axios/common"
+import React, {useEffect, useState} from "react";
+import { Switch } from "@mui/material";
+import { SAFETY_SELECT_4_LEVEL, SAFETY_SELECT_4_LEVEL_RESET } from "@redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getL4Layers } from "@common/axios/common";
+
+
+const example = [{
+    name: 'EAST-WEST',
+    store: 'Safety',
+    layer: 'L4TD_YONGDAM_EW',
+    checked: false
+},{
+    name: 'UP-DOWN',
+    store: 'Safety',
+    layer: 'L4TD_YONGDAM_UD',
+    checked: false
+},{
+    name: 'NORTH-SOUTH',
+    store: 'Safety',
+    layer: 'L4TD_YONGDAM_UD',
+    checked: false
+}]
 
 /**
  * 안전 - 4LEVEL 활용주제도
@@ -15,39 +33,36 @@ const SafetyL4Thematic = () => {
     //레벨 4 리스트
     const [level4List, setLevel4List] = useState([])
 
-    /**
-     * select3Level : 3레벨값이 바뀌면 4레벨 데이터 LIST 가 변경되어야 한다 API 후 SET LIST
-     * 현재는 임의로 버튼 추가
-     * */
     useEffect(()=>{    
         //3레벨이 선택되었으면 4레벨 reducer 초기화
         dispatch({type:SAFETY_SELECT_4_LEVEL_RESET})
-
-        if(Object.keys(layers).length > 0){
-            let selectLayer = layers[Object.keys(layers)[0]]
-            const { id = false } = selectLayer.props
-            
-            if(id){
-                getL4Layers({id:id}).then((response)=>{
-                    let dataList = []
-                    if(select3Level.category !== 'L3TDA2'){
-                        if(response?.result?.data?.length > 0){
-                            response.result.data.map((obj)=>{
-                                let name = obj.filename.indexOf('_EW_') > -1 ? 'EAST-WEST' : obj.filename.indexOf('_UD_') > -1 ? 'UP-DOWN' : obj.filename.indexOf('_NS_') > -1 ? 'NORTH-SOUTH' : ''
-                                dataList.push({store:obj.dataType.toLowerCase(), layer: obj.name, checked: false, name: name, id:obj.id})
-                            })
-                            setLevel4List(dataList)
-                        }else{
-                            setLevel4List(dataList)    
-                        }
-                    }else{
-                        setLevel4List([])    
-                    }
-                })
+        /**
+         * select3Level : 3레벨값이 바뀌면 4레벨 데이터 LIST 가 변경되어야 한다 API 후 SET LIST
+         * 현재는 임의로 버튼 추가
+         * */
+        //select3Level 레벨 값 API 확인후  (***API 필요***)
+        getL4Layers({id:select3Level.id}).then((response)=>{
+            let dataList = []
+            if(select3Level.category !== 'L3TDA2'){
+                if(response?.result?.data?.length > 0){
+                    response.result.data.map((obj)=>{
+                        let name = obj.filename.indexOf('_EW_') > -1 ? 'EAST-WEST' : obj.filename.indexOf('_UD_') > -1 ? 'UP-DOWN' : obj.filename.indexOf('_NS_') > -1 ? 'NORTH-SOUTH' : ''
+                        dataList.push({store:obj.dataType.toLowerCase(), layer: obj.name, checked: false, name: name, id:obj.id})
+                    })
+                    setLevel4List(dataList)
+                }else{
+                    setLevel4List(dataList)    
+                }
+            }else{
+                setLevel4List([])    
             }
             
-        }
-    },[layers])
+            
+        })
+
+        
+
+    },[select3Level])
 
 
 
@@ -95,7 +110,7 @@ const SafetyL4Thematic = () => {
     }
 
     return (
-        <> {/** L3TDA3 */}
+        <>
             <div className="widget widget-toggle" style={{display: select3Level.category !== 'L3TDA2' ? '' : 'none'}}>
                 <div className="widget-box">
                     <div className="widget-header">

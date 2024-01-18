@@ -31,8 +31,9 @@ const SafetyL4CompBtn = () => {
 
     return (
         <>
+            
             <button className="btn btn-float"
-                    style={{display: compLayerClick ? 'none' : displaceLevel ? 'none' : ''}}
+                    style={{display: compLayerClick ? 'none' : ''}}
                     onClick={()=>{
                         dispatch({type: SAFETY_CLICK_MODE, compLayerClick: true})
                     }}

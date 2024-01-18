@@ -99,10 +99,12 @@ const SafetyL4CompWidget = () => {
         
         //창이 닫히면 pinlayer 제거
         return()=>{
-            G$removeLayer(safetyPinLayer.current.layer)
-            dispatch({type: SAFETY_CLICK_MODE, compLayerClick: false})
             setLoading(false)
-            //dispatch({type: LOADING, loading: false})
+            safetyPinLayer.current.entities.removeAll()
+            G$removeLayer(safetyPinLayer.current.layer)
+            dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: false})
+            dispatch({type:SAFETY_CLICK_MODE, compLayerClick: false})
+
         }
 
     },[])
@@ -127,14 +129,14 @@ const SafetyL4CompWidget = () => {
     //grid 레이어가 선택이 되면 pinlayer 추가
     useEffect(()=>{
         if(selectFeature){
-            //let coord = G$4326to3857(selectFeature.clickPosition.longitude, selectFeature.clickPosition.latitude)
-            let id = select4Level ? select4Level.id : select3Level.id
-            //dispatch({type: LOADING, loading: true})
+            const { props, clickPosition } = selectFeature
+
+            let id = select4Level ? select4Level.id : props.id
+
             setLoading(true)
-            getSafetyCompResult({y:parseFloat(selectFeature.clickPosition.latitude), x:parseFloat(selectFeature.clickPosition.longitude), id: Number(id)}).then((response)=>{
+            getSafetyCompResult({y:parseFloat(clickPosition.latitude), x:parseFloat(clickPosition.longitude), id: Number(id)}).then((response)=>{
 
                 setLoading(false)
-                //dispatch({type: LOADING, loading: false})
                 let datas = []
                 let cols = []
                 if(response.result.data.data.length > 0){
@@ -149,10 +151,6 @@ const SafetyL4CompWidget = () => {
                 }
                 addData(datas)
             })
-            
-            //addData()
-            //레이어가 선택되면 API 통하여 데이터 가져오기
-            
         }
     },[selectFeature])
 
@@ -163,7 +161,7 @@ const SafetyL4CompWidget = () => {
         chartRef.current.provider = chartInfoRef.current.datasets = []
         gridRef.current.provider = []
         dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: false})
-    },[select4Level, select3Level, displaceLevel])
+    },[select4Level])
 
 
     //데이터 추가

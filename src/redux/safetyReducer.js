@@ -112,8 +112,8 @@ function safetyReducer(state = initialState, action) {
     case SAFETY_SET_LAYERS:
       //setType true => add / false => remove
       let layerId = `${action.layerInfo.store}:${action.layerInfo.layer}`
+
       if(action.setType){
-        //layer Instace 가 없을시 
         if(!state.layers[layerId]){
           const updateLayers = {
             ...state.layers,

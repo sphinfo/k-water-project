@@ -95,7 +95,6 @@ const DroughtResult = () => {
     // 초기화
     useEffect(()=>{
         setLayerList([])
-
         return()=>{
           dispatch({ type: DROUGHT_SELECT_LAYER, selectDroughtLayer: false });
         }
@@ -109,25 +108,18 @@ const DroughtResult = () => {
           if (outerIndex === i) {
               const updatedSubArray = subArray.map((item, j) => {
                   if (innerIndex === j) {
-                      return { ...item, checked: !item.checked };
+                      return { ...item, checked: !item.checked }
                   }
                   return { ...item } 
-                  //return { ...item, checked: false }; // 기존 선택 해제
               });
               return updatedSubArray;
           }
           return subArray.map(item => ({ ...item }))
-          //return subArray.map(item => ({ ...item, checked: false })); // 다른 항목들의 선택 해제
       });
       setLayerList(updatedList);
 
       //이벤트 발생 위치 확인후 
-      const selectedItem = updatedList[outerIndex][innerIndex];
-
-      //선택이 되었으면 layerItem 전송 / 선택이 해제되었으면 false
-      //let value = !selectedItem.checked ? false : selectedItem
-      //dispatch({ type: DROUGHT_SELECT_LAYER, selectDroughtLayer: value })
-
+      const selectedItem = updatedList[outerIndex][innerIndex]
       //reducer에게 레이어 info 전달
       dispatch({ type: DROUGHT_SET_LAYERS, layerInfo: selectedItem, setType: selectedItem.checked })
 
