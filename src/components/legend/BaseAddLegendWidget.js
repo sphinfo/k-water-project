@@ -13,7 +13,7 @@ const BaseAddLegendWidget = (props) => {
     return (
         <>
             {React.Children.map(children, (child, index) => (
-                <div key={index}>{child}</div>
+                <div className="widget widget-legend" key={index}>{child}</div>
             ))}
         </>
     )

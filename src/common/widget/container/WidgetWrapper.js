@@ -31,7 +31,7 @@ const WidgetWrapper = (props) => {
     return (
         <>
             {legend ? (
-                <div key={wid} className={`${wid} widget widget-legend`}>
+                <div key={wid} className={`${wid} widget-wrapper`}>
                     <Suspense>{writeChildren()}</Suspense>
                 </div>
             ) : (
