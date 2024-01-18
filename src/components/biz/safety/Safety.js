@@ -179,11 +179,14 @@ const Safety = () => {
             <SafetyResult />
 
             {/* 4레벨 결과 영역 ( 3레벨이 레이어가 1개 선택되었을시 / 여러개 선택이 되면 레이어 보는 기능 )*/}
-            {layerIdx === 1 && (
-                <div className="side-content">
-                    <SafetyL4 mainLayer={mainLayer}/>
-                </div>
-            )}
+            {layerIdx === 1 && 
+                (
+                    <div className="side-content side-content-has-inner">
+                        <SafetyL4 mainLayer={mainLayer}/>
+                    </div>
+                ) 
+            }
+
         </>
     )
 }
