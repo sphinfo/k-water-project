@@ -12,6 +12,8 @@ import pin from "@images/map-icon-st.svg"
 import pin2 from "@images/map-icon-st-clicked.svg"
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
+import BaseAddLegendWidget from "@components/legend/BaseAddLegendWidget";
+import BaseLegendWidget from "@components/legend/BaseLegendWidget";
 
 /* 홍수 */
 const Flood = () => {
@@ -85,7 +87,7 @@ const Flood = () => {
 
     /* 초기 세팅 사항 */
     useEffect(()=>{
-
+        
         //홍수 - 수위 지점 point
         floodWaterLevelLayer.current = new BaseEntityCollection({name:'floodWaterLevelLayer', image: pin, overlay: new WaterLevelOverlay()})
 
@@ -112,7 +114,7 @@ const Flood = () => {
 
         return()=>{
             //범례 삭제
-            G$removeWidget('BaseLegendWidget')
+            G$removeWidget('BaseAddLegendWidget')
 
             G$removeLayer(floodWaterLevelLayer.current.layer)
 
@@ -134,17 +136,18 @@ const Flood = () => {
      * 침수피해지도 ON / OFF
      */
     useEffect(()=>{
+        
         if(selectFloodDamageLayer){
             //floodLayer.current.show = false
             //침수피해 범례 on
-            G$addWidget('BaseLegendWidget', { params: { title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}]} })
-            
+            //G$addWidget('BaseLegendWidget', { params: { title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}]} })
+            G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendWidget params={{ title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}]}}/>]})
             const {store, layer} = selectFloodDamageLayer
             floodDamageLayer.current.changeParameters({store:store, layerId:layer})
             floodDamageLayer.current.setOpacity(0.5)
         }else{
             floodDamageLayer.current.remove()
-            G$removeWidget('BaseLegendWidget')
+            G$removeWidget('BaseAddLegendWidget')
         }
     },[selectFloodDamageLayer])
 
