@@ -11,7 +11,6 @@ const SafetyL4 = ({ mainLayer, ...props}) => {
     return (
         <>
           <div className="side-content-top">
-            <div>{mainLayer?.layerId}</div>
             {
               //변위탐지 - 고성산란체 분산산란체 일시
               (mainLayer?.layerId?.indexOf('L3TDA1') > -1 || mainLayer?.layerId?.indexOf('L3TDA2') > -1) &&
