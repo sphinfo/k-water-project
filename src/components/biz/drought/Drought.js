@@ -14,6 +14,7 @@ import DroughtL4 from "./component/DroughtL4";
 import { getDroughtObs } from "@common/axios/drought";
 import { getL4Layers } from "@common/axios/common";
 import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
+import BaseLegendgGradientWidget from "@components/legend/BaseLegendgGradientWidget";
 
 const Drought = () => {
 
@@ -114,10 +115,8 @@ const Drought = () => {
             //가뭄 reducer 초기화
             dispatch({type:DROUGHT_RESET})
             dispatch({type:DROUGHT_CLEAR_LAEYRS})
-            
 
-            G$removeWidget('BaseLegendgGradientWidget')
-            G$removeWidget('BaseLegendgGradientWidget2')
+            G$removeWidget('BaseAddLegendWidget')
         }
 
     },[])
@@ -129,10 +128,10 @@ const Drought = () => {
         //레이어가 켜저 있으면 지점 on
         if(layerCnt > 0){
             droughtObsrvLayer.current.show = true
-            G$addWidget('BaseLegendgGradientWidget', { params: {title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}})
+            G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}}/>]})
         }else{
             droughtObsrvLayer.current.show = false
-            G$removeWidget('BaseLegendgGradientWidget')
+            G$removeWidget('BaseAddLegendWidget')
         }
     },[layers])
 
