@@ -303,7 +303,7 @@ const Safety = () => {
 
             {/* 4레벨 결과 영역 ( 3레벨이 선택되었을시 4레벨창 open )*/}
             {select3Level && (
-                <div className="side-content">
+                <div className="side-content side-content-has-inner">
                     <SafetyL4/>
                 </div>
             )}
