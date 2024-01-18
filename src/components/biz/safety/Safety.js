@@ -1,13 +1,17 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET, SET_SIDE_PANEL, SAFETY_CLICK_MODE, SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
-import { G$addWidget, G$flyToPoint, G$removeLayer, G$removeWidget } from "@gis/util";
+import { G$addWidget, G$flyToPoint, G$paramWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import SafetyOptions from "./component/SafetyOptions";
 import SafetyResult from "./component/SafetyResult";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import SafetyL4 from "./component/l4Component/SafetyL4";
 import SafetyOverlay from "@gis/util/overlay/SafetyOverlay";
+import TestLegend1 from "@components/legend/TestLegend1";
+import TestLegend2 from "@components/legend/TestLegend2";
+import BaseLegendgGradientWidget from "@components/legend/BaseLegendgGradientWidget";
+import BaseLegendWidget from "@components/legend/BaseLegendWidget";
 
 /**
  *  안전 메인 페이지
@@ -26,15 +30,8 @@ const Safety = () => {
      */
     const {bizName, select4Level, displaceLevel, compLayerClick, selectFeature, layers} = useSelector(state => state.safety)
 
-    {/** 안전3레벨 / 안전4레벨 / 변위등급 ( 데이터가 있는한 정적인 레이어 ) */}
-    //안전 3레벨 레이어 생성
-    //const safety3LevelLayerRef = useRef()
-
     //안전 4레벨 레이어 생성
     const safety4LevelLayerRef = useRef()
-
-    //변위등급 레이어 생성
-    //const safetyDisplaceLevelLayerRef = useRef()
 
     const overlayRef = useRef(new SafetyOverlay())
 
@@ -74,6 +71,8 @@ const Safety = () => {
         //레이어 클릭 callback 활성화
         GisLayerClickTool.enable(bizName)
 
+        //G$addWidget('BaseAddLegendWidget')
+
         return()=>{
 
             //안전 4레벨 레이어 삭제
@@ -86,8 +85,7 @@ const Safety = () => {
             overlayRef.current.removeAll()
 
             //범례 삭제
-            G$removeWidget('BaseLegendWidget')
-            G$removeWidget('BaseLegendgGradientWidget')
+            G$removeWidget('BaseAddLegendWidget')
             G$removeWidget('SafetyL4LevelDataWidget')
             
 
@@ -109,7 +107,6 @@ const Safety = () => {
         let layerCnt = Object.keys(layers).length
         setLayerIdx(layerCnt)
         setMainLayer(false)
-
         //click이벤트 초기화
         GisLayerClickTool.resetLayer(bizName)
         dispatch({type: SAFETY_CLICK_MODE, compLayerClick: false})
@@ -118,7 +115,6 @@ const Safety = () => {
         //하나만 선택되었을때 레이어 클릭이벤트 활성화
         if(layerCnt === 1){
             Object.keys(layers).map((layerId, i)=>{
-                console.info(layers[layerId])
                 const { store, layer, ...other } = layers[layerId]?.props
                 if(i === 0){
                     //클릭이벤트 등록
@@ -128,8 +124,9 @@ const Safety = () => {
                     if(layer.indexOf('L4DC') > -1){
                         dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: true})
                         G$addWidget('SafetyL4LevelDataWidget')
+                    }else{
+                        G$removeWidget('BaseLegendWidget')
                     }
-
                 }
             })
         }else{
@@ -138,18 +135,56 @@ const Safety = () => {
         
     },[layers])
 
+    useEffect(()=>{
+        legendSetting()
+    },[layerIdx])
+
+    const legendSetting = () =>{
+        let legendCategory = []
+        if(layerIdx > 0){
+            Object.keys(layers).map((layerId, i)=>{
+                const { category, group=category } = layers[layerId]?.props
+                legendCategory.push(group)
+            })
+        }
+        legendVisible(legendCategory)
+    }
+
+    const legendVisible = (legendList=[]) =>{
+        G$removeWidget('BaseAddLegendWidget')
+        if(legendList.length > 0){
+
+            let legends = []
+
+            const uniqueArray = [...new Set(legendList)]
+            console.info(uniqueArray)
+            uniqueArray.map((group)=>{
+                if(group === 'L3'){
+                    legends.push(<BaseLegendgGradientWidget params={{title:'변위 속도(cm/year)', min:-5, max: 5, datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}}/>)
+                }else if(group === 'L4'){
+                    legends.push(<BaseLegendWidget params={{ title:'L4TD 변위등급',  datas: [{label:'안전', color:'BLUE'} ,{label:'보통', color:'GREEN'} ,{label:'위험', color:'RED'} ]}}/>)
+                }else if(group === 'L4TD'){
+                    legends.push(<BaseLegendgGradientWidget params={{title:'L4TD 시계열변위',min:-1, max: 1, datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}}/>)
+                }
+                
+            })
+            G$addWidget('BaseAddLegendWidget', {children:legends})
+        }
+    }
+
 
     //4레벨 레이어 선택되었을시
     useEffect(()=>{
         GisLayerClickTool.resetLayer(bizName)
         if(select4Level){
-            const {store, layer} = select4Level
+            const {store, layer, category} = select4Level
             safety4LevelLayerRef.current.changeParameters({store:store, layerId:layer})
-            GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])   
+            GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
+            legendVisible(['L4TD'])
         }else{
+            legendSetting()
             safety4LevelLayerRef.current.remove()
         }
-
         
         if(layerIdx > 0){
             Object.keys(layers).map((layerId, i)=>{
@@ -163,10 +198,8 @@ const Safety = () => {
                         GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
                     }
                 }
-
             })
         }
-
     },[select4Level])
 
 

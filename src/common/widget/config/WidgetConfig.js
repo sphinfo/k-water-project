@@ -7,6 +7,7 @@ const widgets = {
     SafetyL4CompWidget: lazy(() => import('@components/biz/safety/widget/SafetyL4CompWidget')),
     SafetyL4LevelDataWidget: lazy(() => import('@components/biz/safety/widget/SafetyL4LevelDataWidget')),
 
+    BaseAddLegendWidget: lazy(() => import('@components/legend/BaseAddLegendWidget')),
     LegendWidget: lazy(() => import('@components/legend/LegendWidget')),
     BaseLegendWidget: lazy(() => import('@components/legend/BaseLegendWidget')),
     BaseLegendgGradientWidget: lazy(() => import('@components/legend/BaseLegendgGradientWidget')),
@@ -103,6 +104,14 @@ const WidgetConfig = {
 
 /* 범례 */
 const LegendWWidgetConfig = {
+    
+    'BaseAddLegendWidget':{
+        title: 'LegendWidget',
+        legend: true,
+        style: {  position:'absolute'},
+        instance: widgets.BaseAddLegendWidget
+    },
+
     'LegendWidget': {
         title: 'LegendWidget',
         legend: true,
