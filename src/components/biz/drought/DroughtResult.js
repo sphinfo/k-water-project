@@ -193,7 +193,7 @@ const DroughtResult = () => {
             <div className="content-row">
               {layerList.length > 0 &&
                 <div className="form-control">
-                  <Tabs className={"toggle-btn-wrap"} value={selectResultTab} onChange={(e, v)=>{dispatch({type: DROUGHT_RESULT_TAB, selectResultTab: v})}}>
+                  <Tabs className={"toggle-btn-wrap toggle-btn-variant"} value={selectResultTab} onChange={(e, v)=>{dispatch({type: DROUGHT_RESULT_TAB, selectResultTab: v})}}>
                     <Tab className={"tab-item"} label={'물리'} value={'A1'}></Tab>
                     <Tab className={"tab-item"} label={'강우'} value={'A2'}></Tab>
                     <Tab className={"tab-item"} label={'토양'} value={'A3'}></Tab>
