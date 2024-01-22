@@ -9,16 +9,14 @@ import EnvironmentThematic from "./EnvironmentThematic";
 /**
  * 환경 4레벨
  */
-const EnvironmentL4 = () => {
+const EnvironmentL4 = ({ mainLayer, ...props}) => {
 
     /**
      * selectEnvironmentLayer: 수변피복 레이어 선택
      */
-    const { selectEnvironmentLayer } = useSelector(state => state.environment)
 
 
     useEffect(()=>{
-
         return()=>{
             G$removeWidget('EnvironmentLandCoverWidget')
             G$removeWidget('EnvironmentGarbageWidget')
@@ -26,31 +24,37 @@ const EnvironmentL4 = () => {
         }
     },[])
 
-
     useEffect(()=>{
 
-        if(selectEnvironmentLayer.group === 'LandCover'){
-            G$addWidget('EnvironmentLandCoverWidget')
+        if(mainLayer.group === 'LandCover'){
             G$removeWidget('EnvironmentGarbageWidget')
             G$removeWidget('EnvironmentGreenWidget')
-        }else if(selectEnvironmentLayer.group === 'Green'){
-            //G$addWidget('EnvironmentGreenWidget')
-            G$removeWidget('EnvironmentLandCoverWidget')
-            //G$removeWidget('EnvironmentGarbageWidget')            
-        }else if(selectEnvironmentLayer.group === 'Garbage'){
-            //G$addWidget('EnvironmentGarbageWidget')
-            //G$removeWidget('EnvironmentGreenWidget')
-            G$removeWidget('EnvironmentLandCoverWidget')
+
+            G$addWidget('EnvironmentLandCoverWidget')
+            
+        }else if(mainLayer.group === 'Green'){
+
+            G$removeWidget('EnvironmentLandCoverWidget')   
+            G$removeWidget('EnvironmentGarbageWidget')  
+            
+            G$addWidget('EnvironmentGreenWidget')
+            
+        }else if(mainLayer.group === 'Garbage'){
+
+            G$removeWidget('EnvironmentGreenWidget')  
+            G$removeWidget('EnvironmentLandCoverWidget')  
+
+            G$addWidget('EnvironmentGarbageWidget')
         }
 
-    },[selectEnvironmentLayer])
+    },[mainLayer])
 
 
 
     return (
         <>
             {
-                selectEnvironmentLayer && selectEnvironmentLayer.group === 'LandCover' &&
+                mainLayer && mainLayer.group === 'LandCover' &&
                 <EnvironmentThematic />
             }
             <BaseOragDataInfo a={true} b={true}/>

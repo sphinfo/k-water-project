@@ -27,14 +27,13 @@ const Environment = () => {
   //변화탐지 레이어 
   const landCoverDetectionLayer = useRef()
 
-  const l3aeLayer = useRef()
 
 
   /* 초기 세팅 사항 */
   useEffect(()=>{
 
     //환경 메인 레이어
-    environmentLayer.current = new BaseWmsImageLayer({store:'', layerId: '', fly:false})
+    environmentLayer.current = new BaseWmsImageLayer({store:'', layerId: ''})
 
     //변화탐지 레이어
     landCoverDetectionLayer.current = new BaseWmsImageLayer({store:'',layerId:''})
@@ -73,24 +72,11 @@ const Environment = () => {
       const {store, layer} = selectEnvironmentLayer
       environmentLayer.current.changeParameters({store:store, layerId:layer})
 
-      if(text.name.indexOf('댐') > -1){
+      /*if(text.name.indexOf('댐') > -1){
           if(text.x && text.y && text.z){
               G$flyToPoint([text.y, text.x], text.z)
           }
-      }
-      
-      // if(selectEnvironmentLayer.group === 'LandCover'){
-      //   //const {xmin, xmax, ymin, ymax} = text
-      //   //l3aeLayer.current._addFeature({xmin: xmin, ymin: ymin, xmax: xmax, ymax: ymax, properties:{id:G$RandomId()}})
-      //   //G$flyToPoint([xmin,ymin],103000)
-
-
-      // }else if(selectEnvironmentLayer.group === 'Garbage'){
-      //   //l3aeLayer.current._addFeature({xmin: 127.505519, ymin: 36.41462133, xmax: 127.5096512, ymax: 36.41048908, properties:{id:G$RandomId()}})
-      //   //G$flyToPoint([127.505519,36.41462133],8000)
-      // }
-
-      //
+      }*/
 
 
     }else{
