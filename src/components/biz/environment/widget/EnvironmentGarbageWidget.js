@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 /**
  * 환경 부우물 레이어 선택
  */
-const EnvironmentGarbageWidget = () => {
+const EnvironmentGarbageWidget = (props) => {
 
     /**
      * selectEnvironmentLayer: 수변피복 레이어 선택
      */
     const { selectEnvironmentLayer } = useSelector(state => state.environment)
-    
 
     //레이어 변경시 reset
     useEffect(()=>{

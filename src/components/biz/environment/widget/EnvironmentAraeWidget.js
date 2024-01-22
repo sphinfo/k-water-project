@@ -9,22 +9,24 @@ import img from "@images/image 51.png"
 /**
  * 환경 녹조 위젯
  */
-const EnvironmentL3AEWidget = () => {
+const EnvironmentAraeWidget = (props) => {
 
     const dispatch = useDispatch()
-    /**
-     * selectEnvironmentLayer: 수변피복 레이어 선택
-     */
-    const { selectEnvironmentLayer, landCoverDetection } = useSelector(state => state.environment)
+    const {params, ...other} = props
 
+    const [allArea, setAllArea] = useState(0)
 
-    //레이어 변경시 reset
     useEffect(()=>{
 
-        if(selectEnvironmentLayer){
+        if(params.length > 0){
+            let area = 0
+            params.map((obj)=>{
+                area += obj.area
+            })
+            setAllArea(area)
         }
 
-    },[selectEnvironmentLayer])
+    },[params])
 
 
     return (
@@ -35,7 +37,7 @@ const EnvironmentL3AEWidget = () => {
                     <div className="number-dashboard number-dashboard-min">
                         <div className="nd-item">
                             <h4 className="nd-item-title">전체 녹조 면적</h4>
-                            <div className="nd-item-body">87,242 ㎡</div>
+                            <div className="nd-item-body">{allArea} ㎡</div>
                         </div>
                     </div>
                 </div>
@@ -52,26 +54,21 @@ const EnvironmentL3AEWidget = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>LON ‘135” 23’42” LAT 23”10’13”</td>
-                                <td>17,242 ㎡</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>LON ‘135” 23’42” LAT 23”10’13”</td>
-                                <td>17,242 ㎡</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>LON ‘135” 23’42” LAT 23”10’13”</td>
-                                <td>17,242 ㎡</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>LON ‘135” 23’42” LAT 23”10’13”</td>
-                                <td>17,242 ㎡</td>
-                            </tr>
+                                {
+                                    params.length > 0 && 
+                                    params.map((obj, i)=>{
+                                        return(
+                                            <>
+                                                <tr>
+                                                    <td>{i+1}</td>
+                                                    <td>LON {obj.x} LAT {obj.y}</td>
+                                                    <td>{obj.area} ㎡</td>
+                                                </tr>
+                                            </>
+                                        )
+                                        
+                                    })
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -82,4 +79,4 @@ const EnvironmentL3AEWidget = () => {
     )
 }
 
-export default React.memo(EnvironmentL3AEWidget);
+export default React.memo(EnvironmentAraeWidget);

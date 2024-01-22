@@ -24,7 +24,7 @@ const widgets = {
     EnvironmentLandCoverWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentLandCoverWidget')),
     EnvironmentGarbageWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentGarbageWidget')),
     EnvironmentGreenWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentGreenWidget')),
-    EnvironmentL3AEWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentL3AEWidget')),
+    EnvironmentAraeWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentAraeWidget')),
 };
 
 /* widget */
@@ -94,6 +94,11 @@ const WidgetConfig = {
     'EnvironmentGreenWidget': {
         title: '녹조 정보',
         instance: widgets.EnvironmentGreenWidget
+    },
+
+    'EnvironmentAraeWidget':  {
+        title: '',
+        instance: widgets.EnvironmentAraeWidget
     },
     
     
