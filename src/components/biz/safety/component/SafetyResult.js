@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_CLICK_MODE, SAFETY_RESET_LAYER, SAFETY_SELECT_BOX, SAFETY_SELECT_DISPLACE_LEVEL, SAFETY_SELECT_RESULT, SAFETY_SET_LAYERS } from "@redux/actions";
+import { SAFETY_CLEAR_LAEYRS, SAFETY_CLICK_MODE, SAFETY_RESET_LAYER, SAFETY_SELECT_BOX, SAFETY_SELECT_DISPLACE_LEVEL, SAFETY_SELECT_RESULT, SAFETY_SET_LAYERS } from "@redux/actions";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
@@ -31,6 +31,7 @@ const SafetyResult = () => {
     useEffect(()=>{
 
       dispatch({type:SAFETY_RESET_LAYER})
+      dispatch({type:SAFETY_CLEAR_LAEYRS})
 
       if(searchOn && text.length > 0){
 

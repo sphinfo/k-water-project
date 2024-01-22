@@ -40,6 +40,7 @@ const EnvironmentResult = () => {
     useEffect(()=>{
 
       dispatch({type:ENV_RESET_LAYER})
+      dispatch({type:ENV_CLEAR_LAEYRS})
       setGarbageCnt(0)
       setGreenCnt(0)
       setLandCoverCnt(0)
