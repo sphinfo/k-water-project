@@ -33,7 +33,9 @@ const MapControl = () =>{
             <div className="map-control-wrap">
                 <div className="map_ctrl_top">
                     <AddrSearchWidget/> {/* 위치 조회 */}
+                    <CoordiateWidget/> {/* center 좌표 */}
                     <TimeZoneWidget/> {/* 현재 시간 */}
+
                     {/*<BaseMapWidget />    배경지도*/}
                 </div>
                 <div className="map_ctrl_right">
@@ -46,7 +48,7 @@ const MapControl = () =>{
                 </div>
                 <div className="map_ctrl_btm">
                     {/*<MapPositionWidget/>  현재 위치 주소 */}
-                    <CoordiateWidget/> {/* center 좌표 */}
+                    {/*<CoordiateWidget/>  center 좌표 */}
                 </div>
             </div>
 
