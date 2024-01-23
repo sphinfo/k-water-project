@@ -2125,6 +2125,7 @@
         color: $white-alpha-50;
         position: relative;
         overflow: visible;
+        z-index: 3;
 
         .MuiTouchRipple-root {
           border-radius: 6px;
@@ -2134,6 +2135,7 @@
         &.Mui-selected {
           font-weight: 500;
           color: $white;
+          z-index: 4;
         }
       }
 
@@ -2143,8 +2145,11 @@
       .MuiTabs-flexContainer {
         .tab-item {
           color: rgba(255, 255, 255, 0.8);
+          z-index: auto;
 
           &.Mui-selected {
+            z-index: 3;
+
             &:after {
               color: #fff;
             }
