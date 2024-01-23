@@ -1417,6 +1417,18 @@
       font-size: 16px;
       color: $body-font-color;
       font-weight: 500;
+
+      .popup-subtitle {
+        font-weight: 400;
+
+        &:before {
+          content: '|';
+          display: inline-block;
+          margin-right: 6px;
+          margin-left: 6px;
+          font-weight: 100;
+        }
+      }
     }
   }
 
