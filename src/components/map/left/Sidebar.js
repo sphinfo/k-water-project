@@ -105,6 +105,11 @@ export default function Sidebar() {
 
   return (
     <>
+      <div className={`title-logo ${value === -1 ? '' : panelVisible ? 'open' : ''}`}>
+        <h1>수자원위성 활용산출물 통합 표출시스템</h1>
+        <p>Korea Water Resources  Satellite Visualization System</p>
+      </div>
+      
       <div className="sidebar-left" >
         <div className="sidebar-left-main">
           <div className="logo"><svg width="40" height="19" viewBox="0 0 40 19" fill="none" xmlns="http://www.w3.org/2000/svg">

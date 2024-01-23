@@ -4,12 +4,11 @@ import img01 from "@images/legend-img-drought01.png"
 import img02 from "@images/legend-img-drought02.png"
 import img03 from "@images/legend-img-drought03.png"
 
-const LegendInfo = (props) => {
+const LegendInfo = ({type, ...props}) => {
     return (
         <>
             <Tooltip placement="top" title={
                 <React.Fragment>
-
                     <div className="tooltip-info-wrap">
                         {/*홍수 01*/}
                         <div className="tooltip-info">

@@ -12,6 +12,7 @@ import TestLegend1 from "@components/legend/TestLegend1";
 import TestLegend2 from "@components/legend/TestLegend2";
 import BaseLegendgGradientWidget from "@components/legend/BaseLegendgGradientWidget";
 import BaseLegendWidget from "@components/legend/BaseLegendWidget";
+import LegendSafety from "@components/legend/LegendSafety";
 
 /**
  *  안전 메인 페이지
@@ -140,31 +141,33 @@ const Safety = () => {
     },[layerIdx])
 
     const legendSetting = () =>{
-        let legendCategory = []
+        let legendGroup = []
+        let legendOption = []
         if(layerIdx > 0){
             Object.keys(layers).map((layerId, i)=>{
-                const { category, group=category } = layers[layerId]?.props
-                legendCategory.push(group)
+                const { category, group=category, ...other } = layers[layerId]?.props
+                legendGroup.push(group)
+                legendOption.push(layers[layerId]?.props)
             })
         }
-        legendVisible(legendCategory)
+        legendVisible(legendGroup, legendOption)
     }
 
-    const legendVisible = (legendList=[]) =>{
+    const legendVisible = (legendGroup=[], legendOption=[]) =>{
         G$removeWidget('BaseAddLegendWidget')
-        if(legendList.length > 0){
-
+        if(legendGroup.length > 0){
             let legends = []
-
-            const uniqueArray = [...new Set(legendList)]
-            console.info(uniqueArray)
+            let tooltip = false
+            const uniqueArray = [...new Set(legendGroup)]
+            console.info(legendOption[0])
+            tooltip = legendGroup.length === 1 ? <LegendSafety props={legendOption[0]}/> : false
             uniqueArray.map((group)=>{
                 if(group === 'L3'){
-                    legends.push(<BaseLegendgGradientWidget params={{title:'변위 속도(cm/year)', min:-5, max: 5, datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}}/>)
+                    legends.push(<BaseLegendgGradientWidget params={{title:'변위 속도(cm/year)', min:-5, max: 5, datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000'], tooltip:tooltip }}/>)
                 }else if(group === 'L4'){
-                    legends.push(<BaseLegendWidget params={{ title:'L4TD 변위등급',  datas: [{label:'안전', color:'BLUE'} ,{label:'보통', color:'GREEN'} ,{label:'위험', color:'RED'} ]}}/>)
+                    legends.push(<BaseLegendWidget params={{ title:'L4TD 변위등급',  datas: [{label:'안전', color:'BLUE'} ,{label:'보통', color:'GREEN'} ,{label:'위험', color:'RED'}], tooltip:tooltip }}/>)
                 }else if(group === 'L4TD'){
-                    legends.push(<BaseLegendgGradientWidget params={{title:'L4TD 시계열변위',min:-1, max: 1, datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000']}}/>)
+                    legends.push(<BaseLegendgGradientWidget params={{title:'L4TD 시계열변위',min:-1, max: 1, datas:['#1E90FF','#87CEFA',  '#FAFAD2', '#FFA500', '#FF0000'], tooltip:tooltip }}/>)
                 }
                 
             })

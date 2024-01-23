@@ -61,13 +61,14 @@ const SafetyResult = () => {
                   let layer = obj.name
                   let group = obj.level
                   let groupNm = obj.level === 'L3' ? '변위탐지' : '변위등급'
+                  let udew = obj.filename.indexOf('_D_') > -1 ? 'DESC' : obj.filename.indexOf('_A_') > -1 ? 'ASC' : ''
                   let categoryNm = obj.category.indexOf('L3TD_A1') > 0 ? '고정산란체' : obj.category.indexOf('L3TD_A2') > 0 ? '분산산란체' : ''
                   let locationKr = G$getKoreanName(obj.testLocation.split('-'))
                   //satellite
                   obj.satellite = obj.satellite === "S1X" ? "S1A" : obj.satellite
 
                   if(obj.level === 'L3'){
-                    resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
+                    resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr, udew})
                   }else{
                     //L4DC 변위등급도
                     if(obj.category === 'L4DC'){
@@ -195,7 +196,7 @@ const SafetyResult = () => {
                   <p className="list-info">{obj.locationKr}</p>
                   <p className="list-info">{obj.groupNm}</p>
                   <p className="list-info">{`${obj.category} | ${obj.category === 'L3TDA1' ? '고정산란체' : obj.category === 'L3TDA2' ? '분산산란체' : ''}`}</p>
-                  <p className="list-info">{`${obj.satellite}`}</p>
+                  <p className="list-info">{`${obj.satellite} ${obj.udew ? ' | '+obj.udew : obj.udew}`}</p>
                   <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
                 </div>
               </div>
