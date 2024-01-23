@@ -101,6 +101,16 @@ const EnvironmentLandCover = () => {
 
             }
 
+            
+            
+        }
+
+    },[selectEnvironmentLayer])
+
+    useEffect(()=>{
+        //변화탐지 선택되었을시 
+        if(landCoverDetection){
+
             //*******API*************/ 수변피복 색상표 데이터
             /** ex) [[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5]]
              * 배열 합치기 [1,2,3,4,5,1,2,3,4,5....]
@@ -111,7 +121,7 @@ const EnvironmentLandCover = () => {
             
         }
 
-    },[selectEnvironmentLayer])
+    },[landCoverDetection])
 
 
     const renderColorGrid = (value=0, i) =>{
@@ -175,7 +185,7 @@ const EnvironmentLandCover = () => {
 
 
 
-                    {/* <div className="content-col" style={{display: colorGrids.length > 0 ? '' : 'none'}}>
+                    <div className="content-col" style={{display: landCoverDetection ? '' : 'none'}}>
                         <div className="content-row">
                             <div className="panel-box">
                                 <div className="heatmap-chart-wrap">
@@ -214,7 +224,7 @@ const EnvironmentLandCover = () => {
                             </div>
                             
                         </div>
-                    </div> */}
+                    </div>
 
                 </div>
 

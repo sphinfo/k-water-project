@@ -121,8 +121,8 @@ const FloodL4WaterLevel = () => {
                     datas.map((obj)=>{
                         obj.createdAt = obj.createdAt.substring(0,8)
                         date.push(G$getDateType(obj.createdAt))
-                        estWl.push(obj.estimatedElev  === '' ? NaN : Number(obj.estimatedElev))
-                        obsWl.push(obj.referenceElev  === '' ? NaN : Number(obj.referenceElev))
+                        estWl.push(obj.estimatedElev  === '' ? NaN : Number(obj.estimatedElev).toFixed(2))
+                        obsWl.push(obj.referenceElev  === '' ? NaN : Number(obj.referenceElev).toFixed(2))
 
                         obj.estimatedElev = Number(obj.estimatedElev).toFixed(2)
                         obj.referenceElev = Number(obj.referenceElev).toFixed(2)
@@ -164,8 +164,6 @@ const FloodL4WaterLevel = () => {
                     //Table
                     gridRef.current.provider =  G$sortArrayObject(datas, 'id', true)
 
-                    
-                    
                     //chart
                     chartRef.current.provider = chartInfoRef.current
 

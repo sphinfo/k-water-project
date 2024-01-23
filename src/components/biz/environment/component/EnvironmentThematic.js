@@ -7,10 +7,16 @@ import { useDispatch, useSelector } from "react-redux";
  */
 
 
+// const example = [{
+//     name: '변화탐지',
+//     store:'environment', 
+//     layerId:'20231212113940_environment_L4LC_Q8eh_DAEJEON-DAECHEONG-YONGDAM-SEJONG-ANDONG-SAYEON-UNMUN-MIHO-CHANGNYEONG-SOYANG',
+//     checked: false
+// }]
 const example = [{
     name: '변화탐지',
-    store:'environment', 
-    layerId:'20231212113940_environment_L4LC_Q8eh_DAEJEON-DAECHEONG-YONGDAM-SEJONG-ANDONG-SAYEON-UNMUN-MIHO-CHANGNYEONG-SOYANG',
+    store:'', 
+    layerId:'',
     checked: false
 }]
 
@@ -31,7 +37,7 @@ const EnvironmentThematic = () => {
 
 
     //L4 선택
-    const handleSwitchChange = (index) => {
+    const handleSwitchChange = (item, index) => {
         
         let select4Level = false
         const newList = thematicList.map((item, i) => {
@@ -43,6 +49,7 @@ const EnvironmentThematic = () => {
             }
             return { ...item, checked: false };
         })
+
         select4Level ? dispatch({type:ENV_LANDCOVER_DETECTION, landCoverDetection: select4Level}) : dispatch({type:ENV_LANDCOVER_DETECTION, landCoverDetection: false})
         setThematicList(newList);
     }
@@ -56,7 +63,7 @@ const EnvironmentThematic = () => {
                 <span className="switch-label" key={`label-${i}`}>{item.name}</span>
                 <Switch
                     checked={item.checked}
-                    onClick={(e) => handleSwitchChange(i)}
+                    onClick={(e) => handleSwitchChange(item, i)}
                     name={item.name}
                 />
             </div>

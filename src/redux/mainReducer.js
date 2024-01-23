@@ -33,6 +33,8 @@ const initialState = {
   //두번째 패널 on / off
   panelSide: false,
 
+  holdMap: false,
+
 };
 
 

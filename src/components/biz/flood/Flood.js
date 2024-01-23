@@ -79,7 +79,7 @@ const Flood = () => {
             //수위 데이터 선택되면 feature 그리고 이동
             G$flyToPoint([selectWaterLevel.lng, selectWaterLevel.lat], 46000)
             floodWaterLevelLayer.current._addFeature({lng:selectWaterLevel.lng, lat:selectWaterLevel.lat, properties:selectWaterLevel, hover: true})
-            G$paramWidget('FloodL4WaterLevelWidget', {subTitle: selectWaterLevel.krNm})
+            G$paramWidget('FloodL4WaterLevelWidget', {subTitle: ` | ${selectWaterLevel.krNm}`})
         }else{
             G$removeWidget('FloodL4WaterLevelWidget')
         }
@@ -94,28 +94,10 @@ const Flood = () => {
         //홍수 - 수체 - 침수피해(l4)
         floodDamageLayer.current = new BaseWmsImageLayer({store:'flood', fly: false})
 
-        //레이어 클릭 callback 등록
-        //GisLayerClickTool.addBiz(bizName, layerSelectRef, ['floodWaterLevelLayer'])
-        //레이어 클릭 callback 활성화
-        //GisLayerClickTool.enable(bizName)
-
-        //*******API************* 초기 지점 데이터 가져오기/
-        /*getFloodObs().then((response) => {
-            let obsList = []
-            if(response?.result?.data?.length > 0){
-                response.result.data.map((obj)=>{
-                    obsList.push(obj)
-                    floodWaterLevelLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})
-                })
-            }
-            //지점정보 저장
-            setWaterObsList(obsList)
-        })*/
-
         return()=>{
             //범례 삭제
             G$removeWidget('BaseAddLegendWidget')
-
+            G$removeWidget('FloodL4WaterLevelWidget')
             G$removeLayer(floodWaterLevelLayer.current.layer)
 
             if(floodWaterLevelLayer.current.hoverHandler){
@@ -138,9 +120,6 @@ const Flood = () => {
     useEffect(()=>{
         
         if(selectFloodDamageLayer){
-            //floodLayer.current.show = false
-            //침수피해 범례 on
-            //G$addWidget('BaseLegendWidget', { params: { title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}]} })
             G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendWidget params={{ title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}]}}/>]})
             const {store, layer} = selectFloodDamageLayer
             floodDamageLayer.current.changeParameters({store:store, layerId:layer})
@@ -182,14 +161,9 @@ const Flood = () => {
             {/* 검색조건 영역   ex) 공토영역이 될듯 ? ( 검색 TEXT, 기간 설정 등.. )*/}
             <FloodOptions />
             {/* 결과결과 영역 */}
-            {/** <FloodResult waterObsList={waterObsList}/>*/}
             <FloodResult />
 
             {/* 홍수 3레벨 레이어 선택되었을시 ( 활용주제도 open )*/}
-
-
-            
-
             {layerIdx > 0 && (
                 <div className="side-content">
                     {/* 표출 단위 선택 영역 */}

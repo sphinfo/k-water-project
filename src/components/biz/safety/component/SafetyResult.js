@@ -4,7 +4,7 @@ import { SAFETY_CLEAR_LAEYRS, SAFETY_CLICK_MODE, SAFETY_RESET_LAYER, SAFETY_SELE
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$getDateType } from "@gis/util";
+import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
 import Button from "@mui/material/Button";
 import { getL3Layers } from "@common/axios/common";
 import dayjs from "dayjs";
@@ -62,23 +62,23 @@ const SafetyResult = () => {
                   let group = obj.level
                   let groupNm = obj.level === 'L3' ? '변위탐지' : '변위등급'
                   let categoryNm = obj.category.indexOf('L3TD_A1') > 0 ? '고정산란체' : obj.category.indexOf('L3TD_A2') > 0 ? '분산산란체' : ''
-                  
+                  let locationKr = G$getKoreanName(obj.testLocation.split('-'))
                   //satellite
                   obj.satellite = obj.satellite === "S1X" ? "S1A" : obj.satellite
 
                   if(obj.level === 'L3'){
-                    resultList.push({...obj, store, layer, group, categoryNm, groupNm})
+                    resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
                   }else{
                     //L4DC 변위등급도
                     if(obj.category === 'L4DC'){
-                      displaceResultList.push({...obj, store, layer, group, categoryNm, groupNm})                    
+                      displaceResultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})                    
                     }
                     
                   }
                 })
 
                 
-                const groupArray = G$BaseSelectBoxArray(resultList)
+                const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true))
                 const resultArray = groupArray.grouped
 
                 //변위 등급 리스트
@@ -192,6 +192,7 @@ const SafetyResult = () => {
                   <img src={obj.thumbnailUrl}/>
                 </div>
                 <div className="list-info-wrap">
+                  <p className="list-info">{obj.locationKr}</p>
                   <p className="list-info">{obj.groupNm}</p>
                   <p className="list-info">{`${obj.category} | ${obj.category === 'L3TDA1' ? '고정산란체' : obj.category === 'L3TDA2' ? '분산산란체' : ''}`}</p>
                   <p className="list-info">{`${obj.satellite}`}</p>
@@ -232,6 +233,7 @@ const SafetyResult = () => {
                                   <img src={obj.thumbnailUrl}/>
                                 </div>
                                 <div className="list-info-wrap">
+                                  <p className="list-info">{obj.locationKr}</p>
                                   <p className="list-info">{obj.groupNm}</p>
                                   <p className="list-info">{obj.category}</p>
                                   <p className="list-info">{`${obj.satellite}`}</p>

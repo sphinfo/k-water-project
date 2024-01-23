@@ -45,8 +45,14 @@ const EnvironmentL4 = ({ mainLayer, ...props}) => {
                     G$flyToPoint([test.longitudeMin, test.latitudeMin], 46000)
                     let datas = [{area:3, x:1, x:2},{area:5, x:1, x:2},{area:1, x:1, x:2},{area:7, x:1, x:2},{area:3, x:1, x:2},{area:2, x:1, x:2}]
                     G$addWidget('EnvironmentAraeWidget', {params:datas}, {subTitle: mainLayer.group === 'Green' ? '녹조 정보' : '부유물 부유물'})
+
+                    G$GetPointToDetail(longitude, latitude)
+
                 }
             })*/
+
+            let datas = [{area:3, x:1, x:2},{area:5, x:1, x:2},{area:1, x:1, x:2},{area:7, x:1, x:2},{area:3, x:1, x:2},{area:2, x:1, x:2}]
+            G$addWidget('EnvironmentAraeWidget', {params:datas}, {subTitle: mainLayer.group === 'Green' ? '녹조 정보' : '부유물 정보'})
         }
 
 

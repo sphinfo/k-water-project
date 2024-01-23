@@ -15,6 +15,7 @@ import { getDroughtObs } from "@common/axios/drought";
 import { getL4Layers } from "@common/axios/common";
 import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
 import BaseLegendgGradientWidget from "@components/legend/BaseLegendgGradientWidget";
+import BaseLegendgGradientWidget2 from "@components/legend/BaseLegendgGradientWidget2";
 
 const Drought = () => {
 
@@ -126,14 +127,23 @@ const Drought = () => {
         let layerCnt = Object.keys(layers).length
         setLayerIdx(layerCnt)
         //레이어가 켜저 있으면 지점 on
+        G$removeWidget('BaseAddLegendWidget')
         if(layerCnt > 0){
             droughtObsrvLayer.current.show = true
-            G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}}/>]})
+            if(obsrvTab === 'soilMoisture'){
+                G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}}/>]})
+            }else if(obsrvTab === 'index'){                
+                G$addWidget('BaseAddLegendWidget',{children:[
+                    <BaseLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}}/>
+                    // ,<BaseLegendgGradientWidget2 params={{title:'SWDI(가뭄 위험 등급 판단 기준)' }}/>
+                ]})
+            }
+            
         }else{
             droughtObsrvLayer.current.show = false
             G$removeWidget('BaseAddLegendWidget')
         }
-    },[layers])
+    },[layers, obsrvTab])
 
     // useEffect(()=>{
 
