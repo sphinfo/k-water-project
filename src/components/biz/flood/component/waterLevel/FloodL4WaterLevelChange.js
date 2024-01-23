@@ -209,7 +209,7 @@ const FloodL4WaterLevel = () => {
             <div className="content-col">
                 <div className="content-row">
                     <div className="panel-box">
-                        <div className="table-wrap" style={{width: 350, height: 360, overflowY: 'auto'}}>
+                        <div className="table-wrap" style={{height: 360, overflowY: 'auto'}}>
                             <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'}/>
                         </div>
 
