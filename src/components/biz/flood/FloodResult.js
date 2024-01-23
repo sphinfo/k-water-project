@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$findEngNmFilter, G$flyToPoint, G$getDateType } from "@gis/util";
+import { G$BaseSelectBoxArray, G$findEngNmFilter, G$flyToPoint, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
 import { FLOOD_CLEAR_LAEYRS, FLOOD_RESET, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, FLOOD_SELECT_WATER_LEVEL, FLOOD_SET_LAYERS, LOADING } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
 import { Button } from "@mui/material";
@@ -52,6 +52,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
               if(response?.length > 0){
                 let resultList = []
 
+                
                 response.map((resObj)=>{
                   //수체
                   if(resObj.config?.url === '/api/layers/getAll'){
@@ -63,8 +64,9 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                         let layer = obj.name
                         let group = 'WaterBody'
                         let groupNm = '수체탐지'
+                        let locationKr = G$getKoreanName(obj.testLocation.split('-'))
                         let categoryNm = obj.category === 'L3WBA1' ? 'AI 알고리즘' : obj.category === 'L3WBA2' ? '물리 기반' : obj.category
-                        resultList.push({...obj, store, layer, group, categoryNm, groupNm})
+                        resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
                       })
                     }
                   }else if(resObj.config?.url === "/api/flood/getObservatory"){
@@ -76,12 +78,13 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                         let groupNm = '지점수위'
                         let satellite= 'Sentinel 1'
                         let krNm = G$findEngNmFilter(obj.name)[0]?.items[0]?.name
-                        resultList.push({group, krNm, groupNm, satellite, ...obj})
+                        let startedAt = dayjs(obj.date).format('YYYYMMDD')
+                        resultList.push({group, krNm, groupNm, satellite, startedAt, ...obj})
                       })
                     }
                   }
 
-                  const groupArray = G$BaseSelectBoxArray(resultList, 'store')
+                  const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'store')
                   const resultArray = groupArray.grouped
 
                   setLayerList(resultArray)
@@ -90,53 +93,6 @@ const FloodResult = ({waterObsList=[], ...props}) => {
               }
 
             })
-
-            /*
-            getL3Layers(params).then((response) => {
-
-              if(response?.result?.data?.length > 0){
-                let resultList = []
-                response.result.data.map((obj)=>{
-
-                  let store = obj.dataType
-                  let layer = obj.name
-                  let group = 'WaterBody'
-                  let groupNm = '수체탐지'
-                  let categoryNm = obj.category === 'L3WBA1' ? 'AI 알고리즘' : obj.category === 'L3WBA2' ? '물리 기반' : obj.category
-                  resultList.push({...obj, store, layer, group, categoryNm, groupNm})
-                })
-
-
-                //수위 지점 리스트 ( 초기에 가져온 값에서 확인 가능함 )
-                if(waterObsList.length > 0){
-                  waterObsList.map((obj)=>{
-                    if(obj.name.indexOf(text.code) > 0){
-                      //수위 지점 따로 추가 해야함 ( 관측소 정보 가져온데이터와 비교 하여 있으면 표출 )
-                      resultList.push({krNm: text.name, group: 'WaterLevel',groupNm: '지점수위', category: 'L3WL', satellite: 'Sentinel 1',code: text.code, ...obj})
-                    }
-                  })
-                }
-
-
-                resultList.map((obj)=>{
-                  if(obj.group === 'WaterBody'){
-                    setWbCnt(prevCount => prevCount + 1)
-                  }else if(obj.group === 'WaterLevel'){
-                    setWlCnt(prevCount => prevCount + 1)
-                  }
-                })
-
-                const groupArray = G$BaseSelectBoxArray(resultList, 'store')
-                const resultArray = groupArray.grouped
-
-                setLayerList(resultArray)
-                setNoData(false)
-              }else{
-                setLayerList([])
-                setNoData(true)
-              }
-            })*/
-
 
           } else {
             setLayerList([])
@@ -152,18 +108,6 @@ const FloodResult = ({waterObsList=[], ...props}) => {
         
       }
     },[searchOn, startDate, endDate])
-
-    /*useEffect(()=>{
-      //수위 탭이 생성되면 수위 첫번째 buttn click 이벤트 
-      if(floodResultTab === 'WaterLevel'){
-        layerList.map((obj,i)=>{
-          if(obj[0].group === 'WaterLevel'){
-            G$flyToPoint([obj[0].lng, obj[0].lat], 46000)
-            checkboxChange(i,0)
-          }
-        })
-      }
-    },[floodResultTab])*/
 
     //임시 검색결과 도출
     useEffect(()=>{
@@ -237,6 +181,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
             <img src={obj.thumbnailUrl}/>
           </div>
           <div className="list-info-wrap">
+            <p className="list-info">{obj.locationKr}</p>
             <p className="list-info">{obj.groupNm}</p>
             <p className="list-info">{`${obj.category} | ${obj.categoryNm}`}</p>
             <p className="list-info">{obj.satellite}</p>

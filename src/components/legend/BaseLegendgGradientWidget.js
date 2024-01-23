@@ -10,13 +10,13 @@ const BaseLegendGradientWidget = (props) => {
     const [datas, setDatas] = useState([])
     const [max, setMax] = useState(0)
     const [min, setMin] = useState(0)
-
+    const [tooltip, setTooltip] = useState(false)
     useEffect(()=>{
         setTitle(params.title)
         setDatas(toJS(params.datas));
         setMin(params.min)
         setMax(params.max)
-
+        setTooltip(params.tooltip)
     },[params.title, params.datas, params.min, params.max])
 
     return (
@@ -24,7 +24,7 @@ const BaseLegendGradientWidget = (props) => {
             <dl className="widget-box legend-gradient">
                 <dt className="widget-header">
                     <h4 className="widget-title">{title}</h4>
-                    <LegendInfo />
+                    {tooltip}
                 </dt>
                 <dd className="widget-body">
                     {datas && datas.length > 3 ? (

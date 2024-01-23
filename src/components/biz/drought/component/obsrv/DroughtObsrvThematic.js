@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Switch } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { G$addWidget,G$removeWidget } from "@gis/util";
+import { G$addWidget,G$paramWidget,G$removeWidget } from "@gis/util";
 import {DROUGHT_OBSRV_TAB } from "@redux/actions";
 
 const DroughtObsrvThematic = () => {
@@ -20,6 +20,14 @@ const DroughtObsrvThematic = () => {
             G$removeWidget('DroughtObsrvWidget')
         }
     },[])
+
+    useEffect(()=>{
+
+        if(selectObs){
+            G$paramWidget('DroughtObsrvWidget',{subTitle: ` | ${selectObs?.properties?.name}`})
+        }
+
+    },[selectObs])
 
     //
     const [obsIndexTab, setObsIndexTab] = useState(false)

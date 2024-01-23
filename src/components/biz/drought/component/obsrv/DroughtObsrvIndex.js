@@ -128,6 +128,8 @@ const DroughtObsrvIndex = () => {
         
         if(selectObs){
 
+            console.info(selectObs)
+
             getDroughtObsIndex({code:selectObs.properties.code}).then((response)=>{
 
                 if(response?.result?.data?.length > 0){

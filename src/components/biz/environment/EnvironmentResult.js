@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$getDateType } from "@gis/util";
+import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
 import EnvironmentResultTab from "./EnvironmentResultTab";
 import { ENV_CLEAR_LAEYRS, ENV_RESET, ENV_RESET_LAYER, ENV_SELECT_BOX, ENV_SELECT_LAYER, ENV_SET_LAYERS } from "@redux/actions";
 import { Button } from "@mui/material";
@@ -66,8 +66,8 @@ const EnvironmentResult = () => {
                   let group = obj.category === 'L3GA' ? 'Garbage' : obj.category === 'L3AE' ? 'Green': obj.category === 'L3AL' ? 'Garbage' : obj.category === 'L3LCA1' ? 'LandCover' : obj.category === 'L3LCA2' ? 'LandCover' : 'a'
                   let categoryNm = obj.category === 'L3GA' ? '부유물' : obj.category === 'L3AE' ? '녹조 농도' : obj.category === 'L3AL' ? '녹조 탐지' : obj.category === 'L3LCA1' ? '수변피복' : obj.category === 'L3LCA2' ? '수변피복' : 'b'
                   let groupNm = obj.category === 'L3GA' ? '부유물' : obj.category === 'L3AE' ? '녹조 농도' : obj.category === 'L3AL' ? '녹조 탐지' : obj.category === 'L3LCA1' ? 'AI 알고리즘' : obj.category === 'L3LCA2' ? '광학자료' : 'c'
-
-                  resultList.push({...obj, store, layer, group, groupNm, categoryNm})
+                  let locationKr = G$getKoreanName(obj.testLocation.split('-'))
+                  resultList.push({...obj, store, layer, group, groupNm, categoryNm, locationKr})
 
                 })
 
@@ -82,7 +82,7 @@ const EnvironmentResult = () => {
                 })
 
                 //environmentResultTab
-                const groupArray = G$BaseSelectBoxArray(resultList, 'group')
+                const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'group')
                 const resultArray = groupArray.grouped
                 setLayerList(resultArray)
               }else{
@@ -181,6 +181,7 @@ const EnvironmentResult = () => {
                 <img src={obj.thumbnailUrl}/>
               </div>
               <div className="list-info-wrap">
+                <p className="list-info">{obj.locationKr}</p>
                 <p className="list-info">{obj.categoryNm}</p>
                 <p className="list-info">{`${obj.category} | ${obj.groupNm}`}</p>
                 <p className="list-info">{`${obj.satellite}`}</p>

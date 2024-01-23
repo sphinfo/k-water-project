@@ -576,6 +576,18 @@ const G$findEngNmFilter=(name=null)=>{
     }).filter(category => category.items.length > 0)
 }
 
+const G$getKoreanName = (codes=[]) => {
+    const foundNames = []
+    codes.forEach(code => {
+        const foundItem = SelectBoxConfig.flatMap(category => category.items).find(item => item.code === code)
+        const name = foundItem ? foundItem.name : ''
+        foundNames.push(name)
+    })
+
+    let nameStr = foundNames.map(krNm => krNm).join(',')
+    return nameStr
+}
+
 export {
     G$addLayer,
     G$removeLayer,
@@ -630,5 +642,6 @@ export {
     G$arrayGetMinMax,
 
     G$selectBoxFilter,
-    G$findEngNmFilter
+    G$findEngNmFilter,
+    G$getKoreanName,
 }

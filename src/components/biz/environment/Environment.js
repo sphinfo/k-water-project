@@ -8,6 +8,9 @@ import { ENV_RESET } from "@redux/actions";
 import EnvironmentL4 from "./component/EnvironmentL4";
 import BasePolygonEntityCollection from "@gis/layers/BasePolygonEntityCollection";
 import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
+import LegendEnvi from "@components/legend/LegendEnvi";
+import BaseLegendWidget from "@components/legend/BaseLegendWidget";
+import BaseLegendgGradientWidget from "@components/legend/BaseLegendgGradientWidget";
 
 /* 환경 */
 const Environment = () => {
@@ -59,6 +62,47 @@ const Environment = () => {
         setMainLayer(false)
       }
   },[layers])
+
+
+  useEffect(()=>{
+    legendSetting()
+  },[layerIdx])
+
+
+  const legendSetting = () =>{
+      let legendGroup = []
+      let legendOption = []
+      if(layerIdx > 0){
+          Object.keys(layers).map((layerId, i)=>{
+              const { category, group=category, ...other } = layers[layerId]?.props
+              legendGroup.push(group)
+              legendOption.push(layers[layerId]?.props)
+          })
+      }
+      legendVisible(legendGroup, legendOption)
+  }
+
+  const legendVisible = (legendGroup=[], legendOption=[]) =>{
+      G$removeWidget('BaseAddLegendWidget')
+      if(legendGroup.length > 0){
+          let legends = []
+          let tooltip = false
+          const uniqueArray = [...new Set(legendGroup)]
+          console.info(legendOption[0])
+          tooltip = legendGroup.length === 1 ? <LegendEnvi props={legendOption[0]}/> : false
+          uniqueArray.map((group)=>{
+              if(group === 'LandCover'){
+                  legends.push(<BaseLegendWidget params={{ title:'피복 분류', datas: [{label:'수체', color:'#557BDF'} ,{label:'나지', color:'#F3AC50'} ,{label:'초지', color:'#A1F8A5'} ,{label:'목지', color:'#35783B'} ,{label:'건물', color:'#DD59B2'}], tooltip:tooltip }}/>)
+              }else if(group === 'Garbage'){
+                  legends.push(<BaseLegendgGradientWidget params={{title:'부유물 농도', min:0, max: 300, datas:['#1E90FF', '#87CEFA', '#FAFAD2', '#FFA500', '#FF0000'], tooltip:tooltip }}/>)
+              }else if(group === 'Green'){
+                  legends.push(<BaseLegendgGradientWidget params={{title:'녹조 농도 (mg/m3)', min:0, max: 300, datas:['#1E90FF', '#87CEFA', '#FAFAD2', '#FFA500', '#FF0000'], tooltip:tooltip }}/>)
+              }
+              
+          })
+          G$addWidget('BaseAddLegendWidget', {children:legends})
+      }
+  }
 
 
   //변화탐지 레이어

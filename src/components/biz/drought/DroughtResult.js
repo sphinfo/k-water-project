@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$getDateType } from "@gis/util";
+import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
 import { DROUGHT_CLEAR_LAEYRS, DROUGHT_RESET, DROUGHT_RESET_LAYER, DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER, DROUGHT_SET_LAYERS } from "@redux/actions";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -58,7 +58,8 @@ const DroughtResult = () => {
                   let group = obj.category.indexOf('A1') > 0 ? 'A1' : obj.category.indexOf('A2') > 0 ? 'A2' : obj.category.indexOf('A3') > 0 ? 'A3' : ''
                   let groupNm = '토양수분'
                   let categoryNm = obj.category.indexOf('A1') > 0 ? '물리모형' : obj.category.indexOf('A2') > 0 ? '강우자료' : obj.category.indexOf('A3') > 0 ? '토양특성' : ''
-                  resultList.push({...obj, store, layer, group, categoryNm, groupNm})
+                  let locationKr = G$getKoreanName(obj.testLocation.split('-'))
+                  resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
                 })
 
                 resultList.map((obj)=>{
@@ -71,7 +72,7 @@ const DroughtResult = () => {
                   }
                 })
 
-                const groupArray = G$BaseSelectBoxArray(resultList, 'group')
+                const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'group')
                 const resultArray = groupArray.grouped
                 setLayerList(resultArray)
               }else{
@@ -166,6 +167,7 @@ const DroughtResult = () => {
                   <img src={obj.thumbnailUrl}/>
                 </div>
                 <div className="list-info-wrap">
+                  <p className="list-info">{obj.locationKr}</p>
                   <p className="list-info">{obj.groupNm}</p>
                   <p className="list-info">{`${obj.category} | ${obj.categoryNm}`}</p>
                   <p className="list-info">{`${obj.satellite}`}</p>
