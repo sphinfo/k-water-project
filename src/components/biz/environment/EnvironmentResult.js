@@ -184,7 +184,7 @@ const EnvironmentResult = () => {
                 <p className="list-info">{obj.locationKr}</p>
                 <p className="list-info">{obj.categoryNm}</p>
                 <p className="list-info">{`${obj.category} | ${obj.groupNm}`}</p>
-                <p className="list-info">{`${obj.satellite}`}</p>
+                <p className="list-info">{`${obj.satellite === 'S1A' ? 'Sentinal 1' :  obj.satellite === 'S2A' ? 'Sentinal 2' : obj.satellite}`}</p>
                 <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
               </div>
             </div>
