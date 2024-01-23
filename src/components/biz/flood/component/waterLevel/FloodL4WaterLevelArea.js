@@ -78,29 +78,42 @@ const FloodL4WaterLevelArea = () => {
                     annotations: {
                         fullRangeAnnotation: {
                             type: 'box',
-                            borderColor: 'rgba(255, 0, 0, 0)',
-                            backgroundColor: 'rgba(255, 0, 0, 0)',
-                            yMin: 0,
-                            yMax: satationInfo.c2,
+                            borderColor: 'transparent',
+                            backgroundColor: 'rgba(8, 132, 229, 0.1)',
+
                             borderWidth: 1,
-                        },                
-                        /**현수위 */
-                        nowLine: {
+                        },
+
+                        nowBox: {
                             type: 'box',
-                            backgroundColor: '#32CD32',
+                            backgroundColor: 'rgba(8, 132, 229, 0.4)',
+                            borderColor: 'rgba(8, 132, 229, 0.4)',
                             yMin: 0,
                             yMax: realWl,
+                            label: {
+                                display: true,
+                                color: 'rgba(255,255,255,0.9)',
+                                backgroundColor: '#FF9E2B',
+                                borderRadius: 5,
+                                rotation: 'auto',
+                                position: 'center',
+                                content: '현수위 ( ' +realWl+ ' EL.m )',
+                                font: {
+                                    size: 12,
+                                }
+                            },
                         },
+
                         /**저수위 */
                         minLine: {
                             type: 'line',
-                            borderColor: '#ffe88a',
+                            borderColor: '#FF9E2B',
                             yMin: satationInfo.c5,
                             yMax: satationInfo.c5,
                             borderWidth: 2,
                             label: {
                                 display: true,
-                                backgroundColor: '#ffe88a',
+                                backgroundColor: '#FF9E2B',
                                 borderRadius: 5,
                                 rotation: 'auto',
                                 position: 'start',
@@ -113,13 +126,13 @@ const FloodL4WaterLevelArea = () => {
                         /**만수위 */
                         maxLine: {
                             type: 'line',
-                            borderColor: '#E83233',
+                            borderColor: '#DD4747',
                             borderWidth: 2,
                             yMin: satationInfo.c2,
                             yMax: satationInfo.c2,
                             label: {
                                 display: true,
-                                backgroundColor: '#E83233',
+                                backgroundColor: '#DD4747',
                                 borderRadius: 5,
                                 rotation: 'auto',
                                 position: 'start',
@@ -132,22 +145,22 @@ const FloodL4WaterLevelArea = () => {
                         /**위성수위 */
                         sateLine: {
                             type: 'line',
-                            borderColor: '#A3D0F3',
+                            borderColor: '#47BFD9',
                             yMin: wl,
                             yMax: wl,
                             borderWidth: 2,
                             label: {
                                 display: true,
-                                backgroundColor: '#A3D0F3',
+                                backgroundColor: '#47BFD9',
                                 borderRadius: 5,
                                 rotation: 'auto',
                                 position: 'start',
-                                content: '위성수위 ( ' +wl+ 'm )',
+                                content: '위성수위 ( ' +wl+ ' EL.m )',
                                 font: {
                                     size: 12,
                                 }
                             },
-                        }
+                        },
                     }
                 }
             },
@@ -217,7 +230,7 @@ const FloodL4WaterLevelArea = () => {
                 </div>
                 <div className="content-row height-100">
                     <div className="panel-box height-100">
-                        <BaseChart width={'100%'} height={300} ref={chartRef} data={chartInfoRef} chartType={'bar'}/>
+                        <BaseChart width={'100%'} height={'100%'} ref={chartRef} data={chartInfoRef} chartType={'bar'}/>
                     </div>
                 </div>
             </div>
