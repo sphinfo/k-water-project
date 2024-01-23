@@ -7,22 +7,20 @@ const BaseLegendWidget = (props) => {
     const {params, ...other} = props
     const [title, setTitle] = useState('')
     const [datas, setDatas] = useState([])
+    const [tooltip, setTooltip] = useState(false)
 
     useEffect(()=>{
         setTitle(params.title)
-
-        setDatas(toJS(params.datas) );
-
+        setDatas(toJS(params.datas))
+        setTooltip(params.tooltip)
     },[params.title, params.datas])
-
-    useEffect(()=>{
-    },[datas])
 
     return (
         <>
             <dl className="widget-box">
                 <dt className={"widget-header"}>
                     <h4 className={"widget-title"}>{title}</h4>
+                    {tooltip}
                 </dt>
                 <dd className={"widget-body"}>
                     <ul>

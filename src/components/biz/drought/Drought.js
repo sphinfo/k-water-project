@@ -131,11 +131,12 @@ const Drought = () => {
         if(layerCnt > 0){
             droughtObsrvLayer.current.show = true
             if(obsrvTab === 'soilMoisture'){
-                G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}}/>]})
+                G$addWidget('BaseAddLegendWidget',{children:[
+                    <BaseLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}}/>
+                ]})
             }else if(obsrvTab === 'index'){                
                 G$addWidget('BaseAddLegendWidget',{children:[
                     <BaseLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF']}}/>
-                    // ,<BaseLegendgGradientWidget2 params={{title:'SWDI(가뭄 위험 등급 판단 기준)' }}/>
                 ]})
             }
             
