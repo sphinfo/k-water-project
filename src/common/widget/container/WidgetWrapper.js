@@ -41,7 +41,8 @@ const WidgetWrapper = (props) => {
                     <div key={wid} className={`${wid} popup ${mini ? 'minimize' : ''}`}>
                         <div className={"popup-header"}>
                             <h1 className={"popup-title"}>
-                                {title}<span className="popup-subtitle">{subTitle ? subTitle : ''}</span>
+                                {title}
+                                {subTitle && <span className="popup-subtitle">{subTitle}</span>}
                             </h1>
                             <div className="btn-wrap">
                                 <button className="btn-icon btn-min-max" onClick={()=>{setMini(!mini)}}></button>
