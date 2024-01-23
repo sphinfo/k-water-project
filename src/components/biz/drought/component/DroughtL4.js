@@ -29,7 +29,7 @@ const DroughtL4 = () => {
                 ( 
                     <>
                         <DroughtObsrvThematic />
-                        <BaseOragDataInfo a={true}/>
+                        {/* <BaseOragDataInfo a={true}/> */}
                     </>
                 ) 
             }

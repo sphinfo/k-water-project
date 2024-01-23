@@ -54,7 +54,7 @@ const EnvironmentAraeWidget = (props) => {
                             </tr>
                             </thead>
                             <tbody>
-                                {
+                                {/*
                                     params.length > 0 && 
                                     params.map((obj, i)=>{
                                         return(
@@ -68,7 +68,7 @@ const EnvironmentAraeWidget = (props) => {
                                         )
                                         
                                     })
-                                }
+                                */}
                             </tbody>
                         </table>
                     </div>

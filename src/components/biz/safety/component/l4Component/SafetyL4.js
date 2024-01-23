@@ -25,7 +25,7 @@ const SafetyL4 = ({ mainLayer, ...props}) => {
               <SafetyL4Thematic />
             }
             
-            <BaseOragDataInfo a={true} b={true}/>
+            {/* <BaseOragDataInfo a={true} b={true}/> */}
           </div>
         </>
     )

@@ -24,7 +24,7 @@ const DroughtObsrvThematic = () => {
     useEffect(()=>{
 
         if(selectObs){
-            G$paramWidget('DroughtObsrvWidget',{subTitle: ` | ${selectObs?.properties?.name}`})
+            G$paramWidget('DroughtObsrvWidget',{subTitle: `${selectObs?.properties?.name}`})
         }
 
     },[selectObs])

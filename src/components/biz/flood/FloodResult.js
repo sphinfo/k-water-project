@@ -84,8 +84,14 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                     }
                   }
 
-                  const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'store')
+                  //resultList = G$sortArrayObject(resultList, 'startedAt', true)
+
+                  const groupArray = G$BaseSelectBoxArray(resultList, 'store')
                   const resultArray = groupArray.grouped
+
+                  resultArray.map((result)=>{
+                    result = G$sortArrayObject(result, 'startedAt', true)
+                  })
 
                   setLayerList(resultArray)
 

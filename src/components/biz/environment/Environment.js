@@ -66,7 +66,7 @@ const Environment = () => {
 
   useEffect(()=>{
     legendSetting()
-  },[layerIdx])
+  },[layerIdx,layers])
 
 
   const legendSetting = () =>{
@@ -94,7 +94,7 @@ const Environment = () => {
               if(group === 'LandCover'){
                   legends.push(<BaseLegendWidget params={{ title:'피복 분류', datas: [{label:'수체', color:'#557BDF'} ,{label:'나지', color:'#F3AC50'} ,{label:'초지', color:'#A1F8A5'} ,{label:'목지', color:'#35783B'} ,{label:'건물', color:'#DD59B2'}], tooltip:tooltip }}/>)
               }else if(group === 'Garbage'){
-                  legends.push(<BaseLegendgGradientWidget params={{title:'부유물 농도', min:0, max: 300, datas:['#1E90FF', '#87CEFA', '#FAFAD2', '#FFA500', '#FF0000'], tooltip:tooltip }}/>)
+                  legends.push(<BaseLegendWidget params={{title:'부유물 폐기성', datas:[{label:'부유물 발생', color:'#FF9F9F'}], tooltip:tooltip }}/>)
               }else if(group === 'Green'){
                   legends.push(<BaseLegendgGradientWidget params={{title:'녹조 농도 (mg/m3)', min:0, max: 300, datas:['#1E90FF', '#87CEFA', '#FAFAD2', '#FFA500', '#FF0000'], tooltip:tooltip }}/>)
               }
