@@ -78,6 +78,7 @@
     input {
       width: 100%;
       height: 26px;
+      padding: 0;
     }
 
     &.bed-open {
@@ -2172,13 +2173,13 @@
 
           &:nth-child(1) {
             &:after {
-              content: '물리';
+              content: '위성토양수분';
             }
           }
 
           &:nth-child(2) {
             &:after {
-              content: '강우';
+              content: '강우자료';
             }
 
             &.Mui-selected {
@@ -2187,7 +2188,7 @@
                 content: '';
                 display: block;
                 background-color: $primary;
-                width: 200%;
+                width: 230%;
                 height: 100%;
                 position: absolute;
                 right: 0;
@@ -2211,7 +2212,7 @@
 
           &:nth-child(3) {
             &:after {
-              content: '토양';
+              content: '토양자료';
             }
 
             &.Mui-selected {
@@ -2220,7 +2221,7 @@
                 content: '';
                 display: block;
                 background-color: $primary;
-                width: 300%;
+                width: 330%;
                 height: 100%;
                 position: absolute;
                 right: 0;
