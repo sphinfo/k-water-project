@@ -194,10 +194,12 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     const renderWaterLevel = (obj)=>{
       return (
         <>
-          <div className="list-info-wrap">
-            <p className="list-info">{obj.krNm}</p>
-            <p className="list-info">{obj.groupNm}</p>
-            <p className="list-info">{`${obj.satellite}`}</p>
+          <div className="list-info-wrap list-info-wrap-variant">
+            <div className="list-info-wrap-variant-inner">
+              <p className="list-info">{obj.krNm}</p>
+              <p className="list-info">{obj.groupNm}</p>
+              <p className="list-info">{`${obj.satellite}`}</p>
+            </div>
             <p className="list-info">{`${dayjs(obj.date).format('YYYY-MM-DD')}`}</p>
           </div>
         </>
