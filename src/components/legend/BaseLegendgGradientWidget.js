@@ -1,5 +1,6 @@
 import { toJS } from "mobx";
 import React, { useEffect, useState } from "react";
+import LegendInfo from "./LegendInfo";
 
 /** 범례 공통으로 사용할경우 param 받아서 범례값 title 변경 예시 230731 */
 const BaseLegendGradientWidget = (props) => {
@@ -20,10 +21,11 @@ const BaseLegendGradientWidget = (props) => {
 
     return (
         <>
-
-        <div className="map_widget map-basic-style"  >
             <dl className="widget-box legend-gradient">
-                <dt className="widget-header"><h4 className="widget-title">{title}</h4></dt>
+                <dt className="widget-header">
+                    <h4 className="widget-title">{title}</h4>
+                    <LegendInfo />
+                </dt>
                 <dd className="widget-body">
                     {datas && datas.length > 3 ? (
                       <div className="widget-legend-chip"
@@ -36,10 +38,6 @@ const BaseLegendGradientWidget = (props) => {
                     </ul>
                 </dd>
             </dl>
-        </div>
-
-
-            
         </>
     )
 }
