@@ -9,11 +9,10 @@ import FloodL4 from "./component/FloodL4";
 import FloodOptions from "./FloodOptions";
 import FloodResult from "./FloodResult";
 import pin from "@images/map-icon-st.svg"
-import pin2 from "@images/map-icon-st-clicked.svg"
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
-import BaseAddLegendWidget from "@components/legend/BaseAddLegendWidget";
 import BaseLegendWidget from "@components/legend/BaseLegendWidget";
+import LegendFlood from "@components/legend/LegendFlood";
 
 /* 홍수 */
 const Flood = () => {
@@ -32,37 +31,6 @@ const Flood = () => {
 
     //홍수 - 수위 Point Wfs
     const floodWaterLevelLayer = useRef()
-
-    //const [waterObsList, setWaterObsList] = useState([])
-
-    //const [station, setStation] = useState(false)
-
-    /* 레이어 선택 callback Ref */
-    const layerSelectRef = useRef();
-    /*useImperativeHandle(layerSelectRef, ()=>({
-        getFeatures(features){
-
-            //수위일시 onclick 이벤트 활성화
-            if(floodResultTab === 'WaterLevel'){
-
-                if(selectWaterLevel){
-                    selectWaterLevel.entity.billboard.image = pin
-                }
-    
-                if(station === features[0].properties.name){
-                    dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: false})
-                    setStation(false)
-                }else{
-                    features[0].entity.billboard.image = pin2
-                    G$paramWidget('FloodL4WaterLevelWidget')
-                    dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: features[0]})
-                    setStation(features[0].properties.name)
-                }
-
-            }
-            
-        }
-    }))*/
 
     const [layerIdx, setLayerIdx] = useState(0)
     useEffect(()=>{
@@ -120,7 +88,7 @@ const Flood = () => {
     useEffect(()=>{
         
         if(selectFloodDamageLayer){
-            G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendWidget params={{ title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}]}}/>]})
+            G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendWidget params={{ title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}],tooltip:<LegendFlood /> }}/>]})
             const {store, layer} = selectFloodDamageLayer
             floodDamageLayer.current.changeParameters({store:store, layerId:layer})
             floodDamageLayer.current.setOpacity(0.5)
