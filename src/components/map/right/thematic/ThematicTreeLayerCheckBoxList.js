@@ -1,3 +1,4 @@
+import BaseLegendWidget from "@components/legend/BaseLegendWidget";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import { G$addWidget, G$removeWidget } from "@gis/util";
 import { TreeItem, TreeView } from "@mui/lab";
@@ -149,9 +150,11 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
             //범례 존재시 범례 on // off
             if(layerInfo.legend){
               if(visible){
-                G$addWidget('BaseLegendWidget', layerInfo.legend)
+                G$addWidget('BaseAddLegendWidget',{children:[
+                  <BaseLegendWidget params={layerInfo.legend} />
+                ]})
               }else{
-                G$removeWidget('BaseLegendWidget')
+                G$removeWidget('BaseAddLegendWidget')
               }
             }
 
