@@ -104,6 +104,7 @@ const SafetyResult = () => {
 
       }else{
         setLayerList([])
+        setDisplaceLevelData([])
       }
       
     },[searchOn])
