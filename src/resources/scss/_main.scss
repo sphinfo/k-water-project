@@ -2393,6 +2393,7 @@
         .img-box {
           position: relative;
           width: 110px;
+          max-height: 120px;
           overflow: hidden;
           flex: 1 0 auto;
 
@@ -2410,7 +2411,7 @@
           display: flex;
           flex-direction: column;
           gap: 5px;
-          min-width: calc(100% - 100px);
+          min-width: calc(100% - 110px);
           flex: 1 0 0;
           padding: 10px;
           background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.00) 100%);
@@ -2670,7 +2671,7 @@
 }
 
 .tooltip-info-wrap {
-  overflow: scroll;
+  overflow-y: auto;
   max-height: 500px;
 }
 
