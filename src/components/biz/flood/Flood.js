@@ -79,7 +79,7 @@ const Flood = () => {
             //수위 데이터 선택되면 feature 그리고 이동
             G$flyToPoint([selectWaterLevel.lng, selectWaterLevel.lat], 46000)
             floodWaterLevelLayer.current._addFeature({lng:selectWaterLevel.lng, lat:selectWaterLevel.lat, properties:selectWaterLevel, hover: true})
-            G$paramWidget('FloodL4WaterLevelWidget', {subTitle: ` | ${selectWaterLevel.krNm}`})
+            G$paramWidget('FloodL4WaterLevelWidget', {subTitle: ` ${selectWaterLevel.krNm}`})
         }else{
             G$removeWidget('FloodL4WaterLevelWidget')
         }

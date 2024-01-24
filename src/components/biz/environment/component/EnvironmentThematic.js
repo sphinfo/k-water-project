@@ -30,7 +30,7 @@ const EnvironmentThematic = () => {
         setThematicList(example)
         
         return()=>{
-    
+            dispatch({type:ENV_LANDCOVER_DETECTION, landCoverDetection: false})
         }
         
     },[])
