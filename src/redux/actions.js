@@ -4,7 +4,8 @@ export const CHANGE_MODE = 'CHANGE_MODE';
 export const HOLD_MAP = 'HOLD_MAP';
 //주제도 ON / OFF
 export const THEMATIC_MODE = 'THEMATIC_MODE';
-
+//투명도 ON / OFF
+export const OPACITY_MODE = 'OPACITY_MODE';
 //맵 로딩바
 export const LOADING = 'LOADING';
 

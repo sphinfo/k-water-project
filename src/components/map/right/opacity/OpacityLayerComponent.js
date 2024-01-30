@@ -1,16 +1,18 @@
 import { G$imageLayersOpacity } from "@gis/util";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const OpacityLayerComponent = () => {
 
+    const opacityMode = useSelector(state => state.main.opacity);
+
     const changeOpacity = (e)=>{
-        console.info(e.target.value/10)
         G$imageLayersOpacity(e.target.value/10)
     }
 
     return (
         <>  
-            <div className="map-layer-box map-opacity-box">
+            <div className="map-layer-box map-opacity-box" style={{display: opacityMode ? '': 'none'}}>
               <div className="box-header">
                 <h4 className="box-title">표출 지도 투명도</h4>
               </div>

@@ -10,6 +10,7 @@ import {
   LEGNED_PANEL,
   SEARCH_ADDR,
   THEMATIC_MODE,
+  OPACITY_MODE,
   SEARCH_RIVER,
   SET_PANEL_VISIBLE,
   SET_SIDE_PANEL,
@@ -20,6 +21,7 @@ const initialState = {
   mode: '',
   loading: false, //맵로딩
   thematic: false, //주제도
+  opacity: false, //투명도
   mainOptions: [],
   selectOption: null,
   startDate: dayjs().format('YYYY-MM-DD'),
@@ -46,6 +48,8 @@ function mainReducer(state = initialState, action) {
       return { ...state, loading: action.loading }
     case THEMATIC_MODE:
       return { ...state, thematic: action.thematic }
+    case OPACITY_MODE:
+      return { ...state, opacity: action.opacity }
     case CHANGE_MODE:
       return { ...state, mode: action.mode };
     case HOLD_MAP:

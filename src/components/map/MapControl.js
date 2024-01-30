@@ -13,6 +13,7 @@ import logo02 from "@images/logo02.png"
 import { useSelector } from "react-redux";
 import CompassWidget from "./right/CompassWidget";
 import HoldMapWidget from "./right/HoldMapWidget";
+import OpacityLayerWidget from "./right/OpacityLayerWidget";
 
 
 const MapControl = () =>{
@@ -36,8 +37,13 @@ const MapControl = () =>{
                     {/*<BaseMapWidget />    배경지도*/}
                 </div>
                 <div className="map_ctrl_right">
-                    <ThematicWidget/> {/* 주제도 */}
-                    {/** <HoldMapWidget/> */} {/* 지도 Hold */}
+                    <div className={`map-widget-vertical-block map-basic-style`}>
+                        <ThematicWidget/> {/* 주제도 */}
+                        <OpacityLayerWidget/> {/* 레이어 투명도 */}
+                        <HoldMapWidget/> {/* 지도 Hold */}
+                    </div>
+                    
+                    
                     <MeasureMapWidget/> {/* 측정 */}
                     <ZoomMapWidget/> {/* 줌 */}
                     <CompassWidget /> {/*나침반*/}

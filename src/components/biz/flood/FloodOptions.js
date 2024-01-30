@@ -16,7 +16,7 @@ const FloodOptions = () => {
 
     useEffect(()=>{
         if(selectBox !== 'off'){
-            selectRef.current.visibleTree = true
+            selectRef.current.visibleTree = selectBox
         }
     },[selectBox])
 
