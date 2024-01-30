@@ -37,7 +37,7 @@ const MapControl = () =>{
                 </div>
                 <div className="map_ctrl_right">
                     <ThematicWidget/> {/* 주제도 */}
-                    <HoldMapWidget/> {/* 지도 Hold */}
+                    {/** <HoldMapWidget/> */} {/* 지도 Hold */}
                     <MeasureMapWidget/> {/* 측정 */}
                     <ZoomMapWidget/> {/* 줌 */}
                     <CompassWidget /> {/*나침반*/}
