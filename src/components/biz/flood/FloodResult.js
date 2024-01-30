@@ -84,18 +84,25 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                     }
                   }
 
-                  //resultList = G$sortArrayObject(resultList, 'startedAt', true)
-
-                  const groupArray = G$BaseSelectBoxArray(resultList, 'store')
-                  const resultArray = groupArray.grouped
-
-                  resultArray.map((result)=>{
-                    result = G$sortArrayObject(result, 'startedAt', true)
-                  })
-
-                  setLayerList(resultArray)
-
                 })
+
+                const groupArray = G$BaseSelectBoxArray(resultList, 'store')
+                const resultArray = groupArray.grouped
+
+                resultArray.map((result)=>{
+                  result = G$sortArrayObject(result, 'startedAt', true)
+                })
+
+                let firstGroup = resultArray[0]?.[0]?.group === 'WaterBody' ? resultArray[0][0] :
+                resultArray[1]?.[0]?.group === 'WaterBody' ? resultArray[1][0] : false 
+
+                if(firstGroup){
+                  firstGroup.checked = true
+                  dispatch({ type: FLOOD_SET_LAYERS, layerInfo: firstGroup, setType: true })
+                }
+
+                setLayerList(resultArray)
+
               }
 
             })

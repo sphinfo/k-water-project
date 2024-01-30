@@ -79,7 +79,7 @@ const Drought = () => {
         droughtObsrvLayer.current = new BaseEntityCollection({name:'droughtObsrvLayer', image: pin, overlay: new DroughtOverlay()})
 
         //가뭄 메인 레이어 L4
-        //droughtL4Layer.current = new BaseWmsImageLayer({store:'drought',layerId:''})
+        droughtL4Layer.current = new BaseWmsImageLayer({store:'drought',layerId:''})
 
         //*******API*************/
         //let obsList = DroughtObsrvConfig
@@ -110,9 +110,14 @@ const Drought = () => {
                 droughtObsrvLayer.current.hoverHandler = undefined
             }
 
+            if(droughtObsrvLayer.current?.overlay){
+                droughtObsrvLayer.current.overlay.removeAll()
+            }
+
+            //removeAll
+
             //가뭄 레이어 삭제
-            //G$removeLayer(droughtLayer.current.layer)
-            //G$removeLayer(droughtL4Layer.current.layer)
+            G$removeLayer(droughtL4Layer.current.layer)
 
             //가뭄 reducer 초기화
             dispatch({type:DROUGHT_RESET})
@@ -124,12 +129,30 @@ const Drought = () => {
     },[])
 
     const [layerIdx, setLayerIdx] = useState(0)
+    const [mainLayer, setMainLayer] = useState(false)
     useEffect(()=>{
         let layerCnt = Object.keys(layers).length
         setLayerIdx(layerCnt)
+
+        if(layerCnt === 1){
+            Object.keys(layers).map((layerId, i)=>{
+              const { store, layer, ...other } = layers[layerId]?.props
+              if(i === 0){
+                  setMainLayer(other)
+              }
+          })
+            
+        }else{
+          setMainLayer(false)
+        }
+
+        
+    },[layers])
+
+    useEffect(()=>{
         //레이어가 켜저 있으면 지점 on
         G$removeWidget('BaseAddLegendWidget')
-        if(layerCnt > 0){
+        if(layerIdx > 0){
             droughtObsrvLayer.current.show = true
             if(obsrvTab === 'soilMoisture'){
                 G$addWidget('BaseAddLegendWidget',{children:[
@@ -145,25 +168,22 @@ const Drought = () => {
             droughtObsrvLayer.current.show = false
             G$removeWidget('BaseAddLegendWidget')
         }
-    },[layers, obsrvTab])
+    },[layerIdx])
 
-    // useEffect(()=>{
-
-    //     if(obsrvTab === 'index'){
-    //         if(selectDroughtLayer){
-    //             const {id} = selectDroughtLayer
-    //             getL4Layers({id:id}).then((response)=>{
-    //                 if(response?.result?.data?.length > 0){
-    //                     let store = response.result.data[0].dataType.toLowerCase()
-    //                     let layer = response.result.data[0].name
-    //                     droughtL4Layer.current.changeParameters({store:store, layerId:layer})
-    //                 }
-    //             })
-    //         }
-    //     }else{
-    //         droughtL4Layer.current.remove()
-    //     }
-    //},[obsrvTab])
+    useEffect(()=>{
+        if(obsrvTab === 'index' && mainLayer){
+            const {id} = mainLayer
+            getL4Layers({id:id}).then((response)=>{
+                if(response?.result?.data?.length > 0){
+                    let store = response.result.data[0].dataType.toLowerCase()
+                    let layer = response.result.data[0].name
+                    droughtL4Layer.current.changeParameters({store:store, layerId:layer})
+                }
+            })
+        }else{
+            droughtL4Layer.current.remove()
+        }
+    },[obsrvTab])
 
     return (
         <>

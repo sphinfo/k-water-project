@@ -76,25 +76,25 @@ function floodReducer(state = initialState, action) {
       return { ...state, searchOn: action.searchOn}
 
     case FLOOD_SET_LAYERS:
-      //setType true => add / false => remove
-      let layerId = `${action.layerInfo.store}:${action.layerInfo.layer}`
-      if(action.setType){
-        //layer Instace 가 없을시 
-        if(!state.layers[layerId]){
-          const updateLayers = {
-            ...state.layers,
-            [layerId]: new BaseWmsImageLayer({store:action.layerInfo.store, layerId:action.layerInfo.layer, info:action.layerInfo}),
-          }
-          return {...state, layers:updateLayers}
+    //setType true => add / false => remove
+    let layerId = `${action.layerInfo.store}:${action.layerInfo.layer}`
+    if(action.setType){
+      //layer Instace 가 없을시 
+      if(!state.layers[layerId]){
+        const updateLayers = {
+          ...state.layers,
+          [layerId]: new BaseWmsImageLayer({store:action.layerInfo.store, layerId:action.layerInfo.layer, info:action.layerInfo}),
         }
-      }else{
-        const updatedLayers = { ...state.layers }
-        if (updatedLayers[layerId]) {
-          G$removeLayer(updatedLayers[layerId].layer)
-          delete updatedLayers[layerId]
-          return { ...state, layers: updatedLayers }
-        }
+        return {...state, layers:updateLayers}
       }
+    }else{
+      const updatedLayers = { ...state.layers }
+      if (updatedLayers[layerId]) {
+        G$removeLayer(updatedLayers[layerId].layer)
+        delete updatedLayers[layerId]
+        return { ...state, layers: updatedLayers }
+      }
+    }
 
     //레이어 clear
     case FLOOD_CLEAR_LAEYRS:
@@ -105,7 +105,7 @@ function floodReducer(state = initialState, action) {
           delete state.layers[layerId]
         })
       }
-      return {...state }
+      return {...state, layers: {} }
 
 
     //초기화

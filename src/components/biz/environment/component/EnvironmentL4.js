@@ -27,17 +27,9 @@ const EnvironmentL4 = ({ mainLayer, ...props}) => {
     },[])
 
     useEffect(()=>{
-        G$removeWidget('EnvironmentLandCoverWidget')
         G$removeWidget('EnvironmentAraeWidget')
-        if(mainLayer.group === 'LandCover'){
-            G$removeWidget('EnvironmentAraeWidget')
-            G$addWidget('EnvironmentLandCoverWidget')
-            
-        }else if(mainLayer.group === 'Green' || mainLayer.group === 'Garbage'){
-            G$removeWidget('EnvironmentLandCoverWidget')   
-            
-            G$addWidget('EnvironmentAraeWidget', {params:[]}, {subTitle: mainLayer.group === 'Green' ? '녹조 정보' : '부유물 정보'})
-
+        if(mainLayer.group === 'Garbage'){
+            G$addWidget('EnvironmentAraeWidget', {params:mainLayer}, {title: '부유물 정보'})
             /*let params = {type:'environment'}
             getAreaInfo(params).then((response) => {
                 if(response?.result?.data?.length > 0){
@@ -54,21 +46,17 @@ const EnvironmentL4 = ({ mainLayer, ...props}) => {
 
             //let datas = [{area:3, x:1, x:2},{area:5, x:1, x:2},{area:1, x:1, x:2},{area:7, x:1, x:2},{area:3, x:1, x:2},{area:2, x:1, x:2}]
             //G$addWidget('EnvironmentAraeWidget', {params:datas}, {subTitle: mainLayer.group === 'Green' ? '녹조 정보' : '부유물 정보'})
+        }else{
+            G$removeWidget('EnvironmentAraeWidget')
         }
-
-
-
     },[mainLayer])
-
-
 
     return (
         <>
             {
                 mainLayer && mainLayer.group === 'LandCover' &&
-                <EnvironmentThematic />
+                <EnvironmentThematic mainLayer={mainLayer}/>
             }
-            {/* <BaseOragDataInfo a={true} b={true}/> */}
         </>
     )
 }

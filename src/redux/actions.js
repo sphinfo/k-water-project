@@ -1,6 +1,7 @@
 //LEFT SIDEBAR TYPE ( 메인 구분 )
 export const CHANGE_MODE = 'CHANGE_MODE';
-
+//맵 이동 control
+export const HOLD_MAP = 'HOLD_MAP';
 //주제도 ON / OFF
 export const THEMATIC_MODE = 'THEMATIC_MODE';
 

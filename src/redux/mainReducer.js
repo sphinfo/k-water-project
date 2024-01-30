@@ -12,7 +12,8 @@ import {
   THEMATIC_MODE,
   SEARCH_RIVER,
   SET_PANEL_VISIBLE,
-  SET_SIDE_PANEL
+  SET_SIDE_PANEL,
+  HOLD_MAP
 } from './actions';
 
 const initialState = {
@@ -33,6 +34,7 @@ const initialState = {
   //두번째 패널 on / off
   panelSide: false,
 
+  //맵 이동 control
   holdMap: false,
 
 };
@@ -46,6 +48,8 @@ function mainReducer(state = initialState, action) {
       return { ...state, thematic: action.thematic }
     case CHANGE_MODE:
       return { ...state, mode: action.mode };
+    case HOLD_MAP:
+      return { ...state, holdMap: action.hold };
     case SET_START_DATE:
       return { ...state, startDate: action.date };
     case SET_END_DATE:

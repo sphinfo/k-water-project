@@ -82,6 +82,14 @@ const SafetyResult = () => {
                 const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true))
                 const resultArray = groupArray.grouped
 
+                let firstGroup = resultArray[0]?.[0]?.group === 'L3' ? resultArray[0][0] :
+                resultArray[1]?.[0]?.group === 'L3' ? resultArray[1][0] : false 
+
+                if(firstGroup){
+                  firstGroup.checked = true
+                  dispatch({ type: SAFETY_SET_LAYERS, layerInfo: firstGroup, setType: true })
+                }
+
                 //변위 등급 리스트
                 setDisplaceLevelData(displaceResultList)
                 //3레벨 레이어 리스트

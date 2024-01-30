@@ -31,7 +31,7 @@ const DroughtObsrv = () => {
     const rows = useMemo(()=>{ return [  ] },[])
     const columns = [
         {accessor: 'date', Header: '관측 일자', width: 120, align: 'center'},
-        {accessor: 'simGrid', Header: '모의 토양 수분 (vol.%)', width: 200, align: 'center'},
+        {accessor: 'simGrid', Header: '위성 토양 수분 (vol.%)', width: 200, align: 'center'},
         {accessor: 'obs', Header: '실측 토양 수분 (vol.%)', width: 200, align: 'center'},
     ]
 
@@ -157,12 +157,9 @@ const DroughtObsrv = () => {
                         obj.precipitation = Number(obj.precipitation).toFixed(2)
                         obj.sim = Number(obj.sim).toFixed(2)
 
-                        
-
                         avg += Number(obj.obs)
                         avg2 += (Number(obj.obs) - Number(obj.sim))
 
-                        
                     })
 
                     setAvg(avg / (response?.result?.data?.length))
@@ -184,7 +181,7 @@ const DroughtObsrv = () => {
                     
                     
                     chartInfoRef.current.datasets.push({
-                        label: '모의 토양 수분',
+                        label: '위성 토양 수분',
                         type: 'line',
                         yAxisID: 'y1',
                         pointRadius: 2,

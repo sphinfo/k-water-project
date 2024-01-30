@@ -390,6 +390,15 @@ const G$pointsToExtent = (points = []) =>{
     return [minY, minX, maxX, maxY]
 
 }
+/* 지도 이동 컨트롤 */
+const G$holdMap = (hold=false) =>{
+    MapManager.holdeMap(hold)
+}
+
+/* 전체 imageLyaers 투명도 조절 */
+const G$imageLayersOpacity = (opacity=1)=>{
+    MapManager.setImageLayersOpacity(opacity)
+}
 
 const G$flyToExtent= (extent, pitch=false) =>{
     MapManager.flyToExtent(extent, pitch)
@@ -615,6 +624,7 @@ export {
     G$multiPolygonToExtent,
     G$pointsToExtent,
     G$flyToExtent,
+    G$holdMap,
     G$flyToPoint,
     
     G$ZeroCnt,

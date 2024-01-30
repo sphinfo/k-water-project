@@ -12,7 +12,7 @@ const colorType = [
     { index: 1, rgb: [56, 5, 120] },
 ]
 
-const EnvironmentLandCover = () => {
+const EnvironmentLandCover = (props) => {
 
     const dispatch = useDispatch()
     /**
@@ -32,6 +32,15 @@ const EnvironmentLandCover = () => {
     const [maxArea, setMaxArea] = useState(0)
 
     const [colorGrids, setColorGrid] = useState([])
+
+    useEffect(()=>{
+
+        if(props?.params?.id){
+            const {id} = props?.params
+            console.info(id)
+        }
+
+    },[props])
 
     //레이어 변경시 reset
     useEffect(()=>{

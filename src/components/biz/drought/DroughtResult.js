@@ -74,6 +74,15 @@ const DroughtResult = () => {
 
                 const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'group')
                 const resultArray = groupArray.grouped
+
+                let firstGroup = resultArray[0]?.[0]?.group === 'A1' ? resultArray[0][0] :
+                resultArray[1]?.[0]?.group === 'A1' ? resultArray[1][0] :
+                resultArray[2]?.[0]?.group === 'A1' ? resultArray[2][0] : false 
+
+                if(firstGroup){
+                  firstGroup.checked = true
+                  dispatch({ type: DROUGHT_SET_LAYERS, layerInfo: firstGroup, setType: true })
+                }
                 setLayerList(resultArray)
               }else{
                 setLayerList([])

@@ -105,7 +105,7 @@ function droughtReducer(state = initialState, action) {
           delete state.layers[layerId]
         })
       }
-      return {...state }
+      return {...state, layers:{} }
 
 
     //초기화
@@ -125,6 +125,7 @@ function droughtReducer(state = initialState, action) {
     case DROUGHT_RESET_LAYER:
       return { ...state, 
         selectObs: false,
+        selectResultTab: 'A1',
         selectDroughtLayer: false,
       }
     default:

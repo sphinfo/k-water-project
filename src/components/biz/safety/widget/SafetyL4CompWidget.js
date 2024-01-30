@@ -38,8 +38,8 @@ const SafetyL4CompWidget = () => {
     const rows = useMemo(()=>{ return [  ] },[])
     const columns = [
         {accessor: 'date', Header: '관측 일자', width: 120, align: 'center'},
-        {accessor: 'p1', Header: '변위속도 (p1)', width: 200, align: 'center'},
-        {accessor: 'p2', Header: '변위속도 (p2)', width: 200, align: 'center'},
+        {accessor: 'p1', Header: '변위 (p1)', width: 200, align: 'center'},
+        {accessor: 'p2', Header: '변위 (p2)', width: 200, align: 'center'},
     ]
     
     const [loading, setLoading] = useState(false)
@@ -83,7 +83,9 @@ const SafetyL4CompWidget = () => {
                 y: {
                     grid: {
                         display: false
-                    }
+                    },
+                    min: -3,
+                    max: 3
                 },
                 x: {
                     grid: {
@@ -284,11 +286,11 @@ const SafetyL4CompWidget = () => {
                         <div className="panel-box">
                             <div className="number-dashboard">
                                 <div className="nd-item">
-                                    <h4 className="nd-item-title">P1 평균 변위 속도(cm/y)</h4>
+                                    <h4 className="nd-item-title">P1 평균 변위(cm/y)</h4>
                                     <div className="nd-item-body">{avgP1}</div>
                                 </div>
                                 <div className="nd-item">
-                                    <h4 className="nd-item-title">P2 평균 변위 속도(cm/y)</h4>
+                                    <h4 className="nd-item-title">P2 평균 변위(cm/y)</h4>
                                     <div className="nd-item-body">{avgP2}</div>
                                 </div>
                             </div>
@@ -298,7 +300,7 @@ const SafetyL4CompWidget = () => {
                     <div className="content-row">
                         <div className="panel-box">
                         <div className="chart-unit-warp">
-                            <span className="chart-unit">변위속도(cm/y)</span>
+                            <span className="chart-unit">변위(cm)</span>
                         </div>
                             <BaseChart width={'100%'} height={300} ref={chartRef} chartType={'Line'} title={''}/>
                         </div>
@@ -312,7 +314,7 @@ const SafetyL4CompWidget = () => {
                     <div className="content-row height-100">
                         <div className="panel-box height-100">
                             <div className="panel-box-header">
-                                <h4 className="panel-box-title">변위속도 자료</h4>
+                                <h4 className="panel-box-title">변위속도</h4>
                             </div>
                             <div className="table-wrap" style={{minHeight: '360px', height: '100%', overflowY: 'auto'}}>
                                 

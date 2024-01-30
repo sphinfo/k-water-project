@@ -16,47 +16,13 @@ class MapManager {
                      Hybrid : {layer : 'Hybrid', tileType : 'png'},
                      Satellite: {layer : 'Satellite', tileType : 'jpeg'} 
                     }
-
+    _holdMap = true
     constructor(opt) {
 
     }
 
     // Map 를 생성하여 반환한다.
     createMap(target, options = {}) {
-
-        var layers ={ Base:{layer : 'Base', tileType : 'png'}, 
-                    gray: {layer : 'gray', tileType : 'png'},
-                    midnight: {layer : 'midnight', tileType : 'png'},
-                    Hybrid : {layer : 'Hybrid', tileType : 'png'},
-                    Satellite: {layer : 'Satellite', tileType : 'jpeg'} }
-
-        //var selLayer = layers['Hybrid'];
-        //var selLayer2 = layers['Satellite'];
-
-        //let vworld_key = 'B9A40D30-8F5B-3141-839A-DAA04BB600F0'
-
-        // var vworld = new WebMapTileServiceImageryProvider({
-        //     url : `http://api.vworld.kr/req/wmts/1.0.0/${vworld_key}/${selLayer.layer}/{TileMatrix}/{TileRow}/{TileCol}.${selLayer.tileType}`,
-        //     layer : 'Base',
-        //     style : 'default',
-        //     tileMatrixSetID: 'EPSG:900913',
-        //     maximumLevel: 19,
-        //     credit : new Credit('VWorld Korea')
-        // });
-
-        // var vworld2 = new WebMapTileServiceImageryProvider({
-        //     url : `http://api.vworld.kr/req/wmts/1.0.0/${vworld_key}/${selLayer2.layer}/{TileMatrix}/{TileRow}/{TileCol}.${selLayer2.tileType}`,
-        //     layer : 'Base',
-        //     style : 'default',
-        //     tileMatrixSetID: 'EPSG:900913',
-        //     maximumLevel: 19,
-        //     credit : new Credit('VWorld Korea')
-        // });
-
-        //let mapLayer = 
-        
-        
-        //Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmYTU0NmIyMS1hYTEwLTQyOTctYTE4OC01ZGY1YmRjM2E1NWEiLCJpZCI6MTY5ODQxLCJpYXQiOjE2OTYzODIxNjF9.W5XfR-n6gkphDtD7sUbkTfpBX4A5jbddFk_Ok1BSV6A'
 
         this._map = new Viewer(target, {
             homeButton: false,
@@ -158,59 +124,12 @@ class MapManager {
         }
     }
 
-    // _changeBaseMap(type=null) {
-    //     if(type){
-
-    //         if(this._baseMapLayer){
-    //             this.removeLayer(this.getImageryLayersById('baseMap'))
-    //             this.removeLayer(this.getImageryLayersById('Hybrid'))
-    //         }
-            
-    //         this._baseMapType = type
-
-    //         //위성맵일시 arcgis map으로 변경
-    //         if(type === 'Satellite'){
-    //             this._map.imageryLayers.get(0).show = true
-    //         }else{
-    //             this._map.imageryLayers.get(0).show = false
-    //             let option = this._vwroldLayer[type]
-    //             this._baseMapLayer = this.addImageLayer(
-    //                 new WebMapTileServiceImageryProvider({
-    //                     url : `http://api.vworld.kr/req/wmts/1.0.0/${this._vworld_key}/${option.layer}/{TileMatrix}/{TileRow}/{TileCol}.${option.tileType}`,
-    //                     layer : 'Base',
-    //                     style : 'default',
-    //                     tileMatrixSetID: 'EPSG:900913',
-    //                     maximumLevel: 19,
-    //                     credit : new Credit('VWorld Korea')
-    //             }))
-    //             this._baseMapLayer.id = 'baseMap'
-    //             //this._map.imageryLayers.lower(this._baseMapLayer)
-    //             this._map.imageryLayers.lowerToBottom(this._baseMapLayer)
-
-    //         }
-
-    //         return this._baseMapLayer
-    //     }else{
-    //         return null
-    //     }
-    // }
-
     get map() {
         return this._map;
     }
 
     // test terrain load
     async terrainLoad() {
-
-        //let layer = new BaseWmsImageLayer('sph_test', 'pyramid')
-
-        // const terrainProvider = await Cesium.GeoserverTerrainProvider({
-        //     url: '/waterGeo',
-        //     layerName: "sph_test:pyramid",
-        //     proxy: new Cesium.DefaultProxy('http://localhost:3000/')
-        // });
-        // this._map.terrainProvider = terrainProvider
-
     }
 
     getMap(){
@@ -219,31 +138,40 @@ class MapManager {
 
     //point 이동
     flyToPoint(point, zoom=850000, pitch=-90){
-        this._map.camera.flyTo({
-            destination: Cartesian3.fromDegrees(point[0], point[1], zoom), // 목표 위치의 카메라 높이 (높이 값 조절 가능)
-            orientation: {
-              heading: Math.toRadians(0), // 방위각 (degrees)
-              pitch: Math.toRadians(pitch), // 피치각 (degrees)
-              roll: 0, // 롤각 (degrees)
-            },
-            duration: 3, // 애니메이션 지속 시간 (초)
-        })
+        if(!this._holdMap){
+            this._map.camera.flyTo({
+                destination: Cartesian3.fromDegrees(point[0], point[1], zoom), // 목표 위치의 카메라 높이 (높이 값 조절 가능)
+                orientation: {
+                  heading: Math.toRadians(0), // 방위각 (degrees)
+                  pitch: Math.toRadians(pitch), // 피치각 (degrees)
+                  roll: 0, // 롤각 (degrees)
+                },
+                duration: 3, // 애니메이션 지속 시간 (초)
+            })
+        }
+        
+    }
+
+    holdeMap(type){
+        this._holdMap = type
     }
 
     //extent 이동
     flyToExtent(extent, pitch){
-
-        this._map.camera.flyTo({
-            destination: Rectangle.fromDegrees(
-                extent[0], extent[1], extent[2], extent[3]
-            ),
-            orientation: {
-                heading: Math.toRadians(0),
-                pitch: Math.toRadians(!pitch ? -90 : pitch),
-                roll: 0.0,
-            },
-            duration: 2.0
-        })
+        if(!this._holdMap){
+            this._map.camera.flyTo({
+                destination: Rectangle.fromDegrees(
+                    extent[0], extent[1], extent[2], extent[3]
+                ),
+                orientation: {
+                    heading: Math.toRadians(0),
+                    pitch: Math.toRadians(!pitch ? -90 : pitch),
+                    roll: 0.0,
+                },
+                duration: 2.0
+            })
+        }
+        
     }
 
     //레이어 추가
@@ -268,6 +196,10 @@ class MapManager {
         }
     }
 
+    //전체 imagelayers 투명도 조절
+    setImageLayersOpacity(opacity){
+        this._map.imageryLayers._layers.find(layer => layer.alpha = opacity)
+    }
 
     getLayerForId(id){
         let l = null

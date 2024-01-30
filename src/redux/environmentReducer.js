@@ -99,7 +99,7 @@ function environmentReducer(state = initialState, action) {
           delete state.layers[layerId]
         })
       }
-      return {...state }
+      return {...state, layers: {} }
 
 
     //초기화

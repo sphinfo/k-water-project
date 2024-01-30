@@ -32,6 +32,7 @@ class KwaterApp extends React.Component {
         <MapControl />
 
         <ThematicLayerComponent /> {/* 주제도 */}
+        
         <canvas id="pieChartCanvas"></canvas>
         {/* <Menubars /> */}
       </>
