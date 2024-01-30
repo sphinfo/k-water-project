@@ -266,7 +266,7 @@ const SafetyResult = () => {
 
   return (
 
-    <div className="content-body border-top filled">
+    <div className="content-body scroll">
       {
         layerList.length === 0 &&
           <div className="content-row empty-wrap">

@@ -190,7 +190,7 @@ const DroughtResult = () => {
 
     return (
         <>
-          <div className={"content-body border-top filled"}>
+          <div className={"content-body"}>
             {
               layerList.length === 0 &&
               <div className="content-row empty-wrap">
@@ -206,8 +206,8 @@ const DroughtResult = () => {
                 <div className="form-control">
                   <Tabs className={"toggle-btn-wrap toggle-btn-variant"} value={selectResultTab} onChange={(e, v)=>{dispatch({type: DROUGHT_RESULT_TAB, selectResultTab: v})}}>
                     <Tab className={"tab-item"} label={'위성토양수분'} value={'A1'}></Tab>
-                    <Tab className={"tab-item"} label={'강우자료'} value={'A2'}></Tab>
-                    <Tab className={"tab-item"} label={'토양자료'} value={'A3'}></Tab>
+                    <Tab className={"tab-item"} label={'+ 강우자료'} value={'A2'}></Tab>
+                    <Tab className={"tab-item"} label={'+ 토양자료'} value={'A3'}></Tab>
                   </Tabs>
                 </div>
               }

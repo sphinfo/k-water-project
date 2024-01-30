@@ -249,7 +249,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
 
     return (
         <>
-          <div className={"content-body border-top filled"} >
+          <div className={"content-body"} >
             {
               layerList.length === 0 &&
               <div className="content-row empty-wrap">
