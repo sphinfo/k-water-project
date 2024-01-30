@@ -265,6 +265,12 @@
   position: relative;
   z-index: 2;
   cursor: pointer;
+
+  &.active {
+    &:before, &:after {
+      opacity: 0;
+    }
+  }
 }
 
 [data-tooltip]:before,
@@ -1099,11 +1105,9 @@
   background-repeat: no-repeat;
 }
 
-.thematic-layers-box{
+.map-layer-box {
   position: absolute;
-  top: 58px; //map_ctrl_right 기준, 화면 기준: 54px
-  right: 50px; //화면기준 50px
-  background-color: $black-deep;
+  background-color: $black-navy;
   border-radius: 10px ;
   padding: 7px;
   width: max-content;
@@ -1111,80 +1115,92 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  right: 50px;
 
-  .box-header{
+  .box-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 3px 6px 3px 10px;
-    .box-title{
+
+    .box-title {
       font-size: 14px;
     }
   }
-  .thematic-layers-box-wrap{
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex: 1 0 120px;
 
-    .thematic-layer-item {
-      padding: 0;
-      margin-bottom: 4px;
+  &.map-opacity-box {
+    top: 90px;
+    gap: 0;
+  }
 
-      .MuiTreeItem-content {
+  &.thematic-layers-box {
+    top: 58px;
+
+    .thematic-layers-box-wrap{
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1 0 120px;
+
+      .thematic-layer-item {
         padding: 0;
-        background: $white-alpha-10;
-        border-radius: 8px;
-        display: flex;
-        min-width: 160px;
-        align-items: center;
+        margin-bottom: 4px;
 
-        .MuiTreeItem-iconContainer{
-          //display: none;
-          order: 2;
-          margin-right: 10px;
-          width: auto;
-          color: #fff;
+        .MuiTreeItem-content {
+          padding: 0;
+          background: $white-alpha-10;
+          border-radius: 8px;
+          display: flex;
+          min-width: 160px;
+          align-items: center;
 
-          svg {
-            font-size: unset;
+          .MuiTreeItem-iconContainer{
+            //display: none;
+            order: 2;
+            margin-right: 10px;
+            width: auto;
+            color: #fff;
+
+            svg {
+              font-size: unset;
+            }
+
+            .css-1m9ymud-MuiSvgIcon-root{
+              width: inherit;
+              height: inherit;
+            }
           }
 
-          .css-1m9ymud-MuiSvgIcon-root{
-            width: inherit;
-            height: inherit;
+          /*&.Mui-selected{
+            background: rgba(84, 166, 231, 0.1);
+          }*/
+
+          .MuiTreeItem-label {
+            order: 1;
+            padding: 6px 10px;
+
+            span {
+              font-size: 14px;
+              line-height: 1;
+            }
           }
         }
+        .MuiTreeItem-group {
+          margin-left: 0;
+          margin-top: 4px;
 
-        /*&.Mui-selected{
-          background: rgba(84, 166, 231, 0.1);
-        }*/
+          .MuiCollapse-wrapper {
+            .MuiCollapse-wrapperInner {
+              .MuiTreeItem-content{
+                background-color: transparent;
 
-        .MuiTreeItem-label {
-          order: 1;
-          padding: 6px 10px;
+                /*&.Mui-selected {
+                  background: rgba(84, 166, 231, 0.20);
+                }*/
 
-          span {
-            font-size: 14px;
-            line-height: 1;
-          }
-        }
-      }
-      .MuiTreeItem-group {
-        margin-left: 0;
-        margin-top: 4px;
-
-        .MuiCollapse-wrapper {
-          .MuiCollapse-wrapperInner {
-            .MuiTreeItem-content{
-              background-color: transparent;
-
-              /*&.Mui-selected {
-                background: rgba(84, 166, 231, 0.20);
-              }*/
-
-              .MuiTreeItem-label {
-                padding: 4px 10px 4px 20px;
+                .MuiTreeItem-label {
+                  padding: 4px 10px 4px 20px;
+                }
               }
             }
           }
@@ -1192,10 +1208,7 @@
       }
     }
   }
-
 }
-
-
 
 .check-box{
   background-repeat: no-repeat;

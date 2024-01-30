@@ -13,7 +13,7 @@ const ThematicLayerComponent = () => {
 
     return (
         <>  
-            <div className="thematic-layers-box" style={{display: thematicMode ? '': 'none'}}>
+            <div className="map-layer-box thematic-layers-box" style={{display: thematicMode ? '': 'none'}}>
 
                 <BaseMapWidget />   {/* 배경지도 */}
                 {/* <ThematicLayerCheckBoxList ref={treeRef} /> */}
