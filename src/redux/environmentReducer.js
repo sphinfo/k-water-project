@@ -33,7 +33,7 @@ const initialState = {
   landCoverDetection: false,
 
   //대상지역 selectbox
-  selectBox: 'off',
+  selectBox: false,
   
   layers: {},
 

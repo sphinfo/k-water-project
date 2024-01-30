@@ -32,7 +32,7 @@ const initialState = {
 
   selectDroughtLayer: false, //가뭄 레이어 선택값
 
-  selectBox: 'off', //대상지역
+  selectBox: false, //대상지역
 
   //가뭄 레이어 
   layers: {},

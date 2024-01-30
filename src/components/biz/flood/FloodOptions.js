@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ENV_SET_TEXT, ENV_START_DATE, ENV_END_DATE, FLOOD_SET_TEXT, FLOOD_START_DATE, FLOOD_END_DATE, FLOOD_SEARCH_ON } from "@redux/actions";
+import { ENV_SET_TEXT, ENV_START_DATE, ENV_END_DATE, FLOOD_SET_TEXT, FLOOD_START_DATE, FLOOD_END_DATE, FLOOD_SEARCH_ON, FLOOD_SELECT_BOX } from "@redux/actions";
 import BaseSelectOption from "@common/util/BaseSelectOption";
 import BaseDatePicker from "@common/datepicker/BaseDatePicker";
 import dayjs from "dayjs";
@@ -15,9 +15,7 @@ const FloodOptions = () => {
     const selectRef = useRef()
 
     useEffect(()=>{
-        if(selectBox !== 'off'){
-            selectRef.current.visibleTree = selectBox
-        }
+        selectRef.current.visibleTree = selectBox
     },[selectBox])
 
     return (
@@ -28,7 +26,7 @@ const FloodOptions = () => {
                     <h2 className="content-row-title">검색</h2>
                 </div>
                 <div className="form-control">
-                    <BaseSelectOption ref={selectRef} provider={namesRef.current} searchOn={(type)=>{dispatch({type: FLOOD_SEARCH_ON, searchOn: type})}} changeItem={(item)=>{dispatch({type: FLOOD_SET_TEXT, text: item})}}/>
+                    <BaseSelectOption ref={selectRef} provider={namesRef.current} searchOn={(type)=>{dispatch({type: FLOOD_SEARCH_ON, searchOn: type}); dispatch({type:FLOOD_SELECT_BOX, selectBox: !type}) }} changeItem={(item)=>{dispatch({type: FLOOD_SET_TEXT, text: item})}}/>
                 </div>
             </div>
             

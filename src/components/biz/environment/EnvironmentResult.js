@@ -204,13 +204,16 @@ const EnvironmentResult = () => {
 
     return (
         <>
-          <div className={"content-body"} >
+          <div className={"content-body"} onClick={()=>{ dispatch({type:ENV_SELECT_BOX, selectBox: false}) }}>
             {
               layerList.length === 0 &&
               <div className="content-row empty-wrap">
                 <div className="empty-message">
                   <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
-                  <Button className="btn empty-btn" onClick={()=>{{dispatch({type:ENV_SELECT_BOX, selectBox: !selectBox})}}}>지역검색</Button>
+                  <Button className="btn empty-btn" onClick={(e)=>{{
+                      e.stopPropagation()
+                      dispatch({type:ENV_SELECT_BOX, selectBox: true})
+                    }}}>지역검색</Button>
                 </div>
               </div>
             }  

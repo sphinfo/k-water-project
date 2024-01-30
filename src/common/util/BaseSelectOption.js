@@ -96,7 +96,7 @@ const BaseSelectOption = ({ provider = [], changeItem, searchOn, ...other}, ref)
 
   return (
     <>
-      <div className="input-basic-search panel-input">
+      <div className="input-basic-search panel-input">  
       <input
         readOnly
         type="text"

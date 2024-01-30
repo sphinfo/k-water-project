@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ENV_SET_TEXT, ENV_START_DATE, ENV_END_DATE, ENV_SEARCH_ON } from "@redux/actions";
+import { ENV_SET_TEXT, ENV_START_DATE, ENV_END_DATE, ENV_SEARCH_ON, ENV_SELECT_BOX } from "@redux/actions";
 import BaseSelectOption from "@common/util/BaseSelectOption";
 import BaseDatePicker from "@common/datepicker/BaseDatePicker";
 import dayjs from "dayjs";
@@ -14,9 +14,7 @@ const EnvironmentOptions = () => {
     const selectRef = useRef()
 
     useEffect(()=>{
-        if(selectBox !== 'off'){
-            selectRef.current.visibleTree = true
-        }
+        selectRef.current.visibleTree = selectBox
     },[selectBox])
     return (
         <>
@@ -26,7 +24,7 @@ const EnvironmentOptions = () => {
                     <h2 className="content-row-title">검색</h2>
                 </div>
                 <div className="form-control">
-                    <BaseSelectOption ref={selectRef} provider={namesRef.current} searchOn={(type)=>{dispatch({type: ENV_SEARCH_ON, searchOn: type})}}  changeItem={(item)=>{dispatch({type: ENV_SET_TEXT, text: item})}}/>
+                    <BaseSelectOption ref={selectRef} provider={namesRef.current} searchOn={(type)=>{dispatch({type: ENV_SEARCH_ON, searchOn: type}); dispatch({type:ENV_SELECT_BOX, selectBox: !type}) }}  changeItem={(item)=>{dispatch({type: ENV_SET_TEXT, text: item})}}/>
                 </div>
             </div>
             

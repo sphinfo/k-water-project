@@ -249,14 +249,17 @@ const FloodResult = ({waterObsList=[], ...props}) => {
 
     return (
         <>
-          <div className={"content-body"} >
+          <div className={"content-body"} onClick={()=>{ dispatch({type:FLOOD_SELECT_BOX, selectBox: false}) }}>
             {
               layerList.length === 0 &&
               <div className="content-row empty-wrap">
                 <div className="empty-message">
                   <h3 className="empty-text">{noData ? '데이터가 존재하지 않습니다. ' : '연구대상 지역을 선택해주세요'}</h3>
                   {noData && <> <h3 className="empty-text">{"연구 대상 지역 또는 기간을 변경해주세요."}</h3> </>}
-                  <Button className="btn empty-btn" onClick={()=>{{dispatch({type:FLOOD_SELECT_BOX, selectBox: !selectBox})}}}>지역검색</Button>
+                  <Button className="btn empty-btn" onClick={(e)=>{{
+                      e.stopPropagation()
+                      dispatch({type:FLOOD_SELECT_BOX, selectBox: true})
+                    }}}>지역검색</Button>
                 </div>
               </div>
             }

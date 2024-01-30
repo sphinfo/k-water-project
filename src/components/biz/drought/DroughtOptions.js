@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DROUGHT_END_DATE, DROUGHT_START_DATE, DROUGHT_SET_TEXT, DROUGHT_SEARCH_ON } from "@redux/actions";
+import { DROUGHT_END_DATE, DROUGHT_START_DATE, DROUGHT_SET_TEXT, DROUGHT_SEARCH_ON, DROUGHT_SELECT_BOX } from "@redux/actions";
 import BaseSelectOption from "@common/util/BaseSelectOption";
 import BaseDatePicker from "@common/datepicker/BaseDatePicker";
 import dayjs from "dayjs";
@@ -14,9 +14,7 @@ const DroughtOptions = () => {
     const selectRef = useRef()
 
     useEffect(()=>{
-        if(selectBox !== 'off'){
-            selectRef.current.visibleTree = true
-        }
+        selectRef.current.visibleTree = selectBox
     },[selectBox])
 
     return (
@@ -27,7 +25,7 @@ const DroughtOptions = () => {
                     <h2 className="content-row-title">검색</h2>
                 </div>
                 <div className="form-control">
-                    <BaseSelectOption ref={selectRef} provider={namesRef.current} searchOn={(type)=>{dispatch({type: DROUGHT_SEARCH_ON, searchOn: type})}} changeItem={(item)=>{dispatch({type: DROUGHT_SET_TEXT, text: item})}}/>
+                    <BaseSelectOption ref={selectRef} provider={namesRef.current} searchOn={(type)=>{dispatch({type: DROUGHT_SEARCH_ON, searchOn: type}); dispatch({type:DROUGHT_SELECT_BOX, selectBox: !type})  }} changeItem={(item)=>{dispatch({type: DROUGHT_SET_TEXT, text: item})}}/>
                 </div>
             </div>
             

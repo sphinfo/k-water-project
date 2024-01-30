@@ -49,7 +49,7 @@ const initialState = {
   selectFeature: null,
 
   //검색박스 ON / OFF
-  selectBox : 'off',
+  selectBox : false,
   
   layers: {},
 

@@ -34,7 +34,7 @@ const initialState = {
   //수위 지점 선택
   selectWaterLevel: false,
 
-  selectBox: 'off', //대상지역
+  selectBox: false, //대상지역
 
   //레이어관리
   layers: {},
