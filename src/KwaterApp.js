@@ -2,11 +2,11 @@ import React from "react";
 import CesiumMapView from "./components/map/CesiumMapView";
 import WidgetContainer from "./common/widget/container/WidgetContainer";
 import MapControl from "./components/map/MapControl";
-import Menubars from "@components/menu";
 import { Provider } from 'react-redux'; // useSelector 추가
 import store from '@redux/store';
 import ThematicLayerComponent from "@components/map/right/thematic/ThematicLayerComponent";
 import { createTheme, ThemeProvider } from '@mui/material';
+import OpacityLayerComponent from "@components/map/right/opacity/OpacityLayerComponent";
 
 const theme = createTheme({
   typography: {
@@ -32,6 +32,7 @@ class KwaterApp extends React.Component {
         <MapControl />
 
         <ThematicLayerComponent /> {/* 주제도 */}
+        <OpacityLayerComponent />
         
         <canvas id="pieChartCanvas"></canvas>
         {/* <Menubars /> */}

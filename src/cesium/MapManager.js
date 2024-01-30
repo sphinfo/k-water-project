@@ -16,7 +16,8 @@ class MapManager {
                      Hybrid : {layer : 'Hybrid', tileType : 'png'},
                      Satellite: {layer : 'Satellite', tileType : 'jpeg'} 
                     }
-    _holdMap = true
+    _holdMap = false
+    _baseOpactiy = 1
     constructor(opt) {
 
     }
@@ -198,7 +199,11 @@ class MapManager {
 
     //전체 imagelayers 투명도 조절
     setImageLayersOpacity(opacity){
-        this._map.imageryLayers._layers.find(layer => layer.alpha = opacity)
+        console.info(opacity)
+        this._baseOpactiy = opacity
+        this._map.imageryLayers._layers.forEach(layer => {
+            layer.alpha = layer.id !== 'baseMap' ? opacity : 1
+        })
     }
 
     getLayerForId(id){

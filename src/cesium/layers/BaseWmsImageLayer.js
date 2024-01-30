@@ -66,7 +66,7 @@ class BaseWmsImageLayer {
 				parameters: this.props.wmsParameters,
 		}))
 
-		
+		this.layer.alpha = MapManager._baseOpactiy
 
 		// 변경된 이미지 레이어 설정 ( Geoserver 사용 store:layer )
 		this.layer.id = `${this.props.subId}${this.props.store.toLowerCase()}:${this.props.layerId}`

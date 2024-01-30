@@ -625,6 +625,7 @@ export {
     G$pointsToExtent,
     G$flyToExtent,
     G$holdMap,
+    G$imageLayersOpacity,
     G$flyToPoint,
     
     G$ZeroCnt,
