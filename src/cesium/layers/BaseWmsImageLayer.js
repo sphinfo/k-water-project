@@ -123,51 +123,52 @@ class BaseWmsImageLayer {
 	}
 
 	//지점 extent 이동
-	_flyToExtent(){
-
-		//layers: this.props.layerId,
-		//레이어 위치 이동
-		fetch(`${this.props.wmsUrl}?service=wms&version=1.3.0&request=GetCapabilities&layers=${this.props.layerId}`).then(response => response.text()).then(data => {
-			// Parse the XML response
-			const parser = new DOMParser();
-
-			const xmlDoc = parser.parseFromString(data, 'text/xml');
-
-			const layers = xmlDoc.querySelectorAll('Layer > Name');
-
-			
-
-			let targetLayer;
-			for (let i = 0; i < layers.length; i++) {
+	_flyToExtent() {
+		return new Promise((resolve, reject) => {
+		  fetch(`${this.props.wmsUrl}?service=wms&version=1.3.0&request=GetCapabilities&layers=${this.props.layerId}`)
+			.then(response => response.text())
+			.then(data => {
+			  // Parse the XML response
+			  const parser = new DOMParser();
+			  const xmlDoc = parser.parseFromString(data, 'text/xml');
+			  const layers = xmlDoc.querySelectorAll('Layer > Name');
+			  let targetLayer;
+	  
+			  for (let i = 0; i < layers.length; i++) {
 				if (layers[i].textContent === this.props.layerId || layers[i].textContent === `${this.props.store}:${this.props.layerId}`) {
-					targetLayer = layers[i].parentNode;
-					break;
+				  targetLayer = layers[i].parentNode;
+				  break;
 				}
-			}
-			
-			if (targetLayer) {
+			  }
+	  
+			  if (targetLayer) {
 				const boundingBox = targetLayer.querySelector('EX_GeographicBoundingBox');
 				if (boundingBox) {
 				  const westBound = parseFloat(boundingBox.querySelector('westBoundLongitude').textContent);
 				  const eastBound = parseFloat(boundingBox.querySelector('eastBoundLongitude').textContent);
 				  const southBound = parseFloat(boundingBox.querySelector('southBoundLatitude').textContent);
 				  const northBound = parseFloat(boundingBox.querySelector('northBoundLatitude').textContent);
-
-				  //왼쪽 패널때문에 가려지는 현상 보완 근사치
-				  const extent = [westBound+((westBound - eastBound) * 0.3), southBound, eastBound+((westBound - eastBound) * 0.3), northBound];
-
-				G$flyToExtent(extent)
-
+	  
+				  // 왼쪽 패널 때문에 가려지는 현상 보완 근사치
+				  const extent = [westBound + ((westBound - eastBound) * 0.3), southBound, eastBound + ((westBound - eastBound) * 0.3), northBound];
+	  
+				  G$flyToExtent(extent);
+				  resolve(extent);
 				} else {
 				  console.log('EX_GeographicBoundingBox not found for the specified layer.');
+				  reject('EX_GeographicBoundingBox not found');
 				}
-			} else {
+			  } else {
 				console.log('Layer not found.');
-			}
-
+				reject('Layer not found');
+			  }
+			})
+			.catch(error => {
+			  console.error('Error fetching data:', error);
+			  reject(error);
+			});
 		});
-
-	}
+	  }
 
 	//mouse이벤트 생성 ( 추후 공통 으로 overlay 작업 필수 )
 	_createHoverHandler() {

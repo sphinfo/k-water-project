@@ -93,7 +93,7 @@ const Flood = () => {
             G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendWidget params={{ title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}]}}/>]})
             const {store, layer} = selectFloodDamageLayer
             floodDamageLayer.current.changeParameters({store:store, layerId:layer})
-            floodDamageLayer.current.setOpacity(0.5)
+            //floodDamageLayer.current.setOpacity(0.5)
         }else{
             floodDamageLayer.current.remove()
             G$removeWidget('BaseAddLegendWidget')

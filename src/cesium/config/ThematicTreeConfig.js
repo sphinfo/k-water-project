@@ -78,18 +78,26 @@ const ThematicTreeConfig = [
             },{
                 store: 'river_network',
                 id: 'W_FRST',
-                name: '구지방1급하천',
+                name: '지방하천',
                 parent: 'river',
                 nameCol: 'NAME1',
                 valCol: 'CODE1'
-            },{
-                store: 'river_network',
-                id: 'W_SCND',
-                name: '구지방2급하천',
-                parent: 'river',
-                nameCol: 'RIV_NAM_1',
-                valCol: 'RIV_CD_1'
             }
+            // ,{
+            //     store: 'river_network',
+            //     id: 'W_FRST',
+            //     name: '구지방1급하천',
+            //     parent: 'river',
+            //     nameCol: 'NAME1',
+            //     valCol: 'CODE1'
+            // },{
+            //     store: 'river_network',
+            //     id: 'W_SCND',
+            //     name: '구지방2급하천',
+            //     parent: 'river',
+            //     nameCol: 'RIV_NAM_1',
+            //     valCol: 'RIV_CD_1'
+            // }
         ]
     },{
         id: 'FS_IJ100',

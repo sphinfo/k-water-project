@@ -33,8 +33,10 @@ const SafetyL4Thematic = () => {
                     if(select3Level.category !== 'L3TDA2'){
                         if(response?.result?.data?.length > 0){
                             response.result.data.map((obj)=>{
-                                let name = obj.filename.indexOf('_EW_') > -1 ? 'EAST-WEST' : obj.filename.indexOf('_UD_') > -1 ? 'UP-DOWN' : obj.filename.indexOf('_NS_') > -1 ? 'NORTH-SOUTH' : ''
-                                dataList.push({store:obj.dataType.toLowerCase(), layer: obj.name, checked: false, name: name, id:obj.id})
+                                let name = obj.filename.indexOf('_EW_') > -1 ? 'EAST-WEST' : obj.filename.indexOf('_UD_') > -1 ? 'UP-DOWN' : obj.filename.indexOf('_NS_') > -1 ? 'NORTH-SOUTH' : false
+                                if(name){
+                                    dataList.push({store:obj.dataType.toLowerCase(), layer: obj.name, checked: false, name: name, id:obj.id})
+                                }
                             })
                             setLevel4List(dataList)
                         }else{

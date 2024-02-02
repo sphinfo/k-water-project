@@ -15,16 +15,15 @@ const DroughtObsrvThematic = () => {
 
     //닫힐때 침수피해 레이어 초기화
     useEffect(()=>{
-        G$addWidget('DroughtObsrvWidget')
+        
         return()=>{
             G$removeWidget('DroughtObsrvWidget')
         }
     },[])
 
     useEffect(()=>{
-
         if(selectObs){
-            G$paramWidget('DroughtObsrvWidget',{subTitle: `${selectObs?.properties?.name}`})
+            G$addWidget('DroughtObsrvWidget',{},{subTitle: `${selectObs?.properties?.name}`})
         }
 
     },[selectObs])
@@ -47,7 +46,6 @@ const DroughtObsrvThematic = () => {
                 <div className="widget-body">
                     <div className="switch-list">
                         <div className="switch-list-item">
-                            {obsrvTab}
                             <span className="switch-label">가뭄지수</span>
                             <Switch className="float-box-switch" checked={obsIndexTab} onClick={() => {
                                 setObsIndexTab(!obsIndexTab)

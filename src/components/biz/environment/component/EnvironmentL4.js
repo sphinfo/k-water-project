@@ -16,10 +16,10 @@ const EnvironmentL4 = ({ mainLayer, ...props}) => {
      * selectEnvironmentLayer: 수변피복 레이어 선택
      */
 
-    const areaLayer = useRef()
+    //const areaLayer = useRef()
 
     useEffect(()=>{
-        areaLayer.current = new BasePolygonEntityCollection({name:'enviAreaLayer'})
+        //areaLayer.current = new BasePolygonEntityCollection({name:'enviAreaLayer'})
         return()=>{
             G$removeWidget('EnvironmentLandCoverWidget')
             G$removeWidget('EnvironmentAraeWidget')

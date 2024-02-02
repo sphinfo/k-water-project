@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
@@ -6,7 +6,7 @@ import DroughtResult from "./DroughtResult";
 import DroughtOptions from "./DroughtOptions";
 import pin from "@images/map-icon-dr.svg"
 import pin2 from "@images/map-icon-dr-clicked.svg"
-import { G$addWidget, G$flyToPoint, G$randomCoordinates, G$removeLayer, G$removeWidget } from "@gis/util";
+import { G$RandomId, G$addWidget, G$cartesianToLongLat, G$flyToPoint, G$randomCoordinates, G$removeLayer, G$removeWidget } from "@gis/util";
 import { DROUGHT_CLEAR_LAEYRS, DROUGHT_RESET, DROUGHT_SELECT_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
 import DroughtOverlay from "@gis/util/overlay/DroughtOverlay";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
@@ -17,6 +17,7 @@ import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
 import BaseLegendgGradientWidget from "@components/legend/BaseLegendgGradientWidget";
 import BaseLegendgGradientWidget2 from "@components/legend/BaseLegendgGradientWidget2";
 import LegendDrought from "@components/legend/LegendDrought";
+import BasePolygonEntityCollection from "@gis/layers/BasePolygonEntityCollection";
 
 const Drought = () => {
 
@@ -29,10 +30,6 @@ const Drought = () => {
      * layers: 등록 레이어
      */
     const { bizName, selectObs, selectDroughtLayer, obsrvTab, layers } = useSelector(state => state.drought)
-//
-
-    //가뭄 레이어 ( 3L )
-    const droughtLayer = useRef()
 
     //가뭄 레이어 ( 4L )
     const droughtL4Layer = useRef()
@@ -70,7 +67,9 @@ const Drought = () => {
         }
     },[selectObs])
 
-    
+    const [obsList, setObseList] = useState([])
+
+    //const areaLayer = useRef()
 
     /* 초기 세팅 사항 */
     useEffect(()=>{
@@ -81,10 +80,14 @@ const Drought = () => {
         //가뭄 메인 레이어 L4
         droughtL4Layer.current = new BaseWmsImageLayer({store:'drought',layerId:''})
 
+        //areaLayer.current = new BasePolygonEntityCollection({name:'l3aeLayer'})
+
         //*******API*************/
         //let obsList = DroughtObsrvConfig
         getDroughtObs().then((response) => {
             if(response?.result?.data?.length > 0){
+                //areaLayer.current._addFeature({xmin: 127.50600844103556, ymin: 34.3913015352451, xmax: 130.64136019478192, ymax: 36.53665712523854, properties:{id:G$RandomId()}})
+                setObseList(response?.result?.data)
                 response.result.data.map((obj)=>{
                     droughtObsrvLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})
                 })
@@ -130,6 +133,9 @@ const Drought = () => {
 
     const [layerIdx, setLayerIdx] = useState(0)
     const [mainLayer, setMainLayer] = useState(false)
+
+    
+
     useEffect(()=>{
         let layerCnt = Object.keys(layers).length
         setLayerIdx(layerCnt)
@@ -137,13 +143,29 @@ const Drought = () => {
         if(layerCnt === 1){
             Object.keys(layers).map((layerId, i)=>{
               const { store, layer, ...other } = layers[layerId]?.props
+              /*console.info()
+              layers[layerId]._flyToExtent().then((extent)=>{
+
+                    if(droughtObsrvLayer.current.entities?.values?.length > 0){
+                        droughtObsrvLayer.current.entities.values.forEach((entity)=>{
+
+                            const {longitude, latitude} = G$cartesianToLongLat(entity.position._value)
+                            const pointsInsideExtent = longitude >= extent[0] && longitude <= extent[2] && latitude >= extent[1] && latitude <= extent[3]
+                            entity.show = pointsInsideExtent
+
+                            
+                        })
+                    }
+
+                })*/
               if(i === 0){
                   setMainLayer(other)
               }
           })
             
         }else{
-          setMainLayer(false)
+            droughtL4Layer.current.remove()
+            setMainLayer(false)
         }
 
         
@@ -194,7 +216,7 @@ const Drought = () => {
             <DroughtResult />
 
             {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
-            {layerIdx > 0 && (
+            {layerIdx === 1 && (
                 <div className="side-content">
                     {
                         obsrvTab === 'soilMoisture' &&

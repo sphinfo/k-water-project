@@ -138,11 +138,18 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
             if(!layerInfo.children){
                 if(layerInfo.instance){
                     layerInfo.instance.setVisible(visible)
-
                     
+                    if(layerInfo.instance2){
+                      layerInfo.instance2.setVisible(visible)
+                    }
                 }else{
                     if(visible){
-                      layerInfo.instance = new BaseWmsImageLayer({store:layerInfo.store, layerId:layerInfo.id, fly:false})
+                      if(layerInfo.id === 'W_FRST'){
+                        layerInfo.instance = new BaseWmsImageLayer({store:layerInfo.store, layerId:layerInfo.id, fly:false})
+                        layerInfo.instance2 = new BaseWmsImageLayer({store:layerInfo.store, layerId:'W_SCND', fly:false})
+                      }else{
+                        layerInfo.instance = new BaseWmsImageLayer({store:layerInfo.store, layerId:layerInfo.id, fly:false})
+                      }
                     }
                 }
             }
