@@ -38,52 +38,6 @@ const BaseLegendGradientWidget = (props) => {
                     </ul>
                 </dd>
             </dl>
-
-            <dl className="widget-box">
-                <dt className="widget-header">
-                    <h4 className="widget-title">{title}</h4>
-                    {tooltip}
-                </dt>
-                <dd className="widget-body">
-                    <ul className="widget-legend-stack">
-                        <li style={{background: '#c2523c'}}></li>
-                        <li style={{background: '#cf6332'}}></li>
-                        <li style={{background: '#de7e23'}}></li>
-                        <li style={{background: '#eda113'}}></li>
-                        <li style={{background: '#f2b90f'}}></li>
-                        <li style={{background: '#f7d707'}}></li>
-                        <li style={{background: '#ffff00'}}></li>
-                        <li style={{background: '#a6f200'}}></li>
-                        <li style={{background: '#4ce600'}}></li>
-                        <li style={{background: '#00db00'}}></li>
-                        <li style={{background: '#0ec441'}}></li>
-                        <li style={{background: '#18ad72'}}></li>
-                        <li style={{background: '#20998f'}}></li>
-                        <li style={{background: '#1a7b8f'}}></li>
-                        <li style={{background: '#135585'}}></li>
-                        <li style={{background: '#0b2c7a'}}></li>
-                    </ul>
-                    <ul className="widget-legend-stack-unit">
-                        <li>0</li>
-                        <li>5</li>
-                        <li>10</li>
-                        <li>12.5</li>
-                        <li>15</li>
-                        <li>17.5</li>
-                        <li>20</li>
-                        <li>22.5</li>
-                        <li>25</li>
-                        <li>27.5</li>
-                        <li>30</li>
-                        <li>32.5</li>
-                        <li>35</li>
-                        <li>40</li>
-                        <li>45</li>
-                        <li>50</li>
-                        <li>>50</li>
-                    </ul>
-                </dd>
-            </dl>
         </>
     )
 }

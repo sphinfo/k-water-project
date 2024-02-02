@@ -18,6 +18,7 @@ import BaseLegendgGradientWidget from "@components/legend/BaseLegendgGradientWid
 import BaseLegendgGradientWidget2 from "@components/legend/BaseLegendgGradientWidget2";
 import LegendDrought from "@components/legend/LegendDrought";
 import BasePolygonEntityCollection from "@gis/layers/BasePolygonEntityCollection";
+import DroughtLegendgGradientWidget from "@components/legend/DroughtLegendgGradientWidget";
 
 const Drought = () => {
 
@@ -178,11 +179,11 @@ const Drought = () => {
             droughtObsrvLayer.current.show = true
             if(obsrvTab === 'soilMoisture'){
                 G$addWidget('BaseAddLegendWidget',{children:[
-                    <BaseLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF'], tooltip:<LegendDrought type={obsrvTab}/>}}/>
+                    <DroughtLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF'], tooltip:<LegendDrought type={obsrvTab}/>}}/>
                 ]})
             }else if(obsrvTab === 'index'){                
                 G$addWidget('BaseAddLegendWidget',{children:[
-                    <BaseLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF'], tooltip:<LegendDrought type={obsrvTab}/>}}/>
+                    <DroughtLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF'], tooltip:<LegendDrought type={obsrvTab}/>}}/>
                 ]})
             }
             
