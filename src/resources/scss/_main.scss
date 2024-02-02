@@ -838,7 +838,38 @@
       }
     }
 
-    .widget-legend-chip{
+    .widget-legend-stack {
+      gap: 1px;
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 0 7px 4px 4px;
+
+      li {
+        width: 20px;
+        height: 20px;
+        flex: 1 0 0;
+
+        &:last-child {
+          border-right: 0;
+        }
+      }
+    }
+
+    .widget-legend-stack-unit {
+      display: flex;
+      justify-content: space-between;
+      margin-left: -6px;
+
+      li {
+        font-size: 10px;
+        padding-right: 0;
+        width: 17px;
+        letter-spacing: -0.02rem;
+        justify-content: center;
+      }
+    }
+
+    .widget-legend-chip {
       display: inline-block;
       width: 18px;
       height: 13px;
