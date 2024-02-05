@@ -14,6 +14,7 @@ import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
 import BaseAddLegendWidget from "@components/legend/BaseAddLegendWidget";
 import BaseLegendWidget from "@components/legend/BaseLegendWidget";
+import LegendFlood from "@components/legend/LegendFlood";
 
 /* 홍수 */
 const Flood = () => {
@@ -90,7 +91,7 @@ const Flood = () => {
     useEffect(()=>{
         
         if(selectFloodDamageLayer){
-            G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendWidget params={{ title:'피복 분류', datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}]}}/>]})
+            G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendWidget params={{ title:'피복 분류', tooltip:<LegendFlood />, datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}]}}/>]})
             const {store, layer} = selectFloodDamageLayer
             floodDamageLayer.current.changeParameters({store:store, layerId:layer})
             //floodDamageLayer.current.setOpacity(0.5)
@@ -138,12 +139,12 @@ const Flood = () => {
             {layerIdx > 0 && (
                 <div className="side-content">
                     {/* 표출 단위 선택 영역 */}
-                    {
+                    {/*
                         layerIdx > 0 && !selectFloodDamageLayer &&
                         (
                             <BaseSelectExpUnt baseName={'Flood'}/>
                         )
-                    }
+                    */}
                     {
                         layerIdx === 1 && 
                         (

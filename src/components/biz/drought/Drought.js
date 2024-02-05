@@ -19,6 +19,7 @@ import BaseLegendgGradientWidget2 from "@components/legend/BaseLegendgGradientWi
 import LegendDrought from "@components/legend/LegendDrought";
 import BasePolygonEntityCollection from "@gis/layers/BasePolygonEntityCollection";
 import DroughtLegendgGradientWidget from "@components/legend/DroughtLegendgGradientWidget";
+import BaseLegendWidget from "@components/legend/BaseLegendWidget";
 
 const Drought = () => {
 
@@ -144,21 +145,6 @@ const Drought = () => {
         if(layerCnt === 1){
             Object.keys(layers).map((layerId, i)=>{
               const { store, layer, ...other } = layers[layerId]?.props
-              /*console.info()
-              layers[layerId]._flyToExtent().then((extent)=>{
-
-                    if(droughtObsrvLayer.current.entities?.values?.length > 0){
-                        droughtObsrvLayer.current.entities.values.forEach((entity)=>{
-
-                            const {longitude, latitude} = G$cartesianToLongLat(entity.position._value)
-                            const pointsInsideExtent = longitude >= extent[0] && longitude <= extent[2] && latitude >= extent[1] && latitude <= extent[3]
-                            entity.show = pointsInsideExtent
-
-                            
-                        })
-                    }
-
-                })*/
               if(i === 0){
                   setMainLayer(other)
               }
@@ -176,14 +162,17 @@ const Drought = () => {
         //레이어가 켜저 있으면 지점 on
         G$removeWidget('BaseAddLegendWidget')
         if(layerIdx > 0){
+            let tooltip = false
+            if(layerIdx === 1){ tooltip = <LegendDrought type={obsrvTab} mainLayer={mainLayer}/> }
+
             droughtObsrvLayer.current.show = true
             if(obsrvTab === 'soilMoisture'){
                 G$addWidget('BaseAddLegendWidget',{children:[
-                    <DroughtLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF'], tooltip:<LegendDrought type={obsrvTab}/>}}/>
+                    <DroughtLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF'], tooltip:tooltip}}/>
                 ]})
             }else if(obsrvTab === 'index'){                
                 G$addWidget('BaseAddLegendWidget',{children:[
-                    <DroughtLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF'], tooltip:<LegendDrought type={obsrvTab}/>}}/>
+                    <BaseLegendWidget params={{ title:'가뭄지수', tooltip:tooltip, datas: [{label:'관심', color:'#3A60FB'},{label:'주의', color:'#FFFF00'},{label:'경계', color:'#FFAA01'},{label:'심각', color:'#FF0000'}]}}/>
                 ]})
             }
             
@@ -191,7 +180,7 @@ const Drought = () => {
             droughtObsrvLayer.current.show = false
             G$removeWidget('BaseAddLegendWidget')
         }
-    },[layerIdx])
+    },[layerIdx, obsrvTab])
 
     useEffect(()=>{
         if(obsrvTab === 'index' && mainLayer){

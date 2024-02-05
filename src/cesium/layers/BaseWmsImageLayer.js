@@ -160,7 +160,7 @@ class BaseWmsImageLayer {
 				}
 			  } else {
 				console.log('Layer not found.');
-				reject('Layer not found');
+				//reject('Layer not found');
 			  }
 			})
 			.catch(error => {

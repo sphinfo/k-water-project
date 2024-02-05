@@ -2,6 +2,7 @@ import BaseChart from "@common/chart/BaseChart";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { G$arrayGetMinMax, G$normalizeWithColors, G$setNumberFixedKomma } from "@gis/util";
+import { getBarData, getEnvLandCoverDatas, getHeatmapData } from "@common/axios/envi";
 
 /**
  * 환경 수변피복 레이어 변화탐지
@@ -23,7 +24,7 @@ const EnvironmentLandCover = (props) => {
     //차트 정보
     const chartRef = useRef()
     const chartInfoRef = useRef({
-        labels: ['수체', '나지', '초지','목지', '건물'],
+        labels: ['수체', '나지', '초지','목지', '건물','변화면적'],
         datasets: [],
     })
 
@@ -33,11 +34,12 @@ const EnvironmentLandCover = (props) => {
 
     const [colorGrids, setColorGrid] = useState([])
 
+    const [id, setId] = useState(false)
+
     useEffect(()=>{
 
         if(props?.params?.id){
             const {id} = props?.params
-            console.info(id)
         }
 
     },[props])
@@ -45,92 +47,137 @@ const EnvironmentLandCover = (props) => {
     //레이어 변경시 reset
     useEffect(()=>{
 
-        if(selectEnvironmentLayer){
-
-            //*******API*************/ 수변피복 차트 데이터
-            const {data} = text
-
-            if(data && data.length > 0){
-
-                let area = 0
-                data.map((obj)=>{
-                    area += obj
-                })
-
-                setMaxArea(area)
-
-                setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]}  ${G$setNumberFixedKomma(data[G$arrayGetMinMax(data).min], 0)}`)
-                setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]}  ${G$setNumberFixedKomma(data[G$arrayGetMinMax(data).max], 0)}`)
-
-                chartRef.current.updateOptions = {
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                    },
-                    scales: {
-                        'x': {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.2)',
-                            },
-                            ticks:{
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                fontSize: 12,
-                            }
-                        },
-                        'y': {
-                            title: {
-                                display: false,
-                                text: "Area(m2)",
-                                font: {
-                                  size: 10,
-                                },
-                            },
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.2)',
-                            },
-                            ticks:{
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                fontSize: 12,
-                            }
-                        },
-                    },
-                }
-    
-                chartInfoRef.current.datasets = []
-    
-                chartInfoRef.current.datasets.push({
-                    type: 'bar',
-                    borderColor: ['#557BDF','#F3AC50', '#A1F8A5','#35783B', '#DD59B2'],
-                    backgroundColor: ['#557BDF','#F3AC50', '#A1F8A5','#35783B', '#DD59B2'],
-                    data: data,
-                })
-    
-                chartRef.current.provider = chartInfoRef.current
-
-            }
-
-            
-            
-        }
-
-    },[selectEnvironmentLayer])
-
-    useEffect(()=>{
-        //변화탐지 선택되었을시 
         if(landCoverDetection){
 
-            //*******API*************/ 수변피복 색상표 데이터
-            /** ex) [[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5]]
-             * 배열 합치기 [1,2,3,4,5,1,2,3,4,5....]
-             */
+            const {id} = landCoverDetection
 
-            //let sampleArray = [[0,2,3,4,5],[1,0,3,4,5],[1,2,0,4,5],[1,2,3,0,5],[1,2,3,4,0]]
-            //setColorGrid([].concat(...sampleArray))
+            if(id){
+                let params = {id:id}
+
+                getEnvLandCoverDatas(params).then((response)=>{
+                    if(response?.length > 0){
+                        let heatDatas = false
+                        let barDatas = false
+                        response.map((resObj)=>{
+                            if(resObj.config?.url === '/api/environment/getHeatmapData'){
+                                if(resObj?.data?.data?.length > 0){
+                                    heatDatas = resObj?.data?.data
+                                }
+                            }else{
+                                if(resObj?.data?.data?.length > 0){
+                                    barDatas = resObj?.data?.data[0]
+                                }
+                            }
+                        })
+
+                        setHeatData(heatDatas, barDatas)
+
+                    }
+                    
+                })
+
+                /*getBarData(params).then((response)=>{
+                    if(response?.result?.data.length > 0){
+                        setBarData(response?.result?.data[0])
+                    }
+                })
+
+                getHeatmapData(params).then((response)=>{
+                    if(response?.result?.data.length > 0){
+                        
+                    }
+                })*/
+
+            }
             
         }
 
     },[landCoverDetection])
+
+    const setBarData = (datas, change=0) =>{
+
+        let data = [datas.class1,
+                    datas.class2,
+                    datas.class3,
+                    datas.class4,
+                    datas.class5,
+                    change]
+
+        let area = 0
+        data.map((obj)=>{
+            area += obj
+        })
+
+        setMaxArea(area)
+
+        setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]}  ${G$setNumberFixedKomma(data[G$arrayGetMinMax(data).min], 0)}`)
+        setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]}  ${G$setNumberFixedKomma(data[G$arrayGetMinMax(data).max], 0)}`)
+
+        chartRef.current.updateOptions = {
+            plugins: {
+                legend: {
+                    display: false
+                },
+            },
+            scales: {
+                'x': {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.2)',
+                    },
+                    ticks:{
+                        color: 'rgba(255, 255, 255, 0.9)',
+                        fontSize: 12,
+                    }
+                },
+                'y': {
+                    title: {
+                        display: false,
+                        text: "Area(m2)",
+                        font: {
+                            size: 10,
+                        },
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.2)',
+                    },
+                    ticks:{
+                        color: 'rgba(255, 255, 255, 0.9)',
+                        fontSize: 12,
+                    }
+                },
+            },
+        }
+
+        chartInfoRef.current.datasets = []
+
+        chartInfoRef.current.datasets.push({
+            type: 'bar',
+            borderColor: ['#557BDF','#F3AC50', '#A1F8A5','#35783B', '#DD59B2','#6A58A1'],
+            backgroundColor: ['#557BDF','#F3AC50', '#A1F8A5','#35783B', '#DD59B2','#6A58A1'],
+            data: data,
+        })
+
+        chartRef.current.provider = chartInfoRef.current
+
+    }
+
+    const setHeatData = (datas, barDatas) =>{
+
+        //#6A58A1
+        let heatArray = []
+        datas.map((data)=>{
+            heatArray.push(data.class1)
+            heatArray.push(data.class2)
+            heatArray.push(data.class3)
+            heatArray.push(data.class4)
+            heatArray.push(data.class5)
+        })
+
+        setColorGrid(heatArray)
+        let total = heatArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+        setBarData(barDatas, total)
+    }
 
 
     const renderColorGrid = (value=0, i) =>{
@@ -203,21 +250,22 @@ const EnvironmentLandCover = (props) => {
                                             <div className="chart-axis chart-axis-y">
                                                 <div className="axis-title">변경 전 피복</div>
                                                 <div className="axis-label-wrap">
-                                                    <div className="axis-label">목지</div>
-                                                    <div className="axis-label">수체</div>
                                                     <div className="axis-label">건물</div>
+                                                    <div className="axis-label">목지</div>
                                                     <div className="axis-label">초지</div>
                                                     <div className="axis-label">나지</div>
+                                                    <div className="axis-label">수체</div>
                                                 </div>
 
                                             </div>
                                             <div className="chart-axis chart-axis-x">
                                                 <div className="axis-label-wrap">
-                                                    <div className="axis-label">목지</div>
                                                     <div className="axis-label">수체</div>
-                                                    <div className="axis-label">건물</div>
-                                                    <div className="axis-label">초지</div>
                                                     <div className="axis-label">나지</div>
+                                                    <div className="axis-label">초지</div>
+                                                    <div className="axis-label">목지</div>
+                                                    <div className="axis-label">건물</div>
+                                                    
                                                 </div>
                                                 <div className="axis-title">변경 후 피복</div>
                                             </div>
@@ -230,14 +278,10 @@ const EnvironmentLandCover = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            
+                            </div>  
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         </>
     )

@@ -16,7 +16,7 @@ const BaseSelectExpUnt = (props) => {
 
     useEffect(()=>{
 
-        let expArray = [{name:'테스트 베드', id:'test', checked: true, children:[{name: '테스트 베드', id:'test', parent:'test', checked:true}]}]
+        let expArray = [{name:'테스트 베드', id:'test', checked: true, expUse:true, children:[{name: '테스트 베드', id:'test', parent:'test', checked:true, expUse:true,}]}]
         ThematicTreeConfig.map((thematicObj)=>{
             if(thematicObj.expUse){
                 expArray.push(thematicObj)
@@ -45,6 +45,7 @@ const BaseSelectExpUnt = (props) => {
 
     const renderButton = (item) => {
         return item.children.map((child) => (
+            child.expUse && 
           <button className={`btn btn-widget ${selectButton === child.id ? 'active' : ''}`} key={child.id} style={{display: selectedParent === child.parent ? '' : 'none'}} onClick={() => handleButtonClick(child)}>
             {child.name}
           </button>

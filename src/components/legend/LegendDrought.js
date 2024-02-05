@@ -4,7 +4,7 @@ import img01 from "@images/legend-img-drought01.png"
 import img02 from "@images/legend-img-drought02.png"
 import img03 from "@images/legend-img-drought03.png"
 
-const LegendDrought = ({type, ...props}) => {
+const LegendDrought = ({type, mainLayer, ...props}) => {
     return (
         <>
             <Tooltip placement="top" title={
@@ -21,12 +21,53 @@ const LegendDrought = ({type, ...props}) => {
 
                                 <div className="tooltip-info-box">
                                     <h6>입력자료</h6>
-                                    <p>Sentinel-1 L1 GRD</p>
+                                    {
+                                        mainLayer?.category === 'L3SMA1' && 
+                                        <p>Sentinel-1 L1 GRD</p>
+                                    }
+                                    {
+                                        mainLayer?.category === 'L3SMA2' && 
+                                        <>
+                                            <p>L3SM_A1 산출물</p>
+                                            <p>SAR 기반 식생 지수</p>
+                                            <p>1~5일 전 선행 강우량</p>
+                                            <p>지형 정보</p>
+                                        </>
+                                    }
+                                    {
+                                        mainLayer?.category === 'L3SMA3' && 
+                                        <>
+                                            <p>L3SM_A1 산출물</p>
+                                            <p>SAR 기반 식생 지수</p>
+                                            <p>1~5일 전 선행 강우량</p>
+                                            <p>지형 정보</p>
+                                            <p>토양 정보</p>
+                                        </>
+                                        
+                                    }
                                 </div>
 
                                 <div className="tooltip-info-box">
                                     <h6>산출 알고리즘</h6>
-                                    <p>Multiple Linear Regression</p>
+                                    {
+                                        mainLayer?.category === 'L3SMA1' && 
+                                        <>
+                                            <p>TU-wien change detection algorithm</p>
+                                        </>
+                                    }
+                                    {
+                                        mainLayer?.category === 'L3SMA2' && 
+                                        <>
+                                            <p>Random forest</p>
+                                        </>
+                                    }
+                                    {
+                                        mainLayer?.category === 'L3SMA3' && 
+                                        <>
+                                            <p>Random forest</p>
+                                        </>
+                                    }
+                                    
                                 </div>
 
                                 <div className="tooltip-info-box">

@@ -21,7 +21,7 @@ const Environment = () => {
    * selectEnvironmentLayer : 환경 레이어 선택
    * landCoverDetection : 변화 탐지 선택
    */
-  const { selectEnvironmentLayer, landCoverDetection, layers } = useSelector(state => state.environment)
+  const { landCoverDetection, layers } = useSelector(state => state.environment)
 
   //변화탐지 레이어 
   const landCoverDetectionLayer = useRef()
@@ -88,15 +88,20 @@ const Environment = () => {
           let legends = []
           let tooltip = false
           const uniqueArray = [...new Set(legendGroup)]
-          console.info(legendOption[0])
           tooltip = legendGroup.length === 1 ? <LegendEnvi props={legendOption[0]}/> : false
           uniqueArray.map((group)=>{
               if(group === 'LandCover'){
-                  legends.push(<BaseLegendWidget params={{ title:'피복 분류', datas: [{label:'수체', color:'#557BDF'} ,{label:'나지', color:'#F3AC50'} ,{label:'초지', color:'#A1F8A5'} ,{label:'목지', color:'#35783B'} ,{label:'건물', color:'#DD59B2'}], tooltip:tooltip }}/>)
+                
+                let datas = [{label:'수체', color:'#557BDF'} ,{label:'나지', color:'#F3AC50'} ,{label:'초지', color:'#A1F8A5'} ,{label:'목지', color:'#35783B'} ,{label:'건물', color:'#DD59B2'}]
+                if(landCoverDetection){
+                  datas = [{label:'수체', color:'#557BDF'} ,{label:'나지', color:'#F3AC50'} ,{label:'초지', color:'#A1F8A5'} ,{label:'목지', color:'#35783B'} ,{label:'건물', color:'#DD59B2'} ,{label:'변화탐지', color:'#6A58A1'}]
+                }
+
+                legends.push(<BaseLegendWidget params={{ title:'피복 분류', datas: datas, tooltip:tooltip }}/>)
               }else if(group === 'Garbage'){
-                  legends.push(<BaseLegendWidget params={{title:'부유물 폐기성', datas:[{label:'부유물 발생', color:'#FF9F9F'}], tooltip:tooltip }}/>)
+                legends.push(<BaseLegendWidget params={{title:'부유물 폐기성', datas:[{label:'부유물 발생', color:'#FF9F9F'}], tooltip:tooltip }}/>)
               }else if(group === 'Green'){
-                  legends.push(<BaseLegendgGradientWidget params={{title:'녹조 농도 (mg/m3)', min:0, max: 300, datas:['#1E90FF', '#87CEFA', '#FAFAD2', '#FFA500', '#FF0000'], tooltip:tooltip }}/>)
+                legends.push(<BaseLegendgGradientWidget params={{title:'녹조 농도 (mg/m3)', min:0, max: 300, datas:['#1E90FF', '#87CEFA', '#FAFAD2', '#FFA500', '#FF0000'], tooltip:tooltip }}/>)
               }
               
           })
@@ -107,10 +112,14 @@ const Environment = () => {
 
   //변화탐지 레이어
   useEffect(()=>{
+    legendSetting()
     if(landCoverDetection){
-      landCoverDetectionLayer.current.changeParameters({store:'environment', layerId:'20231212113940_environment_L4LC_Q8eh_DAEJEON-DAECHEONG-YONGDAM-SEJONG-ANDONG-SAYEON-UNMUN-MIHO-CHANGNYEONG-SOYANG'})
+      const { store, layer, id } = landCoverDetection
+      landCoverDetectionLayer.current.changeParameters({store:store, layerId:layer})
+      G$addWidget('EnvironmentLandCoverWidget', {params:{id:id}} )
     }else{
       landCoverDetectionLayer.current.remove()
+      G$removeWidget('EnvironmentLandCoverWidget')
     }
 
   },[landCoverDetection])
@@ -127,7 +136,7 @@ const Environment = () => {
       {/* 레이어 선택시 단일 선택시 */}
       {layerIdx === 1 && (
           <div className="side-content">
-              <BaseSelectExpUnt baseName={'Env'}/>
+              {/** <BaseSelectExpUnt baseName={'Env'}/> */}
               <EnvironmentL4 mainLayer={mainLayer}/>
           </div>
 

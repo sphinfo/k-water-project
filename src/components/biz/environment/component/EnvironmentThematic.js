@@ -24,9 +24,11 @@ const EnvironmentThematic = (props) => {
                     let layer = response.result.data[0].name
                     thematics.push({...response.result.data[0], store, layer})
                 }
+                //주제도 등록
+                setThematicList(thematics)
             })
-            //주제도 등록
-            setThematicList(thematics)
+            
+            
         }
 
         return()=>{
@@ -61,7 +63,7 @@ const EnvironmentThematic = (props) => {
     const renderResult = (item, i) =>{
         return (
             <div className="switch-list-item" key={`item-${i}`}>
-                <span className="switch-label" key={`label-${i}`}>{item.name}</span>
+                <span className="switch-label" key={`label-${i}`}>{"변화 탐지"}</span>
                 <Switch
                     checked={item.checked}
                     onClick={(e) => handleSwitchChange(item, i)}

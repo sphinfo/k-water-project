@@ -199,7 +199,6 @@ class MapManager {
 
     //전체 imagelayers 투명도 조절
     setImageLayersOpacity(opacity){
-        console.info(opacity)
         this._baseOpactiy = opacity
         this._map.imageryLayers._layers.forEach(layer => {
             layer.alpha = layer.id !== 'baseMap' ? opacity : 1
