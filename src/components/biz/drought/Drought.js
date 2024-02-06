@@ -28,10 +28,9 @@ const Drought = () => {
     /**
      * bizName : 메뉴 명 ( 공통으로 reducer에 사용될 예정 )
      * selectObs : 선택된 관측소 정보
-     * selectDroughtLayer : 가뭄 메인 레이어
      * layers: 등록 레이어
      */
-    const { bizName, selectObs, selectDroughtLayer, obsrvTab, layers } = useSelector(state => state.drought)
+    const { bizName, selectObs, obsrvTab, layers } = useSelector(state => state.drought)
 
     //가뭄 레이어 ( 4L )
     const droughtL4Layer = useRef()
@@ -41,24 +40,33 @@ const Drought = () => {
 
     const [station, setStation] = useState(false)
 
+    const [selectType, setSelectType] = useState({id:''})
+
     /* 레이어 선택 callback Ref */
     const layerSelectRef = useRef();
     useImperativeHandle(layerSelectRef, ()=>({
         getFeatures(features){
 
-            //기존에 선택된 레이어가 있으면 이미지 변경
-            if(selectObs){
-                selectObs.entity.billboard.image = pin
-            }
+            if(selectType?.id === ''){
+                //기존에 선택된 레이어가 있으면 이미지 변경
+                if(selectObs){
+                    selectObs.entity.billboard.image = pin
+                }
 
-            if(station === features[0].properties.Station){
-                dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: false})
-                setStation(false)
+                if(station === features[0].properties.Station){
+                    dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: false})
+                    setStation(false)
+                }else{
+                    features[0].entity.billboard.image = pin2
+                    dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: features[0]})
+                    setStation(features[0].properties.Station)
+                }
             }else{
-                features[0].entity.billboard.image = pin2
-                dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: features[0]})
-                setStation(features[0].properties.Station)
-            }
+                G$removeWidget('DroughtExpUntWidget')
+                if(features.length > 0){
+                    G$addWidget('DroughtExpUntWidget', {params: features[0], selectType}, {subTitle:features[0].properties[selectType.nameCol]})
+                }
+            }            
         }
     }));
 
@@ -69,10 +77,6 @@ const Drought = () => {
         }
     },[selectObs])
 
-    const [obsList, setObseList] = useState([])
-
-    //const areaLayer = useRef()
-
     /* 초기 세팅 사항 */
     useEffect(()=>{
 
@@ -82,20 +86,16 @@ const Drought = () => {
         //가뭄 메인 레이어 L4
         droughtL4Layer.current = new BaseWmsImageLayer({store:'drought',layerId:''})
 
-        //areaLayer.current = new BasePolygonEntityCollection({name:'l3aeLayer'})
-
-        //*******API*************/
-        //let obsList = DroughtObsrvConfig
+        //초기 지점리스트 get
         getDroughtObs().then((response) => {
             if(response?.result?.data?.length > 0){
-                //areaLayer.current._addFeature({xmin: 127.50600844103556, ymin: 34.3913015352451, xmax: 130.64136019478192, ymax: 36.53665712523854, properties:{id:G$RandomId()}})
-                setObseList(response?.result?.data)
                 response.result.data.map((obj)=>{
                     droughtObsrvLayer.current._addFeature({lng:obj.lng, lat:obj.lat, properties:obj, hover: true})
                 })
             }
         })
         
+        //지점 hide
         droughtObsrvLayer.current.show = false
 
         //레이어 클릭 callback 등록
@@ -129,6 +129,7 @@ const Drought = () => {
             dispatch({type:DROUGHT_CLEAR_LAEYRS})
 
             G$removeWidget('BaseAddLegendWidget')
+            G$removeWidget('DroughtExpUntWidget')
         }
 
     },[])
@@ -168,11 +169,15 @@ const Drought = () => {
             droughtObsrvLayer.current.show = true
             if(obsrvTab === 'soilMoisture'){
                 G$addWidget('BaseAddLegendWidget',{children:[
-                    <DroughtLegendgGradientWidget params={{title:'토양수분', min:0, max: 50, datas:['#FF0000', '#FFA500', '#FAFAD2', '#87CEFA', '#1E90FF'], tooltip:tooltip}}/>
+                    <DroughtLegendgGradientWidget params={{title:'토양수분', tooltip:tooltip}}/>
                 ]})
             }else if(obsrvTab === 'index'){                
                 G$addWidget('BaseAddLegendWidget',{children:[
                     <BaseLegendWidget params={{ title:'가뭄지수', tooltip:tooltip, datas: [{label:'관심', color:'#3A60FB'},{label:'주의', color:'#FFFF00'},{label:'경계', color:'#FFAA01'},{label:'심각', color:'#FF0000'}]}}/>
+                ]})
+            }else if(obsrvTab === 'appease'){
+                G$addWidget('BaseAddLegendWidget',{children:[
+                    <DroughtLegendgGradientWidget params={{title:'가뭄해갈', tooltip:tooltip}}/>
                 ]})
             }
             
@@ -197,6 +202,21 @@ const Drought = () => {
         }
     },[obsrvTab])
 
+    const expUntFeature = (layerId, item) =>{
+
+        G$removeWidget('DroughtExpUntWidget')
+
+        let id = layerId ? layerId : 'droughtObsrvLayer' 
+        if(!layerId){    
+            dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: false})
+        }
+
+        GisLayerClickTool.resetLayer(bizName)
+        GisLayerClickTool.addLayer(bizName, [id])
+        setSelectType(item)
+
+    }
+
     return (
         <>
             {/* 검색조건 영역   ex) 공토영역이 될듯 ? ( 검색 TEXT, 기간 설정 등.. )*/}
@@ -206,16 +226,15 @@ const Drought = () => {
             <DroughtResult />
 
             {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
-            {layerIdx === 1 && (
-                <div className="side-content">
-                    {
-                        obsrvTab === 'soilMoisture' &&
-                        <BaseSelectExpUnt baseName={'Drought'}/>
-                    }
-                    
+            
+
+            <div className="side-content">
+                <BaseSelectExpUnt baseName={'Drought'} setFeatureInfo={expUntFeature}/>
+                {layerIdx === 1 && (
                     <DroughtL4/>
-                </div>
-            )}
+                )}
+                
+            </div>
         </>
     )
 }

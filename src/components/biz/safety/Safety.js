@@ -159,7 +159,6 @@ const Safety = () => {
             let legends = []
             let tooltip = false
             const uniqueArray = [...new Set(legendGroup)]
-            console.info(legendOption[0])
             tooltip = legendGroup.length === 1 ? <LegendSafety props={legendOption[0]}/> : false
             uniqueArray.map((group)=>{
                 if(group === 'L3'){

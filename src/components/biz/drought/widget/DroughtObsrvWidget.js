@@ -27,12 +27,18 @@ const DroughtObsrvWidget = () => {
     return (
         <>
             <div className={"content-body"}>
-                <div className="content-col-group" style={{display: obsrvTab === 'soilMoisture' ? '' : 'none'}}>
-                    <DroughtObsrvSoilMoisture />
-                </div>
-                <div className="content-col-group" style={{display: obsrvTab === 'index' ? '' : 'none'}}>
-                    <DroughtObsrvIndex />
-                </div>
+                {
+                    obsrvTab === 'soilMoisture' &&
+                    <div className="content-col-group">
+                        <DroughtObsrvSoilMoisture />
+                    </div>
+                }
+                {
+                    obsrvTab === 'index' &&
+                    <div className="content-col-group">
+                        <DroughtObsrvIndex />
+                    </div>
+                }
             </div>
         </>
     )

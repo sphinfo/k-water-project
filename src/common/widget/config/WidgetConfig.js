@@ -19,6 +19,7 @@ const widgets = {
     
     //가뭄
     DroughtObsrvWidget: lazy(() => import('@components/biz/drought/widget/DroughtObsrvWidget')),
+    DroughtExpUntWidget: lazy(() => import('@components/biz/drought/widget/DroughtExpUntWidget')),
 
     //환경
     EnvironmentLandCoverWidget: lazy(() => import('@components/biz/environment/widget/EnvironmentLandCoverWidget')),
@@ -62,6 +63,12 @@ const WidgetConfig = {
         title: '토양 수분 분석',
         instance: widgets.DroughtObsrvWidget
     },
+
+    'DroughtExpUntWidget': {
+        title: '종합 토양 분석',
+        instance: widgets.DroughtExpUntWidget
+    },
+    
 
 
     /**

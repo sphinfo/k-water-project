@@ -120,23 +120,23 @@ const LegendDrought = ({type, mainLayer, ...props}) => {
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td>SWDI > 0</td>
+                                            <td>SWDI &gt; 0</td>
                                             <td>No drought</td>
                                         </tr>
                                         <tr>
-                                            <td>0 > SWDI > -2</td>
+                                            <td>0 &gt; SWDI &gt; -2</td>
                                             <td>Mild</td>
                                         </tr>
                                         <tr>
-                                            <td>-2 > SWDI > -5</td>
+                                            <td>-2 &gt; SWDI &gt; -5</td>
                                             <td>Moderate</td>
                                         </tr>
                                         <tr>
-                                            <td>-5 > SWDI > -10</td>
+                                            <td>-5 &gt; SWDI &gt; -10</td>
                                             <td>Servere</td>
                                         </tr>
                                         <tr>
-                                            <td>-10 > SWDI</td>
+                                            <td>-10 &gt; SWDI</td>
                                             <td>Extreme</td>
                                         </tr>
                                         </tbody>
@@ -157,7 +157,7 @@ const LegendDrought = ({type, mainLayer, ...props}) => {
 
                         {
                             /*L4DR_A2 - 가뭄해갈 강우량 레전드 인포*/
-                            type === null &&
+                            type === 'appease' &&
                             <div className="tooltip-info">
                                 <div className="tooltip-info-box">
                                     <h5>가뭄해갈 강우량</h5>

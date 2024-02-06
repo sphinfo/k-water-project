@@ -1,7 +1,7 @@
 import React, {useRef} from "react";
 import { useCallback } from "react";
 
-const BodyRow = ({row, rowIdx, onRowClick, onCellClick}) => {
+const BodyRow = ({row, rowIdx, onRowClick, onCellClick, highlight}) => {
 
 	const rowRef = useRef();
 	const cellRef = useRef()
@@ -16,7 +16,7 @@ const BodyRow = ({row, rowIdx, onRowClick, onCellClick}) => {
 	return (
 		<tr ref={rowRef} {...row.getRowProps()} >
 			{row.cells.map((cell, cellIdx) => (
-				<td ref={cellRef} 
+				<td ref={cellRef} className={`${highlight && cell.column.id === highlight ? highlight : ''}`}
 				onClick={() => onClicked(cell, cellIdx)}
 				{...cell.getCellProps()}>
 					{cell.render("Cell")}

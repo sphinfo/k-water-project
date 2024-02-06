@@ -38,7 +38,7 @@ const LegendEnvi = ({props, ...other}) => {
 
                                 <div className="tooltip-info-box">
                                     <h6>산출 알고리즘</h6>
-                                    <p>Random Foreset(RF_A2)</p>
+                                    <p>Random Foreset(RF_A1)</p>
                                 </div>
 
                                 <div className="tooltip-info-box">

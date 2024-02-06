@@ -21,6 +21,7 @@ const BaseGrid = ({ columns, provider = [], className='', ...props }, ref) => {
 		(props.onCellClick && props.onCellClick(value, origin, ref));
 	});
 
+	const [highlight, setHighlight] = useState(false)
 
 	/* react table */
 	const {  
@@ -29,7 +30,7 @@ const BaseGrid = ({ columns, provider = [], className='', ...props }, ref) => {
 		headerGroups, 
 		rows, 
 		prepareRow 
-	} = useTable({  columns, data }, useSortBy);
+	} = useTable({ columns, data }, useSortBy);
 
 
 	/* data change */
@@ -48,7 +49,7 @@ const BaseGrid = ({ columns, provider = [], className='', ...props }, ref) => {
         return headerGroups.map((headerGroup, i) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    <th {...column.getHeaderProps(column.getSortByToggleProps())} className={`${highlight && column.id === highlight ? highlight : ''}`}>
                         {column.render("Header")}
                         <span>
                             {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
@@ -57,7 +58,7 @@ const BaseGrid = ({ columns, provider = [], className='', ...props }, ref) => {
                 ))}
             </tr>
         ))
-    }, [])
+    }, [highlight])
 
 
 	// Body Render
@@ -68,7 +69,7 @@ const BaseGrid = ({ columns, provider = [], className='', ...props }, ref) => {
 				{rows.length > 0 && rows.map((row, i) => {
 					prepareRow(row);
 					let rowIdx = i
-					const properties = { row, rowIdx, ...bodyProps };
+					const properties = { row, rowIdx, highlight, ...bodyProps };
 					return (
 						<BodyRow key={`bodyRow_${i}`} {...properties}/>
 					);
@@ -78,7 +79,7 @@ const BaseGrid = ({ columns, provider = [], className='', ...props }, ref) => {
 				}
 			</>
 		)
-	}, [ rows, prepareRow ]);
+	}, [ rows, prepareRow, highlight ]);
 	
 
 	useImperativeHandle(ref, () => ({
@@ -99,6 +100,10 @@ const BaseGrid = ({ columns, provider = [], className='', ...props }, ref) => {
 		get rows() {
 			return rows;
 		},
+
+		set highlight(col){
+			setHighlight(col)
+		}
 	}));
 
 	return (

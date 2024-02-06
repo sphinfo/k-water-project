@@ -52,9 +52,7 @@ class BaseOverlay {
         
 
         if(coord){
-
             features.geometry.coordinates.map((coords)=>{
-
                 const outline = MapManager.map.entities.add({
                     polyline: {
                         positions: Cartesian3.fromDegreesArray([...[].concat(...coords[0])]),
@@ -63,10 +61,7 @@ class BaseOverlay {
                     }
                 })
                 this.polyline.push(outline)
-
             })
-
-            
 
             /* 해당좌표로 오버레이 html 위치 지정 */
             var catresian3 = Cartesian3.fromDegrees(coord.longitude, coord.latitude, 0)
@@ -83,8 +78,6 @@ class BaseOverlay {
                     overlay.style.display = 'none'
                 }
             })
-
-
             this.overlays.push(overlay)
         }
 		

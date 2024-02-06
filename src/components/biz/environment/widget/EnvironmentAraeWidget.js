@@ -36,7 +36,7 @@ const EnvironmentAraeWidget = (props) => {
                 <div className="panel-box">
                     <div className="number-dashboard number-dashboard-min">
                         <div className="nd-item">
-                            <h4 className="nd-item-title">전체 녹조 면적</h4>
+                            <h4 className="nd-item-title">전체 부유물 면적</h4>
                             <div className="nd-item-body">{allArea} ㎡</div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@ const EnvironmentAraeWidget = (props) => {
                             <tr>
                                 <th>No.</th>
                                 <th>위/경도</th>
-                                <th>녹조 면적</th>
+                                <th>부유물 면적</th>
                             </tr>
                             </thead>
                             <tbody>

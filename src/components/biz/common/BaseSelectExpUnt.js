@@ -1,21 +1,20 @@
-import React, {useEffect, useRef, useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useEffect, useImperativeHandle, useRef, useState} from "react";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import BaseOverlay from "@gis/util/overlay/BaseOverlay";
 import ThematicTreeConfig from '@gis/config/ThematicTreeConfig';
+import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
+
+const bizName = 'expUnt'
 
 const BaseSelectExpUnt = (props) => {
 
     //초기 입력값
-    const { baseName='', ...other } = props
-    const dispatch = useDispatch()
+    const { baseName='', setFeatureInfo, ...other } = props
     const [expList, setExpList] = useState([])
 
     //ref
     const selectLayerRef = useRef()
-
     useEffect(()=>{
-
         let expArray = [{name:'테스트 베드', id:'test', checked: true, expUse:true, children:[{name: '테스트 베드', id:'test', parent:'test', checked:true, expUse:true,}]}]
         ThematicTreeConfig.map((thematicObj)=>{
             if(thematicObj.expUse){
@@ -33,11 +32,16 @@ const BaseSelectExpUnt = (props) => {
 
     
     const setLayer = (item)=>{
-        if(item && item.id !== 'test'){
-            selectLayerRef.current.changeParameters({store:item.store, layerId:item.id, col:item.nameCol})
+        
+        let layerId = false
+        if(item && item.id !== 'test' && item.id !== ''){
+            selectLayerRef.current.changeParameters({store:item.store, layerId:item.id, col:item.nameCol})   
+            layerId = `${baseName}${item.store}:${item.id}`
         }else{
             selectLayerRef.current.remove()
         }
+
+        if(setFeatureInfo){ setFeatureInfo(layerId, item) }
     }
 
     const [selectedParent, setSelectedParent] = useState('test')
@@ -46,16 +50,16 @@ const BaseSelectExpUnt = (props) => {
     const renderButton = (item) => {
         return item.children.map((child) => (
             child.expUse && 
-          <button className={`btn btn-widget ${selectButton === child.id ? 'active' : ''}`} key={child.id} style={{display: selectedParent === child.parent ? '' : 'none'}} onClick={() => handleButtonClick(child)}>
-            {child.name}
-          </button>
+            <button className={`btn btn-widget ${selectButton === child.id ? 'active' : ''}`} key={child.id} style={{display: selectedParent === child.parent ? '' : 'none'}} onClick={() => handleButtonClick(child)}>
+                {child.name}
+            </button>
         ))
     }
 
     const handleParentChange = (event) => {
         const selectedParentId = event.target.value
         const selectedData = expList.find(item => item.id === selectedParentId)
-    
+        handleButtonClick({id:''})
         if (selectedData) {
           setSelectedParent(selectedParentId)
         }
