@@ -16,7 +16,7 @@ const BodyRow = ({row, rowIdx, onRowClick, onCellClick, highlight}) => {
 	return (
 		<tr ref={rowRef} {...row.getRowProps()} >
 			{row.cells.map((cell, cellIdx) => (
-				<td ref={cellRef} className={`${highlight && cell.column.id === highlight ? highlight : ''}`}
+				<td ref={cellRef} className={`${highlight && cell.column.id === highlight ? 'highlight' : ''}`}
 				onClick={() => onClicked(cell, cellIdx)}
 				{...cell.getCellProps()}>
 					{cell.render("Cell")}

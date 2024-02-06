@@ -49,7 +49,7 @@ const BaseGrid = ({ columns, provider = [], className='', ...props }, ref) => {
         return headerGroups.map((headerGroup, i) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                    <th {...column.getHeaderProps(column.getSortByToggleProps())} className={`${highlight && column.id === highlight ? highlight : ''}`}>
+                    <th {...column.getHeaderProps(column.getSortByToggleProps())} className={`${highlight && column.id === highlight ? 'highlight' : ''}`}>
                         {column.render("Header")}
                         <span>
                             {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
