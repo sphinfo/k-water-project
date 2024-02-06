@@ -141,7 +141,17 @@ const DroughtExpUntDatas = () => {
     return (
         <>
             <div className="content-col">
-                {radioList.map((item)=>renderRadio(item))}
+                <div className="content-row">
+                    <div className="panel-box">
+                        <div className="radio-list-wrap">
+                            <h4 className="radio-title">차트 데이터</h4>
+                            <div className="radio-list">
+                                {radioList.map((item)=>renderRadio(item))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="content-row">
                     <div className="panel-box">
                         <div className="chart-unit-warp">
