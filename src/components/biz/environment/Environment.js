@@ -92,9 +92,9 @@ const Environment = () => {
           uniqueArray.map((group)=>{
               if(group === 'LandCover'){
                 
-                let datas = [{label:'수체', color:'#557BDF'} ,{label:'나지', color:'#F3AC50'} ,{label:'초지', color:'#A1F8A5'} ,{label:'목지', color:'#35783B'} ,{label:'건물', color:'#DD59B2'}]
+                let datas = [{label:'수체', color:'#012FFF'} ,{label:'나지', color:'#FF9E01'} ,{label:'초지', color:'#FFFB07'} ,{label:'목지', color:'#35783B'} ,{label:'건물', color:'#FF0000'}]
                 if(landCoverDetection){
-                  datas = [{label:'수체', color:'#557BDF'} ,{label:'나지', color:'#F3AC50'} ,{label:'초지', color:'#A1F8A5'} ,{label:'목지', color:'#35783B'} ,{label:'건물', color:'#DD59B2'} ,{label:'변화탐지', color:'#6A58A1'}]
+                  datas = [{label:'수체', color:'#012FFF'} ,{label:'나지', color:'#FF9E01'} ,{label:'초지', color:'#FFFB07'} ,{label:'목지', color:'#35783B'} ,{label:'건물', color:'#FF0000'} ,{label:'변화탐지', color:'#DE3CFF'}]
                 }
 
                 legends.push(<BaseLegendWidget params={{ title:'피복 분류', datas: datas, tooltip:tooltip }}/>)

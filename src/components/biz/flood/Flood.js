@@ -91,7 +91,7 @@ const Flood = () => {
     useEffect(()=>{
         
         if(selectFloodDamageLayer){
-            G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendWidget params={{ title:'피복 분류', tooltip:<LegendFlood />, datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#DD59B2'},{label:'나지', color:'#F3AC50'},{label:'초지', color:'#A1F8A5'}]}}/>]})
+            G$addWidget('BaseAddLegendWidget',{children:[<BaseLegendWidget params={{ title:'수변 피복', tooltip:<LegendFlood />, datas: [{label:'목지', color:'#35783B'},{label:'건물', color:'#FF0000'},{label:'나지', color:'#FF9E01'},{label:'초지', color:'#FFFB07'}]}}/>]})
             const {store, layer} = selectFloodDamageLayer
             floodDamageLayer.current.changeParameters({store:store, layerId:layer})
             //floodDamageLayer.current.setOpacity(0.5)

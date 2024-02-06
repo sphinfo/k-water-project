@@ -152,8 +152,8 @@ const EnvironmentLandCover = (props) => {
 
         chartInfoRef.current.datasets.push({
             type: 'bar',
-            borderColor: ['#557BDF','#F3AC50', '#A1F8A5','#35783B', '#DD59B2','#6A58A1'],
-            backgroundColor: ['#557BDF','#F3AC50', '#A1F8A5','#35783B', '#DD59B2','#6A58A1'],
+            borderColor: ['#557BDF','#FF9E01', '#FFFB07','#35783B', '#FF0000','#DE3CFF'],
+            backgroundColor: ['#557BDF','#FF9E01', '#FFFB07','#35783B', '#FF0000','#DE3CFF'],
             data: data,
         })
 

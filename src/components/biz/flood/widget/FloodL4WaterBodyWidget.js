@@ -92,8 +92,8 @@ const FloodL4WaterBodyWidget = () => {
     
                     chartInfoRef.current.datasets.push({
                         type: 'bar',
-                        borderColor: ['#35783B', '#DD59B2', '#F3AC50', '#A1F8A5'],
-                        backgroundColor: ['#35783B', '#DD59B2', '#F3AC50', '#A1F8A5'],
+                        borderColor: ['#35783B', '#FF0000', '#FF9E01', '#FFFB07'],
+                        backgroundColor: ['#35783B', '#FF0000', '#FF9E01', '#FFFB07'],
                         data: datas,
                         barThickness: 18,
                         maxBarThickness: 25
