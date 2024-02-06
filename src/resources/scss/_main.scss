@@ -1515,6 +1515,11 @@
     }
   }
 
+  .popup-body {
+    .content-body {
+      padding-bottom: 12px;
+    }
+  }
 
   &.minimize {
     min-width: 220px;
@@ -1582,7 +1587,6 @@
 
 .content-col-group {
   display: flex;
-  margin-bottom: 15px;
 
   .content-col {
     border-right: 1px solid $white-alpha-20;

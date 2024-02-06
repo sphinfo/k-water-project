@@ -316,8 +316,7 @@ const SafetyL4CompWidget = () => {
                             <div className="panel-box-header">
                                 <h4 className="panel-box-title">변위속도</h4>
                             </div>
-                            <div className="table-wrap" style={{minHeight: '360px', height: '100%', overflowY: 'auto'}}>
-                                
+                            <div className="table-wrap" style={{ height: '360px', overflowY: 'auto'}}>
                                 <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'}/>
                             </div>
                         </div>
