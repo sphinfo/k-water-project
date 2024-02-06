@@ -859,6 +859,7 @@
       display: flex;
       justify-content: space-between;
       margin-left: -6px;
+      gap: 0;
 
       li {
         font-size: 10px;
@@ -2867,6 +2868,17 @@
     table {
       margin-top: 10px;
       margin-bottom: 10px;
+    }
+
+    ul.info-annotation {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 1.4;
+      margin-top: 10px;
+
+      li {
+        margin-bottom: 5px;
+      }
     }
   }
 

@@ -22,9 +22,10 @@ const DroughtLegendgGradientWidget = (props) => {
     return (
         <>
 
+            {/*토양수분(vol.%)*/}
             <dl className="widget-box">
                 <dt className="widget-header">
-                    <h4 className="widget-title">{title}</h4>
+                    <h4 className="widget-title">토양수분(vol.%)</h4>
                     {tooltip}
                 </dt>
                 <dd className="widget-body">
@@ -63,7 +64,57 @@ const DroughtLegendgGradientWidget = (props) => {
                         <li>40</li>
                         <li>45</li>
                         <li>50</li>
-                        <li>>50</li>
+                        <li>&gt;50</li>
+                    </ul>
+                </dd>
+            </dl>
+
+
+            {/*가뭄해갈강우량(mm/day)*/}
+            <dl className="widget-box">
+                <dt className="widget-header">
+                    <h4 className="widget-title">가뭄해갈강우량(mm/day)</h4>
+                    {tooltip}
+                </dt>
+                <dd className="widget-body">
+                    <ul className="widget-legend-stack">
+                        <li style={{background: '#0000ff'}}></li>
+                        <li style={{background: '#2b41ff'}}></li>
+                        <li style={{background: '#386dff'}}></li>
+                        <li style={{background: '#3b9dff'}}></li>
+                        <li style={{background: '#30cfff'}}></li>
+                        <li style={{background: '#00ffff'}}></li>
+                        <li style={{background: '#70ffd2'}}></li>
+                        <li style={{background: '#a1ffa4'}}></li>
+                        <li style={{background: '#c7ff78'}}></li>
+                        <li style={{background: '#e7ff4a'}}></li>
+                        <li style={{background: '#ffff00'}}></li>
+                        <li style={{background: '#ffd500'}}></li>
+                        <li style={{background: '#ffa600'}}></li>
+                        <li style={{background: '#ff7b00'}}></li>
+                        <li style={{background: '#ff4d00'}}></li>
+                        <li style={{background: '#ff0000'}}></li>
+
+                    </ul>
+                    <ul className="widget-legend-stack-unit">
+                        <li></li>
+                        <li>0</li>
+                        <li>1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li>
+                        <li>6</li>
+                        <li>7</li>
+                        <li>8</li>
+                        <li>9</li>
+                        <li>10</li>
+                        <li>15</li>
+                        <li>20</li>
+                        <li>25</li>
+                        <li>30</li>
+                        <li>&gt;30</li>
+
                     </ul>
                 </dd>
             </dl>

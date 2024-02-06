@@ -22,11 +22,11 @@ const LegendDrought = ({type, mainLayer, ...props}) => {
                                 <div className="tooltip-info-box">
                                     <h6>입력자료</h6>
                                     {
-                                        mainLayer?.category === 'L3SMA1' && 
-                                        <p>Sentinel-1 L1 GRD</p>
+                                        mainLayer?.category === 'L3SMA1' &&
+                                        <p>Sentinel-1 VV편파 후방산란계수</p>
                                     }
                                     {
-                                        mainLayer?.category === 'L3SMA2' && 
+                                        mainLayer?.category === 'L3SMA2' &&
                                         <>
                                             <p>L3SM_A1 산출물</p>
                                             <p>SAR 기반 식생 지수</p>
@@ -35,7 +35,7 @@ const LegendDrought = ({type, mainLayer, ...props}) => {
                                         </>
                                     }
                                     {
-                                        mainLayer?.category === 'L3SMA3' && 
+                                        mainLayer?.category === 'L3SMA3' &&
                                         <>
                                             <p>L3SM_A1 산출물</p>
                                             <p>SAR 기반 식생 지수</p>
@@ -43,31 +43,31 @@ const LegendDrought = ({type, mainLayer, ...props}) => {
                                             <p>지형 정보</p>
                                             <p>토양 정보</p>
                                         </>
-                                        
+
                                     }
                                 </div>
 
                                 <div className="tooltip-info-box">
                                     <h6>산출 알고리즘</h6>
                                     {
-                                        mainLayer?.category === 'L3SMA1' && 
+                                        mainLayer?.category === 'L3SMA1' &&
                                         <>
                                             <p>TU-wien change detection algorithm</p>
                                         </>
                                     }
                                     {
-                                        mainLayer?.category === 'L3SMA2' && 
+                                        mainLayer?.category === 'L3SMA2' &&
                                         <>
                                             <p>Random forest</p>
                                         </>
                                     }
                                     {
-                                        mainLayer?.category === 'L3SMA3' && 
+                                        mainLayer?.category === 'L3SMA3' &&
                                         <>
                                             <p>Random forest</p>
                                         </>
                                     }
-                                    
+
                                 </div>
 
                                 <div className="tooltip-info-box">
@@ -79,26 +79,26 @@ const LegendDrought = ({type, mainLayer, ...props}) => {
                                     <h6>시간해상도(day)</h6>
                                     <p>12</p>
                                 </div>
-
-                                <div className="tooltip-info-box">
-                                    <h6>토성별 토양수 특성 (Rawl et al., 1982)</h6>
-                                    <picture>
-                                        <img src={img01} alt=""/>
-                                        <figcaption>
-                                            Rawls, W. J., D. L. Brakensiek, K. E. Saxton, 1982. Estimation of soil water
-                                            properties, Trans. of the ASAE, Vol(25), p.1316-1320, 1328.
-                                        </figcaption>
-                                    </picture>
-                                </div>
                             </div>
                         }
-                        
+
                         {
+                            /*L4DR_A1 - 가뭄지수 레전드 인포*/
                             type === 'index' &&
                             <div className="tooltip-info">
                                 <div className="tooltip-info-box">
-                                    <h5>SWDI(Soil Water Deficit Index)</h5>
-                                    <p>Martínez-Fernández et al. (2015)*에 의해 제안된 토양수분 지수로 토양속성과 시계열 토양수분을 활용해 산정</p>
+                                    <h5>가뭄지수</h5>
+                                    <p>Martínez-Fernández et al. (2015)*에 의해 제안된 토양수분기반 가뭄지수</p>
+                                </div>
+
+                                <div className="tooltip-info-box">
+                                    <h6>입력자료</h6>
+                                    <p>L3SM_A3 토양수분 산출물</p>
+                                    <p>토양정보</p>
+                                </div>
+
+                                <div className="tooltip-info-box">
+                                    <h6>산출 알고리즘</h6>
                                     <picture>
                                         <img src={img02} alt=""/>
                                         <figcaption className="text-right">
@@ -107,16 +107,80 @@ const LegendDrought = ({type, mainLayer, ...props}) => {
                                             θ: 현재토양수분량<br/>
                                         </figcaption>
                                     </picture>
+                                    <table className="table-basic table-tooltip">
+                                        <colgroup>
+                                            <col width="50%"/>
+                                            <col width="50%"/>
+                                        </colgroup>
+                                        <thead>
+                                        <tr>
+                                            <th>SWDI value</th>
+                                            <th>Drought Level</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>SWDI > 0</td>
+                                            <td>No drought</td>
+                                        </tr>
+                                        <tr>
+                                            <td>0 > SWDI > -2</td>
+                                            <td>Mild</td>
+                                        </tr>
+                                        <tr>
+                                            <td>-2 > SWDI > -5</td>
+                                            <td>Moderate</td>
+                                        </tr>
+                                        <tr>
+                                            <td>-5 > SWDI > -10</td>
+                                            <td>Servere</td>
+                                        </tr>
+                                        <tr>
+                                            <td>-10 > SWDI</td>
+                                            <td>Extreme</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div className="tooltip-info-box">
+                                    <h6>공간해상도(m)</h6>
+                                    <p>10</p>
+                                </div>
+
+                                <div className="tooltip-info-box">
+                                    <h6>시간해상도(day)</h6>
+                                    <p>12</p>
+                                </div>
+                            </div>
+                        }
+
+                        {
+                            /*L4DR_A2 - 가뭄해갈 강우량 레전드 인포*/
+                            type === null &&
+                            <div className="tooltip-info">
+                                <div className="tooltip-info-box">
+                                    <h5>가뭄해갈 강우량</h5>
+                                    <p>생장저해수분점*을 기준으로 현재 토양수분과의 차이를 계산하여 가뭄의 해갈에 필요한 토양수분량을 계산한 결과</p>
+                                    <ul className="info-annotation">
+                                        <li>* 생장저해수분점: 식물이 더 이상 흡수할
+                                            물이 없을 정도의 토양 수분 함유량
+                                        </li>
+                                        <li>* 강수량의 차단량, 증발산량 등 외부요인에 대한
+                                            고려는 하지 않고 현재 토양수분의 부족량을 표출
+                                        </li>
+                                    </ul>
                                 </div>
 
                                 <div className="tooltip-info-box">
                                     <h6>입력자료</h6>
-                                    <p>Soil moisture content(%)</p>
+                                    <p>L3SM_A3 산출물</p>
+                                    <p>토양정보</p>
                                 </div>
 
                                 <div className="tooltip-info-box">
                                     <h6>산출 알고리즘</h6>
-                                    <p>Multiple Linear Regression</p>
+                                    <p>(생장저해수분점 - 현재토양수분 ) X 유효토심</p>
                                 </div>
 
                                 <div className="tooltip-info-box">
