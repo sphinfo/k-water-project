@@ -27,7 +27,11 @@ const DroughtObsrvThematic = () => {
 
     useEffect(()=>{
         if(selectObs){
-            G$addWidget('DroughtObsrvWidget',{},{subTitle: `${selectObs?.properties?.name}`})
+            if(obsrvTab !== 'appease'){
+                G$addWidget('DroughtObsrvWidget',{},{subTitle: `${selectObs?.properties?.name}`})
+            }else{
+                G$removeWidget('DroughtObsrvWidget')    
+            }
         }else{
             G$removeWidget('DroughtObsrvWidget')
         }

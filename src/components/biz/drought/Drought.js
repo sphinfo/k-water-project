@@ -201,12 +201,25 @@ const Drought = () => {
     },[layerIdx, obsrvTab])
 
     useEffect(()=>{
-        if(obsrvTab === 'index' && mainLayer){
+        if(obsrvTab === 'index' || obsrvTab === 'appease' && mainLayer){
             const {id} = mainLayer
             getL4Layers({id:id}).then((response)=>{
                 if(response?.result?.data?.length > 0){
-                    let store = response.result.data[0].dataType.toLowerCase()
-                    let layer = response.result.data[0].name
+
+                    let store = ''
+                    let layer = ''
+
+                    //category:"L4DRA2"
+                    response.result.data.map((obj)=>{
+                        if(obsrvTab === 'index' && obj.category === 'L4DRA1'){
+                            store = obj.dataType.toLowerCase()
+                            layer = obj.name
+                        }else if(obsrvTab === 'appease' && obj.category === 'L4DRA2'){
+                            store = obj.dataType.toLowerCase()
+                            layer = obj.name
+                        }
+                    })
+
                     droughtL4Layer.current.changeParameters({store:store, layerId:layer})
                 }
             })
