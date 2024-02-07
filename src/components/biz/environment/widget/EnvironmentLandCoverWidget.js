@@ -193,7 +193,9 @@ const EnvironmentLandCover = (props) => {
                 }
                 {
                     value !== 0 &&
-                    <div className={`chart-item`} key={`item-${i}`} style={{backgroundColor: `#${G$normalizeWithColors({value, min:min, max:max, type:colorType}).hex}`}}> {value} </div>
+                    <div className={`chart-item`} key={`item-${i}`} style={{backgroundColor: `#${G$normalizeWithColors({value, min:min, max:max, type:colorType}).hex}`}}>
+                        <span>{value}</span>
+                    </div>
                 }
             </>
         )
