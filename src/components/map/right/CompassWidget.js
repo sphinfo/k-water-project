@@ -1,6 +1,5 @@
 import MapEvents from '@common/eventBus/MapEvents';
 import EventBus from '@common/eventBus/eventBus';
-import MapManager from '@gis/MapManager';
 import { G$headingChange } from '@gis/util';
 import Tooltip from '@mui/material/Tooltip';
 import React, { useEffect, useState } from 'react';

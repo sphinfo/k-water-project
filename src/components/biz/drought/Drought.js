@@ -40,14 +40,14 @@ const Drought = () => {
 
     const [station, setStation] = useState(false)
 
-    const [selectType, setSelectType] = useState({id:''})
+    const [selectType, setSelectType] = useState({id:'test'})
 
     /* 레이어 선택 callback Ref */
     const layerSelectRef = useRef();
     useImperativeHandle(layerSelectRef, ()=>({
         getFeatures(features){
 
-            if(selectType?.id === ''){
+            if(selectType?.id === 'test'){
                 //기존에 선택된 레이어가 있으면 이미지 변경
                 if(selectObs){
                     selectObs.entity.billboard.image = pin
@@ -68,7 +68,7 @@ const Drought = () => {
                 }
             }            
         }
-    }));
+    }))
 
     //WIDGET 창이 닫혔을시
     useEffect(()=>{
@@ -159,6 +159,19 @@ const Drought = () => {
         
     },[layers])
 
+    
+
+    useEffect(()=>{
+        if(selectType?.id === 'test'){
+            if(layerIdx > 0){
+                droughtObsrvLayer.current.show = true
+            }
+        }else{
+            droughtObsrvLayer.current.show = false
+        }
+
+    },[selectType, layerIdx])
+
     useEffect(()=>{
         //레이어가 켜저 있으면 지점 on
         G$removeWidget('BaseAddLegendWidget')
@@ -166,7 +179,7 @@ const Drought = () => {
             let tooltip = false
             if(layerIdx === 1){ tooltip = <LegendDrought type={obsrvTab} mainLayer={mainLayer}/> }
 
-            droughtObsrvLayer.current.show = true
+            //droughtObsrvLayer.current.show = true
             if(obsrvTab === 'soilMoisture'){
                 G$addWidget('BaseAddLegendWidget',{children:[
                     <DroughtLegendgGradientWidget params={{title:'토양수분', tooltip:tooltip}}/>
@@ -182,7 +195,7 @@ const Drought = () => {
             }
             
         }else{
-            droughtObsrvLayer.current.show = false
+            //droughtObsrvLayer.current.show = false
             G$removeWidget('BaseAddLegendWidget')
         }
     },[layerIdx, obsrvTab])
@@ -209,7 +222,6 @@ const Drought = () => {
         let id = layerId ? layerId : 'droughtObsrvLayer' 
         if(!layerId){    
             dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: false})
-            item = {id:''}
         }
 
         GisLayerClickTool.resetLayer(bizName)
