@@ -128,7 +128,7 @@ const DroughtExpUntDatas = () => {
                     checked={radioValue === item.value}
                     onChange={handleRadioChange}
                 />
-                {item.name}
+                <span>{item.name}</span>
             </label>
         )
     }
