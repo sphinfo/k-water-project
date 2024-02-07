@@ -499,6 +499,15 @@ const G$setNumberFixedKomma = (data, value = 1) =>{
     return returnData
 }
 
+const G$setSliceNumber = (num=0, fixed=0) =>{
+    if (num >= 10000) {
+        let km2 = (num / 1000).toFixed(fixed)
+        return {convert: true, num:parseFloat(km2)}
+    } else {
+        return {conver: false, num};
+    }
+}
+
 const G$getDateType = function ( date, type='DTD') {
 
     if (type && date) {
@@ -649,6 +658,7 @@ export {
 
     G$sortArrayObject,
     G$setNumberFixedKomma,
+    G$setSliceNumber,
     G$getDateType,
 
     G$covertKm,

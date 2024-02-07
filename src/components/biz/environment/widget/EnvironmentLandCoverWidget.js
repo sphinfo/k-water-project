@@ -1,7 +1,7 @@
 import BaseChart from "@common/chart/BaseChart";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { G$arrayGetMinMax, G$normalizeWithColors, G$setNumberFixedKomma } from "@gis/util";
+import { G$arrayGetMinMax, G$normalizeWithColors, G$setNumberFixedKomma, G$setSliceNumber } from "@gis/util";
 import { getBarData, getEnvLandCoverDatas, getHeatmapData } from "@common/axios/envi";
 
 /**
@@ -110,8 +110,8 @@ const EnvironmentLandCover = (props) => {
 
         setMaxArea(area)
 
-        setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]}  ${G$setNumberFixedKomma(data[G$arrayGetMinMax(data).min], 0)}`)
-        setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]}  ${G$setNumberFixedKomma(data[G$arrayGetMinMax(data).max], 0)}`)
+        setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]}  ${G$setNumberFixedKomma(G$setSliceNumber(data[G$arrayGetMinMax(data).min]).num, 0)}${G$setSliceNumber(data[G$arrayGetMinMax(data).min]).convert ? 'K' : ''}`)
+        setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]}  ${G$setNumberFixedKomma(G$setSliceNumber(data[G$arrayGetMinMax(data).max]).num, 0)}${G$setSliceNumber(data[G$arrayGetMinMax(data).max]).convert ? 'K' : ''}`)
 
         chartRef.current.updateOptions = {
             plugins: {
@@ -193,7 +193,7 @@ const EnvironmentLandCover = (props) => {
                 }
                 {
                     value !== 0 &&
-                    <div className={`chart-item`} key={`item-${i}`} style={{backgroundColor: `#${G$normalizeWithColors({value, min:min, max:max, type:colorType}).hex}`}}> {value} </div>
+                    <div className={`chart-item`} key={`item-${i}`} style={{backgroundColor: `#${G$normalizeWithColors({value, min:min, max:max, type:colorType}).hex}`}}> {G$setNumberFixedKomma(G$setSliceNumber(value).num,0)}{G$setSliceNumber(value).convert ? 'K' : ''}</div>
                 }
             </>
         )
@@ -211,7 +211,7 @@ const EnvironmentLandCover = (props) => {
                                 <div className="number-dashboard">
                                     <div className="nd-item">
                                         <h4 className="nd-item-title">전체면적(㎡)</h4>
-                                        <div className="nd-item-body">{G$setNumberFixedKomma(maxArea,0)}</div>
+                                        <div className="nd-item-body">{G$setNumberFixedKomma(G$setSliceNumber(maxArea).num,0)}{G$setSliceNumber(maxArea).convert ? 'K' : ''}</div>
                                     </div>
                                     <div className="nd-item">
                                         <h4 className="nd-item-title">최대 면적(㎡)</h4>
