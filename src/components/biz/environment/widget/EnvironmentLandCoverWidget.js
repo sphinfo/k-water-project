@@ -193,7 +193,9 @@ const EnvironmentLandCover = (props) => {
                 }
                 {
                     value !== 0 &&
-                    <div className={`chart-item`} key={`item-${i}`} style={{backgroundColor: `#${G$normalizeWithColors({value, min:min, max:max, type:colorType}).hex}`}}> {G$setNumberFixedKomma(G$setSliceNumber(value).num,0)}{G$setSliceNumber(value).convert ? 'K' : ''}</div>
+                    <div className={`chart-item`} key={`item-${i}`} style={{backgroundColor: `#${G$normalizeWithColors({value, min:min, max:max, type:colorType}).hex}`}}>
+                        <span>{G$setNumberFixedKomma(G$setSliceNumber(value).num,0)}{G$setSliceNumber(value).convert ? 'K' : ''}</span>
+                    </div>
                 }
             </>
         )
