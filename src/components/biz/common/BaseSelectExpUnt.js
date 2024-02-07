@@ -59,7 +59,7 @@ const BaseSelectExpUnt = (props) => {
     const handleParentChange = (event) => {
         const selectedParentId = event.target.value
         const selectedData = expList.find(item => item.id === selectedParentId)
-        handleButtonClick({id:''})
+        handleButtonClick({id:selectedParentId === 'test' ? 'test' : ''})
         if (selectedData) {
           setSelectedParent(selectedParentId)
         }

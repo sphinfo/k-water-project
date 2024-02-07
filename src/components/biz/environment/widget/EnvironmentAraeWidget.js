@@ -5,6 +5,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import img from "@images/image 51.png"
+import { getAreaInfo } from "@common/axios/envi";
+import { G$setNumberFixedKomma } from "@gis/util";
 
 /**
  * 환경 녹조 위젯
@@ -15,17 +17,24 @@ const EnvironmentAraeWidget = (props) => {
     const {params, ...other} = props
 
     const [allArea, setAllArea] = useState(0)
+    const [gridData, setGridData] = useState([])
 
     useEffect(()=>{
-
-        if(params.length > 0){
-            let area = 0
-            params.map((obj)=>{
-                area += obj.area
+        if(params?.id){
+            getAreaInfo({id:params.id}).then((response) => {
+                let result = []
+                let area = 0
+                if(response?.result?.data?.length > 0){
+                    result = response?.result?.data
+                    response?.result?.data.map((obj)=>{
+                        area += obj.area
+                    })
+                }
+                setGridData(result)
+                setAllArea(area)
             })
-            setAllArea(area)
         }
-
+        
     },[params])
 
 
@@ -54,21 +63,21 @@ const EnvironmentAraeWidget = (props) => {
                             </tr>
                             </thead>
                             <tbody>
-                                {/*
-                                    params.length > 0 && 
-                                    params.map((obj, i)=>{
+                                {
+                                    gridData.length > 0 && 
+                                    gridData.map((obj, i)=>{
                                         return(
                                             <>
                                                 <tr>
                                                     <td>{i+1}</td>
-                                                    <td>LON {obj.x} LAT {obj.y}</td>
-                                                    <td>{obj.area} ㎡</td>
+                                                    <td>{obj.latitudeMax}/{obj.longitudeMax}/{obj.latitudeMin}/{obj.longitudeMin}</td>
+                                                    <td>{G$setNumberFixedKomma(obj.area,0)} ㎡</td>
                                                 </tr>
                                             </>
                                         )
                                         
                                     })
-                                */}
+                                }
                             </tbody>
                         </table>
                     </div>

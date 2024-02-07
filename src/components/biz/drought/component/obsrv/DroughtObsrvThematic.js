@@ -27,7 +27,11 @@ const DroughtObsrvThematic = () => {
 
     useEffect(()=>{
         if(selectObs){
-            G$addWidget('DroughtObsrvWidget',{},{subTitle: `${selectObs?.properties?.name}`})
+            if(obsrvTab !== 'appease'){
+                G$addWidget('DroughtObsrvWidget',{},{subTitle: `${selectObs?.properties?.name}`})
+            }else{
+                G$removeWidget('DroughtObsrvWidget')    
+            }
         }else{
             G$removeWidget('DroughtObsrvWidget')
         }
@@ -52,7 +56,7 @@ const DroughtObsrvThematic = () => {
     //4레벨 Switch 버튼 render
     const renderResult = (item, i) =>{
         return (
-            <div className="switch-list-item">
+            <div className="switch-list-item" key={`list_${i}`}>
                 <span className="switch-label">{item.name}</span>
                 <Switch
                     checked={item.checked}

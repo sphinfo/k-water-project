@@ -408,6 +408,10 @@ const G$flyToPoint= (point, zoom, pitch) =>{
     MapManager.flyToPoint(point, zoom, pitch)
 }
 
+const G$headingChange= (heading) =>{
+    MapManager.headingChange(heading)
+}
+
 
 /* 위젯 추가 */
 const G$addWidget = (wId,props, config) =>{
@@ -627,6 +631,7 @@ export {
     G$holdMap,
     G$imageLayersOpacity,
     G$flyToPoint,
+    G$headingChange,
     
     G$ZeroCnt,
     G$TypeOf,
