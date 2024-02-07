@@ -70,6 +70,7 @@ const Flood = () => {
             G$removeWidget('FloodL4WaterLevelWidget')
 
             G$removeLayer(floodWaterLevelLayer.current.layer)
+            G$removeLayer(floodDamageLayer.current.layer)
 
             if(floodWaterLevelLayer.current.hoverHandler){
                 floodWaterLevelLayer.current.hoverHandler.destroy()

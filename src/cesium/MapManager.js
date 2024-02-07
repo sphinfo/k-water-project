@@ -153,6 +153,19 @@ class MapManager {
         
     }
 
+    //정북 방향
+    headingChange(heading=0){
+        this._map.camera.flyTo({
+            destination: this._map.camera.position,
+            orientation: {
+              heading: Math.toRadians(heading),
+              pitch: this._map.camera.pitch,
+              roll: this._map.camera.roll, 
+            },
+            duration: 3,
+        })
+    }
+
     holdeMap(type){
         this._holdMap = type
     }

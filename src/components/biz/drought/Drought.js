@@ -209,6 +209,7 @@ const Drought = () => {
         let id = layerId ? layerId : 'droughtObsrvLayer' 
         if(!layerId){    
             dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: false})
+            item = {id:''}
         }
 
         GisLayerClickTool.resetLayer(bizName)

@@ -1,5 +1,7 @@
 import MapEvents from '@common/eventBus/MapEvents';
 import EventBus from '@common/eventBus/eventBus';
+import MapManager from '@gis/MapManager';
+import { G$headingChange } from '@gis/util';
 import Tooltip from '@mui/material/Tooltip';
 import React, { useEffect, useState } from 'react';
 
@@ -26,7 +28,7 @@ const CompassWidget = () => {
                         </div>
                     </React.Fragment>
                   }>
-            <div className="map-compass" style={{transform: `rotate(${heading}deg)`}}>
+            <div className="map-compass" style={{transform: `rotate(${heading}deg)`}} onClick={()=>{G$headingChange()}}>
               <div className="map-compass-pin"></div>
             </div>
           </Tooltip>
