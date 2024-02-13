@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import { SET_PANEL_VISIBLE } from '@redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Admin from '@components/biz/admin/Admin';
+import Tooltip from "@mui/material/Tooltip";
 
 //탭 패널 공통
 function TabPanel(props) {
@@ -46,9 +47,22 @@ function TabPanel(props) {
             {children}
 
             <div className="panel-bottom">
-              <div className="data-date-info">
-                <span>최신 데이터 추가일</span>
-                <span>-</span>
+              <div className="panel-bottom-info">
+                <p>산출물 개수</p>
+                <p className="info-number">
+                    총 <span>-</span>건
+                    <Tooltip placement="top-end" arrow id="infoNumberPop" title={
+                        <React.Fragment>
+                            <ul className="info-number-list">
+                                <li><p>L3WBA1</p> <span>- 건</span></li>
+                                <li><p>L3WBA2</p> <span>- 건</span></li>
+                                <li><p>L3WL</p> <span>- 건</span></li>
+                            </ul>
+                        </React.Fragment>
+                    }>
+                        <span className="tooltip-icon"></span>
+                    </Tooltip>
+                </p>
               </div>
             </div>
           </div>

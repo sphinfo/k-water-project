@@ -1398,13 +1398,20 @@
     padding: 8px 14px;
     background-color: $white-alpha-10;
 
-    .data-date-info {
+    .panel-bottom-info {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       font-size: 12px;
       color: rgba(255,255,255,0.6);
       font-weight: 300;
       gap: 20px;
+
+      .info-number {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+      }
     }
   }
 }
@@ -2795,15 +2802,39 @@
     }
   }
 
+  &#infoNumberPop {
+    .MuiTooltip-tooltip {
+      background-color: $primary-deep !important;
+
+      .MuiTooltip-arrow {
+        &:before {
+          background-color: $primary-deep !important;
+        }
+      }
+    }
+  }
+
+  &[data-popper-placement="top-end"] {
+    .MuiTooltip-tooltip {
+      margin-right: -6px;
+      margin-bottom: 10px !important;
+
+      .MuiTooltip-arrow {
+        margin-left: -3px;
+
+        &:before {
+        }
+      }
+    }
+  }
+
   .MuiTooltip-tooltip {
     .MuiTooltip-arrow {
       &:before {
         background-color: $black-navy !important;
       }
-
     }
   }
-
 }
 
 .MuiTooltip-tooltip {
@@ -2915,6 +2946,18 @@
 
   & + .tooltip-info {
     border-top: 1px solid $line;
+  }
+}
+
+.info-number-list {
+  padding: 6px;
+
+  li {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
   }
 }
 
