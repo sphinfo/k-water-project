@@ -603,9 +603,12 @@ const G$getKoreanName = (codes=[]) => {
     codes.forEach(code => {
         const foundItem = SelectBoxConfig.flatMap(category => category.items).find(item => item.code === code)
         const name = foundItem ? foundItem.name : ''
-        foundNames.push(name)
+        if(name !== ''){
+            foundNames.push(name)
+        }
     })
 
+    console.info(foundNames)
     let nameStr = foundNames.map(krNm => krNm).join(',')
     return nameStr
 }

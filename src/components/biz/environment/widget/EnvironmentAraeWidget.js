@@ -16,7 +16,7 @@ const EnvironmentAraeWidget = (props) => {
     const dispatch = useDispatch()
     const {params, ...other} = props
 
-    const [allArea, setAllArea] = useState(0)
+    const [allArea, setAllArea] = useState('-')
     const [gridData, setGridData] = useState([])
 
     useEffect(()=>{
@@ -46,12 +46,14 @@ const EnvironmentAraeWidget = (props) => {
                     <div className="number-dashboard number-dashboard-min">
                         <div className="nd-item">
                             <h4 className="nd-item-title">전체 부유물 면적</h4>
-                            <div className="nd-item-body">{allArea} ㎡</div>
+                            <div className="nd-item-body">{G$setNumberFixedKomma(allArea,0)} ㎡</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="content-row">
+            {/**
+             
+             <div className="content-row">
                 <div className="panel-box">
                     <div className="table-wrap" style={{maxHeight: 360, overflowY: 'auto'}}>
                         <table className="table-basic env-table">
@@ -83,6 +85,10 @@ const EnvironmentAraeWidget = (props) => {
                     </div>
                 </div>
             </div>
+
+             */
+            }
+            
         </div>
 
     )

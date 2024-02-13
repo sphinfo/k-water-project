@@ -45,12 +45,14 @@ function TabPanel(props) {
 
             {children}
 
-            <div className="panel-bottom">
+            {/** 
+             <div className="panel-bottom">
               <div className="data-date-info">
                 <span>최신 데이터 추가일</span>
                 <span>-</span>
               </div>
             </div>
+            */}
           </div>
       )}
     </div>

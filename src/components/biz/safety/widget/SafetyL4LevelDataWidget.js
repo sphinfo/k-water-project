@@ -31,12 +31,11 @@ const SafetyL4LevelDataWidget = () => {
                     <div className="number-dashboard number-dashboard-min">
                         <div className="nd-item">
                             <h4 className="nd-item-title">선택지점 변위 등급</h4>
-                            <div
-                                className="nd-item-body">{selectFeature && selectFeature.properties.GRAY_INDEX}</div>
+                            <div className="nd-item-body" style={{display: selectFeature && selectFeature.properties.GRAY_INDEX ? '' : 'none'}}>{selectFeature && selectFeature.properties.GRAY_INDEX}</div>
                         </div>
                         <div className="nd-item">
                             <h4 className="nd-item-title"></h4>
-                            <div className="nd-item-body">{selectFeature && selectFeature.properties.GRAY_INDEX === 1 ? '안전' : selectFeature && selectFeature.properties.GRAY_INDEX === 2 ? '보통' : selectFeature && selectFeature.properties.GRAY_INDEX === 3 ? '위험' : ''}</div>
+                            <div className="nd-item-body">{selectFeature && selectFeature.properties.GRAY_INDEX === 1 ? '안전' : selectFeature && selectFeature.properties.GRAY_INDEX === 2 ? '보통' : selectFeature && selectFeature.properties.GRAY_INDEX === 3 ? '위험' : '지도에서 지점을 선택하세요'}</div>
                         </div>
                     </div>
                 </div>

@@ -214,7 +214,12 @@ class MapManager {
     setImageLayersOpacity(opacity){
         this._baseOpactiy = opacity
         this._map.imageryLayers._layers.forEach(layer => {
-            layer.alpha = layer.id !== 'baseMap' ? opacity : 1
+            if(layer.id?.indexOf('thematic') > -1){
+                layer.alpha = 1
+            }else{
+                layer.alpha = layer.id !== 'baseMap' ? opacity : 1
+            }
+            
         })
     }
 

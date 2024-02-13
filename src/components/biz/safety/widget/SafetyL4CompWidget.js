@@ -287,11 +287,11 @@ const SafetyL4CompWidget = () => {
                             <div className="number-dashboard">
                                 <div className="nd-item">
                                     <h4 className="nd-item-title">P1 평균 변위(cm/y)</h4>
-                                    <div className="nd-item-body">{avgP1}</div>
+                                    <div className="nd-item-body">{avgP1 === 0 ? '지도에서 지점을 선택하세요' : avgP1}</div>
                                 </div>
                                 <div className="nd-item">
                                     <h4 className="nd-item-title">P2 평균 변위(cm/y)</h4>
-                                    <div className="nd-item-body">{avgP2}</div>
+                                    <div className="nd-item-body">{avgP2 === 0 ? '지도에서 지점을 선택하세요' : avgP2}</div>
                                 </div>
                             </div>
                         </div>

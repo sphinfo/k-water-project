@@ -9,6 +9,7 @@ import FloodWaterLevelChartDatas from "@gis/config/flood/FloodWaterLevelChartDat
 import BaseGrid from "@common/grid/BaseGrid";
 import { G$getDateType, G$sortArrayObject } from "@gis/util";
 import { getFloodWaterLevelChart } from "@common/axios/flood";
+import dayjs from "dayjs";
 
 
 const FloodL4WaterLevel = () => {
@@ -117,6 +118,7 @@ const FloodL4WaterLevel = () => {
                     let avg = 0
                     let avg2 = 0
                     
+                    let zeros = 0
 
                     datas.map((obj)=>{
                         obj.createdAt = obj.createdAt.substring(0,8)
@@ -128,20 +130,23 @@ const FloodL4WaterLevel = () => {
                         obj.referenceElev = Number(obj.referenceElev).toFixed(2)
 
                         avg += Number(obj.estimatedElev)
-                        avg2 += (Number(obj.estimatedElev) - Number(obj.referenceElev)) < 0 ? -(Number(obj.estimatedElev) - Number(obj.referenceElev)) : (Number(obj.estimatedElev) - Number(obj.referenceElev))
+
+                        if(Number(obj.referenceElev) === 0){
+                            zeros++
+                        }else{
+                            avg2 += (Number(obj.estimatedElev) - Number(obj.referenceElev)) < 0 ? -(Number(obj.estimatedElev) - Number(obj.referenceElev)) : (Number(obj.estimatedElev) - Number(obj.referenceElev))
+                        }
 
                         obj.createdAt = G$getDateType(obj.createdAt)
+                        obj.formatDate = dayjs(obj.createdAt).format('YYYYMMDD')
                     })
-
                     setAvg(avg / datas.length)
-                    setAvg2(avg2 / datas.length)
-
-                    
+                    setAvg2(avg2 / (datas.length-zeros))
 
                     chartInfoRef.current.datasets.push({
                         tension: 0.4,
                         data:estWl,
-                        label: '위성 기반 계측 수위',
+                        label: '실제 계측 수위',
                         pointRadius: 1,
                         borderWidth: 1,
                         borderColor: '#FF9933',
@@ -152,7 +157,7 @@ const FloodL4WaterLevel = () => {
                     chartInfoRef.current.datasets.push({
                         tension: 0.4,
                         data: obsWl,
-                        label: '실제 계측 수위',
+                        label: '위성 기반 계측 수위',
                         pointRadius: 1,
                         borderWidth: 1,
                         borderColor: '#54A6E7',
@@ -161,8 +166,9 @@ const FloodL4WaterLevel = () => {
 
                     chartInfoRef.current.labels = date
 
+                    console.info(datas)
                     //Table
-                    gridRef.current.provider =  G$sortArrayObject(datas, 'id', true)
+                    gridRef.current.provider =  G$sortArrayObject(datas, 'formatDate', true)
 
                     //chart
                     chartRef.current.provider = chartInfoRef.current
