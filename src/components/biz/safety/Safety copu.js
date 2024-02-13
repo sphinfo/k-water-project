@@ -177,7 +177,6 @@ const Safety = () => {
             
             //callback 레이어로 추가
             GisLayerClickTool.addLayer(bizName, [`${store.toLowerCase()}:${layer}`])
-            //console.info(safety3LevelLayerRef.current)
             //3레벨 선택이 되었을시 4레벨 데이터를 가져와야함 2안을 적용했을시 / 1안이 적용되었으면 조건입력후 4레벨 데이터 가져오기 ( SafetyDisplaceLevelTemp )
 
 

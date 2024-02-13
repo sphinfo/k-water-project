@@ -608,7 +608,6 @@ const G$getKoreanName = (codes=[]) => {
         }
     })
 
-    console.info(foundNames)
     let nameStr = foundNames.map(krNm => krNm).join(',')
     return nameStr
 }

@@ -13,7 +13,6 @@ class GisLayerClickTool {
 	_axios = null
 
 	constructor() {
-		//console.info(MapManager.map)
 	  	this.map = null
 		this._axios = new BaseGeoserverAxios()
 	  	

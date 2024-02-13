@@ -8,6 +8,7 @@ import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject
 import Button from "@mui/material/Button";
 import { getL3Layers } from "@common/axios/common";
 import dayjs from "dayjs";
+import BaseResultCntTooltip from "@components/biz/common/BaseResultCntTooltip";
 
 const SafetyResult = () => {
     
@@ -17,6 +18,8 @@ const SafetyResult = () => {
     const { text, selectBox, searchOn } = useSelector(state => state.safety)
 
     const [layerList, setLayerList] = useState([])
+
+    const [resultInfos, setResultInfos] = useState({})
 
     //debouncing timer
     const [timer, setTimer] = useState(null)
@@ -32,6 +35,7 @@ const SafetyResult = () => {
 
       dispatch({type:SAFETY_RESET_LAYER})
       dispatch({type:SAFETY_CLEAR_LAEYRS})
+      setResultInfos({})
 
       if(searchOn && text.length > 0){
 
@@ -78,7 +82,7 @@ const SafetyResult = () => {
                   }
                 })
 
-                
+                setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
                 const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true))
                 const resultArray = groupArray.grouped
 
@@ -265,26 +269,28 @@ const SafetyResult = () => {
     }
 
   return (
-
-    <div className="content-body scroll" onClick={()=>{ dispatch({type:SAFETY_SELECT_BOX, selectBox: false}) }}>
-      {
-        layerList.length === 0 &&
-          <div className="content-row empty-wrap">
-            <div className="empty-message">
-              <h3 className="empty-text">{message}</h3>
-              <Button className="btn empty-btn" onClick={(e)=>{{
-                      e.stopPropagation()
-                      dispatch({type:SAFETY_SELECT_BOX, selectBox: true})
-                    }}}>지역검색</Button>
+    <>
+      <div className="content-body scroll" onClick={()=>{ dispatch({type:SAFETY_SELECT_BOX, selectBox: false}) }}>
+        {
+          layerList.length === 0 &&
+            <div className="content-row empty-wrap">
+              <div className="empty-message">
+                <h3 className="empty-text">{message}</h3>
+                <Button className="btn empty-btn" onClick={(e)=>{{
+                        e.stopPropagation()
+                        dispatch({type:SAFETY_SELECT_BOX, selectBox: true})
+                      }}}>지역검색</Button>
+              </div>
             </div>
-          </div>
-        }
+          }
 
-        {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))}
+          {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))}
 
-        {displaceLevelData.length > 0 && renderSafetyLevel()}
-        
-      </div>
+          {displaceLevelData.length > 0 && renderSafetyLevel()}
+          
+        </div>
+        <BaseResultCntTooltip resultInfos={resultInfos}/>
+      </>
     )
 }
 

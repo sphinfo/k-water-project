@@ -5,20 +5,12 @@ import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
 import EnvironmentResultTab from "./EnvironmentResultTab";
-import { ENV_CLEAR_LAEYRS, ENV_RESET, ENV_RESET_LAYER, ENV_SELECT_BOX, ENV_SELECT_LAYER, ENV_SET_LAYERS } from "@redux/actions";
+import { ENV_CLEAR_LAEYRS, ENV_RESET_LAYER, ENV_SELECT_BOX, ENV_SET_LAYERS } from "@redux/actions";
 import { Button } from "@mui/material";
-import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import { getL3Layers } from "@common/axios/common";
 import { TabContext, TabPanel } from "@mui/lab";
+import BaseResultCntTooltip from "../common/BaseResultCntTooltip";
 
-
-//sample 데이터
-const example = [
-  {name:'DATA1',  date: '23.11.10~23.11.16', main:'수변피복', checked: false, store:'LandCover', layer: 'RF_20220914_clip'},
-  {name:'DATA2', date: '23.11.10~23.11.16', main:'수변피복', checked: false, store:'LandCover', layer: 'RF_20221101_clip' },
-  {name:'DATA1', date: '23.11.10~23.11.16', main:'부유물', checked: false, store:'Garbage', layer: 'Chlorophyll_Map_2' },
-  {name:'DATA1', date: '23.11.10~23.11.16', main:'녹조', checked: false, store:'Garbage', layer: 'Chlorophyll_Map_2' },
-]
 
 const EnvironmentResult = () => {
     
@@ -28,6 +20,9 @@ const EnvironmentResult = () => {
     const { searchOn, text, startDate, endDate, environmentResultTab, selectBox } = useSelector(state => state.environment)
 
     const [layerList, setLayerList] = useState([])
+
+    const [resultInfos, setResultInfos] = useState({})
+
 
     //debouncing timer
     const [timer, setTimer] = useState(null);
@@ -44,6 +39,8 @@ const EnvironmentResult = () => {
       setGarbageCnt(0)
       setGreenCnt(0)
       setLandCoverCnt(0)
+      setResultInfos({})
+
 
       if(searchOn && text.length > 0){
         
@@ -81,7 +78,7 @@ const EnvironmentResult = () => {
                   }
                 })
 
-                //environmentResultTab
+                setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
                 const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'group')
                 const resultArray = groupArray.grouped
 
@@ -247,6 +244,7 @@ const EnvironmentResult = () => {
             </TabContext>
 
           </div>
+          <BaseResultCntTooltip resultInfos={resultInfos}/>
         </>
     )
 }

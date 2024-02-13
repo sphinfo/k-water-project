@@ -134,7 +134,6 @@ const DroughtExpUntDatas = () => {
     }
 
     useEffect(()=>{
-        console.info(radioValue)
         gridRef.current.highlight = radioValue
     },[radioValue])
 

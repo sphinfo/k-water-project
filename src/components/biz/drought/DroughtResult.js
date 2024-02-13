@@ -11,6 +11,7 @@ import { Button } from "@mui/material";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import { getL3Layers } from "@common/axios/common";
 import { TabContext, TabPanel } from "@mui/lab";
+import BaseResultCntTooltip from "../common/BaseResultCntTooltip";
 
 
 const DroughtResult = () => {
@@ -21,6 +22,8 @@ const DroughtResult = () => {
     const { searchOn, text, startDate, endDate, selectBox, selectResultTab } = useSelector(state => state.drought)
 
     const [layerList, setLayerList] = useState([])
+
+    const [resultInfos, setResultInfos] = useState({})
 
     //debouncing timer
     const [timer, setTimer] = useState(null);
@@ -36,7 +39,7 @@ const DroughtResult = () => {
       setA1Cnt(0)
       setA2Cnt(0)
       setA3Cnt(0)
-
+      setResultInfos({})
       if(searchOn && text.length > 0){
         
         if (timer) {
@@ -72,6 +75,7 @@ const DroughtResult = () => {
                   }
                 })
 
+                setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
                 const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'group')
                 const resultArray = groupArray.grouped
 
@@ -249,6 +253,7 @@ const DroughtResult = () => {
             </TabContext>
 
           </div>
+          <BaseResultCntTooltip resultInfos={resultInfos}/>
         </>
     )
 }

@@ -11,6 +11,7 @@ import { getL3Layers } from "@common/axios/common";
 import { TabContext, TabPanel } from "@mui/lab";
 import { getFloodL3Search } from "@common/axios/flood";
 import dayjs from "dayjs";
+import BaseResultCntTooltip from "../common/BaseResultCntTooltip";
 
 const FloodResult = ({waterObsList=[], ...props}) => {
     
@@ -20,6 +21,8 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     const { text, startDate, endDate, floodResultTab, selectBox, searchOn } = useSelector(state => state.flood)
 
     const [layerList, setLayerList] = useState([])
+
+    const [resultInfos, setResultInfos] = useState({})
 
     const [noData, setNoData] = useState(false)
 
@@ -35,6 +38,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
       dispatch({type:FLOOD_CLEAR_LAEYRS})
       setWbCnt(0)
       setWlCnt(0)
+      setResultInfos({})
       //*******API*************/
       if(searchOn && text.length > 0){
         if (timer) {
@@ -86,6 +90,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
 
                 })
 
+                setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
                 const groupArray = G$BaseSelectBoxArray(resultList, 'store')
                 const resultArray = groupArray.grouped
 
@@ -284,9 +289,8 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                 {wlCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
               </TabPanel>
             </TabContext>
-            
-            
           </div>
+          <BaseResultCntTooltip resultInfos={resultInfos}/>
         </>
     )
 }

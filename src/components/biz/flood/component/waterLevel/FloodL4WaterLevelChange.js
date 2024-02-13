@@ -165,8 +165,7 @@ const FloodL4WaterLevel = () => {
                     })
 
                     chartInfoRef.current.labels = date
-
-                    console.info(datas)
+                    
                     //Table
                     gridRef.current.provider =  G$sortArrayObject(datas, 'formatDate', true)
 

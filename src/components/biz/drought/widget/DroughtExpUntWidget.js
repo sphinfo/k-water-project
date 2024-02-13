@@ -13,7 +13,6 @@ const DroughtExpUntWidget = (props) => {
     
 
     useEffect(()=>{
-        console.info(props)
     },[props])
 
 
