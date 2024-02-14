@@ -1402,15 +1402,16 @@
       display: flex;
       justify-content: space-between;
       font-size: 12px;
-      color: rgba(255,255,255,0.6);
-      font-weight: 300;
+      color: rgba(255,255,255,0.9);
+      font-weight: 400;
       gap: 20px;
 
-      .info-number {
+      .info-number-label {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 5px;
+        user-select: none;
       }
     }
   }
@@ -2805,8 +2806,11 @@
   &#infoNumberPop {
     .MuiTooltip-tooltip {
       background-color: $primary-deep !important;
+      margin-right: -10px !important;
 
       .MuiTooltip-arrow {
+        margin-left: 16px;
+
         &:before {
           background-color: $primary-deep !important;
         }
@@ -2816,12 +2820,9 @@
 
   &[data-popper-placement="top-end"] {
     .MuiTooltip-tooltip {
-      margin-right: -6px;
       margin-bottom: 10px !important;
 
       .MuiTooltip-arrow {
-        margin-left: -3px;
-
         &:before {
         }
       }
@@ -2951,6 +2952,10 @@
 
 .info-number-list {
   padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 88px;
 
   li {
     font-size: 12px;
