@@ -45,12 +45,31 @@ class SafetyOverlay {
         // widget-body div 요소 생성
         const widgetBody = document.createElement('div')
         widgetBody.className = 'map-popup-box-body'
-        widgetBody.textContent = `LON ${coord.lonDms} LAT ${coord.latDms}`
+        //widgetBody.textContent = `LON ${coord.lonDms} LAT ${coord.latDms}`
+
+        //<span className="text-blue">LON</span>
+        const spanl = document.createElement('span')
+        spanl.className = 'text-blue'
+        spanl.textContent = 'LON '
+
+        const spanlv = document.createElement('span')
+        spanlv.textContent = coord.lonDms
+
+        const spanr = document.createElement('span')
+        spanr.className = 'text-blue'
+        spanr.textContent = '  LAT '
+
+        const spanrv = document.createElement('span')
+        spanrv.textContent = coord.latDms
 
         // 요소들을 구조에 맞게 조립
         //widgetHeader.appendChild(title);
         //widgetHeader.appendChild(iconButton)
         //widgetBox.appendChild(widgetHeader)
+        widgetBody.appendChild(spanl)
+        widgetBody.appendChild(spanlv)
+        widgetBody.appendChild(spanr)
+        widgetBody.appendChild(spanrv)
         widgetBox.appendChild(widgetBody)
         overlay.appendChild(widgetBox)
 

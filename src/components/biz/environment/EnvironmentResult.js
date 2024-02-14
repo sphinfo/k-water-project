@@ -6,7 +6,7 @@ import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
 import EnvironmentResultTab from "./EnvironmentResultTab";
 import { ENV_CLEAR_LAEYRS, ENV_RESET_LAYER, ENV_SELECT_BOX, ENV_SET_LAYERS } from "@redux/actions";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { getL3Layers } from "@common/axios/common";
 import { TabContext, TabPanel } from "@mui/lab";
 import BaseResultCntTooltip from "../common/BaseResultCntTooltip";
@@ -25,11 +25,15 @@ const EnvironmentResult = () => {
 
 
     //debouncing timer
-    const [timer, setTimer] = useState(null);
+    const [timer, setTimer] = useState(null)
+
+    const [loading, setLoading] = useState(false)
 
     const [garbageCnt, setGarbageCnt] = useState(0)
     const [greenCnt, setGreenCnt] = useState(0)
     const [landCoverCnt, setLandCoverCnt] = useState(0)
+
+    const groupRef = useRef('')
 
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
@@ -52,6 +56,7 @@ const EnvironmentResult = () => {
             let location = text.map(item => item.code).join(',')
             //*******API************* getL3Layers: 레벨3 결과값/
             let params = {type:'environment', level: 'L3', location: location, from: startDate, to: endDate}
+            setLoading(true)
             getL3Layers(params).then((response) => {
               if(response?.result?.data?.length > 0){
                 let resultList = []
@@ -88,6 +93,7 @@ const EnvironmentResult = () => {
 
                 if(firstGroup){
                   firstGroup.checked = true
+                  groupRef.current = firstGroup.group
                   dispatch({ type: ENV_SET_LAYERS, layerInfo: firstGroup, setType: true })
                 }
 
@@ -97,6 +103,9 @@ const EnvironmentResult = () => {
               }
             })
             
+            setTimeout(() => {
+              setLoading(false)
+            }, 500)
           } else {
             setLayerList([])
           }
@@ -118,7 +127,7 @@ const EnvironmentResult = () => {
         setLayerList([])
     },[])
 
-    const groupRef = useRef('')
+    
 
     //체크박스 다시 그리기
     const checkboxChange = (outerIndex, innerIndex) =>{
@@ -191,7 +200,7 @@ const EnvironmentResult = () => {
                 <p className="list-info">{obj.locationKr}</p>
                 <p className="list-info">{obj.categoryNm}</p>
                 <p className="list-info">{`${obj.category} | ${obj.groupNm}`}</p>
-                <p className="list-info">{`${obj.satellite === 'S1A' ? 'Sentinal 1' :  obj.satellite === 'S2A' ? 'Sentinal 2' : obj.satellite}`}</p>
+                <p className="list-info">{`${obj.satellite === 'S1A' ? 'sentinel 1' :  obj.satellite === 'S2A' ? 'sentinel 2' : obj.satellite === 'S2B' ? 'sentinel 2' : obj.satellite}`}</p>
                 <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
               </div>
             </div>
@@ -203,7 +212,10 @@ const EnvironmentResult = () => {
         <>
           <div className={"content-body"} onClick={()=>{ dispatch({type:ENV_SELECT_BOX, selectBox: false}) }}>
             {
-              layerList.length === 0 &&
+              loading && <div className="content-row empty-wrap" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}><CircularProgress color="primary" size={50} thickness={4} /></div>
+            }
+            {
+              layerList.length === 0 && !loading &&
               <div className="content-row empty-wrap">
                 <div className="empty-message">
                   <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
@@ -215,33 +227,37 @@ const EnvironmentResult = () => {
               </div>
             }  
 
-            <TabContext value={environmentResultTab} >
-              {layerList.length > 0 && <EnvironmentResultTab />}
-              <TabPanel value={"LandCover"} style={{display: layerList.length === 0 ? 'none': ''}}>
-                {layerList.length > 0 && layerList.map((obj, i)=> {
-                  if(obj[0].group === 'LandCover'){
-                    return renderResult(obj, i)
-                  }
-                })}
-                {landCoverCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
-              </TabPanel>
-              <TabPanel value={"Garbage"} style={{display: layerList.length === 0 ? 'none': ''}}>
-                {layerList.length > 0 && layerList.map((obj, i)=> {
-                  if(obj[0].group === 'Garbage'){
-                    return renderResult(obj, i)
-                  }
-                })}
-                {garbageCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
-              </TabPanel>
-              <TabPanel value={"Green"} style={{display: layerList.length === 0 ? 'none': ''}}>
-                {layerList.length > 0 && layerList.map((obj, i)=> {
-                  if(obj[0].group === 'Green'){
-                    return renderResult(obj, i)
-                  }
-                })}
-                {greenCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
-              </TabPanel>
-            </TabContext>
+            {
+               !loading &&
+              <TabContext value={environmentResultTab} >
+                {layerList.length > 0 && <EnvironmentResultTab />}
+                <TabPanel value={"LandCover"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                  {layerList.length > 0 && layerList.map((obj, i)=> {
+                    if(obj[0].group === 'LandCover'){
+                      return renderResult(obj, i)
+                    }
+                  })}
+                  {landCoverCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
+                </TabPanel>
+                <TabPanel value={"Garbage"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                  {layerList.length > 0 && layerList.map((obj, i)=> {
+                    if(obj[0].group === 'Garbage'){
+                      return renderResult(obj, i)
+                    }
+                  })}
+                  {garbageCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
+                </TabPanel>
+                <TabPanel value={"Green"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                  {layerList.length > 0 && layerList.map((obj, i)=> {
+                    if(obj[0].group === 'Green'){
+                      return renderResult(obj, i)
+                    }
+                  })}
+                  {greenCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
+                </TabPanel>
+              </TabContext>
+            }
+            
 
           </div>
           <BaseResultCntTooltip resultInfos={resultInfos}/>

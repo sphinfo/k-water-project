@@ -164,7 +164,7 @@ const Safety = () => {
                 if(group === 'L3'){
                     legends.push(<BaseLegendgGradientWidget params={{title:'변위 속도(cm/year)', min:-5, max: 5, datas:['#0000ff','#00ffff',  '#00ff00', '#ffff00', '#ff0000'], tooltip:tooltip }}/>)
                 }else if(group === 'L4'){
-                    legends.push(<BaseLegendWidget params={{ title:'L4TD 변위등급',  datas: [{label:'안전', color:'BLUE'} ,{label:'보통', color:'GREEN'} ,{label:'위험', color:'RED'}], tooltip:tooltip }}/>)
+                    legends.push(<BaseLegendWidget params={{ title:'변위등급',  datas: [{label:'안전', color:'BLUE'} ,{label:'보통', color:'GREEN'} ,{label:'위험', color:'RED'}], tooltip:tooltip }}/>)
                 }else if(group === 'L4TD'){
                     legends.push(<BaseLegendgGradientWidget params={{title:'L4TD 시계열변위',min:-5, max: 5, datas:['#0000ff','#00ffff',  '#00ff00', '#ffff00', '#ff0000'], tooltip:tooltip }}/>)
                 }

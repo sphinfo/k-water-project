@@ -6,7 +6,7 @@ import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$findEngNmFilter, G$flyToPoint, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
 import { FLOOD_CLEAR_LAEYRS, FLOOD_RESET, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, FLOOD_SELECT_WATER_LEVEL, FLOOD_SET_LAYERS, LOADING } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { getL3Layers } from "@common/axios/common";
 import { TabContext, TabPanel } from "@mui/lab";
 import { getFloodL3Search } from "@common/axios/flood";
@@ -32,6 +32,8 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     const [wbCnt, setWbCnt] = useState(0)
     const [wlCnt, setWlCnt] = useState(0)
 
+    const [loading, setLoading] = useState(false)
+
     //검색조건이 변동될떄마다 검색결과 재검색
     useEffect(()=>{
       dispatch({type:FLOOD_RESET_LAYER})
@@ -45,14 +47,15 @@ const FloodResult = ({waterObsList=[], ...props}) => {
           clearTimeout(timer)
         }
 
+        
         const delayRequest = setTimeout(() => {
           if (text.length > 0) {
             
             let location = text.map(item => item.code).join(',')
             let params = {type:'flood', level: 'L3', location: location, from: startDate, to: endDate}
-            
-            getFloodL3Search(params).then((response)=>{
 
+            setLoading(true)
+            getFloodL3Search(params).then((response)=>{
               if(response?.length > 0){
                 let resultList = []
 
@@ -108,10 +111,14 @@ const FloodResult = ({waterObsList=[], ...props}) => {
 
                 setLayerList(resultArray)
 
+                setTimeout(() => {
+                  setLoading(false)
+                }, 500)
               }
 
             })
 
+            
           } else {
             setLayerList([])
             setNoData(false)
@@ -202,7 +209,11 @@ const FloodResult = ({waterObsList=[], ...props}) => {
             <p className="list-info">{obj.locationKr}</p>
             <p className="list-info">{obj.groupNm}</p>
             <p className="list-info">{`${obj.category} | ${obj.categoryNm}`}</p>
-            <p className="list-info">{obj.satellite === 'S1A' ? 'Sentinal 1' :  obj.satellite === 'S2A' ? 'Sentinal 2' : obj.satellite}</p>
+            <p className="list-info">{obj.satellite === 'S1A' ? 'Sentinel 1' 
+              : obj.satellite === 'S1B' ? 'Sentinel 1' 
+              :  obj.satellite === 'S2A' ? 'Sentinel 2' 
+              :  obj.satellite === 'S2B' ? 'Sentinel 2' 
+              : obj.satellite}</p>
             <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
           </div>
         </>
@@ -256,7 +267,10 @@ const FloodResult = ({waterObsList=[], ...props}) => {
         <>
           <div className={"content-body"} onClick={()=>{ dispatch({type:FLOOD_SELECT_BOX, selectBox: false}) }}>
             {
-              layerList.length === 0 &&
+              loading && <div className="content-row empty-wrap" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}><CircularProgress color="primary" size={50} thickness={4} /></div>
+            }
+            {
+              layerList.length === 0 && !loading &&
               <div className="content-row empty-wrap">
                 <div className="empty-message">
                   <h3 className="empty-text">{noData ? '데이터가 존재하지 않습니다. ' : '연구대상 지역을 선택해주세요'}</h3>
@@ -269,26 +283,30 @@ const FloodResult = ({waterObsList=[], ...props}) => {
               </div>
             }
 
+            {
+              !loading &&
+              <TabContext value={floodResultTab} >
+                {layerList.length > 0 && <FloodResultTab />}
+                <TabPanel value={"WaterBody"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                  {layerList.length > 0 && layerList.map((obj, i)=> {
+                    if(obj[0].group === 'WaterBody'){
+                      return renderResult(obj, i)
+                    }
+                  })}
+                  {wbCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
+                </TabPanel>
+                <TabPanel value={"WaterLevel"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                  {layerList.length > 0 && layerList.map((obj, i)=> {
+                    if(obj[0].group === 'WaterLevel'){
+                      return renderResult(obj, i)
+                    }
+                  })}
+                  {wlCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
+                </TabPanel>
+              </TabContext>
+
+            }
             
-            <TabContext value={floodResultTab} >
-              {layerList.length > 0 && <FloodResultTab />}
-              <TabPanel value={"WaterBody"} style={{display: layerList.length === 0 ? 'none': ''}}>
-                {layerList.length > 0 && layerList.map((obj, i)=> {
-                  if(obj[0].group === 'WaterBody'){
-                    return renderResult(obj, i)
-                  }
-                })}
-                {wbCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
-              </TabPanel>
-              <TabPanel value={"WaterLevel"} style={{display: layerList.length === 0 ? 'none': ''}}>
-                {layerList.length > 0 && layerList.map((obj, i)=> {
-                  if(obj[0].group === 'WaterLevel'){
-                    return renderResult(obj, i)
-                  }
-                })}
-                {wlCnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
-              </TabPanel>
-            </TabContext>
           </div>
           <BaseResultCntTooltip resultInfos={resultInfos}/>
         </>

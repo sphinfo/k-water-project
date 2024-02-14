@@ -38,7 +38,7 @@ const FloodL4WaterLevelArea = () => {
                     let params = {obscd:obj.obscd, startdt: paramDate, enddt: paramDate, output: 'json'}
                     getObsWl(params).then((response)=>{
                         if(response?.result?.list?.length > 0){
-                            setRealWl(Number(response?.result?.list[0].wl))
+                            setRealWl(Number(response?.result?.list[0].wl)?.toFixed(2))
                         }
                     })
                 }

@@ -212,7 +212,7 @@ const EnvironmentLandCover = (props) => {
                             <div className="panel-box">
                                 <div className="number-dashboard">
                                     <div className="nd-item">
-                                        <h4 className="nd-item-title">전체면적(㎡)</h4>
+                                        <h4 className="nd-item-title">전체 면적(㎡)</h4>
                                         <div className="nd-item-body">{G$setNumberFixedKomma(G$setSliceNumber(maxArea).num,0)}{G$setSliceNumber(maxArea).convert ? 'K' : ''}</div>
                                     </div>
                                     <div className="nd-item">

@@ -1,6 +1,6 @@
 import BaseLegendWidget from "@components/legend/BaseLegendWidget";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
-import { G$addWidget, G$removeWidget } from "@gis/util";
+import { G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import { TreeItem, TreeView } from "@mui/lab";
 import {Checkbox, SvgIcon, FormControlLabel} from "@mui/material";
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
@@ -136,22 +136,25 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
         layerIds.map((id)=>{
             let layerInfo = bfsSearch(state.layerList, id)
             if(!layerInfo.children){
-                if(layerInfo.instance){
-                    layerInfo.instance.setVisible(visible)
-                    
-                    if(layerInfo.instance2){
-                      layerInfo.instance2.setVisible(visible)
-                    }
+
+              if(visible){
+                if(layerInfo.id === 'W_FRST'){
+                  layerInfo.instance = new BaseWmsImageLayer({store:layerInfo.store, layerId:layerInfo.id, fly:false, subId:'thematic_'})
+                  layerInfo.instance2 = new BaseWmsImageLayer({store:layerInfo.store, layerId:'W_SCND', fly:false, subId:'thematic_'})
                 }else{
-                    if(visible){
-                      if(layerInfo.id === 'W_FRST'){
-                        layerInfo.instance = new BaseWmsImageLayer({store:layerInfo.store, layerId:layerInfo.id, fly:false, subId:'thematic_'})
-                        layerInfo.instance2 = new BaseWmsImageLayer({store:layerInfo.store, layerId:'W_SCND', fly:false, subId:'thematic_'})
-                      }else{
-                        layerInfo.instance = new BaseWmsImageLayer({store:layerInfo.store, layerId:layerInfo.id, fly:false, subId:'thematic_'})
-                      }
-                    }
+                  layerInfo.instance = new BaseWmsImageLayer({store:layerInfo.store, layerId:layerInfo.id, fly:false, subId:'thematic_'})
                 }
+              }else{
+                if(layerInfo.id === 'W_FRST'){
+                  G$removeLayer(layerInfo.instance.layer)
+                  G$removeLayer(layerInfo.instance2.layer)
+                  layerInfo.instance = null
+                  layerInfo.instance2 = null
+                }else{
+                  G$removeLayer(layerInfo.instance.layer)
+                  layerInfo.instance = null
+                }
+              }
             }
 
             //범례 존재시 범례 on // off
@@ -169,7 +172,6 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
     }
 
   }
-
 
   const renderTree = (nodes) => (
       <TreeItem

@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import { getL3Layers } from "@common/axios/common";
 import dayjs from "dayjs";
 import BaseResultCntTooltip from "@components/biz/common/BaseResultCntTooltip";
+import { CircularProgress } from "@mui/material";
 
 const SafetyResult = () => {
     
@@ -23,6 +24,8 @@ const SafetyResult = () => {
 
     //debouncing timer
     const [timer, setTimer] = useState(null)
+
+    const [loading, setLoading] = useState(false)
 
     //변위등급 데이터
     const [displaceLevelData, setDisplaceLevelData] = useState([])
@@ -53,6 +56,7 @@ const SafetyResult = () => {
 
             //*******API************* getL3Layers: 레벨3 결과값/
             let params = {type:'safety', level: 'L3', location: location, from:dayjs().format('YYYYMMDD'), to:dayjs().format('YYYYMMDD')}
+            setLoading(true)
             getL3Layers(params).then((response) => {
               
               if(response?.result?.data?.length > 0){
@@ -82,7 +86,7 @@ const SafetyResult = () => {
                   }
                 })
 
-                setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
+                setResultInfos(G$BaseSelectBoxArray([...resultList, ...displaceResultList], 'category'))
                 const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true))
                 const resultArray = groupArray.grouped
 
@@ -103,6 +107,9 @@ const SafetyResult = () => {
                 setMessage("데이터가 존재하지 않습니다.")
               }
 
+              setTimeout(() => {
+                setLoading(false)
+              }, 500)
             })
             
           } else {
@@ -209,7 +216,7 @@ const SafetyResult = () => {
                   <p className="list-info">{obj.locationKr}</p>
                   <p className="list-info">{obj.groupNm}</p>
                   <p className="list-info">{`${obj.category} | ${obj.category === 'L3TDA1' ? '고정산란체' : obj.category === 'L3TDA2' ? '분산산란체' : ''}`}</p>
-                  <p className="list-info">{`${obj.satellite === 'S1A' ? 'Sentinal 1' :  obj.satellite === 'S2A' ? 'Sentinal 2' : obj.satellite} ${obj.udew ? ' | '+obj.udew : obj.udew}`}</p>
+                  <p className="list-info">{`${obj.satellite === 'S1A' ? 'sentinel 1' :  obj.satellite === 'S2A' ? 'sentinel 2' : obj.satellite} ${obj.udew ? ' | '+obj.udew : obj.udew}`}</p>
                   <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
                 </div>
               </div>
@@ -250,7 +257,7 @@ const SafetyResult = () => {
                                   <p className="list-info">{obj.locationKr}</p>
                                   <p className="list-info">{obj.groupNm}</p>
                                   <p className="list-info">{obj.category}</p>
-                                  <p className="list-info">{`${obj.satellite}`}</p>
+                                  <p className="list-info">{`${obj.satellite === 'S1A' ? 'sentinel 1' :  obj.satellite === 'S2A' ? 'sentinel 2' : obj.satellite}`}</p>
                                   <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
                               </div>
                             </div>
@@ -271,8 +278,11 @@ const SafetyResult = () => {
   return (
     <>
       <div className="content-body scroll" onClick={()=>{ dispatch({type:SAFETY_SELECT_BOX, selectBox: false}) }}>
-        {
-          layerList.length === 0 &&
+          {
+              loading && <div className="content-row empty-wrap" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}><CircularProgress color="primary" size={50} thickness={4} /></div>
+          }
+          {
+            layerList.length === 0 && !loading &&
             <div className="content-row empty-wrap">
               <div className="empty-message">
                 <h3 className="empty-text">{message}</h3>
@@ -284,9 +294,9 @@ const SafetyResult = () => {
             </div>
           }
 
-          {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))}
+          {layerList.length > 0 && !loading && layerList.map((obj, i)=> renderResult(obj, i))}
 
-          {displaceLevelData.length > 0 && renderSafetyLevel()}
+          {displaceLevelData.length > 0 && !loading && renderSafetyLevel()}
           
         </div>
         <BaseResultCntTooltip resultInfos={resultInfos}/>

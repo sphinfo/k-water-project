@@ -52,7 +52,7 @@ const WidgetWrapper = (props) => {
                         
                         <div className={"popup-body"}>
                             {/* 리소스가 준비될 때까지 렌더링을 일시 중지 */}
-                            <Suspense fallback={<div style={{display: 'flex', justifyContent: 'center'}}><CircularProgress color="primary" size={50} thickness={4} /></div>}>{writeChildren()}</Suspense>
+                            <Suspense fallback={<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 500, width: 500}}><CircularProgress color="primary" size={50} thickness={4} /></div>}>{writeChildren()}</Suspense>
                         </div>
                     </div>
                 </Rnd>

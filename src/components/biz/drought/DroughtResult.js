@@ -7,7 +7,7 @@ import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject
 import { DROUGHT_CLEAR_LAEYRS, DROUGHT_RESET, DROUGHT_RESET_LAYER, DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER, DROUGHT_SET_LAYERS } from "@redux/actions";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import { getL3Layers } from "@common/axios/common";
 import { TabContext, TabPanel } from "@mui/lab";
@@ -27,6 +27,8 @@ const DroughtResult = () => {
 
     //debouncing timer
     const [timer, setTimer] = useState(null);
+
+    const [loading, setLoading] = useState(false)
 
     const [a1Cnt, setA1Cnt] = useState(0)
     const [a2Cnt, setA2Cnt] = useState(0)
@@ -51,6 +53,8 @@ const DroughtResult = () => {
             let location = text.map(item => item.code).join(',')
 
             let params = {type:'drought', level: 'L3', location: location, from: startDate, to: endDate}
+
+            setLoading(true)
             getL3Layers(params).then((response) => {
               if(response?.result?.data?.length > 0){
                 let resultList = []
@@ -91,6 +95,10 @@ const DroughtResult = () => {
               }else{
                 setLayerList([])
               }
+
+              setTimeout(() => {
+                setLoading(false)
+              }, 500)
             })
             
           } else {
@@ -183,7 +191,7 @@ const DroughtResult = () => {
                   <p className="list-info">{obj.locationKr}</p>
                   <p className="list-info">{obj.groupNm}</p>
                   <p className="list-info">{`${obj.category} | ${obj.categoryNm}`}</p>
-                  <p className="list-info">{obj.satellite === 'S1A' ? 'Sentinal 1' :  obj.satellite === 'S2A' ? 'Sentinal 2' : obj.satellite}</p>
+                  <p className="list-info">{obj.satellite === 'S1A' ? 'sentinel 1' :  obj.satellite === 'S2A' ? 'sentinel 2' : obj.satellite}</p>
                   <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
                 </div>
               </div>
@@ -196,7 +204,10 @@ const DroughtResult = () => {
         <>
           <div className={"content-body"} onClick={()=>{ dispatch({type:DROUGHT_SELECT_BOX, selectBox: false}) }}>
             {
-              layerList.length === 0 &&
+              loading && <div className="content-row empty-wrap" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}><CircularProgress color="primary" size={50} thickness={4} /></div>
+            }
+            {
+              layerList.length === 0 && !loading &&
               <div className="content-row empty-wrap">
                 <div className="empty-message">
                   <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
@@ -209,7 +220,7 @@ const DroughtResult = () => {
             }
 
             <div className="content-row">
-              {layerList.length > 0 &&
+              {layerList.length > 0 && !loading &&
                 <div className="form-control">
                   <Tabs className={"toggle-btn-wrap toggle-btn-variant"} value={selectResultTab} onChange={(e, v)=>{dispatch({type: DROUGHT_RESULT_TAB, selectResultTab: v})}}>
                     <Tab className={"tab-item"} label={'위성토양수분'} value={'A1'}></Tab>
@@ -220,37 +231,41 @@ const DroughtResult = () => {
               }
               
             </div>
-            {/* {layerList.length > 0 && layerList.map((obj, i)=> renderResult(obj, i))} */}
+            {
+              !loading &&
+              <TabContext value={selectResultTab} >
 
-            <TabContext value={selectResultTab} >
+                <TabPanel value={"A1"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                  {layerList.length > 0 && layerList.map((obj, i)=> {
+                    if(obj[0].group === 'A1'){
+                      return renderResult(obj, i)
+                    }
+                  })}
+                  {a1Cnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
+                </TabPanel>
 
-              <TabPanel value={"A1"} style={{display: layerList.length === 0 ? 'none': ''}}>
-                {layerList.length > 0 && layerList.map((obj, i)=> {
-                  if(obj[0].group === 'A1'){
-                    return renderResult(obj, i)
-                  }
-                })}
-                {a1Cnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
-              </TabPanel>
+                <TabPanel value={"A2"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                  {layerList.length > 0 && layerList.map((obj, i)=> {
+                    if(obj[0].group === 'A2'){
+                      return renderResult(obj, i)
+                    }
+                  })}
+                  {a2Cnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
+                </TabPanel>
 
-              <TabPanel value={"A2"} style={{display: layerList.length === 0 ? 'none': ''}}>
-                {layerList.length > 0 && layerList.map((obj, i)=> {
-                  if(obj[0].group === 'A2'){
-                    return renderResult(obj, i)
-                  }
-                })}
-                {a2Cnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
-              </TabPanel>
+                <TabPanel value={"A3"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                  {layerList.length > 0 && layerList.map((obj, i)=> {
+                    if(obj[0].group === 'A3'){
+                      return renderResult(obj, i)
+                    }
+                  })}
+                  {a3Cnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
+                </TabPanel>
+              </TabContext>
 
-              <TabPanel value={"A3"} style={{display: layerList.length === 0 ? 'none': ''}}>
-                {layerList.length > 0 && layerList.map((obj, i)=> {
-                  if(obj[0].group === 'A3'){
-                    return renderResult(obj, i)
-                  }
-                })}
-                {a3Cnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
-              </TabPanel>
-            </TabContext>
+            }
+
+            
 
           </div>
           <BaseResultCntTooltip resultInfos={resultInfos}/>
