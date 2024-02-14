@@ -45,27 +45,25 @@ const BaseResultCntTooltip = (props) => {
             <div className="panel-bottom">
                 <div className="panel-bottom-info">
                     <p>산출물 개수</p>
-                    <p className="info-number">
-                        총 <span>{total}</span>건
-                        <Tooltip placement="top-end" arrow id="infoNumberPop" title={
-                            <React.Fragment>
-                                <ul className="info-number-list">
-                                    {
-                                        resultList.length > 0 &&
-                                        resultList.map((obj, i) => {
-                                            return listComponent(obj, i);
-                                        })
-                                    }
-                                    {
-                                        resultList.length === 0 &&
-                                        <li ><span>-</span></li>
-                                    }
-                                </ul>
-                            </React.Fragment>
-                        }>
-                            <span className="tooltip-icon"></span>
-                        </Tooltip>
-                    </p>
+                    <Tooltip placement="top-end" className="info-number-label" arrow id="infoNumberPop" title={
+                        <React.Fragment>
+                            <ul className="info-number-list">
+                                {
+                                    resultList.length > 0 &&
+                                    resultList.map((obj, i) => {
+                                        return listComponent(obj, i);
+                                    })
+                                }
+                                {
+                                    resultList.length === 0 &&
+                                    <li ><span>-</span></li>
+                                }
+                            </ul>
+                        </React.Fragment>
+                    }>
+                        <p className="info-number">총 <span>{total}</span>건</p>
+                        <span className="tooltip-icon"></span>
+                    </Tooltip>
                 </div>
             </div>
         </>
