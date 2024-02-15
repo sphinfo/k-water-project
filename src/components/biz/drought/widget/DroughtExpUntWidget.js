@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DroughtExpUntDatas from "../component/expUnt/DroughtExpUntDatas";
 
@@ -8,11 +8,14 @@ import DroughtExpUntDatas from "../component/expUnt/DroughtExpUntDatas";
  */
 const DroughtExpUntWidget = (props) => {
 
-    const dispatch = useDispatch()
-    const { selectExp } = useSelector(state => state.drought)
-    
+    const [selectInfo, setSelectInfo] = useState(false)
+
+    const {params, selectType} = props
 
     useEffect(()=>{
+        
+        console.info(selectType)
+        setSelectInfo(params)
     },[props])
 
 
@@ -20,7 +23,7 @@ const DroughtExpUntWidget = (props) => {
         <>
             <div className={"content-body"}>
                 <div className="content-col-group">
-                    <DroughtExpUntDatas />
+                    <DroughtExpUntDatas params={params} selectType={selectType}/>
                 </div>
             </div>
         </>

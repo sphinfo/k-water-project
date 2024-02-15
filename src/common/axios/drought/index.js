@@ -48,9 +48,25 @@ const getDroughtObsIndex = async (props) => {
     }
 }
 
+const getDroughtExpUntDatas = async (props) => {
+    try{
+        const { request } = createAxios();
+        const result = await request({
+            url: DroughtConfig.GET_DROUGHT_STATISTICS,
+            method: 'GET',
+            params: props
+        })
+        props = { ...props, result: result.data };
+        return props;
+    }catch(error){
+        return {message:'error', result:{data:[]}}
+    }
+}
+
 
 export {
     getDroughtObs,
     getDroughtObsMoisture,
     getDroughtObsIndex,
+    getDroughtExpUntDatas,
 }
