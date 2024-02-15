@@ -146,13 +146,18 @@ const ThematicTreeLayerCheckBoxList = ({}, ref) => {
                 }
               }else{
                 if(layerInfo.id === 'W_FRST'){
-                  G$removeLayer(layerInfo.instance.layer)
-                  G$removeLayer(layerInfo.instance2.layer)
-                  layerInfo.instance = null
-                  layerInfo.instance2 = null
+                  if(layerInfo?.instance?.layer && layerInfo?.instance2?.layer){
+                    G$removeLayer(layerInfo.instance.layer)
+                    G$removeLayer(layerInfo.instance2.layer)
+                    layerInfo.instance = null
+                    layerInfo.instance2 = null
+                  }
+                  
                 }else{
-                  G$removeLayer(layerInfo.instance.layer)
-                  layerInfo.instance = null
+                  if(layerInfo?.instance?.layer){
+                    G$removeLayer(layerInfo.instance.layer)
+                    layerInfo.instance = null
+                  }
                 }
               }
             }
