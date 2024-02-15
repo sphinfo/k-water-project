@@ -27,7 +27,7 @@ const CompassWidget = () => {
                         </div>
                     </React.Fragment>
                   }>
-            <div className="map-compass" style={{transform: `rotate(${heading}deg)`}} onClick={()=>{G$headingChange()}}>
+            <div className="map-compass" style={{transform: `rotate(${heading}deg)`, cursor: 'pointer'}} onClick={()=>{G$headingChange()}}>
               <div className="map-compass-pin"></div>
             </div>
           </Tooltip>

@@ -53,8 +53,8 @@ const Drought = () => {
                     selectObs.entity.billboard.image = pin
                 }
 
-                if(station === features[0].properties.Station){
-                    dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: false})
+                dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: false})
+                if(station === features[0].properties.code){
                     setStation(false)
                 }else{
                     features[0].entity.billboard.image = pin2

@@ -23,13 +23,15 @@ const CoordiateWidget = () => {
     
 
     return (
-        <ul className="map-coord-box">
-            {/* <div><span className="text-blue">X :</span>{coord.x && coord.x.toFixed(3)}</div>
-            <div><span className="text-blue">Y :</span>{coord.y && coord.y.toFixed(3) }</div> */}
-            <div><span className="text-blue">LON</span>{coord.lonDms}</div>
-            <div><span className="text-blue">LAT</span>{coord.latDms}</div>
-            <div><span className="text-blue">Level</span>{height}</div>
-        </ul>
+        <>
+            <ul className="map-coord-box" style={{width: 250}}>
+                <div><span className="text-blue">LON</span>{coord.lonDms}</div>
+                <div><span className="text-blue">LAT</span>{coord.latDms}</div>
+            </ul>
+            <ul className="map-coord-box" style={{width: 100}}>
+                <div><span className="text-blue">ALT</span>{height}</div>
+            </ul>
+        </>
     )
 }
 
