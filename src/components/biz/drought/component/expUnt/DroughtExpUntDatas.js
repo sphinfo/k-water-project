@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
  * 가뭄 표출단위선택 팝업
  */
 
-const radioList = [{name:'위성토양수분',value:'l3sm'},{name:'가뭄지수',value:'l4d4'},{name:'가뭄 해갈 강우량',value:'l4dr'}]
+const radioList = [{name:'위성토양수분',value:'gl3sm'},{name:'가뭄지수',value:'gl4d4'},{name:'가뭄 해갈 강우량',value:'gl4dr'}]
 
 const charTL4DrOption = {
     plugins: {
@@ -253,7 +253,7 @@ const DroughtExpUntDatas = (props) => {
     //데이터 ref
     const rows = useMemo(()=>{ return [ ] },[])
 
-    const [radioValue, setRadioValue] = useState('l3sm')
+    const [radioValue, setRadioValue] = useState('gl3sm')
 
     useEffect(()=>{
 
@@ -359,9 +359,6 @@ const DroughtExpUntDatas = (props) => {
                 datas.push(obj[radioValue] === 0 ? NaN : obj[radioValue])
             })
 
-            
-            
-
             if(radioValue === 'l4d4'){
                 chartRef.current.updateOptions = charTL4DrOption
             }else{
@@ -376,7 +373,7 @@ const DroughtExpUntDatas = (props) => {
 
             chartInfoRef.current.labels = labels
             chartInfoRef.current.datasets.push({
-                label: radioValue === 'l3sm' ? '위성토양수분' : radioValue === 'l4d4' ? '가뭄지수(vol.%)' : radioValue === 'l4dr' ? '가뭄해갈강우량(mm/day)' : radioValue,
+                label: radioValue === 'gl3sm' ? '위성토양수분' : radioValue === 'gl4d4' ? '가뭄지수(vol.%)' : radioValue === 'gl4dr' ? '가뭄해갈강우량(mm/day)' : radioValue,
                 type: 'line',
                 pointRadius: 1,
                 borderWidth: 1,
@@ -403,7 +400,7 @@ const DroughtExpUntDatas = (props) => {
                 <div className="content-row">
                     <div className="panel-box">
                         <div className="chart-unit-warp">
-                            <span className="chart-unit">{radioValue === 'l3sm' ? '위성토양수분' : radioValue === 'l4d4' ? '가뭄지수(vol.%)' : radioValue === 'l4dr' ? '가뭄해갈강우량(mm/day)' : radioValue}</span>
+                            <span className="chart-unit">{radioValue === 'gl3sm' ? '위성토양수분' : radioValue === 'gl4d4' ? '가뭄지수(vol.%)' : radioValue === 'gl4dr' ? '가뭄해갈강우량(mm/day)' : radioValue}</span>
                         </div>
                         <BaseChart width={'100%'} height={260} ref={chartRef} chartType={'Line'} title={''}/>
                     </div>
