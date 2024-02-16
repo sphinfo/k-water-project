@@ -3,6 +3,7 @@ import { Switch } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { G$addWidget,G$paramWidget,G$removeWidget } from "@gis/util";
 import { DROUGHT_OBSRV_TAB } from "@redux/actions";
+import MainWidgetManager from "@common/widget/WidgetManager";
 
 
 
@@ -28,7 +29,11 @@ const DroughtObsrvThematic = () => {
     useEffect(()=>{
         if(selectObs){
             if(obsrvTab !== 'appease'){
-                G$addWidget('DroughtObsrvWidget',{},{subTitle: `${selectObs?.properties?.name}`})
+                if(MainWidgetManager._hasInstance('DroughtObsrvWidget') ){
+                    G$paramWidget('DroughtObsrvWidget',{subTitle: `${selectObs?.properties?.name}`})
+                }else{
+                    G$addWidget('DroughtObsrvWidget',{},{subTitle: `${selectObs?.properties?.name}`})
+                }
             }else{
                 G$removeWidget('DroughtObsrvWidget')    
             }
