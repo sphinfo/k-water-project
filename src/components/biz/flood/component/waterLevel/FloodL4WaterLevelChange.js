@@ -8,8 +8,10 @@ import FloodADD from "@gis/config/flood/FloodWaterLevelChartDatas";
 import FloodWaterLevelChartDatas from "@gis/config/flood/FloodWaterLevelChartDatas";
 import BaseGrid from "@common/grid/BaseGrid";
 import { G$getDateType, G$sortArrayObject } from "@gis/util";
-import { getFloodWaterLevelChart } from "@common/axios/flood";
+import { getFloodWaterLevelChart, getObsWl, getObsWls } from "@common/axios/flood";
 import dayjs from "dayjs";
+import FloodWaterLevelStationDataConfig from "@gis/config/FloodWaterLevelStationDataConfig";
+import createAxios from "@common/axios/creatAxios";
 
 
 const FloodL4WaterLevel = () => {
@@ -101,82 +103,123 @@ const FloodL4WaterLevel = () => {
         chartInfoRef.current.labels = []
         chartInfoRef.current.datasets = []
 
+        let stationInfos = FloodWaterLevelStationDataConfig
 
         //*******API*************/
         //수위 지점 select get Feature
         if(selectWaterLevel){
-            let params = {name:selectWaterLevel.name}
+            const {name, date} = selectWaterLevel
+            let params = {name:name}
             getFloodWaterLevelChart(params).then((response)=>{
                 if(response?.result?.data?.length > 0){
 
                     let datas = response.result.data
-                    let date = []  //날짜
+                    let dates = []  //날짜
                     let estWl = [] //위성기반 계측수위
                     let obsWl = [] //실제계측수위
 
+                    
 
                     let avg = 0
                     let avg2 = 0
                     
                     let zeros = 0
 
+                    let paramDates = []
+                    
                     datas.map((obj)=>{
                         obj.createdAt = obj.createdAt.substring(0,8)
-                        date.push(G$getDateType(obj.createdAt))
-                        estWl.push(obj.estimatedElev  === '' ? NaN : Number(obj.estimatedElev).toFixed(2))
-                        obsWl.push(obj.referenceElev  === '' ? NaN : Number(obj.referenceElev).toFixed(2))
-
-                        obj.estimatedElev = Number(obj.estimatedElev).toFixed(2)
-                        obj.referenceElev = Number(obj.referenceElev).toFixed(2)
-
-                        avg += Number(obj.estimatedElev)
-
-                        if(Number(obj.referenceElev) === 0){
-                            zeros++
-                        }else{
-                            avg2 += (Number(obj.estimatedElev) - Number(obj.referenceElev)) < 0 ? -(Number(obj.estimatedElev) - Number(obj.referenceElev)) : (Number(obj.estimatedElev) - Number(obj.referenceElev))
-                        }
-
                         obj.createdAt = G$getDateType(obj.createdAt)
                         obj.formatDate = dayjs(obj.createdAt).format('YYYYMMDD')
-                    })
-                    setAvg(avg / datas.length)
-                    setAvg2(avg2 / (datas.length-zeros))
-
-                    chartInfoRef.current.datasets.push({
-                        tension: 0.4,
-                        data:estWl,
-                        label: '실제 계측 수위',
-                        pointRadius: 1,
-                        borderWidth: 1,
-                        borderColor: '#FF9933',
-                        backgroundColor: '#FF9933',
+                        paramDates.push(obj.formatDate)
                     })
 
-                    //차트 data push
-                    chartInfoRef.current.datasets.push({
-                        tension: 0.4,
-                        data: obsWl,
-                        label: '위성 기반 계측 수위',
-                        pointRadius: 1,
-                        borderWidth: 1,
-                        borderColor: '#54A6E7',
-                        backgroundColor: '#54A6E7',
+                    let sortDatas = G$sortArrayObject(datas, 'formatDate', false)
+
+                    stationInfos.map((obj)=>{
+                        if(name.indexOf(obj.name) > -1){
+                            let params = {obscd:obj.obscd, dates: paramDates}
+
+                            getObsWls(params).then((response)=>{
+                                if(response?.length > 0){
+
+                                    let wamisDatas = []
+                                    response.map((res)=>{
+                                        if(res?.data?.list){
+                                            if(res?.data?.list.length > 0){
+                                                wamisDatas.push(res?.data?.list[0])
+                                            }
+                                        }
+                                    })
+
+                                    if(wamisDatas.length > 0){
+
+                                        wamisDatas.forEach((waimsItem) => {
+                                            let matchingB = sortDatas.find((sortItem) => sortItem.formatDate === waimsItem.ymd);
+                                            if (matchingB) {
+                                              matchingB.estimatedElev = waimsItem.wl
+                                            }
+                                        })
+                                    }
+
+                                    sortDatas.map((sortObj)=>{
+                                        dates.push(G$getDateType(sortObj.createdAt))
+                                        estWl.push(sortObj.estimatedElev  === 0 ? NaN : Number(sortObj.estimatedElev).toFixed(2))
+                                        obsWl.push(sortObj.referenceElev  === 0 ? NaN : Number(sortObj.referenceElev).toFixed(2))
+                
+                                        sortObj.estimatedElev = Number(sortObj.estimatedElev).toFixed(2)
+                                        sortObj.referenceElev = Number(sortObj.referenceElev).toFixed(2)
+                
+                                        avg += Number(sortObj.estimatedElev)
+                
+                                        if(Number(sortObj.referenceElev) === 0 || Number(sortObj.estimatedElev) === 0){
+                                            zeros++
+                                        }else{
+                                            avg2 += (Number(sortObj.estimatedElev) - Number(sortObj.referenceElev)) < 0 ? Math.abs(Number(sortObj.estimatedElev) - Number(sortObj.referenceElev)) : +(Number(sortObj.estimatedElev) - Number(sortObj.referenceElev)).toFixed(12)
+                                        }
+    
+                                    })
+    
+                                    if(gridRef.current.provider){
+                                        gridRef.current.provider = G$sortArrayObject(sortDatas, 'formatDate', true)
+                                    }
+                                    
+    
+                                    setAvg(avg / datas.length)
+                                    setAvg2(avg2 / (datas.length-zeros))
+    
+                                    chartInfoRef.current.datasets.push({
+                                        tension: 0.4,
+                                        data:estWl,
+                                        label: '실제 계측 수위',
+                                        pointRadius: 1,
+                                        borderWidth: 1,
+                                        borderColor: '#FF9933',
+                                        backgroundColor: '#FF9933',
+                                    })
+    
+                                    //차트 data push
+                                    chartInfoRef.current.datasets.push({
+                                        tension: 0.4,
+                                        data: obsWl,
+                                        label: '위성 기반 계측 수위',
+                                        pointRadius: 1,
+                                        borderWidth: 1,
+                                        borderColor: '#54A6E7',
+                                        backgroundColor: '#54A6E7',
+                                    })
+    
+                                    chartInfoRef.current.labels = dates
+    
+                                    //chart
+                                    chartRef.current.provider = chartInfoRef.current
+                                }
+                            })
+                        }
                     })
-
-                    chartInfoRef.current.labels = date
-                    
-                    //Table
-                    gridRef.current.provider =  G$sortArrayObject(datas, 'formatDate', true)
-
-                    //chart
-                    chartRef.current.provider = chartInfoRef.current
-
 
                 }
             })
-
-            
         }
 
 
@@ -192,11 +235,11 @@ const FloodL4WaterLevel = () => {
                         <div className="number-dashboard">
                             <div className="nd-item text-blue">
                                 <h4 className="nd-item-title">지점 평균수위(m)</h4>
-                                <div className="nd-item-body">{avg.toFixed(2)}</div>
+                                <div className="nd-item-body">{avg.toFixed(2) === NaN ? '-' : avg.toFixed(2)}</div>
                             </div>
                             <div className="nd-item">
                                 <h4 className="nd-item-title">실측/모의 잔차 평균(m)</h4>
-                                <div className="nd-item-body">{avg2.toFixed(2)}</div>
+                                <div className="nd-item-body">{avg2.toFixed(2) === NaN ? '-' : avg2.toFixed(2)}</div>
                             </div>
                         </div>
                     </div>

@@ -14,7 +14,7 @@ const FloodL4WaterBodyThematic = () => {
     /**
      * selectWaterLevel: 수위 지점 정보
      */
-    const { selectFloodDamageLayer, layers } = useSelector(state => state.flood)
+    const { selectFloodDamageLayer, layers, floodResultTab } = useSelector(state => state.flood)
 
 
     //닫힐때 침수피해 레이어 초기화
@@ -59,7 +59,7 @@ const FloodL4WaterBodyThematic = () => {
 
     return (
         <>
-            <div className="widget widget-toggle">
+            <div className="widget widget-toggle" style={{display: floodResultTab === 'WaterLevel' ? 'none' : ''}}>
                 <div className="widget-box">
                     <div className="widget-header">
                         <h4 className="widget-title">활용 주제도</h4>

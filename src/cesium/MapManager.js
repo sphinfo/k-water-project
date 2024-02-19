@@ -138,8 +138,8 @@ class MapManager {
     }
 
     //point 이동
-    flyToPoint(point, zoom=850000, pitch=-90){
-        if(!this._holdMap){
+    flyToPoint(point, zoom=850000, pitch=-90, ignore=false){
+        if(!this._holdMap || ignore){
             this._map.camera.flyTo({
                 destination: Cartesian3.fromDegrees(point[0], point[1], zoom), // 목표 위치의 카메라 높이 (높이 값 조절 가능)
                 orientation: {

@@ -404,8 +404,8 @@ const G$flyToExtent= (extent, pitch=false) =>{
     MapManager.flyToExtent(extent, pitch)
 }
 
-const G$flyToPoint= (point, zoom, pitch) =>{
-    MapManager.flyToPoint(point, zoom, pitch)
+const G$flyToPoint= (point, zoom, pitch, ignore) =>{
+    MapManager.flyToPoint(point, zoom, pitch, ignore)
 }
 
 const G$headingChange= (heading) =>{
@@ -506,6 +506,11 @@ const G$setSliceNumber = (num=0, fixed=0) =>{
     } else {
         return {conver: false, num};
     }
+}
+
+const G$setMtoKm = (num=0, fiexd=4) =>{
+    let km2 = (num / 1000000).toFixed(fiexd)
+    return parseFloat(km2)
 }
 
 const G$getDateType = function ( date, type='DTD') {
@@ -661,6 +666,7 @@ export {
     G$sortArrayObject,
     G$setNumberFixedKomma,
     G$setSliceNumber,
+    G$setMtoKm,
     G$getDateType,
 
     G$covertKm,

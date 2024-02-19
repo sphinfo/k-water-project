@@ -90,7 +90,7 @@ const SafetyDisplaceSpeedWidget = (props) => {
         <>
             <div className="map-popup-box">
                 <div className="map-popup-box-header">
-                    <h1 className="map-popup-box-title">변위 속도</h1>
+                    <h1 className="map-popup-box-title">변위</h1>
                 <button onClick={close} className="popup-close-btn"></button>
                 </div>
                 <div className="map-popup-box-body">

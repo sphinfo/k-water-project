@@ -282,7 +282,7 @@ const SafetyL4CompWidget = () => {
             <div className="content-col-group">
                 <div className="content-col">
                     
-                    <div className="content-row">
+                    {/* <div className="content-row">
                         <div className="panel-box">
                             <div className="number-dashboard">
                                 <div className="nd-item">
@@ -295,7 +295,7 @@ const SafetyL4CompWidget = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="content-row">
                         <div className="panel-box">
@@ -314,7 +314,7 @@ const SafetyL4CompWidget = () => {
                     <div className="content-row height-100">
                         <div className="panel-box height-100">
                             <div className="panel-box-header">
-                                <h4 className="panel-box-title">변위속도</h4>
+                                <h4 className="panel-box-title">변위</h4>
                             </div>
                             <div className="table-wrap" style={{ height: '360px', overflowY: 'auto'}}>
                                 <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'}/>

@@ -53,7 +53,7 @@ function mainReducer(state = initialState, action) {
     case CHANGE_MODE:
       return { ...state, mode: action.mode };
     case HOLD_MAP:
-      return { ...state, holdMap: action.hold };
+      return { ...state, holdMap: action.holdMap };
     case SET_START_DATE:
       return { ...state, startDate: action.date };
     case SET_END_DATE:

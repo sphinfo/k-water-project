@@ -5,7 +5,7 @@ import BaseSelectOption from "@common/util/BaseSelectOption";
 
 const SafetyOptions = () => {
 
-    const namesRef = useRef(['YONGDAM','DAECHEONG','ANDONG','UNMUN','YEONGCHEON','SAYEON','JUAM','CHANGNYEONG','DAEJEON','NONSAN'])
+    const namesRef = useRef(['YONGDAM','DAECHEONG','ANDONG','UNMUN','YEONGCHEON','JUAM','CHANGNYEONG','NONSAN','SOYANG','SAEDAE'])
 
 
     const dispatch = useDispatch()

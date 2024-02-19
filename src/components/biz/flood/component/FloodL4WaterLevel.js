@@ -221,12 +221,12 @@ const FloodL4WaterLevel = () => {
                 </Tabs>
               {/* 수위변화 OFF : 지역구성 */}
               <div className="content-row" style={{display: levelChange ? 'none' : ''}}>
-                <FloodL4WaterLevelArea />
+                {levelChange && <FloodL4WaterLevelArea />}
               </div>
                 
               {/* 수위변화 ON : 수위변화 그래프 */}
               <div className="content-row" style={{display: !levelChange ? 'none' : ''}}>
-                <FloodL4WaterLevelChange />
+                {!levelChange && <FloodL4WaterLevelChange />}
               </div>
             </div>
         </>

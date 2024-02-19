@@ -5,11 +5,14 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import SvgIcon from "@mui/material/SvgIcon";
-import { G$selectBoxFilter } from "@gis/util";
+import { G$flyToPoint, G$selectBoxFilter } from "@gis/util";
 import { Checkbox } from "@mui/material";
+import { useDispatch } from 'react-redux';
+import { HOLD_MAP } from '@redux/actions';
 
 const BaseSelectOption = ({ provider = [], changeItem, searchOn, ...other}, ref) => {
 
+  const dispatch = useDispatch()
 
   const [datasList, setDataList] = useState([])
   useEffect(()=>{
@@ -36,12 +39,21 @@ const BaseSelectOption = ({ provider = [], changeItem, searchOn, ...other}, ref)
   useEffect(()=>{
     if(searchOn){
       searchOn(!visibleTree)
+      
+      if(selectedItems.length === 1){
+        dispatch({type:HOLD_MAP, holdMap: true})
+        //G$flyToPoint([127.61790470489117,36.52505158669595], 850000)
+        G$flyToPoint([selectedItems[0].y, selectedItems[0].x], selectedItems[0].z, undefined, true)
+      }else{
+        dispatch({type:HOLD_MAP, holdMap: false})
+      }
     }
   },[visibleTree])
 
   //item 변경되었을시 
   useEffect(()=>{
     changeItem(selectedItems)
+    
   },[selectedItems])
 
   // BaseSelectOption 레퍼런스 API

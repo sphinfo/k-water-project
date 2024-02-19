@@ -19,6 +19,21 @@ const getFloodL3Search = async (props) =>{
 
 }
 
+/**WAMIS 댐 수위 */
+const getObsWls = async (props) => {
+    try{
+        const { request } = createAxios()
+        const obswlsPromis = []
+        props.dates.map((date)=>{
+            let param = {obscd:props.obscd, startdt: date, enddt: date, output: 'json'}
+            obswlsPromis.push(request({url: FloodConfig.GET_OBS_WL, params: param, method: 'GET'}))
+        })
+        return await Promise.all(obswlsPromis)
+    }catch(error){
+        return {message:'error', result:{list:[]}}
+    }
+}
+
 /**수위 지점 */
 const getFloodObs = async (props) => {
     try{
@@ -93,5 +108,6 @@ export {
     getFloodWaterBodyChart,
     getFloodWaterLevelChart,
     getObsWl,
+    getObsWls,
     getFloodL3Search,
 }

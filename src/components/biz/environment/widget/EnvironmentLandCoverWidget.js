@@ -1,7 +1,7 @@
 import BaseChart from "@common/chart/BaseChart";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { G$arrayGetMinMax, G$normalizeWithColors, G$setNumberFixedKomma, G$setSliceNumber } from "@gis/util";
+import { G$arrayGetMinMax, G$normalizeWithColors, G$setMtoKm, G$setNumberFixedKomma, G$setSliceNumber } from "@gis/util";
 import { getBarData, getEnvLandCoverDatas, getHeatmapData } from "@common/axios/envi";
 
 /**
@@ -19,7 +19,7 @@ const EnvironmentLandCover = (props) => {
     /**
      * selectEnvironmentLayer: 수변피복 레이어 선택
      */
-    const { selectEnvironmentLayer, landCoverDetection, text } = useSelector(state => state.environment)
+    const { landCoverDetection } = useSelector(state => state.environment)
 
     //차트 정보
     const chartRef = useRef()
@@ -96,12 +96,12 @@ const EnvironmentLandCover = (props) => {
 
     const setBarData = (datas, change=0) =>{
 
-        let data = [datas.class1,
-                    datas.class2,
-                    datas.class3,
-                    datas.class4,
-                    datas.class5,
-                    change]
+        let data = [G$setMtoKm(datas.class1),
+            G$setMtoKm(datas.class2),
+            G$setMtoKm(datas.class3),
+            G$setMtoKm(datas.class4),
+            G$setMtoKm(datas.class5),
+            G$setMtoKm(change)]
 
         let area = 0
         data.map((obj)=>{
@@ -109,9 +109,10 @@ const EnvironmentLandCover = (props) => {
         })
 
         setMaxArea(area)
-
-        setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]}  ${G$setNumberFixedKomma(G$setSliceNumber(data[G$arrayGetMinMax(data).min]).num, 0)}${G$setSliceNumber(data[G$arrayGetMinMax(data).min]).convert ? 'K' : ''}`)
-        setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]}  ${G$setNumberFixedKomma(G$setSliceNumber(data[G$arrayGetMinMax(data).max]).num, 0)}${G$setSliceNumber(data[G$arrayGetMinMax(data).max]).convert ? 'K' : ''}`)
+        // setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]}  ${G$setNumberFixedKomma(G$setSliceNumber(data[G$arrayGetMinMax(data).min]).num, 0)}${G$setSliceNumber(data[G$arrayGetMinMax(data).min]).convert ? 'K' : ''}`)
+        // setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]}  ${G$setNumberFixedKomma(G$setSliceNumber(data[G$arrayGetMinMax(data).max]).num, 0)}${G$setSliceNumber(data[G$arrayGetMinMax(data).max]).convert ? 'K' : ''}`)
+        setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]}  ${data[G$arrayGetMinMax(data).min]}`)
+        setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]}  ${data[G$arrayGetMinMax(data).max]}`)
 
         chartRef.current.updateOptions = {
             plugins: {
@@ -194,7 +195,8 @@ const EnvironmentLandCover = (props) => {
                 {
                     value !== 0 &&
                     <div className={`chart-item`} key={`item-${i}`} style={{backgroundColor: `#${G$normalizeWithColors({value, min:min, max:max, type:colorType}).hex}`}}>
-                        <span>{G$setNumberFixedKomma(G$setSliceNumber(value).num,0)}{G$setSliceNumber(value).convert ? 'K' : ''}</span>
+                        {/* <span>{G$setNumberFixedKomma(G$setSliceNumber(value).num,0)}{G$setSliceNumber(value).convert ? 'K' : ''}</span> */}
+                        <span>{G$setMtoKm(value)}</span>
                     </div>
                 }
             </>
@@ -212,17 +214,18 @@ const EnvironmentLandCover = (props) => {
                             <div className="panel-box">
                                 <div className="number-dashboard">
                                     <div className="nd-item">
-                                        <h4 className="nd-item-title">전체 면적(㎡)</h4>
-                                        <div className="nd-item-body">{G$setNumberFixedKomma(G$setSliceNumber(maxArea).num,0)}{G$setSliceNumber(maxArea).convert ? 'K' : ''}</div>
+                                        <h4 className="nd-item-title">전체 면적(K㎡)</h4>
+                                        {/* <div className="nd-item-body">{G$setNumberFixedKomma(G$setSliceNumber(maxArea).num,0)}{G$setSliceNumber(maxArea).convert ? 'K' : ''}</div> */}
+                                        <div className="nd-item-body">{G$setMtoKm(maxArea)}</div>
                                     </div>
                                     <div className="nd-item">
-                                        <h4 className="nd-item-title">최대 면적(㎡)</h4>
+                                        <h4 className="nd-item-title">최대 면적(K㎡)</h4>
                                         <div className="nd-item-body">
                                             <span className="text">{max}</span>
                                         </div>
                                     </div>
                                     <div className="nd-item">
-                                        <h4 className="nd-item-title">최소 면적(㎡)</h4>
+                                        <h4 className="nd-item-title">최소 면적(K㎡)</h4>
                                         <div className="nd-item-body">
                                             <span className="text">{min}</span>
                                         </div>
@@ -234,7 +237,7 @@ const EnvironmentLandCover = (props) => {
                         <div className="content-row">
                             <div className="panel-box">
                                 <div className="chart-unit-warp">
-                                    <span className="chart-unit">Area(m2)</span>
+                                    <span className="chart-unit">Area(K㎡)</span>
                                 </div>
                                 <BaseChart width={'100%'} height={300} ref={chartRef} chartType={'Bar'} title={''}/>
                             </div>

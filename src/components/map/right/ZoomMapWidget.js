@@ -13,7 +13,7 @@ const ZoomMapWidget = () => {
     }, []);
     
     const home = () =>{
-        G$flyToPoint([127.61790470489117,36.52505158669595], 850000)
+        G$flyToPoint([127.61790470489117,36.52505158669595], 850000, undefined, true)
     }
 
 

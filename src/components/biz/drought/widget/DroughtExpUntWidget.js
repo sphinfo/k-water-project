@@ -13,8 +13,6 @@ const DroughtExpUntWidget = (props) => {
     const {params, selectType} = props
 
     useEffect(()=>{
-        
-        console.info(selectType)
         setSelectInfo(params)
     },[props])
 
