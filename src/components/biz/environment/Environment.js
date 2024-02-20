@@ -16,14 +16,14 @@ import BaseLegendgGradientWidget from "@components/legend/BaseLegendgGradientWid
 const Environment = () => {
 
   const dispatch = useDispatch()
-  
+
   /**
    * selectEnvironmentLayer : 환경 레이어 선택
    * landCoverDetection : 변화 탐지 선택
    */
   const { landCoverDetection, layers } = useSelector(state => state.environment)
 
-  //변화탐지 레이어 
+  //변화탐지 레이어
   const landCoverDetectionLayer = useRef()
 
 
@@ -32,7 +32,7 @@ const Environment = () => {
 
     //변화탐지 레이어
     landCoverDetectionLayer.current = new BaseWmsImageLayer({store:'',layerId:''})
-    
+
     return()=>{
         //변화탐지 레이어 삭제
         G$removeLayer(landCoverDetectionLayer.current.layer)
@@ -43,7 +43,7 @@ const Environment = () => {
   },[])
 
 
-  
+
   const [layerIdx, setLayerIdx] = useState(0)
   const [mainLayer, setMainLayer] = useState(false)
   useEffect(()=>{
@@ -57,7 +57,7 @@ const Environment = () => {
                 setMainLayer(other)
             }
         })
-          
+
       }else{
         setMainLayer(false)
       }
@@ -91,7 +91,7 @@ const Environment = () => {
           tooltip = legendGroup.length === 1 ? <LegendEnvi props={legendOption[0]}/> : false
           uniqueArray.map((group)=>{
               if(group === 'LandCover'){
-                
+
                 let datas = [{label:'수체', color:'#012FFF'} ,{label:'나지', color:'#FF9E01'} ,{label:'초지', color:'#FFFB07'} ,{label:'목지', color:'#35783B'} ,{label:'건물', color:'#FF0000'}]
                 if(landCoverDetection){
                   datas = [{label:'수체', color:'#012FFF'} ,{label:'나지', color:'#FF9E01'} ,{label:'초지', color:'#FFFB07'} ,{label:'목지', color:'#35783B'} ,{label:'건물', color:'#FF0000'} ,{label:'변화탐지', color:'#DE3CFF'}]
@@ -101,9 +101,9 @@ const Environment = () => {
               }else if(group === 'Garbage'){
                 legends.push(<BaseLegendWidget params={{title:'부유물 폐기성', datas:[{label:'부유물 발생', color:'#FF9F9F'}], tooltip:tooltip }}/>)
               }else if(group === 'Green'){
-                legends.push(<BaseLegendgGradientWidget params={{title:'녹조 농도 (mg/m3)', min:0, max: 300, datas:['#0000ff','#00ffff',  '#00ff00', '#ffff00', '#ff0000'], tooltip:tooltip }}/>)
+                legends.push(<BaseLegendgGradientWidget params={{title:'녹조 농도 (mg/m3)', min:0, max: 300, datas:['#000083','#019ED5',  '#8DFF74', '#FD8000', '#800000'], tooltip:tooltip }}/>)
               }
-              
+
           })
           G$addWidget('BaseAddLegendWidget', {children:legends})
       }
