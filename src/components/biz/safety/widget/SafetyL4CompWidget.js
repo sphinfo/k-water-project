@@ -302,7 +302,7 @@ const SafetyL4CompWidget = () => {
                         <div className="chart-unit-warp">
                             <span className="chart-unit">변위(cm)</span>
                         </div>
-                            <BaseChart width={'100%'} height={300} ref={chartRef} chartType={'Line'} title={''}/>
+                            <BaseChart width={'100%'} height={300} ref={chartRef} chartType={'Line'} title={''} noDataText={'지도에서 지점을 선택하세요.'}/>
                         </div>
                     </div>
                 </div>

@@ -44,7 +44,7 @@ const BaseChart = (props, ref) => {
 
 	const chartRef = useRef(null)
 
-	const { width, height, title, chartType='Line', className='', ...other } = props;
+	const { width, height, title, chartType='Line', className='', noDataText='', ...other } = props;
 
 	const ChartComponent = useMemo(() => {
 		return chartType === 'Line' ? Line : chartType === 'Bar' ? Bar : chartType === 'Pie' ? Pie : Pie;
@@ -105,7 +105,7 @@ const BaseChart = (props, ref) => {
 				ctx.textBaseline = "middle";
 				ctx.font = "13px Arial";
 				ctx.fillStyle = "rgba(255,255,255,0.5)";
-				ctx.fillText("", width / 2, height / 2);
+				ctx.fillText(noDataText, width / 2, height / 2);
 				ctx.restore();
 			  }
 			},
