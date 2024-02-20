@@ -101,7 +101,7 @@ const Environment = () => {
               }else if(group === 'Garbage'){
                 legends.push(<BaseLegendWidget params={{title:'부유물 폐기성', datas:[{label:'부유물 발생', color:'#FF9F9F'}], tooltip:tooltip }}/>)
               }else if(group === 'Green'){
-                legends.push(<BaseLegendgGradientWidget params={{title:'녹조 농도 (mg/m3)', min:0, max: 300, datas:['#000083','#019ED5',  '#8DFF74', '#FD8000', '#800000'], tooltip:tooltip }}/>)
+                legends.push(<BaseLegendgGradientWidget params={{title:'녹조 농도 (mg/m3)', min:0, max: 300, datas:['#000083', '#003CAA', '#019ED5', '#03FFFF', '#8DFF74', '#FFFF00', '#FD8000', '#FA0100', '#800000'], tooltip:tooltip }}/>)
               }
 
           })

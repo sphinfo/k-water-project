@@ -162,11 +162,11 @@ const Safety = () => {
             tooltip = legendGroup.length === 1 ? <LegendSafety props={legendOption[0]}/> : false
             uniqueArray.map((group)=>{
                 if(group === 'L3'){
-                    legends.push(<BaseLegendgGradientWidget params={{title:'변위 속도(cm/year)', min:-5, max: 5, datas:['#000083','#019ED5',  '#8DFF74', '#FD8000', '#800000'], tooltip:tooltip }}/>)
+                    legends.push(<BaseLegendgGradientWidget params={{title:'변위 속도(cm/year)', min:-5, max: 5, datas:['#000083', '#003CAA', '#019ED5', '#03FFFF', '#8DFF74', '#FFFF00', '#FD8000', '#FA0100', '#800000'], tooltip:tooltip }}/>)
                 }else if(group === 'L4'){
                     legends.push(<BaseLegendWidget params={{ title:'변위등급',  datas: [{label:'안전', color:'BLUE'} ,{label:'보통', color:'GREEN'} ,{label:'위험', color:'RED'}], tooltip:tooltip }}/>)
                 }else if(group === 'L4TD'){
-                    legends.push(<BaseLegendgGradientWidget params={{title:'L4TD 시계열변위',min:-5, max: 5, datas:['#000083','#019ED5',  '#8DFF74', '#FD8000', '#800000'], tooltip:tooltip }}/>)
+                    legends.push(<BaseLegendgGradientWidget params={{title:'L4TD 시계열변위',min:-5, max: 5, datas:['#000083', '#003CAA', '#019ED5', '#03FFFF', '#8DFF74', '#FFFF00', '#FD8000', '#FA0100', '#800000'], tooltip:tooltip }}/>)
                 }
 
             })

@@ -27,11 +27,9 @@ const BaseLegendGradientWidget = (props) => {
                     {tooltip}
                 </dt>
                 <dd className="widget-body">
-                    {datas && datas.length > 3 ? (
-                        <div className="widget-legend-chip"
-                             style={{background: `linear-gradient(90deg, ${datas[0]} 0%, ${datas[1]} 25.52%, ${datas[2]} 52.08%, ${datas[3]} 77.08%, ${datas[4]} 100%)`}}>
-                        </div>
-                    ) : null}
+                    <div className="widget-legend-chip"
+                         style={{background: `linear-gradient(90deg, ${datas[0]} 0%, ${datas[1]} 12.5%, ${datas[2]} 25%, ${datas[3]} 37.5%, ${datas[4]} 50%, ${datas[5]} 62.5%, ${datas[6]} 75%, ${datas[7]} 87.5%, ${datas[8]} 100%)`}}>
+                    </div>
                     <ul className="widget-legend-unit">
                         <li>{min}</li>
                         <li>{max}</li>
