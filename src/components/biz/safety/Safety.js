@@ -42,16 +42,16 @@ const Safety = () => {
         getFeatures(features){
             if(layerIdx === 1){
                 if(compLayerClick){
-                
+
                     //변위탐지가 아닐시
                     if(features[0]?.id?.indexOf('L4DC') === -1){
                         const featureInfo = {...features[0], ...layers[features[0]?.id]}
                         dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: featureInfo})
                     }
-                    
+
                 }
 
-                //변위등급이 켜져 있는 경우 ovelay 
+                //변위등급이 켜져 있는 경우 ovelay
                 if(displaceLevel){
                     G$addWidget('SafetyL4LevelDataWidget')
                     const {clickPosition, properties} = features[0]
@@ -88,7 +88,7 @@ const Safety = () => {
             //범례 삭제
             G$removeWidget('BaseAddLegendWidget')
             G$removeWidget('SafetyL4LevelDataWidget')
-            
+
 
         }
 
@@ -133,7 +133,7 @@ const Safety = () => {
         }else{
             G$removeWidget('SafetyL4LevelDataWidget')
         }
-        
+
     },[layers])
 
     useEffect(()=>{
@@ -162,13 +162,13 @@ const Safety = () => {
             tooltip = legendGroup.length === 1 ? <LegendSafety props={legendOption[0]}/> : false
             uniqueArray.map((group)=>{
                 if(group === 'L3'){
-                    legends.push(<BaseLegendgGradientWidget params={{title:'변위 속도(cm/year)', min:-5, max: 5, datas:['#0000ff','#00ffff',  '#00ff00', '#ffff00', '#ff0000'], tooltip:tooltip }}/>)
+                    legends.push(<BaseLegendgGradientWidget params={{title:'변위 속도(cm/year)', min:-5, max: 5, datas:['#000083','#019ED5',  '#8DFF74', '#FD8000', '#800000'], tooltip:tooltip }}/>)
                 }else if(group === 'L4'){
                     legends.push(<BaseLegendWidget params={{ title:'변위등급',  datas: [{label:'안전', color:'BLUE'} ,{label:'보통', color:'GREEN'} ,{label:'위험', color:'RED'}], tooltip:tooltip }}/>)
                 }else if(group === 'L4TD'){
-                    legends.push(<BaseLegendgGradientWidget params={{title:'L4TD 시계열변위',min:-5, max: 5, datas:['#0000ff','#00ffff',  '#00ff00', '#ffff00', '#ff0000'], tooltip:tooltip }}/>)
+                    legends.push(<BaseLegendgGradientWidget params={{title:'L4TD 시계열변위',min:-5, max: 5, datas:['#000083','#019ED5',  '#8DFF74', '#FD8000', '#800000'], tooltip:tooltip }}/>)
                 }
-                
+
             })
             G$addWidget('BaseAddLegendWidget', {children:legends})
         }
@@ -187,7 +187,7 @@ const Safety = () => {
             legendSetting()
             safety4LevelLayerRef.current.remove()
         }
-        
+
         if(layerIdx > 0){
             Object.keys(layers).map((layerId, i)=>{
                 const { store, layer, ...other } = layers[layerId]?.props
@@ -214,12 +214,12 @@ const Safety = () => {
             <SafetyResult />
 
             {/* 4레벨 결과 영역 ( 3레벨이 레이어가 1개 선택되었을시 / 여러개 선택이 되면 레이어 보는 기능 )*/}
-            {layerIdx === 1 && 
+            {layerIdx === 1 &&
                 (
                     <div className="side-content side-content-has-inner">
                         <SafetyL4 mainLayer={mainLayer}/>
                     </div>
-                ) 
+                )
             }
 
         </>
