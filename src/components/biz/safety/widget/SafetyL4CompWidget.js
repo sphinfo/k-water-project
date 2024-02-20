@@ -16,7 +16,7 @@ const SafetyL4CompWidget = () => {
      * selectFeature : feature 선택정보
      * select3Level : 3레벨 선택정보
      * select4Level : 4레벨 선택정보
-     * displaceLevel : 변위성분 
+     * displaceLevel : 변위성분
      */
     const { selectFeature, select3Level, select4Level, displaceLevel } = useSelector(state => state.safety)
     const dispatch = useDispatch()
@@ -24,9 +24,9 @@ const SafetyL4CompWidget = () => {
     //Chart Ref
     const chartRef = useRef({})
 
-    //차트 데이터 Ref 
+    //차트 데이터 Ref
     const chartInfoRef = useRef({
-        //X축 
+        //X축
         labels: [],
         //Y축
         datasets: [],
@@ -41,7 +41,7 @@ const SafetyL4CompWidget = () => {
         {accessor: 'p1', Header: '변위 (p1)', width: 200, align: 'center'},
         {accessor: 'p2', Header: '변위 (p2)', width: 200, align: 'center'},
     ]
-    
+
     const [loading, setLoading] = useState(false)
 
     //지점 pin 레이어
@@ -98,7 +98,7 @@ const SafetyL4CompWidget = () => {
                 }
             }
         }
-        
+
         //창이 닫히면 pinlayer 제거
         return()=>{
             setLoading(false)
@@ -221,7 +221,7 @@ const SafetyL4CompWidget = () => {
 
     //테이블 데이터 생성및 추가
     const setTableData = () =>{
-        
+
         let p1 = []
         let p2 = []
 
@@ -232,14 +232,14 @@ const SafetyL4CompWidget = () => {
                 p2 = obj.data
             }
         })
-        
+
         let tableDatas = createTableDatas( chartInfoRef.current.labels, p1, p2 )
 
         let aa = 0
         if(p1.length > 0){
             p1.map((val)=>{
                 aa += val
-            })    
+            })
             aa = (aa/p1.length).toFixed(3)
         }
         setAvgP1(aa)
@@ -248,11 +248,11 @@ const SafetyL4CompWidget = () => {
         if(p2.length > 0){
             p2.map((val)=>{
                 bb += val
-            })    
+            })
             bb = (bb/p2.length).toFixed(3)
         }
         setAvgP2(bb)
-        
+
         tableDatas = tableDatas.sort((a, b) => (a.date < b.date) ? 1 : -1)
         gridRef.current.provider = tableDatas
 
@@ -281,7 +281,7 @@ const SafetyL4CompWidget = () => {
         <div className="content-body">
             <div className="content-col-group">
                 <div className="content-col">
-                    
+
                     {/* <div className="content-row">
                         <div className="panel-box">
                             <div className="number-dashboard">
@@ -297,11 +297,14 @@ const SafetyL4CompWidget = () => {
                         </div>
                     </div> */}
 
-                    <div className="content-row">
-                        <div className="panel-box">
-                        <div className="chart-unit-warp">
-                            <span className="chart-unit">변위(cm)</span>
-                        </div>
+                    <div className="content-row height-100">
+                        <div className="panel-box height-100">
+                            <div className="panel-box-header">
+                                <h4 className="panel-box-title">변위 비교 그래프</h4>
+                            </div>
+                            <div className="chart-unit-warp">
+                                <span className="chart-unit">변위(cm)</span>
+                            </div>
                             <BaseChart width={'100%'} height={300} ref={chartRef} chartType={'Line'} title={''} noDataText={'지도에서 지점을 선택하세요.'}/>
                         </div>
                     </div>
