@@ -235,11 +235,11 @@ const FloodL4WaterLevel = () => {
                         <div className="number-dashboard">
                             <div className="nd-item text-blue">
                                 <h4 className="nd-item-title">지점 평균수위(m)</h4>
-                                <div className="nd-item-body">{avg.toFixed(2) === NaN ? '-' : avg.toFixed(2)}</div>
+                                <div className="nd-item-body">{isNaN(avg.toFixed(2)) ? '-' : avg.toFixed(2)}</div>
                             </div>
                             <div className="nd-item">
                                 <h4 className="nd-item-title">실측/모의 잔차 평균(m)</h4>
-                                <div className="nd-item-body">{avg2.toFixed(2) === NaN ? '-' : avg2.toFixed(2)}</div>
+                                <div className="nd-item-body">{isNaN(avg2.toFixed(2)) ? '-' : avg2.toFixed(2)}</div>
                             </div>
                         </div>
                     </div>
