@@ -97,18 +97,18 @@ const EnvironmentLandCover = (props) => {
     const setBarData = (datas, change=0) =>{
 
         let data = [G$setMtoKm(datas.class1),
-            G$setMtoKm(datas.class2),
-            G$setMtoKm(datas.class3),
-            G$setMtoKm(datas.class4),
-            G$setMtoKm(datas.class5),
-            G$setMtoKm(change)]
+            G$setMtoKm(datas.class2).toFixed(2),
+            G$setMtoKm(datas.class3).toFixed(2),
+            G$setMtoKm(datas.class4).toFixed(2),
+            G$setMtoKm(datas.class5).toFixed(2),
+            G$setMtoKm(change).toFixed(2)]
 
         let area = 0
         data.map((obj)=>{
-            area += obj
+            area += Number(obj)
         })
 
-        setMaxArea(area)
+        setMaxArea(area.toFixed(2))
         // setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]}  ${G$setNumberFixedKomma(G$setSliceNumber(data[G$arrayGetMinMax(data).min]).num, 0)}${G$setSliceNumber(data[G$arrayGetMinMax(data).min]).convert ? 'K' : ''}`)
         // setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]}  ${G$setNumberFixedKomma(G$setSliceNumber(data[G$arrayGetMinMax(data).max]).num, 0)}${G$setSliceNumber(data[G$arrayGetMinMax(data).max]).convert ? 'K' : ''}`)
         setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]}  ${data[G$arrayGetMinMax(data).min]}`)
@@ -196,7 +196,7 @@ const EnvironmentLandCover = (props) => {
                     value !== 0 &&
                     <div className={`chart-item`} key={`item-${i}`} style={{backgroundColor: `#${G$normalizeWithColors({value, min:min, max:max, type:colorType}).hex}`}}>
                         {/* <span>{G$setNumberFixedKomma(G$setSliceNumber(value).num,0)}{G$setSliceNumber(value).convert ? 'K' : ''}</span> */}
-                        <span>{G$setMtoKm(value)}</span>
+                        <span>{G$setMtoKm(value).toFixed(2)}</span>
                     </div>
                 }
             </>
@@ -216,7 +216,7 @@ const EnvironmentLandCover = (props) => {
                                     <div className="nd-item">
                                         <h4 className="nd-item-title">전체 면적(K㎡)</h4>
                                         {/* <div className="nd-item-body">{G$setNumberFixedKomma(G$setSliceNumber(maxArea).num,0)}{G$setSliceNumber(maxArea).convert ? 'K' : ''}</div> */}
-                                        <div className="nd-item-body">{G$setMtoKm(maxArea)}</div>
+                                        <div className="nd-item-body">{maxArea}</div>
                                     </div>
                                     <div className="nd-item">
                                         <h4 className="nd-item-title">최대 면적(K㎡)</h4>

@@ -216,15 +216,14 @@ const DroughtExpUntDatas = (props) => {
                     let datas = response?.result?.data.map((obj)=>{
                         return {...obj
                             , date:obj.createdAt.substring(0,10)
-                            , gpcp: obj.pcp === 0 ? '-' : obj.pcp
-                            , gl3sm: obj.l3sm === 0 ? '-' : obj.l3sm
-                            , gl4dr: obj.l4dr === 0 ? '-' : obj.l4dr
-                            , gl4d4: obj.l4d4 === 0 ? '-' : obj.l4d4
+                            , gpcp: obj.pcp === 0 ? '-' : obj.pcp.toFixed(2)
+                            , gl3sm: obj.l3sm === 0 ? '-' : obj.l3sm.toFixed(2)
+                            , gl4dr: obj.l4dr === 0 ? '-' : obj.l4dr.toFixed(2)
+                            , gl4d4: obj.l4d4 === 0 ? '-' : obj.l4d4.toFixed(2)
                         }
                     })
                     gridRef.current.provider = datas
                     setChartData(datas)
-
                 }
             })
         }
@@ -340,14 +339,9 @@ const DroughtExpUntDatas = (props) => {
     useEffect(()=>{
         gridRef.current.highlight = radioValue
         setChartData(gridRef.current.provider)
-
-
     },[radioValue])
 
     const setChartData = (dataset=[]) =>{
-
-        
-        
 
         chartInfoRef.current.labels = []
         chartInfoRef.current.datasets = []
