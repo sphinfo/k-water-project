@@ -5,10 +5,9 @@ import BaseSelectOption from "@common/util/BaseSelectOption";
 import BaseDatePicker from "@common/datepicker/BaseDatePicker";
 import dayjs from "dayjs";
 
-const FloodOptions = () => {
+const BaseSearchOption = () => {
 
     const namesRef = useRef(['YONGDAM','HWANGGANG','IMNAM','DAECHEONG','ANDONG','UNMUN','YEONGCHEON','SAYEON','SEOUL','DAEJEON','NAESEONGCHEON','MIHOCHEON','WYECHEON'])
-
 
     const dispatch = useDispatch()
     const { startDate, endDate, selectBox } = useSelector(state => state.flood)
@@ -47,4 +46,4 @@ const FloodOptions = () => {
     )
 }
 
-export default React.memo(FloodOptions)
+export default React.memo(BaseSearchOption)

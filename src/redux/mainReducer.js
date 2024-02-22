@@ -39,6 +39,8 @@ const initialState = {
   //맵 이동 control
   holdMap: false,
 
+  //searchOn: false,
+
 };
 
 

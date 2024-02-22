@@ -8,6 +8,7 @@ import { SET_PANEL_VISIBLE } from '@redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Admin from '@components/biz/admin/Admin';
 import Tooltip from "@mui/material/Tooltip";
+import BaseSearchOption from '@components/biz/common/BaseSearchOption';
 
 //탭 패널 공통
 function TabPanel(props) {
@@ -146,6 +147,11 @@ export default function Sidebar() {
           {/* <div className={ value === INDEX_5 ? "sidebar-tab active" : "sidebar-tab" }><div className="tab-icon i-user"></div></div> */}
           {/* <div className={ value === INDEX_5.i ? "sidebar-tab active" : "sidebar-tab" } onClick={() => { handleChange(INDEX_5.i) }} ><div className="tab-icon i-user"></div>{INDEX_5.name}</div> */}
         </div>
+      </div>
+
+      {/** 공통 검색 조건 240222 */}
+      <div>
+        <BaseSearchOption />
       </div>
 
       <div className="panel-wrap">
