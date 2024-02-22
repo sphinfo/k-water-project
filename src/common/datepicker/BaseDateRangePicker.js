@@ -30,15 +30,22 @@ const BaseDateRangePicker = (props, ref) => {
   const [selectedDate, setSelectdDate] = useState([])
 
   const onChangeDate = useCallback((d) => {
-    if (ref && ref.current) {
+    
+    setSelectdDate(d)
+
+    /*if (ref && ref.current) {
       ref.current.value = d;
     } else {
       setSelectdDate(d);
     }
-
     (onChange && onChange(d));
-    (onchangeFromat && onchangeFromat([d[0].format('YYYYMMDD'), d[1].format('YYYYMMDD')]));
-  });
+    (onchangeFromat && onchangeFromat([d[0].format('YYYYMMDD'), d[1].format('YYYYMMDD')]));*/
+  })
+
+  const closeOnSelect = useCallback(()=>{
+    //(onChange && onChange(selectedDate));
+    (onchangeFromat && onchangeFromat([selectedDate[0].format('YYYYMMDD'), selectedDate[1].format('YYYYMMDD')]))
+  },[selectedDate])
 
   const max = useMemo(()=>{
     return maxDate ? dayjs(maxDate) : dayjs().add(interval || -1, 'day')
@@ -73,7 +80,9 @@ const BaseDateRangePicker = (props, ref) => {
         color={"primary"}
         className={"date-picker"}
         defaultValue={[min, max]}
+        
         onChange={onChangeDate}
+        onClose={closeOnSelect}
       />
     </LocalizationProvider>
     </>
