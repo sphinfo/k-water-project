@@ -14,7 +14,9 @@ import {
   SEARCH_RIVER,
   SET_PANEL_VISIBLE,
   SET_SIDE_PANEL,
-  HOLD_MAP
+  HOLD_MAP,
+  MAIN_OPTIONS,
+  SELECT_BOX
 } from './actions';
 
 const initialState = {
@@ -24,8 +26,8 @@ const initialState = {
   opacity: false, //투명도
   mainOptions: [],
   selectOption: null,
-  startDate: dayjs().format('YYYY-MM-DD'),
-  endDate: dayjs().format('YYYY-MM-DD'),
+  startDate: dayjs('20100101').format('YYYYMMDD'), //검색 옵션 ( 기간설정 )
+  endDate: dayjs().format('YYYYMMDD'),   //검색 옵션 ( 기간설정 )
   lengedPanel: {},
   addrResult:false,
   riverResult:[],
@@ -38,8 +40,8 @@ const initialState = {
 
   //맵 이동 control
   holdMap: false,
-
-  //searchOn: false,
+  
+  selectBox: false,
 
 };
 
@@ -56,10 +58,6 @@ function mainReducer(state = initialState, action) {
       return { ...state, mode: action.mode };
     case HOLD_MAP:
       return { ...state, holdMap: action.holdMap };
-    case SET_START_DATE:
-      return { ...state, startDate: action.date };
-    case SET_END_DATE:
-      return { ...state, endDate: action.date };
     case SET_PANEL_VISIBLE:
       return { ...state, panelVisible: action.panelVisible };
     case SET_SIDE_PANEL:
@@ -71,6 +69,16 @@ function mainReducer(state = initialState, action) {
         ...state,
         mainOptions: state.mainOptions.filter(obj => obj.id !== action.value.id)
       };
+
+    
+    case SET_START_DATE:
+      return { ...state, startDate: action.date };
+    case SET_END_DATE:
+      return { ...state, endDate: action.date };
+    case MAIN_OPTIONS:
+      return  { ...state, mainOptions: action.mainOptions };
+    case SELECT_BOX:
+      return { ...state, selectBox: action.selectBox}
 
     //하단 
     case LEGNED_PANEL:

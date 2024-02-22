@@ -150,7 +150,7 @@ export default function Sidebar() {
       </div>
 
       {/** 공통 검색 조건 240222 */}
-      <div style={{position: 'fixed', left: 300}}>
+      <div style={{position: 'fixed', left: 400}}>
         <BaseSearchOption />
       </div>
 
