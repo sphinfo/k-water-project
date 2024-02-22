@@ -34,9 +34,13 @@ const BaseSearchOption = () => {
                     <h2 className="content-row-title">기간 설정</h2>
                 </div>
                 <div className="form-control group">
-                    <BaseDatePicker date={dayjs('20100101')} maxDate={endDate} onchangeFromat={(date)=>{dispatch({type: SET_START_DATE, date})}}/>
-                    <span>~</span>
-                    <BaseDatePicker minDate={startDate} onchangeFromat={(date)=>{dispatch({type: SET_END_DATE, date})}}/>
+                    <BaseDateRangePicker onchangeFromat={(date)=>{dispatch({type: SET_START_DATE, date:date[0]}); dispatch({type: SET_END_DATE, date:date[1]})}}/>
+                    {/**
+                     * <BaseDatePicker date={dayjs('20100101')} maxDate={endDate} onchangeFromat={(date)=>{dispatch({type: SET_START_DATE, date})}}/>
+                        <span>~</span>
+                        <BaseDatePicker minDate={startDate} onchangeFromat={(date)=>{dispatch({type: SET_END_DATE, date})}}/>
+                     */}
+                    
                 </div>
             </div>
 

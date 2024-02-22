@@ -1,12 +1,12 @@
 import React, { useCallback, useImperativeHandle, useMemo, useState } from "react";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers'
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { koKR } from '@mui/x-date-pickers/locales';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { memo } from "react";
-import { DateRangePicker } from "@mui/lab";
+import { DateRangePicker } from "@mui/x-date-pickers-pro";
 
 dayjs.locale('ko');
 
@@ -26,7 +26,8 @@ const BaseDateRangePicker = (props, ref) => {
   // onChange : Parent Combo Change Event Function
   const { dateFormat, minDate, maxDate, interval, onChange, onchangeFromat, ...other } = props;
 
-  const [selectedDate, setSelectdDate] = useState(props.date || dayjs().add(interval || -1, 'day'));
+  //const [selectedDate, setSelectdDate] = useState(props.date || dayjs().add(interval || -1, 'day'));
+  const [selectedDate, setSelectdDate] = useState([])
 
   const onChangeDate = useCallback((d) => {
     if (ref && ref.current) {
@@ -36,11 +37,11 @@ const BaseDateRangePicker = (props, ref) => {
     }
 
     (onChange && onChange(d));
-    (onchangeFromat && onchangeFromat(d.format('YYYYMMDD')));
+    (onchangeFromat && onchangeFromat([d[0].format('YYYYMMDD'), d[1].format('YYYYMMDD')]));
   });
 
   const max = useMemo(()=>{
-    return maxDate ? dayjs(maxDate) : dayjs('2030-12-31')
+    return maxDate ? dayjs(maxDate) : dayjs().add(interval || -1, 'day')
   }, [maxDate])
 
   const min = useMemo(()=>{
@@ -64,24 +65,18 @@ const BaseDateRangePicker = (props, ref) => {
   }));
 
   return (
+    <>
     <LocalizationProvider dateAdapter={LocalizedUtils} >
-      <DateRangePicker localeText={{ start: 'Check-in', end: 'Check-out' }} />
-      <DesktopDatePicker
-        autoFocus
-        value={selectedDate}
+      <DateRangePicker 
+        calendars={1}
         format={format}
         color={"primary"}
         className={"date-picker"}
-        maxDate={max}
-        minDate={min}
+        defaultValue={[min, max]}
         onChange={onChangeDate}
-        PopperProps={{
-          disablePortal: true,
-          onClose: () => {},
-        }}
-        {...other}
       />
     </LocalizationProvider>
+    </>
   );
 };
 
