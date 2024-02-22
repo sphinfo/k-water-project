@@ -4,6 +4,7 @@ import { SET_START_DATE, SET_END_DATE } from "@redux/actions";
 import BaseSelectOption from "@common/util/BaseSelectOption";
 import BaseDatePicker from "@common/datepicker/BaseDatePicker";
 import dayjs from "dayjs";
+import BaseDateRangePicker from "@common/datepicker/BaseDateRangePicker";
 
 const BaseSearchOption = () => {
 
