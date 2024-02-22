@@ -21,18 +21,12 @@ const BaseSearchOption = () => {
     return (
         <div className="base-search-wrap">
             <div className="content-row">
-                <div className="content-row-header">
-                    <h2 className="content-row-title">검색</h2>
-                </div>
                 <div className="form-control">
                     <BaseSelectOption ref={selectRef} provider={namesRef.current} />
                 </div>
             </div>
 
             <div className="content-row">
-                <div className="content-row-header">
-                    <h2 className="content-row-title">기간 설정</h2>
-                </div>
                 <div className="form-control group">
                     <BaseDateRangePicker onchangeFromat={(date)=>{dispatch({type: SET_START_DATE, date:date[0]}); dispatch({type: SET_END_DATE, date:date[1]})}}/>
                     {/**
@@ -40,7 +34,18 @@ const BaseSearchOption = () => {
                         <span>~</span>
                         <BaseDatePicker minDate={startDate} onchangeFromat={(date)=>{dispatch({type: SET_END_DATE, date})}}/>
                      */}
-                    
+
+                </div>
+            </div>
+            <div className="content-row">
+                <div className="base-btn-wrap">
+                    <div className="form-control">
+                        <input type="checkbox" id="checkbox"/>
+                        <label htmlFor="checkbox">
+                            현 지도 내 검색
+                        </label>
+                    </div>
+                    <button className="btn">적용</button>
                 </div>
             </div>
 

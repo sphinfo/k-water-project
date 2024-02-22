@@ -67,13 +67,14 @@ const BaseDateRangePicker = (props, ref) => {
   return (
     <>
     <LocalizationProvider dateAdapter={LocalizedUtils} >
-      <DateRangePicker 
+      <DateRangePicker
         calendars={1}
         format={format}
         color={"primary"}
         className={"date-picker"}
         defaultValue={[min, max]}
         onChange={onChangeDate}
+        localeText={{ start: '', end: '' }}
       />
     </LocalizationProvider>
     </>
