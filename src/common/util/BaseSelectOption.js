@@ -13,7 +13,7 @@ const BaseSelectOption = ({ provider = [], ...other}, ref) => {
   const [datasList, setDataList] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
   const [menuIsOpen, setMenuIsOpen] = useState(false)
-  
+
   useEffect(()=>{
     setDataList(G$selectBoxFilter(provider))
   },[provider])
@@ -39,9 +39,10 @@ const BaseSelectOption = ({ provider = [], ...other}, ref) => {
 
   return (
     <>
-      <Select 
+      <Select
         closeMenuOnSelect={false}
-        components={animatedComponents}
+        className="react-select-container"
+        classNamePrefix="react-select"
         getOptionLabel={option => option.name}
         getOptionValue={option => option.code}
         options={datasList}

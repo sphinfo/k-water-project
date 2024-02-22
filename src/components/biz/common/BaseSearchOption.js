@@ -19,8 +19,7 @@ const BaseSearchOption = () => {
     },[selectBox])
 
     return (
-        <>
-        <div className={"content-block"}>
+        <div className="base-search-wrap">
             <div className="content-row">
                 <div className="content-row-header">
                     <h2 className="content-row-title">검색</h2>
@@ -29,7 +28,7 @@ const BaseSearchOption = () => {
                     <BaseSelectOption ref={selectRef} provider={namesRef.current} />
                 </div>
             </div>
-            
+
             <div className="content-row">
                 <div className="content-row-header">
                     <h2 className="content-row-title">기간 설정</h2>
@@ -40,10 +39,8 @@ const BaseSearchOption = () => {
                     <BaseDatePicker minDate={startDate} onchangeFromat={(date)=>{dispatch({type: SET_END_DATE, date})}}/>
                 </div>
             </div>
-            
+
         </div>
-            
-        </>
     )
 }
 
