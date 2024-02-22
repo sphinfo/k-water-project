@@ -40,8 +40,6 @@ const BaseSearchOption = () => {
             </div>
 
         </div>
-
-        </>
     )
 }
 
