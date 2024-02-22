@@ -1,58 +1,34 @@
-import React, { forwardRef, memo, useEffect, useImperativeHandle, useState } from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import SvgIcon from "@mui/material/SvgIcon";
-import { G$flyToPoint, G$selectBoxFilter } from "@gis/util";
-import { Checkbox } from "@mui/material";
-import { useDispatch } from 'react-redux';
-import { HOLD_MAP } from '@redux/actions';
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
+import React, { forwardRef, memo, useEffect, useImperativeHandle, useState } from 'react'
+import { G$flyToPoint, G$selectBoxFilter } from "@gis/util"
+import { useDispatch, useSelector } from 'react-redux'
+import { HOLD_MAP, MAIN_OPTIONS } from '@redux/actions'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated'
 
-const BaseSelectOption = ({ provider = [], changeItem, searchOn, ...other}, ref) => {
+const BaseSelectOption = ({ provider = [], ...other}, ref) => {
 
   const dispatch = useDispatch()
+  const { selectBox } = useSelector(state => state.main)
   const animatedComponents = makeAnimated()
   const [datasList, setDataList] = useState([])
+  const [selectedItems, setSelectedItems] = useState([])
   const [menuIsOpen, setMenuIsOpen] = useState(false)
 
   useEffect(()=>{
     setDataList(G$selectBoxFilter(provider))
   },[provider])
 
-  const [selectedItems, setSelectedItems] = useState([])
-
-
-  //item 변경되었을시
   useEffect(()=>{
-    changeItem(selectedItems)
-
-  },[selectedItems])
-
-  // BaseSelectOption 레퍼런스 API
-  useImperativeHandle(ref, () => ({
-    get provider() {
-	    return provider
-    },
-    set provider(datas) {
-      provider = datas
-    },
-
-    set visibleTree(v){
-      //setVisibleTree(v)
-    }
-  }));
+    setMenuIsOpen(selectBox)
+  },[selectBox])
 
   useEffect(()=>{
-    console.info(menuIsOpen)
-  },[menuIsOpen])
+    if(!menuIsOpen) dispatch({type:MAIN_OPTIONS, mainOptions: selectedItems})
+  },[menuIsOpen, selectedItems])
 
-  useEffect(()=>{
-    console.info(menuIsOpen)
-  },[datasList])
+  const handleSelectChange = (selectedOptions) => {
+    setSelectedItems(selectedOptions)
+  }
 
   const formatGroupLabel = (data) => (
     <div >
@@ -60,7 +36,6 @@ const BaseSelectOption = ({ provider = [], changeItem, searchOn, ...other}, ref)
       <span>{data.options.length}</span>
     </div>
   )
-
 
   return (
     <>
@@ -76,7 +51,8 @@ const BaseSelectOption = ({ provider = [], changeItem, searchOn, ...other}, ref)
         menuIsOpen={menuIsOpen}
         onMenuOpen={() => setMenuIsOpen(true)}
         onMenuClose={() => setMenuIsOpen(false)}
-        placeholder={"검색어를 입력해주세요."}
+        onChange={handleSelectChange}
+        value={selectedItems}
       />
     </>
   );

@@ -4,7 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$findEngNmFilter, G$flyToPoint, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
-import { FLOOD_CLEAR_LAEYRS, FLOOD_RESET, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, FLOOD_SELECT_WATER_LEVEL, FLOOD_SET_LAYERS, LOADING } from "@redux/actions";
+import { FLOOD_CLEAR_LAEYRS, FLOOD_RESET, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, FLOOD_SELECT_WATER_LEVEL, FLOOD_SET_LAYERS, LOADING, SELECT_BOX } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
 import { Button, CircularProgress } from "@mui/material";
 import { getL3Layers } from "@common/axios/common";
@@ -18,7 +18,8 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     const dispatch = useDispatch()
 
     // 홍수 검색조건
-    const { text, startDate, endDate, floodResultTab, selectBox, searchOn } = useSelector(state => state.flood)
+    const { text, floodResultTab, selectBox, searchOn } = useSelector(state => state.flood)
+    const { mainOptions, startDate, endDate } = useSelector(state => state.main)
 
     const [layerList, setLayerList] = useState([])
 
@@ -42,16 +43,16 @@ const FloodResult = ({waterObsList=[], ...props}) => {
       setWlCnt(0)
       setResultInfos({})
       //*******API*************/
-      if(searchOn && text.length > 0){
+      if( mainOptions.length > 0 ){
         if (timer) {
           clearTimeout(timer)
         }
 
         
         const delayRequest = setTimeout(() => {
-          if (text.length > 0) {
+          if (mainOptions.length > 0) {
             
-            let location = text.map(item => item.code).join(',')
+            let location = mainOptions.map(item => item.code).join(',')
             let params = {type:'flood', level: 'L3', location: location, from: startDate, to: endDate}
 
             setLoading(true)
@@ -84,7 +85,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                         let group = 'WaterLevel'
                         let groupNm = '지점수위'
                         let satellite= 'Sentinel 1'
-                        let krNm = G$findEngNmFilter(obj.name)[0]?.items[0]?.name
+                        let krNm = G$findEngNmFilter(obj.name)[0]?.options[0]?.name
                         let startedAt = dayjs(obj.date).format('YYYYMMDD')
                         resultList.push({group, krNm, groupNm, satellite, startedAt, ...obj})
                       })
@@ -132,7 +133,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
         setLayerList([])
         
       }
-    },[searchOn, startDate, endDate])
+    },[mainOptions, startDate, endDate])
 
     //임시 검색결과 도출
     useEffect(()=>{
@@ -277,7 +278,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                   {noData && <> <h3 className="empty-text">{"연구 대상 지역 또는 기간을 변경해주세요."}</h3> </>}
                   <Button className="btn empty-btn" onClick={(e)=>{{
                       e.stopPropagation()
-                      dispatch({type:FLOOD_SELECT_BOX, selectBox: true})
+                      dispatch({type:SELECT_BOX, selectBox: true})
                     }}}>지역검색</Button>
                 </div>
               </div>
