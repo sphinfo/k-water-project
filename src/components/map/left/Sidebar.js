@@ -49,11 +49,11 @@ function TabPanel(props) {
 
             {
               /*
-              
-              
+
+
               */
             }
-            
+
           </div>
       )}
     </div>
@@ -65,16 +65,16 @@ export default function Sidebar() {
   const dispatch = useDispatch()
   const {panelVisible, panelSide} = useSelector(state => state.main)
 
-  const INDEX_0 = useMemo(() => { return {i:0, name:'홍수'}}, []); 
-  const INDEX_1 = useMemo(() => { return {i:1, name:'가뭄'}}, []); 
-  const INDEX_2 = useMemo(() => { return {i:2, name:'안전'}}, []); 
-  const INDEX_3 = useMemo(() => { return {i:3, name:'환경'}}, []); 
-  
-  
+  const INDEX_0 = useMemo(() => { return {i:0, name:'홍수'}}, []);
+  const INDEX_1 = useMemo(() => { return {i:1, name:'가뭄'}}, []);
+  const INDEX_2 = useMemo(() => { return {i:2, name:'안전'}}, []);
+  const INDEX_3 = useMemo(() => { return {i:3, name:'환경'}}, []);
+
+
   //const INDEX_4 = useMemo(() => 4, []); //수변피복탐지
-  const INDEX_5 = useMemo(() => { return {i:5, name:''}}, []); 
-  
-  
+  const INDEX_5 = useMemo(() => { return {i:5, name:''}}, []);
+
+
   const NONE_INDEX = useMemo(() => -1, []); //none
 
   const [value, setValue] = useState(NONE_INDEX);
@@ -82,7 +82,7 @@ export default function Sidebar() {
 
   //탭 선택
   const handleChange = useCallback((newValue) => {
-    
+
     if (value === newValue) {
       dispatch({type: SET_PANEL_VISIBLE, panelVisible: false})
       setValue(NONE_INDEX)
@@ -112,7 +112,7 @@ export default function Sidebar() {
         <h1>수자원위성 활용산출물 통합 표출시스템</h1>
         <p>Korea Water Resources  Satellite Visualization System</p>
       </div>
-      
+
       <div className="sidebar-left" >
         <div className="sidebar-left-main">
           <div className="logo"><svg width="40" height="19" viewBox="0 0 40 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -150,9 +150,7 @@ export default function Sidebar() {
       </div>
 
       {/** 공통 검색 조건 240222 */}
-      <div style={{position: 'fixed', left: 300}}>
-        <BaseSearchOption />
-      </div>
+    <BaseSearchOption />
 
       <div className="panel-wrap">
         <TabPanel value={value} index={INDEX_0.i} name={INDEX_0.name} close={handleClose}>
@@ -177,6 +175,6 @@ export default function Sidebar() {
           <IconButton className="folding-btn map-basic-style " disableRipple={true} onClick={()=>{foldingHandler()}} />
         </div>
       </div>
-    </>   
+    </>
   );
 };

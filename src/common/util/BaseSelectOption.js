@@ -18,7 +18,7 @@ const BaseSelectOption = ({ provider = [], changeItem, searchOn, ...other}, ref)
   const animatedComponents = makeAnimated()
   const [datasList, setDataList] = useState([])
   const [menuIsOpen, setMenuIsOpen] = useState(false)
-  
+
   useEffect(()=>{
     setDataList(G$selectBoxFilter(provider))
   },[provider])
@@ -26,10 +26,10 @@ const BaseSelectOption = ({ provider = [], changeItem, searchOn, ...other}, ref)
   const [selectedItems, setSelectedItems] = useState([])
 
 
-  //item 변경되었을시 
+  //item 변경되었을시
   useEffect(()=>{
     changeItem(selectedItems)
-    
+
   },[selectedItems])
 
   // BaseSelectOption 레퍼런스 API
@@ -49,7 +49,7 @@ const BaseSelectOption = ({ provider = [], changeItem, searchOn, ...other}, ref)
   useEffect(()=>{
     console.info(menuIsOpen)
   },[menuIsOpen])
-  
+
   useEffect(()=>{
     console.info(menuIsOpen)
   },[datasList])
@@ -64,9 +64,10 @@ const BaseSelectOption = ({ provider = [], changeItem, searchOn, ...other}, ref)
 
   return (
     <>
-      <Select 
+      <Select
         closeMenuOnSelect={false}
-        components={animatedComponents}
+        className="react-select-container"
+        classNamePrefix="react-select"
         getOptionLabel={option => option.name}
         getOptionValue={option => option.code}
         options={datasList}
@@ -75,6 +76,7 @@ const BaseSelectOption = ({ provider = [], changeItem, searchOn, ...other}, ref)
         menuIsOpen={menuIsOpen}
         onMenuOpen={() => setMenuIsOpen(true)}
         onMenuClose={() => setMenuIsOpen(false)}
+        placeholder={"검색어를 입력해주세요."}
       />
     </>
   );
