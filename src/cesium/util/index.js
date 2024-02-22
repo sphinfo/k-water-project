@@ -590,23 +590,23 @@ const G$selectBoxFilter=(filters=[])=>{
     return SelectBoxConfig.map(category => {
         return {
             ...category,
-            items: category.items.filter(item => filters.includes(item.code))
+            options: category.options.filter(item => filters.includes(item.code))
         };
-    }).filter(category => category.items.length > 0)
+    }).filter(category => category.options.length > 0)
 }
 
 const G$findEngNmFilter=(name=null)=>{
     return SelectBoxConfig.map(category => {
         return {
-            items: category.items.filter(item => name.indexOf(item.code) > -1)
+            options: category.options.filter(item => name.indexOf(item.code) > -1)
         };
-    }).filter(category => category.items.length > 0)
+    }).filter(category => category.options.length > 0)
 }
 
 const G$getKoreanName = (codes=[]) => {
     const foundNames = []
     codes.forEach(code => {
-        const foundItem = SelectBoxConfig.flatMap(category => category.items).find(item => item.code === code)
+        const foundItem = SelectBoxConfig.flatMap(category => category.options).find(item => item.code === code)
         const name = foundItem ? foundItem.name : ''
         if(name !== ''){
             foundNames.push(name)

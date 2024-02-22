@@ -3,7 +3,7 @@ const SelectBoxConfig = [
     {
         name:'댐', 
         code:'DAM',
-        items: [ 
+        options: [ 
             {name:'용담댐', code:'YONGDAM',obscd:"3001690", x:35.9449283, y:127.5246387, z: 35000},
             {name:'황강댐', code:'HWANGGANG', x:38.3954103,  y:127.1831424, z: 35000},
             {name:'임남댐', code:'IMNAM', x:38.4222100, y:127.7908617, z: 35000},
@@ -18,21 +18,21 @@ const SelectBoxConfig = [
     },{
         name:'보', 
         code: 'BO',
-        items: [
+        options: [
             {name:'세종보', code:'SEJONG', x:36.5038281, y:127.2907172, z: 35000},
             {name:'창녕함안보', code:'CHANGNYEONG', x:35.3797885, y:128.5518737, z: 35000},
         ]
     },{
         name:'도시', 
         code: 'CITY',
-        items: [
+        options: [
             {name:'서울', code:'SEOUL', x:37.5518911, y:126.9917937, z: 35000},
             {name:'대전', code:'DAEJEON', x:36.3398175, y:127.3940486, z: 35000},
         ]
     },{
         name:'하천', 
         code: 'RIVER',
-        items: [
+        options: [
             {name:'내성천(낙동강)', code:'NAESEONGCHEON', x:36.6989192, y:128.5573419, z: 35000},
             {name:'미호강', code:'MIHOCHEON', x:36.515, y:127.3197222, z: 35000}, 
             {name:'남천(위천)', code:'WYECHEON', x:36.5570387, y:128.2778682, z: 35000},
@@ -40,7 +40,7 @@ const SelectBoxConfig = [
     },{
         name:'시설,사면', 
         code: 'SI',
-        items: [
+        options: [
             {name:'논산천제방', code:'NONSAN', x:36.1648899, y:127.1992794, z: 35000},
             {name:'세대터널', code: 'SAEDAE', x:37.3821712, y:128.6272039, z: 35000} 
         ]
