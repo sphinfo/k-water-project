@@ -130,7 +130,9 @@ const Flood = () => {
 
     return (
         <>
-            <FloodResult />
+            <div className="panel panel-left">
+                <FloodResult />
+            </div>
             {/* 홍수 3레벨 레이어 선택되었을시 ( 활용주제도 open )*/}
             {layerIdx > 0 && (
                 <div className="side-content">

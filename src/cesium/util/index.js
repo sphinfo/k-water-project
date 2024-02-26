@@ -390,6 +390,12 @@ const G$pointsToExtent = (points = []) =>{
     return [minY, minX, maxX, maxY]
 
 }
+
+/* 현재 지도 extent 가져오기 */
+const G$getMapExtent = () => {
+    return MapManager.getExtent()
+}
+
 /* 지도 이동 컨트롤 */
 const G$holdMap = (hold=false) =>{
     MapManager.holdeMap(hold)
@@ -644,6 +650,7 @@ export {
     G$multiPolygonToExtent,
     G$pointsToExtent,
     G$flyToExtent,
+    G$getMapExtent,
     G$holdMap,
     G$imageLayersOpacity,
     G$flyToPoint,

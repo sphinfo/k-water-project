@@ -211,7 +211,10 @@ const Safety = () => {
             {/* <SafetyOptions /> */}
 
             {/* 결과결과 영역 */}
-            <SafetyResult />
+            
+            <div className="panel panel-left">
+                <SafetyResult />
+            </div>
 
             {/* 4레벨 결과 영역 ( 3레벨이 레이어가 1개 선택되었을시 / 여러개 선택이 되면 레이어 보는 기능 )*/}
             {layerIdx === 1 &&

@@ -249,7 +249,9 @@ const Drought = () => {
             {/* <DroughtOptions /> */}
 
             {/* 결과결과 영역 */}
-            <DroughtResult />
+            <div className="panel panel-left">
+                <DroughtResult />
+            </div>
 
             {/* 관측소 선택결과 ( 관측소가 선택되었을시 활용주제도 open )*/}
             
@@ -259,7 +261,6 @@ const Drought = () => {
                 {layerIdx === 1 && (
                     <DroughtL4/>
                 )}
-                
             </div>
         </>
     )

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$findEngNmFilter, G$flyToPoint, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
+import { G$BaseSelectBoxArray, G$findEngNmFilter, G$flyToPoint, G$getDateType, G$getKoreanName, G$getMapExtent, G$sortArrayObject } from "@gis/util";
 import { FLOOD_CLEAR_LAEYRS, FLOOD_RESET, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, FLOOD_SELECT_WATER_LEVEL, FLOOD_SET_LAYERS, LOADING, SELECT_BOX } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
 import { Button, CircularProgress } from "@mui/material";
@@ -18,7 +18,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
 
     // 홍수 검색조건
     const { floodResultTab } = useSelector(state => state.flood)
-    const { mainOptions, startDate, endDate, mainSearchOn } = useSelector(state => state.main)
+    const { mainOptions, startDate, endDate, mainSearchOn, geoSearch } = useSelector(state => state.main)
 
     const [layerList, setLayerList] = useState([])
 
@@ -45,7 +45,8 @@ const FloodResult = ({waterObsList=[], ...props}) => {
       if (mainOptions.length > 0) {
             
         let location = mainOptions.map(item => item.code).join(',')
-        let params = {type:'flood', level: 'L3', location: location, from: startDate, to: endDate}
+        let param = {type:'flood', level: 'L3', from: startDate, to: endDate}
+        const params = geoSearch ? { ...param, ...G$getMapExtent() } : { ...param, location }
 
         setLoading(true)
         getFloodL3Search(params).then((response)=>{

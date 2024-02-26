@@ -61,7 +61,7 @@ function TabPanel(props) {
 export default function Sidebar() {
 
   const dispatch = useDispatch()
-  const {panelVisible, panelSide} = useSelector(state => state.main)
+  const {panelVisible, panelSide, mainSearchOn} = useSelector(state => state.main)
 
   const INDEX_0 = useMemo(() => { return {i:0, name:'홍수'}}, []);
   const INDEX_1 = useMemo(() => { return {i:1, name:'가뭄'}}, []);
@@ -91,8 +91,13 @@ export default function Sidebar() {
   }, [value]);
 
   useEffect(()=>{
+    //처음검색이 아니고 탭이 없을경우 홍수를 default 로 표출
+    if(mainSearchOn !== 0 && value === -1){
+      setValue(0)
+    }
+  },[mainSearchOn])
 
-  },[value])
+  
 
   //탭 닫기
   const handleClose = () => {
@@ -186,33 +191,40 @@ export default function Sidebar() {
                     {INDEX_3.name}</div>
             </div>
 
-            <div className="panel-wrap">
-                <TabPanel value={value} index={INDEX_0.i} name={INDEX_0.name} close={handleClose}>
-                    <Flood/>
-                </TabPanel>
-                <TabPanel value={value} index={INDEX_1.i} name={INDEX_1.name} close={handleClose}>
-                    <Drought/>
-                </TabPanel>
-                <TabPanel value={value} index={INDEX_2.i} name={INDEX_2.name} close={handleClose}>
-                    <Safety/>
-                </TabPanel>
-                <TabPanel value={value} index={INDEX_3.i} name={INDEX_3.name} close={handleClose}>
-                    <Environment/>
-                </TabPanel>
 
-                {/* 관리자 페이지 */}
-                <TabPanel value={value} index={INDEX_5.i} name={INDEX_5.name} close={handleClose}>
-                    <Admin/>
-                </TabPanel>
 
-                <div
-                    className={`folding-btn-wrap ${panelSide ? 'side-panel-pos' : ''} ${!panelVisible ? 'folding-off' : ''}`}
-                    style={{display: value === -1 ? 'none' : ''}}>
-                    <IconButton className="folding-btn map-basic-style " disableRipple={true} onClick={() => {
-                        foldingHandler()
-                    }}/>
-                </div>
+            <div className='panel-wrap'>
+              {
+                value === 0  && 
+                <Flood/>
+              }
+              {
+                value === 1  && 
+                <Drought/>
+              }
+              {
+                value === 2  && 
+                <Safety/>
+              }
+              {
+                value === 3  && 
+                <Environment/>
+              }
+
+              {/* 관리자 페이지 */}
+              {/* <TabPanel value={value} index={INDEX_5.i} name={INDEX_5.name} close={handleClose}>
+                  <Admin/>
+              </TabPanel> */}
             </div>
+            
+
+              {/* <div
+                  className={`folding-btn-wrap ${panelSide ? 'side-panel-pos' : ''} ${!panelVisible ? 'folding-off' : ''}`}
+                  style={{display: value === -1 ? 'none' : ''}}>
+                  <IconButton className="folding-btn map-basic-style " disableRipple={true} onClick={() => {
+                      foldingHandler()
+                  }}/>
+              </div> */}
 
             {/*<div className="sidebar-left-footer">
                  <div className={ value === INDEX_4 ? "sidebar-tab active" : "sidebar-tab" }><div className="tab-icon i-modify"></div></div>

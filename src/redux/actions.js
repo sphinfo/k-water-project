@@ -21,6 +21,7 @@ export const REMOVE_MAIN_OPTIONS = 'REMOVE_MAIN_OPTIONS';
 export const MAIN_OPTIONS = 'MAIN_OPTIONS'
 export const SELECT_BOX = 'SELECT_BOX'
 export const SEARCH_START = 'SEARCH_START'
+export const GEO_SEARCH = 'GEO_SEARCH'
 export const ADD_LAYER = 'ADD_LAYER'
 export const REMOVE_LAYER = 'REMOVE_LAYER'
 

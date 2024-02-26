@@ -170,6 +170,15 @@ class MapManager {
         this._holdMap = type
     }
 
+    getExtent(){
+        var currentExtent = this._map.camera.computeViewRectangle()
+        var left = Math.toDegrees(currentExtent.west)
+        var bottom = Math.toDegrees(currentExtent.south)
+        var right = Math.toDegrees(currentExtent.east)
+        var top = Math.toDegrees(currentExtent.north)
+        return {left, bottom, right, top}
+    }
+
     //extent 이동
     flyToExtent(extent, pitch){
         if(!this._holdMap){

@@ -17,7 +17,8 @@ import {
   HOLD_MAP,
   MAIN_OPTIONS,
   SELECT_BOX,
-  SEARCH_START
+  SEARCH_START,
+  GEO_SEARCH
 } from './actions';
 
 const initialState = {
@@ -45,6 +46,8 @@ const initialState = {
   selectBox: false,
 
   mainSearchOn: 0,
+
+  geoSearch: false,
 
 };
 
@@ -75,7 +78,8 @@ function mainReducer(state = initialState, action) {
 
     case SEARCH_START:
       return { ...state, mainSearchOn: state.mainSearchOn+1};
-    
+    case GEO_SEARCH:
+      return { ...state, geoSearch: action.geoSearch };
     case SET_START_DATE:
       return { ...state, startDate: action.date };
     case SET_END_DATE:

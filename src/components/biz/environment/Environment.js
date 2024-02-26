@@ -131,7 +131,10 @@ const Environment = () => {
       {/* <EnvironmentOptions /> */}
 
       {/* 결과결과 영역 */}
-      <EnvironmentResult />
+      
+      <div className="panel panel-left">
+        <EnvironmentResult />
+      </div>
 
       {/* 레이어 선택시 단일 선택시 */}
       {layerIdx === 1 && (
@@ -139,7 +142,6 @@ const Environment = () => {
               {/** <BaseSelectExpUnt baseName={'Env'}/> */}
               <EnvironmentL4 mainLayer={mainLayer}/>
           </div>
-
       )}
     </>
   )
