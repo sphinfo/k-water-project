@@ -6,6 +6,7 @@ import BaseDatePicker from "@common/datepicker/BaseDatePicker";
 import dayjs from "dayjs";
 import BaseDateRangePicker from "@common/datepicker/BaseDateRangePicker";
 import { G$flyToPoint } from "@gis/util";
+import {Checkbox, FormControlLabel} from "@mui/material";
 
 const BaseSearchOption = () => {
 
@@ -44,12 +45,17 @@ const BaseSearchOption = () => {
             </div>
             <div className="content-row">
                 <div className="base-btn-wrap">
-                    <div className="form-control">
-                        <input type="checkbox" id="checkbox" onChange={(e)=>{dispatch({type: GEO_SEARCH, geoSearch:e.target.checked})}}/>
-                        <label htmlFor="checkbox" >
-                            현 지도 내 검색
-                        </label>
-                    </div>
+                    <FormControlLabel
+                        label="현재 영역으로 ROI 설정"
+                        control={
+                            <Checkbox
+                                onChange={(e)=>{dispatch({type: GEO_SEARCH, geoSearch:e.target.checked})}}
+                                tabIndex={-1}
+                                disableRipple
+                                className={'check-box'}
+                            />
+                        }
+                    />
                     <button className="btn" onClick={()=>{searchClick()}}>적용</button>
                 </div>
             </div>

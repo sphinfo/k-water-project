@@ -379,7 +379,7 @@
   z-index: 999;
   top: 75px;
   left: 20px;
-  bottom: 10px;
+  bottom: 20px;
   width: 310px;
   display: flex;
   flex-direction: column;
@@ -700,21 +700,20 @@
 
 .side-content {
   position: absolute;
-  left: 300px;
-  margin-left: 10px;
-  bottom: 10px;
+  left: 320px;
+  bottom: 0;
   user-select: none;
   display: flex;
   flex-direction: column;
   justify-content: end;
   gap: 10px;
+  pointer-events: none;
 
   &.side-content-has-inner {
-    top: 65px;
-
     .side-content-top {
       position: absolute;
       top: 0;
+      pointer-events: auto;
     }
 
     .side-content-bottom {
@@ -723,6 +722,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      pointer-events: auto;
     }
   }
 
@@ -758,6 +758,7 @@
   width: fit-content;
   height: fit-content;
   min-width: 240px;
+  pointer-events: auto;
 
   &.disabled {
     position: relative;
@@ -1522,8 +1523,8 @@
 
 .popup {
   position: absolute;
-  top: 65px;
-  left: 364px;
+  top: 75px;
+  left: 340px;
   z-index: 999;
   background-color: $black-navy;
   box-shadow: $box-shadow;
@@ -1628,7 +1629,7 @@
   .btn {
     background-color: $primary-deep;
     font-size: 13px;
-    padding: 8px 14px;
+    padding: 9px 16px;
   }
 }
 
@@ -2411,10 +2412,11 @@
     }
   }
 
-  .toggle-btn-wrap{
+  .toggle-btn-wrap {
     padding: 0;
     position: relative;
     width: 100%;
+    min-height: 42px;
 
     .MuiTabs-flexContainer {
       border-bottom: 0;
@@ -3196,5 +3198,24 @@
 .MuiDateRangeCalendar-root {
   > div:first-child {
     display: none;
+  }
+}
+
+.multiple-select-wrap {
+  padding: 0 12px 4px;
+  display: flex;
+  align-items: center;
+}
+
+.info-comment-box {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px 0;
+
+  .info-comment {
+    span {
+      color: $primary-600;
+    }
   }
 }

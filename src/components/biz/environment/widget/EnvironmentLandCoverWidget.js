@@ -77,10 +77,10 @@ const EnvironmentLandCover = (props) => {
                             }
                         })
                         setHeatData(heatDatas, barDatas)
-                    }  
+                    }
                 })
             }
-            
+
         }
 
     },[landCoverDetection])
@@ -176,7 +176,7 @@ const EnvironmentLandCover = (props) => {
         const max = Math.max(...colorGrids)
 
         return(
-            <>  
+            <>
                 {
                     value === 0 &&
                     <div className={`chart-item no-item`}> {""}</div>
@@ -197,7 +197,15 @@ const EnvironmentLandCover = (props) => {
             <div className={"content-body"}>
                 <div className="content-col-group">
                     <div className="content-col">
-                        {`${start}과 ${end}의 비교 변화 데이터입니다.`}
+                        <div className="content-row">
+                            <div className="info-comment-box">
+                                <i className="fe-info"></i>
+                                <p className="info-comment">
+                                    <span className="">{start}</span>과 <span className="">{end}</span>의 비교 변화 데이터입니다.
+                                </p>
+                            </div>
+                        </div>
+
                         <div className="content-row">
                             <div className="panel-box">
                                 <div className="number-dashboard">
@@ -221,8 +229,8 @@ const EnvironmentLandCover = (props) => {
                             </div>
                         </div>
 
-                        <div className="content-row">
-                            <div className="panel-box">
+                        <div className="content-row height-100">
+                            <div className="panel-box height-100">
                                 <div className="chart-unit-warp">
                                     <span className="chart-unit">Area(K㎡)</span>
                                 </div>
@@ -234,8 +242,8 @@ const EnvironmentLandCover = (props) => {
 
 
                     <div className="content-col" style={{display: landCoverDetection ? '' : 'none'}}>
-                        <div className="content-row">
-                            <div className="panel-box">
+                        <div className="content-row height-100">
+                            <div className="panel-box height-100">
                                 <div className="heatmap-chart-wrap">
                                     <div className="heatmap-chart">
                                         <div className="chart-axis-wrap">
@@ -257,7 +265,7 @@ const EnvironmentLandCover = (props) => {
                                                     <div className="axis-label">초지</div>
                                                     <div className="axis-label">목지</div>
                                                     <div className="axis-label">건물</div>
-                                                    
+
                                                 </div>
                                                 <div className="axis-title">변경 후 피복</div>
                                             </div>
@@ -270,7 +278,7 @@ const EnvironmentLandCover = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>  
+                            </div>
                         </div>
                     </div>
                 </div>

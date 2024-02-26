@@ -6,14 +6,14 @@ import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$findEngNmFilter, G$flyToPoint, G$getDateType, G$getKoreanName, G$getMapExtent, G$sortArrayObject } from "@gis/util";
 import { FLOOD_CLEAR_LAEYRS, FLOOD_RESET, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, FLOOD_SELECT_WATER_LEVEL, FLOOD_SET_LAYERS, LOADING, SELECT_BOX } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
-import { Button, CircularProgress } from "@mui/material";
+import {Button, Checkbox, CircularProgress, FormControlLabel} from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import { getFloodL3Search } from "@common/axios/flood";
 import dayjs from "dayjs";
 import BaseResultCntTooltip from "../common/BaseResultCntTooltip";
 
 const FloodResult = ({waterObsList=[], ...props}) => {
-    
+
     const dispatch = useDispatch()
 
     // 홍수 검색조건
@@ -43,7 +43,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
       setResultInfos({})
       //*******API*************/
       if (mainOptions.length > 0) {
-            
+
         let location = mainOptions.map(item => item.code).join(',')
         let param = {type:'flood', level: 'L3', from: startDate, to: endDate}
         const params = geoSearch ? { ...param, ...G$getMapExtent() } : { ...param, location }
@@ -53,7 +53,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
           if(response?.length > 0){
             let resultList = []
 
-            
+
             response.map((resObj)=>{
               //수체
               if(resObj.config?.url === '/api/layers/getAll'){
@@ -96,7 +96,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
             })
 
             let firstGroup = resultArray[0]?.[0]?.group === 'WaterBody' ? resultArray[0][0] :
-            resultArray[1]?.[0]?.group === 'WaterBody' ? resultArray[1][0] : false 
+            resultArray[1]?.[0]?.group === 'WaterBody' ? resultArray[1][0] : false
 
             if(firstGroup){
               firstGroup.checked = true
@@ -112,7 +112,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
 
         })
 
-        
+
       } else {
         setLayerList([])
         setNoData(false)
@@ -142,7 +142,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                     return { ...item }; // 기존 선택 해제
                   }
 
-                  
+
               });
               return updatedSubArray;
           }
@@ -150,7 +150,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
       });
       setLayerList(updatedList);
 
-      //이벤트 발생 위치 확인후 
+      //이벤트 발생 위치 확인후
       const selectedItem = updatedList[outerIndex][innerIndex]
       //수위 지점 제외
       if(selectedItem.group === 'WaterBody'){
@@ -194,10 +194,10 @@ const FloodResult = ({waterObsList=[], ...props}) => {
             <p className="list-info">{obj.locationKr}</p>
             <p className="list-info">{obj.groupNm}</p>
             <p className="list-info">{`${obj.category} | ${obj.categoryNm}`}</p>
-            <p className="list-info">{obj.satellite === 'S1A' ? 'Sentinel 1' 
-              : obj.satellite === 'S1B' ? 'Sentinel 1' 
-              :  obj.satellite === 'S2A' ? 'Sentinel 2' 
-              :  obj.satellite === 'S2B' ? 'Sentinel 2' 
+            <p className="list-info">{obj.satellite === 'S1A' ? 'Sentinel 1'
+              : obj.satellite === 'S1B' ? 'Sentinel 1'
+              :  obj.satellite === 'S2A' ? 'Sentinel 2'
+              :  obj.satellite === 'S2B' ? 'Sentinel 2'
               : obj.satellite}</p>
             <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
           </div>
@@ -234,14 +234,14 @@ const FloodResult = ({waterObsList=[], ...props}) => {
             >
               <div className="list-body">
                 {
-                  obj.group === 'WaterBody' && 
+                  obj.group === 'WaterBody' &&
                     renderWaterBody(obj)
                 }
                 {
-                  obj.group === 'WaterLevel' && 
+                  obj.group === 'WaterLevel' &&
                     renderWaterLevel(obj)
                 }
-                
+
               </div>
             </ListItemButton>
           </ListItem>
@@ -264,7 +264,16 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                       e.stopPropagation()
                       dispatch({type:SELECT_BOX, selectBox: true})
                     }}}>지역검색</Button>
-                </div>
+                </div><FormControlLabel
+                  label="다중 선택"
+                  control={
+                      <Checkbox
+                          tabIndex={-1}
+                          disableRipple
+                          className={'check-box'}
+                      />
+                  }
+              />
               </div>
             }
 
@@ -272,6 +281,20 @@ const FloodResult = ({waterObsList=[], ...props}) => {
               !loading &&
               <TabContext value={floodResultTab} >
                 {layerList.length > 0 && <FloodResultTab />}
+
+                  <div className="multiple-select-wrap">
+                      <FormControlLabel
+                          label="다중 선택"
+                          control={
+                              <Checkbox
+                                  tabIndex={-1}
+                                  disableRipple
+                                  className={'check-box'}
+                              />
+                          }
+                      />
+                  </div>
+
                 <TabPanel value={"WaterBody"} style={{display: layerList.length === 0 ? 'none': ''}}>
                   {layerList.length > 0 && layerList.map((obj, i)=> {
                     if(obj[0].group === 'WaterBody'){
@@ -291,7 +314,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
               </TabContext>
 
             }
-            
+
           </div>
           <BaseResultCntTooltip resultInfos={resultInfos}/>
         </>
