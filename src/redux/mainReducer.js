@@ -16,7 +16,8 @@ import {
   SET_SIDE_PANEL,
   HOLD_MAP,
   MAIN_OPTIONS,
-  SELECT_BOX
+  SELECT_BOX,
+  SEARCH_START
 } from './actions';
 
 const initialState = {
@@ -42,6 +43,8 @@ const initialState = {
   holdMap: false,
   
   selectBox: false,
+
+  mainSearchOn: 0,
 
 };
 
@@ -70,6 +73,8 @@ function mainReducer(state = initialState, action) {
         mainOptions: state.mainOptions.filter(obj => obj.id !== action.value.id)
       };
 
+    case SEARCH_START:
+      return { ...state, mainSearchOn: state.mainSearchOn+1};
     
     case SET_START_DATE:
       return { ...state, startDate: action.date };
@@ -78,9 +83,8 @@ function mainReducer(state = initialState, action) {
     case MAIN_OPTIONS:
       return  { ...state, mainOptions: action.mainOptions };
     case SELECT_BOX:
-      return { ...state, selectBox: action.selectBox}
-
-    //하단 
+      return { ...state, selectBox: action.selectBox};
+      //하단 
     case LEGNED_PANEL:
 
       const containerName = action.container;

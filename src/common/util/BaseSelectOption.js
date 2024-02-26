@@ -53,6 +53,7 @@ const BaseSelectOption = ({ provider = [], ...other}, ref) => {
         onMenuClose={() => setMenuIsOpen(false)}
         onChange={handleSelectChange}
         value={selectedItems}
+        placeholder={"검색어를 입력해주세요."}
       />
     </>
   );

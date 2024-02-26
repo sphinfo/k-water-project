@@ -4,7 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
-import { DROUGHT_CLEAR_LAEYRS, DROUGHT_RESET, DROUGHT_RESET_LAYER, DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER, DROUGHT_SET_LAYERS } from "@redux/actions";
+import { DROUGHT_CLEAR_LAEYRS, DROUGHT_RESET, DROUGHT_RESET_LAYER, DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER, DROUGHT_SET_LAYERS, SELECT_BOX } from "@redux/actions";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Button, CircularProgress } from "@mui/material";
@@ -19,7 +19,8 @@ const DroughtResult = () => {
     const dispatch = useDispatch()
 
     // 가뭄 검색조건
-    const { searchOn, text, startDate, endDate, selectBox, selectResultTab } = useSelector(state => state.drought)
+    const { searchOn, text, selectResultTab } = useSelector(state => state.drought)
+    const { mainOptions, startDate, endDate, mainSearchOn } = useSelector(state => state.main)
 
     const [layerList, setLayerList] = useState([])
 
@@ -42,77 +43,62 @@ const DroughtResult = () => {
       setA2Cnt(0)
       setA3Cnt(0)
       setResultInfos({})
-      if(searchOn && text.length > 0){
-        
-        if (timer) {
-          clearTimeout(timer)
-        }
-        const delayRequest = setTimeout(() => {
-          if (text.length > 0) {
+      if(mainOptions.length > 0){
 
-            let location = text.map(item => item.code).join(',')
+        let location = mainOptions.map(item => item.code).join(',')
+        let params = {type:'drought', level: 'L3', location: location, from: startDate, to: endDate}
 
-            let params = {type:'drought', level: 'L3', location: location, from: startDate, to: endDate}
+        setLoading(true)
+        getL3Layers(params).then((response) => {
+          if(response?.result?.data?.length > 0){
+            let resultList = []
+            response.result.data.map((obj)=>{
 
-            setLoading(true)
-            getL3Layers(params).then((response) => {
-              if(response?.result?.data?.length > 0){
-                let resultList = []
-                response.result.data.map((obj)=>{
-
-                  let store = obj.dataType
-                  let layer = obj.name
-                  let group = obj.category.indexOf('A1') > 0 ? 'A1' : obj.category.indexOf('A2') > 0 ? 'A2' : obj.category.indexOf('A3') > 0 ? 'A3' : ''
-                  let groupNm = '토양수분'
-                  let categoryNm = obj.category.indexOf('A1') > 0 ? '물리모형' : obj.category.indexOf('A2') > 0 ? '강우자료' : obj.category.indexOf('A3') > 0 ? '토양특성' : ''
-                  let locationKr = G$getKoreanName(obj.testLocation.split('-'))
-                  resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
-                })
-
-                resultList.map((obj)=>{
-                  if(obj.group === 'A1'){
-                    setA1Cnt(prevCount => prevCount + 1)
-                  }else if(obj.group === 'A2'){
-                    setA2Cnt(prevCount => prevCount + 1)
-                  }else if(obj.group === 'A3'){
-                    setA3Cnt(prevCount => prevCount + 1)
-                  }
-                })
-
-                setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
-                const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'group')
-                const resultArray = groupArray.grouped
-
-                let firstGroup = resultArray[0]?.[0]?.group === 'A1' ? resultArray[0][0] :
-                resultArray[1]?.[0]?.group === 'A1' ? resultArray[1][0] :
-                resultArray[2]?.[0]?.group === 'A1' ? resultArray[2][0] : false 
-
-                if(firstGroup){
-                  firstGroup.checked = true
-                  dispatch({ type: DROUGHT_SET_LAYERS, layerInfo: firstGroup, setType: true })
-                }
-                setLayerList(resultArray)
-              }else{
-                setLayerList([])
-              }
-
-              setTimeout(() => {
-                setLoading(false)
-              }, 500)
+              let store = obj.dataType
+              let layer = obj.name
+              let group = obj.category.indexOf('A1') > 0 ? 'A1' : obj.category.indexOf('A2') > 0 ? 'A2' : obj.category.indexOf('A3') > 0 ? 'A3' : ''
+              let groupNm = '토양수분'
+              let categoryNm = obj.category.indexOf('A1') > 0 ? '물리모형' : obj.category.indexOf('A2') > 0 ? '강우자료' : obj.category.indexOf('A3') > 0 ? '토양특성' : ''
+              let locationKr = G$getKoreanName(obj.testLocation.split('-'))
+              resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
             })
-            
-          } else {
+
+            resultList.map((obj)=>{
+              if(obj.group === 'A1'){
+                setA1Cnt(prevCount => prevCount + 1)
+              }else if(obj.group === 'A2'){
+                setA2Cnt(prevCount => prevCount + 1)
+              }else if(obj.group === 'A3'){
+                setA3Cnt(prevCount => prevCount + 1)
+              }
+            })
+
+            setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
+            const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'group')
+            const resultArray = groupArray.grouped
+
+            let firstGroup = resultArray[0]?.[0]?.group === 'A1' ? resultArray[0][0] :
+            resultArray[1]?.[0]?.group === 'A1' ? resultArray[1][0] :
+            resultArray[2]?.[0]?.group === 'A1' ? resultArray[2][0] : false 
+
+            if(firstGroup){
+              firstGroup.checked = true
+              dispatch({ type: DROUGHT_SET_LAYERS, layerInfo: firstGroup, setType: true })
+            }
+            setLayerList(resultArray)
+          }else{
             setLayerList([])
           }
-        }, 1000)
-  
-        // 타이머 설정
-        setTimer(delayRequest)
+
+          setTimeout(() => {
+            setLoading(false)
+          }, 500)
+        })
 
       }else{
         setLayerList([])
       }
-    },[searchOn, startDate, endDate])
+    },[mainSearchOn])
 
     // 초기화
     useEffect(()=>{
@@ -213,7 +199,7 @@ const DroughtResult = () => {
                   <h3 className="empty-text">연구대상 지역을 선택해주세요</h3>
                   <Button className="btn empty-btn" onClick={(e)=>{{
                       e.stopPropagation()
-                      dispatch({type:DROUGHT_SELECT_BOX, selectBox: true})
+                      dispatch({type:SELECT_BOX, selectBox: true})
                     }}}>지역검색</Button>
                 </div>
               </div>

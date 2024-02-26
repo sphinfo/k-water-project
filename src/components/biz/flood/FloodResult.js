@@ -7,7 +7,6 @@ import { G$BaseSelectBoxArray, G$findEngNmFilter, G$flyToPoint, G$getDateType, G
 import { FLOOD_CLEAR_LAEYRS, FLOOD_RESET, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, FLOOD_SELECT_WATER_LEVEL, FLOOD_SET_LAYERS, LOADING, SELECT_BOX } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
 import { Button, CircularProgress } from "@mui/material";
-import { getL3Layers } from "@common/axios/common";
 import { TabContext, TabPanel } from "@mui/lab";
 import { getFloodL3Search } from "@common/axios/flood";
 import dayjs from "dayjs";
@@ -18,8 +17,8 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     const dispatch = useDispatch()
 
     // 홍수 검색조건
-    const { text, floodResultTab, selectBox, searchOn } = useSelector(state => state.flood)
-    const { mainOptions, startDate, endDate } = useSelector(state => state.main)
+    const { floodResultTab } = useSelector(state => state.flood)
+    const { mainOptions, startDate, endDate, mainSearchOn } = useSelector(state => state.main)
 
     const [layerList, setLayerList] = useState([])
 
@@ -43,97 +42,81 @@ const FloodResult = ({waterObsList=[], ...props}) => {
       setWlCnt(0)
       setResultInfos({})
       //*******API*************/
-      if( mainOptions.length > 0 ){
-        if (timer) {
-          clearTimeout(timer)
-        }
-
-        
-        const delayRequest = setTimeout(() => {
-          if (mainOptions.length > 0) {
+      if (mainOptions.length > 0) {
             
-            let location = mainOptions.map(item => item.code).join(',')
-            let params = {type:'flood', level: 'L3', location: location, from: startDate, to: endDate}
+        let location = mainOptions.map(item => item.code).join(',')
+        let params = {type:'flood', level: 'L3', location: location, from: startDate, to: endDate}
 
-            setLoading(true)
-            getFloodL3Search(params).then((response)=>{
-              if(response?.length > 0){
-                let resultList = []
+        setLoading(true)
+        getFloodL3Search(params).then((response)=>{
+          if(response?.length > 0){
+            let resultList = []
 
-                
-                response.map((resObj)=>{
-                  //수체
-                  if(resObj.config?.url === '/api/layers/getAll'){
+            
+            response.map((resObj)=>{
+              //수체
+              if(resObj.config?.url === '/api/layers/getAll'){
 
-                    if(resObj?.data?.data?.length > 0){
-                      setWbCnt(resObj?.result?.data?.length)
-                      resObj.data.data.map((obj)=>{
-                        let store = obj.dataType
-                        let layer = obj.name
-                        let group = 'WaterBody'
-                        let groupNm = '수체탐지'
-                        let locationKr = G$getKoreanName(obj.testLocation.split('-'))
-                        let categoryNm = obj.category === 'L3WBA1' ? 'AI 알고리즘' : obj.category === 'L3WBA2' ? '물리 기반' : obj.category
-                        resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
-                      })
-                    }
-                  }else if(resObj.config?.url === "/api/flood/getObservatory"){
-
-                    if(resObj?.data?.data?.length > 0){
-                      setWlCnt(resObj?.data?.data?.length)
-                      resObj.data.data.map((obj)=>{
-                        let group = 'WaterLevel'
-                        let groupNm = '지점수위'
-                        let satellite= 'Sentinel 1'
-                        let krNm = G$findEngNmFilter(obj.name)[0]?.options[0]?.name
-                        let startedAt = dayjs(obj.date).format('YYYYMMDD')
-                        resultList.push({group, krNm, groupNm, satellite, startedAt, ...obj})
-                      })
-                    }
-                  }
-
-                })
-
-                setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
-                const groupArray = G$BaseSelectBoxArray(resultList, 'store')
-                const resultArray = groupArray.grouped
-
-                resultArray.map((result)=>{
-                  result = G$sortArrayObject(result, 'startedAt', true)
-                })
-
-                let firstGroup = resultArray[0]?.[0]?.group === 'WaterBody' ? resultArray[0][0] :
-                resultArray[1]?.[0]?.group === 'WaterBody' ? resultArray[1][0] : false 
-
-                if(firstGroup){
-                  firstGroup.checked = true
-                  dispatch({ type: FLOOD_SET_LAYERS, layerInfo: firstGroup, setType: true })
+                if(resObj?.data?.data?.length > 0){
+                  setWbCnt(resObj?.result?.data?.length)
+                  resObj.data.data.map((obj)=>{
+                    let store = obj.dataType
+                    let layer = obj.name
+                    let group = 'WaterBody'
+                    let groupNm = '수체탐지'
+                    let locationKr = G$getKoreanName(obj.testLocation.split('-'))
+                    let categoryNm = obj.category === 'L3WBA1' ? 'AI 알고리즘' : obj.category === 'L3WBA2' ? '물리 기반' : obj.category
+                    resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
+                  })
                 }
+              }else if(resObj.config?.url === "/api/flood/getObservatory"){
 
-                setLayerList(resultArray)
-
-                setTimeout(() => {
-                  setLoading(false)
-                }, 500)
+                if(resObj?.data?.data?.length > 0){
+                  setWlCnt(resObj?.data?.data?.length)
+                  resObj.data.data.map((obj)=>{
+                    let group = 'WaterLevel'
+                    let groupNm = '지점수위'
+                    let satellite= 'Sentinel 1'
+                    let krNm = G$findEngNmFilter(obj.name)[0]?.options[0]?.name
+                    let startedAt = dayjs(obj.date).format('YYYYMMDD')
+                    resultList.push({group, krNm, groupNm, satellite, startedAt, ...obj})
+                  })
+                }
               }
 
             })
 
-            
-          } else {
-            setLayerList([])
-            setNoData(false)
-          }
-        }, 1000)
-  
-        // 타이머 설정
-        setTimer(delayRequest)
+            setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
+            const groupArray = G$BaseSelectBoxArray(resultList, 'store')
+            const resultArray = groupArray.grouped
 
-      }else{
-        setLayerList([])
+            resultArray.map((result)=>{
+              result = G$sortArrayObject(result, 'startedAt', true)
+            })
+
+            let firstGroup = resultArray[0]?.[0]?.group === 'WaterBody' ? resultArray[0][0] :
+            resultArray[1]?.[0]?.group === 'WaterBody' ? resultArray[1][0] : false 
+
+            if(firstGroup){
+              firstGroup.checked = true
+              dispatch({ type: FLOOD_SET_LAYERS, layerInfo: firstGroup, setType: true })
+            }
+
+            setLayerList(resultArray)
+
+            setTimeout(() => {
+              setLoading(false)
+            }, 500)
+          }
+
+        })
+
         
+      } else {
+        setLayerList([])
+        setNoData(false)
       }
-    },[mainOptions, startDate, endDate])
+    },[mainSearchOn])
 
     //임시 검색결과 도출
     useEffect(()=>{

@@ -74,7 +74,7 @@ const BaseDateRangePicker = (props, ref) => {
   return (
     <>
     <LocalizationProvider dateAdapter={LocalizedUtils} >
-      <DateRangePicker 
+      <DateRangePicker
         calendars={1}
         format={format}
         color={"primary"}
@@ -83,6 +83,7 @@ const BaseDateRangePicker = (props, ref) => {
         
         onChange={onChangeDate}
         onClose={closeOnSelect}
+        localeText={{ start: '', end: '' }}
       />
     </LocalizationProvider>
     </>

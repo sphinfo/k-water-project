@@ -130,22 +130,10 @@ const Flood = () => {
 
     return (
         <>
-            {/* 검색조건 영역   ex) 공토영역이 될듯 ? ( 검색 TEXT, 기간 설정 등.. )*/}
-            {/* <FloodOptions /> */}
-            {/* 결과결과 영역 */}
-            {/** <FloodResult waterObsList={waterObsList}/>*/}
             <FloodResult />
-
             {/* 홍수 3레벨 레이어 선택되었을시 ( 활용주제도 open )*/}
             {layerIdx > 0 && (
                 <div className="side-content">
-                    {/* 표출 단위 선택 영역 */}
-                    {/*
-                        layerIdx > 0 && !selectFloodDamageLayer &&
-                        (
-                            <BaseSelectExpUnt baseName={'Flood'}/>
-                        )
-                    */}
                     {
                         layerIdx === 1 && 
                         (

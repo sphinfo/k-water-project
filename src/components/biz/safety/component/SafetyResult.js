@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_CLEAR_LAEYRS, SAFETY_CLICK_MODE, SAFETY_RESET_LAYER, SAFETY_SELECT_BOX, SAFETY_SELECT_DISPLACE_LEVEL, SAFETY_SELECT_RESULT, SAFETY_SET_LAYERS } from "@redux/actions";
+import { SAFETY_CLEAR_LAEYRS, SAFETY_CLICK_MODE, SAFETY_RESET_LAYER, SAFETY_SELECT_BOX, SAFETY_SELECT_DISPLACE_LEVEL, SAFETY_SELECT_RESULT, SAFETY_SET_LAYERS, SELECT_BOX } from "@redux/actions";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
@@ -17,6 +17,7 @@ const SafetyResult = () => {
 
     // 안전 검색조건
     const { text, selectBox, searchOn } = useSelector(state => state.safety)
+    const { mainOptions, startDate, endDate, mainSearchOn } = useSelector(state => state.main)
 
     const [layerList, setLayerList] = useState([])
 
@@ -40,93 +41,75 @@ const SafetyResult = () => {
       dispatch({type:SAFETY_CLEAR_LAEYRS})
       setResultInfos({})
 
-      if(searchOn && text.length > 0){
+      if(mainOptions.length > 0){
+        //변위 등급 초기화
+        setDisplaceLevelData([])
 
-        if (timer) {
-          clearTimeout(timer)
-        }
+        let location = mainOptions.map(item => item.code).join(',')
 
-        const delayRequest = setTimeout(() => {
-          if (text.length > 0) {
-            
-            //변위 등급 초기화
-            setDisplaceLevelData([])
+        //*******API************* getL3Layers: 레벨3 결과값/
+        let params = {type:'safety', level: 'L3', location: location, from:dayjs().format('YYYYMMDD'), to:dayjs().format('YYYYMMDD')}
+        setLoading(true)
+        getL3Layers(params).then((response) => {
+          
+          if(response?.result?.data?.length > 0){
 
-            let location = text.map(item => item.code).join(',')
+            let resultList = []
+            let displaceResultList = []
+            response.result.data.map((obj)=>{
 
-            //*******API************* getL3Layers: 레벨3 결과값/
-            let params = {type:'safety', level: 'L3', location: location, from:dayjs().format('YYYYMMDD'), to:dayjs().format('YYYYMMDD')}
-            setLoading(true)
-            getL3Layers(params).then((response) => {
-              
-              if(response?.result?.data?.length > 0){
+              let store = obj.dataType.toLowerCase()
+              let layer = obj.name
+              let group = obj.level
+              let groupNm = obj.level === 'L3' ? '변위탐지' : '변위등급'
+              let udew = obj.filename.indexOf('_D_') > -1 ? 'DESC' : obj.filename.indexOf('_A_') > -1 ? 'ASC' : ''
+              let categoryNm = obj.category.indexOf('L3TD_A1') > 0 ? '고정산란체' : obj.category.indexOf('L3TD_A2') > 0 ? '분산산란체' : ''
+              let locationKr = G$getKoreanName(obj.testLocation.split('-'))
+              //satellite
+              obj.satellite = obj.satellite === "S1X" ? "S1A" : obj.satellite
 
-                let resultList = []
-                let displaceResultList = []
-                response.result.data.map((obj)=>{
-
-                  let store = obj.dataType.toLowerCase()
-                  let layer = obj.name
-                  let group = obj.level
-                  let groupNm = obj.level === 'L3' ? '변위탐지' : '변위등급'
-                  let udew = obj.filename.indexOf('_D_') > -1 ? 'DESC' : obj.filename.indexOf('_A_') > -1 ? 'ASC' : ''
-                  let categoryNm = obj.category.indexOf('L3TD_A1') > 0 ? '고정산란체' : obj.category.indexOf('L3TD_A2') > 0 ? '분산산란체' : ''
-                  let locationKr = G$getKoreanName(obj.testLocation.split('-'))
-                  //satellite
-                  obj.satellite = obj.satellite === "S1X" ? "S1A" : obj.satellite
-
-                  if(obj.level === 'L3'){
-                    resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr, udew})
-                  }else{
-                    //L4DC 변위등급도
-                    if(obj.category === 'L4DC'){
-                      displaceResultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})                    
-                    }
-                    
-                  }
-                })
-
-                setResultInfos(G$BaseSelectBoxArray([...resultList, ...displaceResultList], 'category'))
-                const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true))
-                const resultArray = groupArray.grouped
-
-                let firstGroup = resultArray[0]?.[0]?.group === 'L3' ? resultArray[0][0] :
-                resultArray[1]?.[0]?.group === 'L3' ? resultArray[1][0] : false 
-
-                if(firstGroup){
-                  firstGroup.checked = true
-                  dispatch({ type: SAFETY_SET_LAYERS, layerInfo: firstGroup, setType: true })
-                }
-
-                //변위 등급 리스트
-                setDisplaceLevelData(displaceResultList)
-                //3레벨 레이어 리스트
-                setLayerList(resultArray)
+              if(obj.level === 'L3'){
+                resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr, udew})
               }else{
-                setLayerList([])
-                setMessage("데이터가 존재하지 않습니다.")
+                //L4DC 변위등급도
+                if(obj.category === 'L4DC'){
+                  displaceResultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})                    
+                }
+                
               }
-
-              setTimeout(() => {
-                setLoading(false)
-              }, 500)
             })
-            
-          } else {
+
+            setResultInfos(G$BaseSelectBoxArray([...resultList, ...displaceResultList], 'category'))
+            const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true))
+            const resultArray = groupArray.grouped
+
+            let firstGroup = resultArray[0]?.[0]?.group === 'L3' ? resultArray[0][0] :
+            resultArray[1]?.[0]?.group === 'L3' ? resultArray[1][0] : false 
+
+            if(firstGroup){
+              firstGroup.checked = true
+              dispatch({ type: SAFETY_SET_LAYERS, layerInfo: firstGroup, setType: true })
+            }
+
+            //변위 등급 리스트
+            setDisplaceLevelData(displaceResultList)
+            //3레벨 레이어 리스트
+            setLayerList(resultArray)
+          }else{
             setLayerList([])
             setMessage("데이터가 존재하지 않습니다.")
           }
-        }, 1000)
-  
-        // 타이머 설정
-        setTimer(delayRequest)
 
+          setTimeout(() => {
+            setLoading(false)
+          }, 500)
+        })
       }else{
         setLayerList([])
         setDisplaceLevelData([])
       }
       
-    },[searchOn])
+    },[mainSearchOn])
     
     
 
@@ -288,7 +271,7 @@ const SafetyResult = () => {
                 <h3 className="empty-text">{message}</h3>
                 <Button className="btn empty-btn" onClick={(e)=>{{
                         e.stopPropagation()
-                        dispatch({type:SAFETY_SELECT_BOX, selectBox: true})
+                        dispatch({type:SELECT_BOX, selectBox: true})
                       }}}>지역검색</Button>
               </div>
             </div>
