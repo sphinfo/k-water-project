@@ -44,12 +44,19 @@ const EnvironmentLandCover = (props) => {
 
     },[props])
 
+    const [start, setStart] = useState('-')
+    const [end, setEnd] = useState('-')
     //레이어 변경시 reset
     useEffect(()=>{
 
         if(landCoverDetection){
 
-            const {id} = landCoverDetection
+            const {id, filename} = landCoverDetection
+
+            let start = filename.split("_")[1]
+            let end = filename.split("_")[2]
+            setStart(`${start.substring(2,4)}년도 ${start.substring(4,6)}월`)
+            setEnd(`${end.substring(2,4)}년도 ${end.substring(4,6)}월`)
 
             if(id){
                 let params = {id:id}
@@ -69,25 +76,9 @@ const EnvironmentLandCover = (props) => {
                                 }
                             }
                         })
-
                         setHeatData(heatDatas, barDatas)
-
-                    }
-                    
+                    }  
                 })
-
-                /*getBarData(params).then((response)=>{
-                    if(response?.result?.data.length > 0){
-                        setBarData(response?.result?.data[0])
-                    }
-                })
-
-                getHeatmapData(params).then((response)=>{
-                    if(response?.result?.data.length > 0){
-                        
-                    }
-                })*/
-
             }
             
         }
@@ -109,8 +100,6 @@ const EnvironmentLandCover = (props) => {
         })
 
         setMaxArea(area.toFixed(2))
-        // setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]}  ${G$setNumberFixedKomma(G$setSliceNumber(data[G$arrayGetMinMax(data).min]).num, 0)}${G$setSliceNumber(data[G$arrayGetMinMax(data).min]).convert ? 'K' : ''}`)
-        // setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]}  ${G$setNumberFixedKomma(G$setSliceNumber(data[G$arrayGetMinMax(data).max]).num, 0)}${G$setSliceNumber(data[G$arrayGetMinMax(data).max]).convert ? 'K' : ''}`)
         setMin(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).min]}  ${data[G$arrayGetMinMax(data).min]}`)
         setMax(`${chartInfoRef.current.labels[G$arrayGetMinMax(data).max]}  ${data[G$arrayGetMinMax(data).max]}`)
 
@@ -195,7 +184,6 @@ const EnvironmentLandCover = (props) => {
                 {
                     value !== 0 &&
                     <div className={`chart-item`} key={`item-${i}`} style={{backgroundColor: `#${G$normalizeWithColors({value, min:min, max:max, type:colorType}).hex}`}}>
-                        {/* <span>{G$setNumberFixedKomma(G$setSliceNumber(value).num,0)}{G$setSliceNumber(value).convert ? 'K' : ''}</span> */}
                         <span>{G$setMtoKm(value).toFixed(2)}</span>
                     </div>
                 }
@@ -206,16 +194,15 @@ const EnvironmentLandCover = (props) => {
 
     return (
         <>
-
             <div className={"content-body"}>
                 <div className="content-col-group">
                     <div className="content-col">
+                        {`${start}과 ${end}의 비교 변화 데이터입니다.`}
                         <div className="content-row">
                             <div className="panel-box">
                                 <div className="number-dashboard">
                                     <div className="nd-item">
                                         <h4 className="nd-item-title">전체 면적(K㎡)</h4>
-                                        {/* <div className="nd-item-body">{G$setNumberFixedKomma(G$setSliceNumber(maxArea).num,0)}{G$setSliceNumber(maxArea).convert ? 'K' : ''}</div> */}
                                         <div className="nd-item-body">{maxArea}</div>
                                     </div>
                                     <div className="nd-item">
