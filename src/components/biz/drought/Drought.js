@@ -3,21 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import DroughtResult from "./DroughtResult";
-import DroughtOptions from "./DroughtOptions";
 import pin from "@images/map-icon-dr.svg"
 import pin2 from "@images/map-icon-dr-clicked.svg"
-import { G$RandomId, G$addWidget, G$cartesianToLongLat, G$flyToPoint, G$randomCoordinates, G$removeLayer, G$removeWidget } from "@gis/util";
-import { DROUGHT_CLEAR_LAEYRS, DROUGHT_RESET, DROUGHT_SELECT_FEATURE, SET_SIDE_PANEL } from "@redux/actions";
+import { G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
+import { DROUGHT_CLEAR_LAEYRS, DROUGHT_RESET, DROUGHT_SELECT_FEATURE } from "@redux/actions";
 import DroughtOverlay from "@gis/util/overlay/DroughtOverlay";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import DroughtL4 from "./component/DroughtL4";
 import { getDroughtObs } from "@common/axios/drought";
 import { getL4Layers } from "@common/axios/common";
 import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
-import BaseLegendgGradientWidget from "@components/legend/BaseLegendgGradientWidget";
-import BaseLegendgGradientWidget2 from "@components/legend/BaseLegendgGradientWidget2";
 import LegendDrought from "@components/legend/LegendDrought";
-import BasePolygonEntityCollection from "@gis/layers/BasePolygonEntityCollection";
 import DroughtLegendgGradientWidget from "@components/legend/DroughtLegendgGradientWidget";
 import BaseLegendWidget from "@components/legend/BaseLegendWidget";
 
@@ -31,6 +27,8 @@ const Drought = () => {
      * layers: 등록 레이어
      */
     const { bizName, selectObs, obsrvTab, layers } = useSelector(state => state.drought)
+    const { mainSearchEnd } = useSelector(state => state.main)
+    
 
     //가뭄 레이어 ( 4L )
     const droughtL4Layer = useRef()
@@ -142,21 +140,17 @@ const Drought = () => {
     useEffect(()=>{
         let layerCnt = Object.keys(layers).length
         setLayerIdx(layerCnt)
-
         if(layerCnt === 1){
             Object.keys(layers).map((layerId, i)=>{
-              const { store, layer, ...other } = layers[layerId]?.props
-              if(i === 0){
-                  setMainLayer(other)
-              }
-          })
-            
+                const { store, layer, ...other } = layers[layerId]?.props
+                if(i === 0){
+                    setMainLayer(other)
+                }
+            })
         }else{
             droughtL4Layer.current.remove()
             setMainLayer(false)
         }
-
-        
     },[layers])
 
     
@@ -195,7 +189,6 @@ const Drought = () => {
             }
             
         }else{
-            //droughtObsrvLayer.current.show = false
             G$removeWidget('BaseAddLegendWidget')
         }
     },[layerIdx, obsrvTab])
@@ -259,7 +252,7 @@ const Drought = () => {
             <div className="side-content">
                 <BaseSelectExpUnt baseName={'Drought'} setFeatureInfo={expUntFeature}/>
                 {layerIdx === 1 && (
-                    <DroughtL4/>
+                    <DroughtL4 mainLayer={mainLayer}/>
                 )}
             </div>
         </>

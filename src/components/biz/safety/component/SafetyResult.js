@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import { getL3Layers } from "@common/axios/common";
 import dayjs from "dayjs";
 import BaseResultCntTooltip from "@components/biz/common/BaseResultCntTooltip";
-import { CircularProgress } from "@mui/material";
+import { Checkbox, CircularProgress, FormControlLabel } from "@mui/material";
 
 const SafetyResult = () => {
     
@@ -25,6 +25,8 @@ const SafetyResult = () => {
 
     //debouncing timer
     const [timer, setTimer] = useState(null)
+
+    const [multiSelect, setMultiSelect] = useState(true)
 
     const [loading, setLoading] = useState(false)
 
@@ -127,19 +129,39 @@ const SafetyResult = () => {
                   if (innerIndex === j) {
                       return { ...item, checked: !item.checked };
                   }
-                  return { ...item }
+                  return { ...item, ...(multiSelect ? {} : { checked: false }) }
               });
               return updatedSubArray;
           }
-          return subArray.map(item => ({ ...item }))
+          return subArray.map(item => ({ ...item, ...(multiSelect ? {} : { checked: false }) }))
       });
       setLayerList(updatedList);
 
       //이베트 발생 위치 확인후 
       const selectedItem = updatedList[outerIndex][innerIndex]
+      if(!multiSelect) { dispatch({ type: SAFETY_CLEAR_LAEYRS }); checkboxResetL4() }
       dispatch({ type: SAFETY_SET_LAYERS, layerInfo: selectedItem, setType: selectedItem.checked })
 
     }
+
+    //체크박스 다시 그리기
+    const checkboxResetL3 = () =>{
+      //layerList 전체 데이터
+      const updatedList = layerList.map((subArray, i) => {
+          return subArray.map(item => ({ ...item, checked: false }))
+      });
+      setLayerList(updatedList)
+    }
+
+    //체크박스 다시 그리기
+    const checkboxResetL4 = () =>{
+      const updatedArray = displaceLevelData.map((item, i) => {
+        return { ...item, checked: false  }
+      })
+      setDisplaceLevelData(updatedArray)
+    }
+
+
 
     //변위등급 선택
     const setSafetyLevel = (obj, index) =>{
@@ -147,10 +169,11 @@ const SafetyResult = () => {
           if (index === i) {
               return { ...item, checked: !item.checked };
           }
-          return { ...item }
+          return { ...item, ...(multiSelect ? {} : { checked: false })  }
       })
 
       const selectedItem = updatedArray[index]
+      if(!multiSelect) { dispatch({ type: SAFETY_CLEAR_LAEYRS }); checkboxResetL3() }
       dispatch({ type: SAFETY_SET_LAYERS, layerInfo: selectedItem, setType: selectedItem.checked })
       setDisplaceLevelData(updatedArray)
     }
@@ -276,6 +299,23 @@ const SafetyResult = () => {
               </div>
             </div>
           }
+
+          {
+              <div className="multiple-select-wrap" style={{display: layerList.length > 0 && !loading ? '' : 'none', marginTop: 15}}>
+                  <FormControlLabel
+                      label="다중 선택"
+                      control={
+                          <Checkbox
+                              checked={multiSelect}
+                              tabIndex={-1}
+                              disableRipple
+                              className={'check-box'}
+                              onChange={(e)=>{setMultiSelect(e.target.checked)}}
+                          />
+                      }
+                  />
+              </div>
+            }
 
           {layerList.length > 0 && !loading && layerList.map((obj, i)=> renderResult(obj, i))}
 

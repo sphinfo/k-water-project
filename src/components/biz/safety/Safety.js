@@ -29,7 +29,7 @@ const Safety = () => {
      * select4Level : 표출데이터 선택
      * displaceLevel : 변위등릅 레이어 선택
      */
-    const {bizName, select4Level, displaceLevel, compLayerClick, selectFeature, layers} = useSelector(state => state.safety)
+    const {bizName, select4Level, displaceLevel, compLayerClick, selectFeature, layers, mainSearchEnd} = useSelector(state => state.safety)
 
     //안전 4레벨 레이어 생성
     const safety4LevelLayerRef = useRef()
@@ -121,12 +121,14 @@ const Safety = () => {
                     //클릭이벤트 등록
                     GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
                     setMainLayer(other)
+                    legendSetting()
                     //변위등급이 켜졌을경우 변위등급 widget open ( L4DC 변위등급 )
                     if(layer.indexOf('L4DC') > -1){
                         dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: true})
                         G$addWidget('SafetyL4LevelDataWidget')
                     }else{
                         G$removeWidget('BaseLegendWidget')
+                        G$removeWidget('SafetyL4LevelDataWidget')
                     }
                 }
             })
@@ -134,7 +136,7 @@ const Safety = () => {
             G$removeWidget('SafetyL4LevelDataWidget')
         }
 
-    },[layers])
+    },[layers, mainSearchEnd])
 
     useEffect(()=>{
         legendSetting()

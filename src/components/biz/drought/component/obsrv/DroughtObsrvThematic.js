@@ -7,9 +7,10 @@ import MainWidgetManager from "@common/widget/WidgetManager";
 
 
 
-const DroughtObsrvThematic = () => {
+const DroughtObsrvThematic = (props) => {
 
     const dispatch = useDispatch()
+    const {mainLayer} = props
 
     /**
      * selectObs : 가뭄 선택 지점
@@ -20,11 +21,15 @@ const DroughtObsrvThematic = () => {
 
     //닫힐때 침수피해 레이어 초기화
     useEffect(()=>{
-        
         return()=>{
             G$removeWidget('DroughtObsrvWidget')
         }
     },[])
+
+    useEffect(()=>{
+        setLevel4List([{name:'가뭄지수',value:'index',checked: false},{name:'가뭄해갈',value:'appease',checked: false}])
+        dispatch({type: DROUGHT_OBSRV_TAB, obsrvTab: 'soilMoisture'})
+    },[mainLayer])
 
     useEffect(()=>{
         if(selectObs){

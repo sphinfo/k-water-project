@@ -32,6 +32,8 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     const [wbCnt, setWbCnt] = useState(0)
     const [wlCnt, setWlCnt] = useState(0)
 
+    const [multiSelect, setMultiSelect] = useState(true)
+
     const [loading, setLoading] = useState(false)
 
     //검색조건이 변동될떄마다 검색결과 재검색
@@ -139,14 +141,14 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                   if(outerIndex === 1){
                     return { ...item, checked: false }; // 기존 선택 해제
                   }else{
-                    return { ...item }; // 기존 선택 해제
+                    return { ...item, ...(multiSelect ? {} : { checked: false })}; // 기존 선택 해제
                   }
 
-
+                  //
               });
               return updatedSubArray;
           }
-          return subArray.map(item => ({ ...item })); // 다른 항목들의 선택 해제
+          return subArray.map(item => ({ ...item, ...(multiSelect ? {} : { checked: false }) })); // 다른 항목들의 선택 해제
       });
       setLayerList(updatedList);
 
@@ -154,6 +156,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
       const selectedItem = updatedList[outerIndex][innerIndex]
       //수위 지점 제외
       if(selectedItem.group === 'WaterBody'){
+        if(!multiSelect) { dispatch({ type: FLOOD_CLEAR_LAEYRS }) }
         dispatch({ type: FLOOD_SET_LAYERS, layerInfo: selectedItem, setType: selectedItem.checked })
       }else if(selectedItem.group === 'WaterLevel'){
         dispatch({type: FLOOD_SELECT_WATER_LEVEL, selectWaterLevel: selectedItem})
@@ -264,16 +267,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                       e.stopPropagation()
                       dispatch({type:SELECT_BOX, selectBox: true})
                     }}}>지역검색</Button>
-                </div><FormControlLabel
-                  label="다중 선택"
-                  control={
-                      <Checkbox
-                          tabIndex={-1}
-                          disableRipple
-                          className={'check-box'}
-                      />
-                  }
-              />
+                </div>
               </div>
             }
 
@@ -281,19 +275,23 @@ const FloodResult = ({waterObsList=[], ...props}) => {
               !loading &&
               <TabContext value={floodResultTab} >
                 {layerList.length > 0 && <FloodResultTab />}
-
-                  <div className="multiple-select-wrap">
+                {
+                  <div className="multiple-select-wrap" style={{display: layerList.length > 0 && floodResultTab === 'WaterBody' && !loading ? '' : 'none'}}>
                       <FormControlLabel
                           label="다중 선택"
                           control={
                               <Checkbox
+                                  checked={multiSelect}
                                   tabIndex={-1}
                                   disableRipple
                                   className={'check-box'}
+                                  onChange={(e)=>{setMultiSelect(e.target.checked)}}
                               />
                           }
                       />
                   </div>
+                }
+                  
 
                 <TabPanel value={"WaterBody"} style={{display: layerList.length === 0 ? 'none': ''}}>
                   {layerList.length > 0 && layerList.map((obj, i)=> {

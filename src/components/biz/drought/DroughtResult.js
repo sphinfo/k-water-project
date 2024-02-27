@@ -7,7 +7,7 @@ import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject
 import { DROUGHT_CLEAR_LAEYRS, DROUGHT_RESET, DROUGHT_RESET_LAYER, DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER, DROUGHT_SET_LAYERS, SELECT_BOX } from "@redux/actions";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { Button, CircularProgress } from "@mui/material";
+import { Button, Checkbox, CircularProgress, FormControlLabel } from "@mui/material";
 import img from "@images/Safety-20231113_L3TD_A2_YONGDAM_ASC.jpg"
 import { getL3Layers } from "@common/axios/common";
 import { TabContext, TabPanel } from "@mui/lab";
@@ -28,6 +28,8 @@ const DroughtResult = () => {
 
     //debouncing timer
     const [timer, setTimer] = useState(null);
+
+    const [multiSelect, setMultiSelect] = useState(true)
 
     const [loading, setLoading] = useState(false)
 
@@ -111,6 +113,7 @@ const DroughtResult = () => {
     //체크박스 다시 그리기
     const checkboxChange = (outerIndex, innerIndex) =>{
 
+      // ...(a ? { checked: false } : {})
       //layerList 전체 데이터
       const updatedList = layerList.map((subArray, i) => {
           if (outerIndex === i) {
@@ -118,17 +121,18 @@ const DroughtResult = () => {
                   if (innerIndex === j) {
                       return { ...item, checked: !item.checked }
                   }
-                  return { ...item } 
+                  return { ...item, ...(multiSelect ? {} : { checked: false }) } 
               });
               return updatedSubArray;
           }
-          return subArray.map(item => ({ ...item }))
+          return subArray.map(item => ({ ...item, ...(multiSelect ? {} : { checked: false }) }))
       });
       setLayerList(updatedList);
 
       //이벤트 발생 위치 확인후 
       const selectedItem = updatedList[outerIndex][innerIndex]
       //reducer에게 레이어 info 전달
+      if(!multiSelect) { dispatch({ type: DROUGHT_CLEAR_LAEYRS }) }
       dispatch({ type: DROUGHT_SET_LAYERS, layerInfo: selectedItem, setType: selectedItem.checked })
 
 
@@ -140,13 +144,13 @@ const DroughtResult = () => {
         <>
             {obj.length > 0 &&
                 <div className="content-row" key={`result-${i}`} >
-                    <div className="content-list-wrap" key={`wrap-${i}`} >
+                    <div className="content-list-wrap" >
                         <List className="content-list" sx={{overflow: 'auto'}} key={`list-${i}`}>
                             {
                                 obj.map((item, i2) => (
-                                    <>
-                                        {renderItem(item, i, i2)}
-                                    </>
+                                  <React.Fragment key={`item-${i2}`}>
+                                      {renderItem(item, i, i2)}
+                                  </React.Fragment>
                               ))
                             }
                         </List>
@@ -159,7 +163,7 @@ const DroughtResult = () => {
     //list item 설정
     const renderItem = (obj, i, i2) => (
         <>
-        <ListItem key={i2} selected={true}>
+        <ListItem key={`${i}-${i2}`} selected={true}>
             <ListItemButton
               className={`content-list-item ${obj.checked ? 'item-on' : ''}`}
               selected={true}
@@ -218,10 +222,26 @@ const DroughtResult = () => {
               
             </div>
             {
+              <div className="multiple-select-wrap" style={{display: layerList.length > 0 && !loading ? '' : 'none'}}>
+                  <FormControlLabel
+                      label="다중 선택"
+                      control={
+                          <Checkbox
+                              checked={multiSelect}
+                              tabIndex={-1}
+                              disableRipple
+                              className={'check-box'}
+                              onChange={(e)=>{setMultiSelect(e.target.checked)}}
+                          />
+                      }
+                  />
+              </div>
+            }
+            {
               !loading &&
-              <TabContext value={selectResultTab} >
+              <TabContext value={selectResultTab}>
 
-                <TabPanel value={"A1"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                <TabPanel key={'A1'} value={"A1"} style={{display: layerList.length === 0 ? 'none': ''}}>
                   {layerList.length > 0 && layerList.map((obj, i)=> {
                     if(obj[0].group === 'A1'){
                       return renderResult(obj, i)
@@ -230,7 +250,7 @@ const DroughtResult = () => {
                   {a1Cnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
                 </TabPanel>
 
-                <TabPanel value={"A2"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                <TabPanel key={'A2'} value={"A2"} style={{display: layerList.length === 0 ? 'none': ''}}>
                   {layerList.length > 0 && layerList.map((obj, i)=> {
                     if(obj[0].group === 'A2'){
                       return renderResult(obj, i)
@@ -239,7 +259,7 @@ const DroughtResult = () => {
                   {a2Cnt === 0 && <div className="empty-message"> 데이터가 존재하지 않습니다. <br/> 연구 대상 지역 또는 기간을 변경해주세요. </div>}
                 </TabPanel>
 
-                <TabPanel value={"A3"} style={{display: layerList.length === 0 ? 'none': ''}}>
+                <TabPanel key={'A3'} value={"A3"} style={{display: layerList.length === 0 ? 'none': ''}}>
                   {layerList.length > 0 && layerList.map((obj, i)=> {
                     if(obj[0].group === 'A3'){
                       return renderResult(obj, i)

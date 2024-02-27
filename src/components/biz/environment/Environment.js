@@ -3,11 +3,9 @@ import EnvironmentOptions from "./EnvironmentOptions";
 import EnvironmentResult from "./EnvironmentResult";
 import { useDispatch, useSelector } from "react-redux";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
-import { G$RandomId, G$addWidget, G$flyToExtent, G$flyToPoint, G$removeLayer, G$removeWidget } from "@gis/util";
+import { G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import { ENV_RESET } from "@redux/actions";
 import EnvironmentL4 from "./component/EnvironmentL4";
-import BasePolygonEntityCollection from "@gis/layers/BasePolygonEntityCollection";
-import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
 import LegendEnvi from "@components/legend/LegendEnvi";
 import BaseLegendWidget from "@components/legend/BaseLegendWidget";
 import BaseLegendgGradientWidget from "@components/legend/BaseLegendgGradientWidget";
@@ -21,7 +19,7 @@ const Environment = () => {
    * selectEnvironmentLayer : 환경 레이어 선택
    * landCoverDetection : 변화 탐지 선택
    */
-  const { landCoverDetection, layers } = useSelector(state => state.environment)
+  const { landCoverDetection, layers, mainSearchEnd } = useSelector(state => state.environment)
 
   //변화탐지 레이어
   const landCoverDetectionLayer = useRef()
@@ -61,7 +59,7 @@ const Environment = () => {
       }else{
         setMainLayer(false)
       }
-  },[layers])
+  },[layers, mainSearchEnd])
 
 
   useEffect(()=>{

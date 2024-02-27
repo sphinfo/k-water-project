@@ -6,7 +6,7 @@ import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
 import EnvironmentResultTab from "./EnvironmentResultTab";
 import { ENV_CLEAR_LAEYRS, ENV_RESET_LAYER, ENV_SELECT_BOX, ENV_SET_LAYERS, SELECT_BOX } from "@redux/actions";
-import { Button, CircularProgress } from "@mui/material";
+import { Button, Checkbox, CircularProgress, FormControlLabel } from "@mui/material";
 import { getL3Layers } from "@common/axios/common";
 import { TabContext, TabPanel } from "@mui/lab";
 import BaseResultCntTooltip from "../common/BaseResultCntTooltip";
@@ -27,6 +27,8 @@ const EnvironmentResult = () => {
 
     //debouncing timer
     const [timer, setTimer] = useState(null)
+
+    const [multiSelect, setMultiSelect] = useState(true)
 
     const [loading, setLoading] = useState(false)
 
@@ -126,7 +128,7 @@ const EnvironmentResult = () => {
                   if (innerIndex === j) {
                       return { ...item, checked: !item.checked }
                   }
-                  return { ...item }
+                  return { ...item, ...(multiSelect ? {} : { checked: false })  }
               });
               return updatedSubArray
           }
@@ -140,6 +142,8 @@ const EnvironmentResult = () => {
         groupRef.current = selectedItem.group
         dispatch({ type: ENV_CLEAR_LAEYRS })  
       }
+
+      if(!multiSelect) { dispatch({ type: ENV_CLEAR_LAEYRS }) }
       dispatch({ type: ENV_SET_LAYERS, layerInfo: selectedItem, setType: selectedItem.checked })
 
     }
@@ -214,10 +218,29 @@ const EnvironmentResult = () => {
               </div>
             }  
 
+            
             {
                !loading &&
-              <TabContext value={environmentResultTab} >
+                <TabContext value={environmentResultTab} >
                 {layerList.length > 0 && <EnvironmentResultTab />}
+
+                {
+                  <div className="multiple-select-wrap" style={{display: layerList.length > 0 ? '' : 'none'}}>
+                      <FormControlLabel
+                          label="다중 선택"
+                          control={
+                              <Checkbox
+                                  checked={multiSelect}
+                                  tabIndex={-1}
+                                  disableRipple
+                                  className={'check-box'}
+                                  onChange={(e)=>{setMultiSelect(e.target.checked)}}
+                              />
+                          }
+                      />
+                  </div>
+                }
+
                 <TabPanel value={"LandCover"} style={{display: layerList.length === 0 ? 'none': ''}}>
                   {layerList.length > 0 && layerList.map((obj, i)=> {
                     if(obj[0].group === 'LandCover'){

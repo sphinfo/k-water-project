@@ -11,9 +11,11 @@ const EnvironmentThematic = (props) => {
 
     const dispatch = useDispatch()
     const [thematicList, setThematicList] = useState([])
+    const {mainLayer} = props
+    
     useEffect(()=>{
 
-        const {mainLayer} = props
+        
         const {id} = mainLayer
 
         let thematics = []
@@ -36,7 +38,7 @@ const EnvironmentThematic = (props) => {
             dispatch({type:ENV_LANDCOVER_DETECTION, landCoverDetection: false})
         }
         
-    },[])
+    },[mainLayer])
 
 
     //L4 선택

@@ -9,22 +9,20 @@ import BaseOragDataInfo from "@components/biz/common/BaseOragDataInfo";
 /**
  * 가뭄 활용주제도
  */
-const DroughtL4 = () => {
+const DroughtL4 = (props) => {
+
+    const {mainLayer} = props;
 
     const dispatch = useDispatch()
-    const { selectObs, obsrvTab } = useSelector(state => state.drought)
-    
-
     useEffect(()=>{
         return()=>{
             //선택레이어 삭제
             dispatch({type:DROUGHT_SELECT_FEATURE, selectObs: false})
         }
     },[])
-
     return (
         <>
-            <DroughtObsrvThematic />
+            <DroughtObsrvThematic mainLayer={mainLayer}/>
         </>
     )
 }

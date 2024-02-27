@@ -15,6 +15,7 @@ const FloodL4WaterBodyThematic = () => {
      * selectWaterLevel: 수위 지점 정보
      */
     const { selectFloodDamageLayer, layers, floodResultTab } = useSelector(state => state.flood)
+    const { mainSearchEnd } = useSelector(state => state.main)
 
 
     //닫힐때 침수피해 레이어 초기화
@@ -44,7 +45,7 @@ const FloodL4WaterBodyThematic = () => {
 
         }
 
-    },[layers])
+    },[layers, mainSearchEnd])
 
   
     useEffect(()=>{
