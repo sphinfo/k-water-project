@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
+import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject, G$getMapExtent } from "@gis/util";
 import EnvironmentResultTab from "./EnvironmentResultTab";
 import { ENV_CLEAR_LAEYRS, ENV_RESET_LAYER, ENV_SELECT_BOX, ENV_SET_LAYERS, SELECT_BOX } from "@redux/actions";
 import { Button, Checkbox, CircularProgress, FormControlLabel } from "@mui/material";
@@ -17,8 +17,8 @@ const EnvironmentResult = () => {
     const dispatch = useDispatch()
 
     // 가뭄 검색조건
-    const { searchOn, text, environmentResultTab } = useSelector(state => state.environment)
-    const { mainOptions, startDate, endDate, mainSearchOn } = useSelector(state => state.main)
+    const { environmentResultTab } = useSelector(state => state.environment)
+    const { mainOptions, startDate, endDate, mainSearchOn, geoSearch } = useSelector(state => state.main)
 
     const [layerList, setLayerList] = useState([])
 
@@ -50,9 +50,13 @@ const EnvironmentResult = () => {
 
 
       if (mainOptions.length > 0) {
+        /*let location = mainOptions.map(item => item.code).join(',')
+        let params = {type:'environment', level: 'L3', location: location, from: startDate, to: endDate}*/
+
         let location = mainOptions.map(item => item.code).join(',')
-        //*******API************* getL3Layers: 레벨3 결과값/
-        let params = {type:'environment', level: 'L3', location: location, from: startDate, to: endDate}
+        let param = {type:'environment', level: 'L3', from: startDate, to: endDate}
+        const params = geoSearch ? { ...param, ...G$getMapExtent() } : { ...param, location }
+
         setLoading(true)
         getL3Layers(params).then((response) => {
           if(response?.result?.data?.length > 0){

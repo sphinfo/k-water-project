@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_CLEAR_LAEYRS, SAFETY_CLICK_MODE, SAFETY_RESET_LAYER, SAFETY_SELECT_BOX, SAFETY_SELECT_DISPLACE_LEVEL, SAFETY_SELECT_RESULT, SAFETY_SET_LAYERS, SELECT_BOX } from "@redux/actions";
+import { SAFETY_CLEAR_LAEYRS, SAFETY_RESET_LAYER, SAFETY_SELECT_BOX, SAFETY_SET_LAYERS, SELECT_BOX } from "@redux/actions";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
+import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject, G$getMapExtent } from "@gis/util";
 import Button from "@mui/material/Button";
 import { getL3Layers } from "@common/axios/common";
 import dayjs from "dayjs";
@@ -16,8 +16,7 @@ const SafetyResult = () => {
     const dispatch = useDispatch()
 
     // 안전 검색조건
-    const { text, selectBox, searchOn } = useSelector(state => state.safety)
-    const { mainOptions, startDate, endDate, mainSearchOn } = useSelector(state => state.main)
+    const { mainOptions, startDate, endDate, mainSearchOn, geoSearch } = useSelector(state => state.main)
 
     const [layerList, setLayerList] = useState([])
 
@@ -47,10 +46,12 @@ const SafetyResult = () => {
         //변위 등급 초기화
         setDisplaceLevelData([])
 
+        /*let location = mainOptions.map(item => item.code).join(',')
+        let params = {type:'safety', level: 'L3', location: location, from:dayjs().format('YYYYMMDD'), to:dayjs().format('YYYYMMDD')}*/
         let location = mainOptions.map(item => item.code).join(',')
+        let param = {type:'safety', level: 'L3', from: startDate, to: endDate}
+        const params = geoSearch ? { ...param, ...G$getMapExtent() } : { ...param, location }
 
-        //*******API************* getL3Layers: 레벨3 결과값/
-        let params = {type:'safety', level: 'L3', location: location, from:dayjs().format('YYYYMMDD'), to:dayjs().format('YYYYMMDD')}
         setLoading(true)
         getL3Layers(params).then((response) => {
           

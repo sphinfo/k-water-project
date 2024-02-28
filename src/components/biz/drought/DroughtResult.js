@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject } from "@gis/util";
+import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject, G$getMapExtent } from "@gis/util";
 import { DROUGHT_CLEAR_LAEYRS, DROUGHT_RESET, DROUGHT_RESET_LAYER, DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER, DROUGHT_SET_LAYERS, SELECT_BOX } from "@redux/actions";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -20,7 +20,7 @@ const DroughtResult = () => {
 
     // 가뭄 검색조건
     const { searchOn, text, selectResultTab } = useSelector(state => state.drought)
-    const { mainOptions, startDate, endDate, mainSearchOn } = useSelector(state => state.main)
+    const { mainOptions, mainSearchOn, geoSearch } = useSelector(state => state.main)
 
     const [layerList, setLayerList] = useState([])
 
@@ -47,8 +47,11 @@ const DroughtResult = () => {
       setResultInfos({})
       if(mainOptions.length > 0){
 
+        /*let location = mainOptions.map(item => item.code).join(',')
+        let params = {type:'drought', level: 'L3', location: location, from: startDate, to: endDate}*/
         let location = mainOptions.map(item => item.code).join(',')
-        let params = {type:'drought', level: 'L3', location: location, from: startDate, to: endDate}
+        let param = {type:'drought', level: 'L3'}
+        const params = geoSearch ? { ...param, ...G$getMapExtent() } : { ...param, location }
 
         setLoading(true)
         getL3Layers(params).then((response) => {

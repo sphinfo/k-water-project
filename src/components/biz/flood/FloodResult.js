@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$findEngNmFilter, G$flyToPoint, G$getDateType, G$getKoreanName, G$getMapExtent, G$sortArrayObject } from "@gis/util";
-import { FLOOD_CLEAR_LAEYRS, FLOOD_RESET, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_LAYER, FLOOD_SELECT_WATER_LEVEL, FLOOD_SET_LAYERS, LOADING, SELECT_BOX } from "@redux/actions";
+import { G$BaseSelectBoxArray, G$findEngNmFilter, G$getDateType, G$getKoreanName, G$getMapExtent, G$sortArrayObject } from "@gis/util";
+import { FLOOD_CLEAR_LAEYRS, FLOOD_RESET_LAYER, FLOOD_SELECT_BOX, FLOOD_SELECT_WATER_LEVEL, FLOOD_SET_LAYERS, SELECT_BOX } from "@redux/actions";
 import FloodResultTab from "./FloodResultTab";
 import {Button, Checkbox, CircularProgress, FormControlLabel} from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
@@ -54,7 +54,6 @@ const FloodResult = ({waterObsList=[], ...props}) => {
         getFloodL3Search(params).then((response)=>{
           if(response?.length > 0){
             let resultList = []
-
 
             response.map((resObj)=>{
               //수체
