@@ -12,13 +12,13 @@ import BaseResultCntTooltip from "@components/biz/common/BaseResultCntTooltip";
 import { Checkbox, CircularProgress, FormControlLabel } from "@mui/material";
 
 const SafetyResult = () => {
-    
+
     const dispatch = useDispatch()
 
     // 안전 검색조건
     const { mainOptions, startDate, endDate, mainSearchOn, geoSearch } = useSelector(state => state.main)
     const { layers } = useSelector(state => state.safety)
-    
+
     const [layerList, setLayerList] = useState([])
 
     const [resultInfos, setResultInfos] = useState({})
@@ -55,7 +55,7 @@ const SafetyResult = () => {
 
         setLoading(true)
         getL3Layers(params).then((response) => {
-          
+
           if(response?.result?.data?.length > 0){
 
             let resultList = []
@@ -77,9 +77,9 @@ const SafetyResult = () => {
               }else{
                 //L4DC 변위등급도
                 if(obj.category === 'L4DC'){
-                  displaceResultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})                    
+                  displaceResultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
                 }
-                
+
               }
             })
 
@@ -88,7 +88,7 @@ const SafetyResult = () => {
             const resultArray = groupArray.grouped
 
             let firstGroup = resultArray[0]?.[0]?.group === 'L3' ? resultArray[0][0] :
-            resultArray[1]?.[0]?.group === 'L3' ? resultArray[1][0] : false 
+            resultArray[1]?.[0]?.group === 'L3' ? resultArray[1][0] : false
 
             if(firstGroup){
               firstGroup.checked = true
@@ -112,10 +112,10 @@ const SafetyResult = () => {
         setLayerList([])
         setDisplaceLevelData([])
       }
-      
+
     },[mainSearchOn])
-    
-    
+
+
 
     //변위탐지 선택
     useEffect(()=>{
@@ -141,7 +141,7 @@ const SafetyResult = () => {
       });
       setLayerList(updatedList);
 
-      //이베트 발생 위치 확인후 
+      //이베트 발생 위치 확인후
       const selectedItem = updatedList[outerIndex][innerIndex]
       if(!multiSelect) { dispatch({ type: SAFETY_CLEAR_LAEYRS }); checkboxResetL4() }
       dispatch({ type: SAFETY_SET_LAYERS, layerInfo: selectedItem, setType: selectedItem.checked })
@@ -236,7 +236,7 @@ const SafetyResult = () => {
     )
 
 
-    //변위등급 
+    //변위등급
     const renderSafetyLevel = () =>{
       return (
         <div className="content-row">
@@ -277,17 +277,17 @@ const SafetyResult = () => {
                     )
                   })
                 }
-                
+
               </List>
           </div>
         </div>
       )
-        
+
     }
 
   return (
     <>
-      <div className="content-body scroll" onClick={()=>{ dispatch({type:SAFETY_SELECT_BOX, selectBox: false}) }}>
+      <div className="content-body" onClick={()=>{ dispatch({type:SAFETY_SELECT_BOX, selectBox: false}) }}>
           {
               loading && <div className="content-row empty-wrap" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}><CircularProgress color="primary" size={50} thickness={4} /></div>
           }
@@ -303,6 +303,7 @@ const SafetyResult = () => {
               </div>
             </div>
           }
+
 
           {
               <div className="multiple-select-wrap" style={{display: layerList.length > 0 && !loading ? '' : 'none', marginTop: 15}}>
@@ -321,10 +322,13 @@ const SafetyResult = () => {
               </div>
             }
 
-          {layerList.length > 0 && !loading && layerList.map((obj, i)=> renderResult(obj, i))}
+            <div className={"MuiTabPanel-root"}>
+                {layerList.length > 0 && !loading && layerList.map((obj, i)=> renderResult(obj, i))}
 
-          {displaceLevelData.length > 0 && !loading && renderSafetyLevel()}
-          
+                {displaceLevelData.length > 0 && !loading && renderSafetyLevel()}
+            </div>
+
+
         </div>
         <BaseResultCntTooltip resultInfos={resultInfos}/>
       </>
