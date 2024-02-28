@@ -6,13 +6,9 @@ import WaterLevelOverlay from "@gis/util/overlay/WaterLevelOverlay";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import FloodL4 from "./component/FloodL4";
-import FloodOptions from "./FloodOptions";
 import FloodResult from "./FloodResult";
 import pin from "@images/map-icon-st.svg"
-import pin2 from "@images/map-icon-st-clicked.svg"
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
-import BaseSelectExpUnt from "../common/BaseSelectExpUnt";
-import BaseAddLegendWidget from "@components/legend/BaseAddLegendWidget";
 import BaseLegendWidget from "@components/legend/BaseLegendWidget";
 import LegendFlood from "@components/legend/LegendFlood";
 
