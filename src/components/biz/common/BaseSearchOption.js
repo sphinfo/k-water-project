@@ -13,7 +13,7 @@ const BaseSearchOption = () => {
     const namesRef = useRef(['YONGDAM','HWANGGANG','IMNAM','DAECHEONG','ANDONG','UNMUN','YEONGCHEON','SAYEON','SEOUL','DAEJEON','NAESEONGCHEON','MIHOCHEON','WYECHEON'])
 
     const dispatch = useDispatch()
-    const { selectBox, mainOptions } = useSelector(state => state.main)
+    const { selectBox, mainOptions, geoSearch } = useSelector(state => state.main)
     const selectRef = useRef()
 
     useEffect(()=>{
@@ -22,12 +22,17 @@ const BaseSearchOption = () => {
 
     const searchClick = () =>{
         dispatch({type: SEARCH_START})
-        if(mainOptions.length === 1){
+        if(!geoSearch){
+            if(mainOptions.length === 1){
+                dispatch({type:HOLD_MAP, holdMap: true})
+                G$flyToPoint([mainOptions[0].y, mainOptions[0].x], mainOptions[0].z, undefined, true)
+                }else{
+                dispatch({type:HOLD_MAP, holdMap: false})
+            }
+        }else{
             dispatch({type:HOLD_MAP, holdMap: true})
-            G$flyToPoint([mainOptions[0].y, mainOptions[0].x], mainOptions[0].z, undefined, true)
-          }else{
-            dispatch({type:HOLD_MAP, holdMap: false})
-          }
+        }
+
     }
 
     return (
@@ -87,7 +92,7 @@ const BaseSearchOption = () => {
                 </div>
             </div>
 
-            <div className="content-row">
+            <div className="content-row" style={{display: geoSearch ? 'none' : ''}}>
                 <div className="form-control">
                     <BaseSelectOption ref={selectRef} provider={namesRef.current}/>
                 </div>
@@ -104,7 +109,7 @@ const BaseSearchOption = () => {
             <div className="content-row">
                 <div className="base-btn-wrap">
                     <FormControlLabel
-                        label="현재 영역으로 ROI 설정"
+                        label="현재 영역에서 산출물 검색"
                         control={
                             <Checkbox
                                 onChange={(e) => {

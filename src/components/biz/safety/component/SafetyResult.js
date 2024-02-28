@@ -4,7 +4,7 @@ import { SAFETY_CLEAR_LAEYRS, SAFETY_RESET_LAYER, SAFETY_SELECT_BOX, SAFETY_SET_
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject, G$getMapExtent } from "@gis/util";
+import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject, G$getMapExtentParam,  } from "@gis/util";
 import Button from "@mui/material/Button";
 import { getL3Layers } from "@common/axios/common";
 import dayjs from "dayjs";
@@ -43,75 +43,71 @@ const SafetyResult = () => {
       dispatch({type:SAFETY_CLEAR_LAEYRS})
       setResultInfos({})
 
-      if(mainOptions.length > 0){
-        //변위 등급 초기화
-        setDisplaceLevelData([])
+      
+      //변위 등급 초기화
+      setDisplaceLevelData([])
 
-        /*let location = mainOptions.map(item => item.code).join(',')
-        let params = {type:'safety', level: 'L3', location: location, from:dayjs().format('YYYYMMDD'), to:dayjs().format('YYYYMMDD')}*/
-        let location = mainOptions.map(item => item.code).join(',')
-        let param = {type:'safety', level: 'L3', from: startDate, to: endDate}
-        const params = geoSearch ? { ...param, ...G$getMapExtent() } : { ...param, location }
+      /*let location = mainOptions.map(item => item.code).join(',')
+      let params = {type:'safety', level: 'L3', location: location, from:dayjs().format('YYYYMMDD'), to:dayjs().format('YYYYMMDD')}*/
+      let location = mainOptions.map(item => item.code).join(',')
+      let param = {type:'safety', level: 'L3', from: startDate, to: endDate, geoSearch}
+      const params = geoSearch ? { ...param, ...G$getMapExtentParam() } : { ...param, location }
 
-        setLoading(true)
-        getL3Layers(params).then((response) => {
+      setLoading(true)
+      getL3Layers(params).then((response) => {
 
-          if(response?.result?.data?.length > 0){
+        if(response?.result?.data?.length > 0){
 
-            let resultList = []
-            let displaceResultList = []
-            response.result.data.map((obj)=>{
+          let resultList = []
+          let displaceResultList = []
+          response.result.data.map((obj)=>{
 
-              let store = obj.dataType.toLowerCase()
-              let layer = obj.name
-              let group = obj.level
-              let groupNm = obj.level === 'L3' ? '변위탐지' : '변위등급'
-              let udew = obj.filename.indexOf('_D_') > -1 ? 'DESC' : obj.filename.indexOf('_A_') > -1 ? 'ASC' : ''
-              let categoryNm = obj.category.indexOf('L3TD_A1') > 0 ? '고정산란체' : obj.category.indexOf('L3TD_A2') > 0 ? '분산산란체' : ''
-              let locationKr = G$getKoreanName(obj.testLocation.split('-'))
-              //satellite
-              obj.satellite = obj.satellite === "S1X" ? "S1A" : obj.satellite
+            let store = obj.dataType.toLowerCase()
+            let layer = obj.name
+            let group = obj.level
+            let groupNm = obj.level === 'L3' ? '변위탐지' : '변위등급'
+            let udew = obj.filename.indexOf('_D_') > -1 ? 'DESC' : obj.filename.indexOf('_A_') > -1 ? 'ASC' : ''
+            let categoryNm = obj.category.indexOf('L3TD_A1') > 0 ? '고정산란체' : obj.category.indexOf('L3TD_A2') > 0 ? '분산산란체' : ''
+            let locationKr = G$getKoreanName(obj.testLocation.split('-'))
+            //satellite
+            obj.satellite = obj.satellite === "S1X" ? "S1A" : obj.satellite
 
-              if(obj.level === 'L3'){
-                resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr, udew})
-              }else{
-                //L4DC 변위등급도
-                if(obj.category === 'L4DC'){
-                  displaceResultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
-                }
-
+            if(obj.level === 'L3'){
+              resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr, udew})
+            }else{
+              //L4DC 변위등급도
+              if(obj.category === 'L4DC'){
+                displaceResultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
               }
-            })
 
-            setResultInfos(G$BaseSelectBoxArray([...resultList, ...displaceResultList], 'category'))
-            const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true))
-            const resultArray = groupArray.grouped
-
-            let firstGroup = resultArray[0]?.[0]?.group === 'L3' ? resultArray[0][0] :
-            resultArray[1]?.[0]?.group === 'L3' ? resultArray[1][0] : false
-
-            if(firstGroup){
-              firstGroup.checked = true
-              dispatch({ type: SAFETY_SET_LAYERS, layerInfo: firstGroup, setType: true })
             }
+          })
 
-            //변위 등급 리스트
-            setDisplaceLevelData(displaceResultList)
-            //3레벨 레이어 리스트
-            setLayerList(resultArray)
-          }else{
-            setLayerList([])
-            setMessage("데이터가 존재하지 않습니다.")
+          setResultInfos(G$BaseSelectBoxArray([...resultList, ...displaceResultList], 'category'))
+          const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true))
+          const resultArray = groupArray.grouped
+
+          let firstGroup = resultArray[0]?.[0]?.group === 'L3' ? resultArray[0][0] :
+          resultArray[1]?.[0]?.group === 'L3' ? resultArray[1][0] : false
+
+          if(firstGroup){
+            firstGroup.checked = true
+            dispatch({ type: SAFETY_SET_LAYERS, layerInfo: firstGroup, setType: true })
           }
 
-          setTimeout(() => {
-            setLoading(false)
-          }, 500)
-        })
-      }else{
-        setLayerList([])
-        setDisplaceLevelData([])
-      }
+          //변위 등급 리스트
+          setDisplaceLevelData(displaceResultList)
+          //3레벨 레이어 리스트
+          setLayerList(resultArray)
+        }else{
+          setLayerList([])
+          setMessage("데이터가 존재하지 않습니다.")
+        }
+
+        setTimeout(() => {
+          setLoading(false)
+        }, 500)
+      })
 
     },[mainSearchOn])
 

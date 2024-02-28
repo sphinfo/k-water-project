@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject, G$getMapExtent } from "@gis/util";
+import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject, G$getMapExtentParam } from "@gis/util";
 import EnvironmentResultTab from "./EnvironmentResultTab";
 import { ENV_CLEAR_LAEYRS, ENV_RESET_LAYER, ENV_SELECT_BOX, ENV_SET_LAYERS, SELECT_BOX } from "@redux/actions";
 import { Button, Checkbox, CircularProgress, FormControlLabel } from "@mui/material";
@@ -49,67 +49,65 @@ const EnvironmentResult = () => {
       setResultInfos({})
 
 
-      if (mainOptions.length > 0) {
-        /*let location = mainOptions.map(item => item.code).join(',')
-        let params = {type:'environment', level: 'L3', location: location, from: startDate, to: endDate}*/
+      
+      /*let location = mainOptions.map(item => item.code).join(',')
+      let params = {type:'environment', level: 'L3', location: location, from: startDate, to: endDate}*/
 
-        let location = mainOptions.map(item => item.code).join(',')
-        let param = {type:'environment', level: 'L3', from: startDate, to: endDate}
-        const params = geoSearch ? { ...param, ...G$getMapExtent() } : { ...param, location }
+      let location = mainOptions.map(item => item.code).join(',')
+      let param = {type:'environment', level: 'L3', from: startDate, to: endDate, geoSearch}
+      const params = geoSearch ? { ...param, ...G$getMapExtentParam() } : { ...param, location }
 
-        setLoading(true)
-        getL3Layers(params).then((response) => {
-          if(response?.result?.data?.length > 0){
-            let resultList = []
-            response.result.data.map((obj)=>{
+      setLoading(true)
+      getL3Layers(params).then((response) => {
+        if(response?.result?.data?.length > 0){
+          let resultList = []
+          response.result.data.map((obj)=>{
 
-              let store = obj.dataType.toLowerCase()
-              let layer = obj.name
+            let store = obj.dataType.toLowerCase()
+            let layer = obj.name
 
-              let group = obj.category === 'L3GA' ? 'Garbage' : obj.category === 'L3AE' ? 'Green': obj.category === 'L3AL' ? 'Garbage' : obj.category === 'L3LCA1' ? 'LandCover' : obj.category === 'L3LCA2' ? 'LandCover' : 'a'
-              let categoryNm = obj.category === 'L3GA' ? '부유물' : obj.category === 'L3AE' ? '녹조 농도' : obj.category === 'L3AL' ? '녹조 탐지' : obj.category === 'L3LCA1' ? '수변피복' : obj.category === 'L3LCA2' ? '수변피복' : 'b'
-              let groupNm = obj.category === 'L3GA' ? '부유물' : obj.category === 'L3AE' ? '녹조 농도' : obj.category === 'L3AL' ? '녹조 탐지' : obj.category === 'L3LCA1' ? 'AI 알고리즘' : obj.category === 'L3LCA2' ? '광학자료' : 'c'
-              let locationKr = G$getKoreanName(obj.testLocation.split('-'))
-              resultList.push({...obj, store, layer, group, groupNm, categoryNm, locationKr})
+            let group = obj.category === 'L3GA' ? 'Garbage' : obj.category === 'L3AE' ? 'Green': obj.category === 'L3AL' ? 'Garbage' : obj.category === 'L3LCA1' ? 'LandCover' : obj.category === 'L3LCA2' ? 'LandCover' : 'a'
+            let categoryNm = obj.category === 'L3GA' ? '부유물' : obj.category === 'L3AE' ? '녹조 농도' : obj.category === 'L3AL' ? '녹조 탐지' : obj.category === 'L3LCA1' ? '수변피복' : obj.category === 'L3LCA2' ? '수변피복' : 'b'
+            let groupNm = obj.category === 'L3GA' ? '부유물' : obj.category === 'L3AE' ? '녹조 농도' : obj.category === 'L3AL' ? '녹조 탐지' : obj.category === 'L3LCA1' ? 'AI 알고리즘' : obj.category === 'L3LCA2' ? '광학자료' : 'c'
+            let locationKr = G$getKoreanName(obj.testLocation.split('-'))
+            resultList.push({...obj, store, layer, group, groupNm, categoryNm, locationKr})
 
-            })
+          })
 
-            resultList.map((obj)=>{
-              if(obj.group === 'Garbage'){
-                setGarbageCnt(prevCount => prevCount + 1)
-              }else if(obj.group === 'Green'){
-                setGreenCnt(prevCount => prevCount + 1)
-              }else if(obj.group === 'LandCover'){
-                setLandCoverCnt(prevCount => prevCount + 1)
-              }
-            })
-
-            setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
-            const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'group')
-            const resultArray = groupArray.grouped
-
-            let firstGroup = resultArray[0]?.[0]?.group === 'LandCover' ? resultArray[0][0] :
-            resultArray[1]?.[0]?.group === 'LandCover' ? resultArray[1][0] :
-            resultArray[2]?.[0]?.group === 'LandCover' ? resultArray[2][0] : false 
-
-            if(firstGroup){
-              firstGroup.checked = true
-              groupRef.current = firstGroup.group
-              dispatch({ type: ENV_SET_LAYERS, layerInfo: firstGroup, setType: true })
+          resultList.map((obj)=>{
+            if(obj.group === 'Garbage'){
+              setGarbageCnt(prevCount => prevCount + 1)
+            }else if(obj.group === 'Green'){
+              setGreenCnt(prevCount => prevCount + 1)
+            }else if(obj.group === 'LandCover'){
+              setLandCoverCnt(prevCount => prevCount + 1)
             }
+          })
 
-            setLayerList(resultArray)
-          }else{
-            setLayerList([])
+          setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
+          const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'group')
+          const resultArray = groupArray.grouped
+
+          let firstGroup = resultArray[0]?.[0]?.group === 'LandCover' ? resultArray[0][0] :
+          resultArray[1]?.[0]?.group === 'LandCover' ? resultArray[1][0] :
+          resultArray[2]?.[0]?.group === 'LandCover' ? resultArray[2][0] : false 
+
+          if(firstGroup){
+            firstGroup.checked = true
+            groupRef.current = firstGroup.group
+            dispatch({ type: ENV_SET_LAYERS, layerInfo: firstGroup, setType: true })
           }
-        })
-        
-        setTimeout(() => {
-          setLoading(false)
-        }, 500)
-      } else {
-        setLayerList([])
-      }
+
+          setLayerList(resultArray)
+        }else{
+          setLayerList([])
+        }
+      })
+      
+      setTimeout(() => {
+        setLoading(false)
+      }, 500)
+    
       
     },[mainSearchOn])
 

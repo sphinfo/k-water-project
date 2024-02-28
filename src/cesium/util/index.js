@@ -393,7 +393,18 @@ const G$pointsToExtent = (points = []) =>{
 
 /* 현재 지도 extent 가져오기 */
 const G$getMapExtent = () => {
+    let extent = MapManager.getExtent()
+    console.info(G$4326to3857(extent.left, extent.bottom))
+    console.info(G$4326to3857(extent.right, extent.top))
     return MapManager.getExtent()
+}
+
+/* */
+const G$getMapExtentParam = () => {
+    let extent = MapManager.getExtent()
+    let lb = G$4326to3857(extent.left, extent.bottom)
+    let rt = G$4326to3857(extent.right, extent.top)
+    return {left:lb.x, bottom:lb.y, right:rt.x, top:rt.y}
 }
 
 /* 지도 이동 컨트롤 */
@@ -651,6 +662,7 @@ export {
     G$pointsToExtent,
     G$flyToExtent,
     G$getMapExtent,
+    G$getMapExtentParam,
     G$holdMap,
     G$imageLayersOpacity,
     G$flyToPoint,
