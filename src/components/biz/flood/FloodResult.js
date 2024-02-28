@@ -17,7 +17,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     const dispatch = useDispatch()
 
     // 홍수 검색조건
-    const { floodResultTab } = useSelector(state => state.flood)
+    const { floodResultTab, layers } = useSelector(state => state.flood)
     const { mainOptions, startDate, endDate, mainSearchOn, geoSearch } = useSelector(state => state.main)
 
     const [layerList, setLayerList] = useState([])
@@ -32,7 +32,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
     const [wbCnt, setWbCnt] = useState(0)
     const [wlCnt, setWlCnt] = useState(0)
 
-    const [multiSelect, setMultiSelect] = useState(true)
+    const [multiSelect, setMultiSelect] = useState(false)
 
     const [loading, setLoading] = useState(false)
 
@@ -127,18 +127,19 @@ const FloodResult = ({waterObsList=[], ...props}) => {
 
     //체크박스 다시 그리기
     const checkboxChange = (outerIndex, innerIndex) =>{
-
       //layerList 전체 데이터
       const updatedList = layerList.map((subArray, i) => {
 
           if (outerIndex === i) {
               const updatedSubArray = subArray.map((item, j) => {
                   if (innerIndex === j) {
-                      return { ...item, checked: !item.checked };
+                      //1개이상 선택되어있고 단일 선택으로 변경시 클릭된건 check 다른항목들을 false (240228)
+                      return { ...item, checked: Object.keys(layers).length > 1 && !multiSelect ? true : !item.checked }
+                      //return { ...item, checked: !item.checked };
                   }
 
                   if(outerIndex === 1){
-                    return { ...item, checked: false }; // 기존 선택 해제
+                    return { ...item, checked: false }; // 수위는 기본적으로 기존 선택 해제
                   }else{
                     return { ...item, ...(multiSelect ? {} : { checked: false })}; // 기존 선택 해제
                   }

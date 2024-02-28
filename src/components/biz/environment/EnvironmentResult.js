@@ -17,7 +17,7 @@ const EnvironmentResult = () => {
     const dispatch = useDispatch()
 
     // 가뭄 검색조건
-    const { environmentResultTab } = useSelector(state => state.environment)
+    const { environmentResultTab, layers } = useSelector(state => state.environment)
     const { mainOptions, startDate, endDate, mainSearchOn, geoSearch } = useSelector(state => state.main)
 
     const [layerList, setLayerList] = useState([])
@@ -28,7 +28,7 @@ const EnvironmentResult = () => {
     //debouncing timer
     const [timer, setTimer] = useState(null)
 
-    const [multiSelect, setMultiSelect] = useState(true)
+    const [multiSelect, setMultiSelect] = useState(false)
 
     const [loading, setLoading] = useState(false)
 
@@ -130,7 +130,9 @@ const EnvironmentResult = () => {
           if (outerIndex === i) {
               const updatedSubArray = subArray.map((item, j) => {
                   if (innerIndex === j) {
-                      return { ...item, checked: !item.checked }
+                      //return { ...item, checked: !item.checked }
+                      //1개이상 선택되어있고 단일 선택으로 변경시 클릭된건 check 다른항목들을 false (240228)
+                      return { ...item, checked: Object.keys(layers).length > 1 && !multiSelect ? true : !item.checked }
                   }
                   return { ...item, ...(multiSelect ? {} : { checked: false })  }
               });

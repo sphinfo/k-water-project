@@ -17,7 +17,8 @@ const SafetyResult = () => {
 
     // 안전 검색조건
     const { mainOptions, startDate, endDate, mainSearchOn, geoSearch } = useSelector(state => state.main)
-
+    const { layers } = useSelector(state => state.safety)
+    
     const [layerList, setLayerList] = useState([])
 
     const [resultInfos, setResultInfos] = useState({})
@@ -25,7 +26,7 @@ const SafetyResult = () => {
     //debouncing timer
     const [timer, setTimer] = useState(null)
 
-    const [multiSelect, setMultiSelect] = useState(true)
+    const [multiSelect, setMultiSelect] = useState(false)
 
     const [loading, setLoading] = useState(false)
 
@@ -128,7 +129,9 @@ const SafetyResult = () => {
           if (outerIndex === i) {
               const updatedSubArray = subArray.map((item, j) => {
                   if (innerIndex === j) {
-                      return { ...item, checked: !item.checked };
+                      //return { ...item, checked: !item.checked };
+                      //1개이상 선택되어있고 단일 선택으로 변경시 클릭된건 check 다른항목들을 false (240228)
+                      return { ...item, checked: Object.keys(layers).length > 1 && !multiSelect ? true : !item.checked }
                   }
                   return { ...item, ...(multiSelect ? {} : { checked: false }) }
               });

@@ -19,8 +19,8 @@ const DroughtResult = () => {
     const dispatch = useDispatch()
 
     // 가뭄 검색조건
-    const { searchOn, text, selectResultTab } = useSelector(state => state.drought)
-    const { mainOptions, mainSearchOn, geoSearch } = useSelector(state => state.main)
+    const { selectResultTab, layers } = useSelector(state => state.drought)
+    const { mainOptions, mainSearchOn, geoSearch, startDate, endDate } = useSelector(state => state.main)
 
     const [layerList, setLayerList] = useState([])
 
@@ -29,7 +29,7 @@ const DroughtResult = () => {
     //debouncing timer
     const [timer, setTimer] = useState(null);
 
-    const [multiSelect, setMultiSelect] = useState(true)
+    const [multiSelect, setMultiSelect] = useState(false)
 
     const [loading, setLoading] = useState(false)
 
@@ -50,7 +50,7 @@ const DroughtResult = () => {
         /*let location = mainOptions.map(item => item.code).join(',')
         let params = {type:'drought', level: 'L3', location: location, from: startDate, to: endDate}*/
         let location = mainOptions.map(item => item.code).join(',')
-        let param = {type:'drought', level: 'L3'}
+        let param = {type:'drought', level: 'L3', from: startDate, to: endDate}
         const params = geoSearch ? { ...param, ...G$getMapExtent() } : { ...param, location }
 
         setLoading(true)
@@ -122,7 +122,9 @@ const DroughtResult = () => {
           if (outerIndex === i) {
               const updatedSubArray = subArray.map((item, j) => {
                   if (innerIndex === j) {
-                      return { ...item, checked: !item.checked }
+                      //return { ...item, checked: !item.checked }
+                      //1개이상 선택되어있고 단일 선택으로 변경시 클릭된건 check 다른항목들을 false (240228)
+                      return { ...item, checked: Object.keys(layers).length > 1 && !multiSelect ? true : !item.checked }
                   }
                   return { ...item, ...(multiSelect ? {} : { checked: false }) } 
               });
