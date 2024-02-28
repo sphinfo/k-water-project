@@ -1590,6 +1590,20 @@
   background-color: $black-navy;
   padding-bottom: 15px;
   border-radius: 10px;
+
+  .content-row-form {
+    transition: height 0.2s, visibility 0.2s, opacity 0.2s, padding 0.21s;
+    opacity: 1;
+    visibility: visible;
+    height: 51px;
+
+    &.hidden {
+      opacity: 0;
+      height: 0;
+      visibility: hidden;
+      padding: 0 15px;
+    }
+  }
 }
 
 .base-btn-wrap {

@@ -92,7 +92,8 @@ const BaseSearchOption = () => {
                 </div>
             </div>
 
-            <div className="content-row" style={{display: geoSearch ? 'none' : ''}}>
+            {/*<div className="content-row" style={{display: geoSearch ? 'none' : ''}}>*/}
+            <div className={`content-row content-row-form ${geoSearch ? 'hidden' : ''}`}>
                 <div className="form-control">
                     <BaseSelectOption ref={selectRef} provider={namesRef.current}/>
                 </div>
