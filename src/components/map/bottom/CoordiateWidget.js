@@ -5,7 +5,7 @@ import { G$GetPointToDetail, G$covertKm } from '@gis/util';
 import MapManager from '@gis/MapManager';
 
 const CoordiateWidget = () => {
-    
+
     const [coord, setCoord] = useState([]);
     const [height, setHeight] = useState(0)
 
@@ -18,9 +18,9 @@ const CoordiateWidget = () => {
             var cameraHeight = MapManager.map.camera.positionCartographic.height
             setHeight(G$covertKm(cameraHeight.toFixed(0)))
         })
-        
+
     },[])
-    
+
 
     return (
         <>
@@ -28,7 +28,7 @@ const CoordiateWidget = () => {
                 <div><span className="text-blue">LON</span>{coord.lonDms}</div>
                 <div><span className="text-blue">LAT</span>{coord.latDms}</div>
             </ul>
-            <ul className="map-coord-box" style={{width: 100}}>
+            <ul className="map-coord-box" style={{width: 110}}>
                 <div><span className="text-blue">ALT</span>{height}</div>
             </ul>
         </>
