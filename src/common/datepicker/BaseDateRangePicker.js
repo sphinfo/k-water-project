@@ -44,7 +44,7 @@ const BaseDateRangePicker = (props, ref) => {
 
   const closeOnSelect = useCallback(()=>{
     //(onChange && onChange(selectedDate));
-    (onchangeFromat && onchangeFromat([selectedDate[0].format('YYYYMMDD'), selectedDate[1].format('YYYYMMDD')]))
+    (onchangeFromat && selectedDate.length === 2 && onchangeFromat([selectedDate[0].format('YYYYMMDD'), selectedDate[1].format('YYYYMMDD')]))
   },[selectedDate])
 
   const max = useMemo(()=>{
