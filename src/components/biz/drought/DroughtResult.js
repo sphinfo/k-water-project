@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
-import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject, G$getMapExtent } from "@gis/util";
+import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject, G$getMapExtentParam } from "@gis/util";
 import { DROUGHT_CLEAR_LAEYRS, DROUGHT_RESET, DROUGHT_RESET_LAYER, DROUGHT_RESULT_TAB, DROUGHT_SELECT_BOX, DROUGHT_SELECT_LAYER, DROUGHT_SET_LAYERS, SELECT_BOX } from "@redux/actions";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -45,64 +45,63 @@ const DroughtResult = () => {
       setA2Cnt(0)
       setA3Cnt(0)
       setResultInfos({})
-      if(mainOptions.length > 0){
 
-        /*let location = mainOptions.map(item => item.code).join(',')
-        let params = {type:'drought', level: 'L3', location: location, from: startDate, to: endDate}*/
-        let location = mainOptions.map(item => item.code).join(',')
-        let param = {type:'drought', level: 'L3', from: startDate, to: endDate}
-        const params = geoSearch ? { ...param, ...G$getMapExtent() } : { ...param, location }
+      
 
-        setLoading(true)
-        getL3Layers(params).then((response) => {
-          if(response?.result?.data?.length > 0){
-            let resultList = []
-            response.result.data.map((obj)=>{
+      /*let location = mainOptions.map(item => item.code).join(',')
+      let params = {type:'drought', level: 'L3', location: location, from: startDate, to: endDate}*/
+      let location = mainOptions.map(item => item.code).join(',')
+      let param = {type:'drought', level: 'L3', from: startDate, to: endDate, geoSearch}
+      const params = geoSearch ? { ...param, ...G$getMapExtentParam() } : { ...param, location }
 
-              let store = obj.dataType
-              let layer = obj.name
-              let group = obj.category.indexOf('A1') > 0 ? 'A1' : obj.category.indexOf('A2') > 0 ? 'A2' : obj.category.indexOf('A3') > 0 ? 'A3' : ''
-              let groupNm = '토양수분'
-              let categoryNm = obj.category.indexOf('A1') > 0 ? '물리모형' : obj.category.indexOf('A2') > 0 ? '강우자료' : obj.category.indexOf('A3') > 0 ? '토양특성' : ''
-              let locationKr = G$getKoreanName(obj.testLocation.split('-'))
-              resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
-            })
+      setLoading(true)
+      getL3Layers(params).then((response) => {
+        if(response?.result?.data?.length > 0){
+          let resultList = []
+          response.result.data.map((obj)=>{
 
-            resultList.map((obj)=>{
-              if(obj.group === 'A1'){
-                setA1Cnt(prevCount => prevCount + 1)
-              }else if(obj.group === 'A2'){
-                setA2Cnt(prevCount => prevCount + 1)
-              }else if(obj.group === 'A3'){
-                setA3Cnt(prevCount => prevCount + 1)
-              }
-            })
+            let store = obj.dataType
+            let layer = obj.name
+            let group = obj.category.indexOf('A1') > 0 ? 'A1' : obj.category.indexOf('A2') > 0 ? 'A2' : obj.category.indexOf('A3') > 0 ? 'A3' : ''
+            let groupNm = '토양수분'
+            let categoryNm = obj.category.indexOf('A1') > 0 ? '물리모형' : obj.category.indexOf('A2') > 0 ? '강우자료' : obj.category.indexOf('A3') > 0 ? '토양특성' : ''
+            let locationKr = G$getKoreanName(obj.testLocation.split('-'))
+            resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
+          })
 
-            setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
-            const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'group')
-            const resultArray = groupArray.grouped
-
-            let firstGroup = resultArray[0]?.[0]?.group === 'A1' ? resultArray[0][0] :
-            resultArray[1]?.[0]?.group === 'A1' ? resultArray[1][0] :
-            resultArray[2]?.[0]?.group === 'A1' ? resultArray[2][0] : false 
-
-            if(firstGroup){
-              firstGroup.checked = true
-              dispatch({ type: DROUGHT_SET_LAYERS, layerInfo: firstGroup, setType: true })
+          resultList.map((obj)=>{
+            if(obj.group === 'A1'){
+              setA1Cnt(prevCount => prevCount + 1)
+            }else if(obj.group === 'A2'){
+              setA2Cnt(prevCount => prevCount + 1)
+            }else if(obj.group === 'A3'){
+              setA3Cnt(prevCount => prevCount + 1)
             }
-            setLayerList(resultArray)
-          }else{
-            setLayerList([])
+          })
+
+          setResultInfos(G$BaseSelectBoxArray(resultList, 'category'))
+          const groupArray = G$BaseSelectBoxArray(G$sortArrayObject(resultList, 'startedAt', true), 'group')
+          const resultArray = groupArray.grouped
+
+          let firstGroup = resultArray[0]?.[0]?.group === 'A1' ? resultArray[0][0] :
+          resultArray[1]?.[0]?.group === 'A1' ? resultArray[1][0] :
+          resultArray[2]?.[0]?.group === 'A1' ? resultArray[2][0] : false 
+
+          if(firstGroup){
+            firstGroup.checked = true
+            dispatch({ type: DROUGHT_SET_LAYERS, layerInfo: firstGroup, setType: true })
           }
+          setLayerList(resultArray)
+        }else{
+          setLayerList([])
+        }
 
-          setTimeout(() => {
-            setLoading(false)
-          }, 500)
-        })
+        setTimeout(() => {
+          setLoading(false)
+        }, 500)
+      })
 
-      }else{
-        setLayerList([])
-      }
+    
     },[mainSearchOn])
 
     // 초기화

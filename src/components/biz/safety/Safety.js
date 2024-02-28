@@ -1,15 +1,12 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_SELECT_4_LEVEL_RESET, SET_SIDE_PANEL, SAFETY_CLICK_MODE, SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
+import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_CLICK_MODE, SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
 import { G$addWidget, G$flyToPoint, G$paramWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
-import SafetyOptions from "./component/SafetyOptions";
 import SafetyResult from "./component/SafetyResult";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
 import SafetyL4 from "./component/l4Component/SafetyL4";
 import SafetyOverlay from "@gis/util/overlay/SafetyOverlay";
-import TestLegend1 from "@components/legend/TestLegend1";
-import TestLegend2 from "@components/legend/TestLegend2";
 import BaseLegendgGradientWidget from "@components/legend/BaseLegendgGradientWidget";
 import BaseLegendWidget from "@components/legend/BaseLegendWidget";
 import LegendSafety from "@components/legend/LegendSafety";

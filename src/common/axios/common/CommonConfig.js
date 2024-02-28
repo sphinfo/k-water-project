@@ -4,6 +4,7 @@
 export default {
     
     GET_L3_LAYERS: `/api/layers/getAll`,
+    GET_L3_GEO_LAYERS: `/api/layers/getAllByGeom`,
     GET_L4_LAYERS: `/api/layers/getChildren`,
 
 };

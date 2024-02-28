@@ -4,19 +4,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { HOLD_MAP, MAIN_OPTIONS } from '@redux/actions'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
+import SelectBoxConfig from '@gis/config/SelectBoxConfig'
 
 const BaseSelectOption = ({ provider = [], ...other}, ref) => {
 
   const dispatch = useDispatch()
   const { selectBox } = useSelector(state => state.main)
-  const animatedComponents = makeAnimated()
   const [datasList, setDataList] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
   const [menuIsOpen, setMenuIsOpen] = useState(false)
 
   useEffect(()=>{
-    setDataList(G$selectBoxFilter(provider))
-  },[provider])
+    setDataList(SelectBoxConfig)
+  },[])
 
   useEffect(()=>{
     setMenuIsOpen(selectBox)
