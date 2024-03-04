@@ -3,22 +3,15 @@ import Drought from '@components/biz/drought/Drought';
 import Flood from '@components/biz/flood/Flood';
 import Environment from '@components/biz/environment/Environment';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import IconButton from '@mui/material/IconButton';
 import { SET_PANEL_VISIBLE } from '@redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import Admin from '@components/biz/admin/Admin';
-import Tooltip from "@mui/material/Tooltip";
 import BaseSearchOption from '@components/biz/common/BaseSearchOption';
 
 //탭 패널 공통
-function TabPanel(props) {
-
+/*function TabPanel(props) {
   const { panelVisible } = useSelector(state => state.main)
-
   const { children, value, index, name, close, ...other } = props;
-
   const [visible, setVisible] = useState(false);
-
   useEffect(() => {
     if (value === index) {
       setVisible(true);
@@ -27,8 +20,6 @@ function TabPanel(props) {
     }
 
   }, [value, index]);
-
-
   return (
       visible && (
           <div hidden={value !== index || value === -1} {...other}  className={`panel panel-left ${!panelVisible ? 'fold' : ''}`}>
@@ -43,25 +34,16 @@ function TabPanel(props) {
                 </svg>
               </IconButton>
             </div>
-
             {children}
-
-            {
-              /*
-
-
-              */
-            }
-
           </div>
       )
   );
-}
+}*/
 
 export default function Sidebar() {
 
   const dispatch = useDispatch()
-  const {panelVisible, panelSide, mainSearchOn} = useSelector(state => state.main)
+  const {panelVisible, mainSearchOn} = useSelector(state => state.main)
 
   const INDEX_0 = useMemo(() => { return {i:0, name:'홍수'}}, []);
   const INDEX_1 = useMemo(() => { return {i:1, name:'가뭄'}}, []);
@@ -69,14 +51,13 @@ export default function Sidebar() {
   const INDEX_3 = useMemo(() => { return {i:3, name:'환경'}}, []);
 
 
-  //const INDEX_4 = useMemo(() => 4, []); //수변피복탐지
-  const INDEX_5 = useMemo(() => { return {i:5, name:''}}, []);
+  //const INDEX_4 = useMemo(() => 4, []);
+  //const INDEX_5 = useMemo(() => { return {i:5, name:''}}, []);
 
 
   const NONE_INDEX = useMemo(() => -1, []); //none
 
   const [value, setValue] = useState(NONE_INDEX);
-
 
   //탭 선택
   const handleChange = useCallback((newValue) => {
@@ -97,17 +78,15 @@ export default function Sidebar() {
     }
   },[mainSearchOn])
 
-
-
   //탭 닫기
-  const handleClose = () => {
+  /*const handleClose = () => {
       setValue(NONE_INDEX);
   };
 
   //fold btn
   const foldingHandler = () => {
     dispatch({type: SET_PANEL_VISIBLE, panelVisible: !panelVisible})
-  };
+  };*/
 
   return (
     <>
@@ -143,30 +122,15 @@ export default function Sidebar() {
 
 
             <div className='panel-wrap'>
-              {
-                value === 0  &&
-                <Flood/>
-              }
-              {
-                value === 1  &&
-                <Drought/>
-              }
-              {
-                value === 2  &&
-                <Safety/>
-              }
-              {
-                value === 3  &&
-                <Environment/>
-              }
-
+              { value === 0  && <Flood/> }
+              { value === 1  && <Drought/> }
+              { value === 2  && <Safety/> }
+              { value === 3  && <Environment/> }
               {/* 관리자 페이지 */}
               {/* <TabPanel value={value} index={INDEX_5.i} name={INDEX_5.name} close={handleClose}>
                   <Admin/>
               </TabPanel> */}
             </div>
-
-
               {/* <div
                   className={`folding-btn-wrap ${panelSide ? 'side-panel-pos' : ''} ${!panelVisible ? 'folding-off' : ''}`}
                   style={{display: value === -1 ? 'none' : ''}}>

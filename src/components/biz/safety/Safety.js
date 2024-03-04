@@ -1,7 +1,7 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_CLICK_MODE, SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
-import { G$addWidget, G$flyToPoint, G$paramWidget, G$removeLayer, G$removeWidget } from "@gis/util";
+import { G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import SafetyResult from "./component/SafetyResult";
 import GisLayerClickTool from "@gis/util/click/GisLayerClickTool";
@@ -30,6 +30,8 @@ const Safety = () => {
 
     //안전 4레벨 레이어 생성
     const safety4LevelLayerRef = useRef()
+    //안전 4레벨 관측소 레이어 생성
+    const safety4LevelObsLayerRef = useRef()
 
     const overlayRef = useRef(new SafetyOverlay())
 
@@ -63,7 +65,8 @@ const Safety = () => {
 
         //안전 4레벨 레이어 생성 wms로 될거같음
         safety4LevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:''})
-
+        //안전 4레벨 관측소 기반 데이터
+        //safety4LevelObsLayerRef.current = new BaseEntityCollection({name:'SafetyObsLayer', image: pin, overlay: new DroughtOverlay()})
         //레이어 클릭 callback 등록
         GisLayerClickTool.addBiz(bizName, layerSelectRef, [])
         //레이어 클릭 callback 활성화

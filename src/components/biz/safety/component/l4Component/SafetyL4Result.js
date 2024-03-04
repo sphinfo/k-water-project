@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { SAFETY_SELECT_4_LEVEL, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import ListItemButton from '@mui/material/ListItemButton';
@@ -129,12 +128,6 @@ const SafetyL4Result = () => {
                     </div>
 
                 </div>
-                <button  ></button>
-                {/*
-                    <ToggleButtonGroup sx={{ flexDirection: 'column', width:'100%' }} exclusive value={select4Level ? select4Level.value : null} onChange={(e,newSelected)=>{selectButton(newSelected)}}>
-                        {exampleList.length > 0 && exampleList.map((obj, i)=> renderToggleButton(obj, i))}
-                    </ToggleButtonGroup>
-                */}
             </div>
         </>
     )

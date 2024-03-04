@@ -1,7 +1,6 @@
 import React, { useCallback, useImperativeHandle, useMemo, useState } from "react";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { koKR } from '@mui/x-date-pickers/locales';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -21,29 +20,18 @@ class LocalizedUtils extends AdapterDayjs {
    BaseDateRangePicker Component
  **/
 const BaseDateRangePicker = (props, ref) => {
-
-  // interval : 현재 날짜 간격 조정 [ number ]
+  
   // onChange : Parent Combo Change Event Function
   const { dateFormat, minDate, maxDate, interval, onChange, onchangeFromat, ...other } = props;
 
-  //const [selectedDate, setSelectdDate] = useState(props.date || dayjs().add(interval || -1, 'day'));
   const [selectedDate, setSelectdDate] = useState([])
 
   const onChangeDate = useCallback((d) => {
     
     setSelectdDate(d)
-
-    /*if (ref && ref.current) {
-      ref.current.value = d;
-    } else {
-      setSelectdDate(d);
-    }
-    (onChange && onChange(d));
-    (onchangeFromat && onchangeFromat([d[0].format('YYYYMMDD'), d[1].format('YYYYMMDD')]));*/
   })
 
   const closeOnSelect = useCallback(()=>{
-    //(onChange && onChange(selectedDate));
     (onchangeFromat && selectedDate.length === 2 && onchangeFromat([selectedDate[0].format('YYYYMMDD'), selectedDate[1].format('YYYYMMDD')]))
   },[selectedDate])
 
@@ -63,7 +51,6 @@ const BaseDateRangePicker = (props, ref) => {
   // BaseDatePicker 레퍼런스 API
   useImperativeHandle(ref, () => ({
     get value() {
-      //return moment(selectedDate).format("YYYY-MM-DD");
 	    return selectedDate
     },
     set value(d) {
@@ -80,7 +67,6 @@ const BaseDateRangePicker = (props, ref) => {
         color={"primary"}
         className={"date-picker"}
         defaultValue={[min, max]}
-        
         onChange={onChangeDate}
         onClose={closeOnSelect}
         localeText={{ start: '', end: '' }}

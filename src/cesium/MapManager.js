@@ -1,8 +1,5 @@
 import { Cartesian3, Credit, Math, Rectangle, ScreenSpaceEventType, Terrain, Viewer, WebMapTileServiceImageryProvider } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
-import * as Cesium from 'cesium';
-import BaseWmsImageLayer from "./layers/BaseWmsImageLayer";
-//import 'cesium-geoserverterrainprovider';
 
 
 class MapManager {

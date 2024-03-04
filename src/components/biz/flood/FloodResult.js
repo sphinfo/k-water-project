@@ -71,7 +71,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                   resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
                 })
               }
-            }else if(resObj.config?.url === "/api/flood/getObservatory"){
+            }else if(resObj.config?.url === "/api/flood/getObservatory" || resObj.config?.url === "/api/flood/getWaterObservatoryStatisticsByGeom"){
 
               if(resObj?.data?.data?.length > 0){
                 setWlCnt(resObj?.data?.data?.length)

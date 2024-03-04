@@ -1,8 +1,8 @@
 import BaseChart from "@common/chart/BaseChart";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { G$arrayGetMinMax, G$normalizeWithColors, G$setMtoKm, G$setNumberFixedKomma, G$setSliceNumber } from "@gis/util";
-import { getBarData, getEnvLandCoverDatas, getHeatmapData } from "@common/axios/envi";
+import { G$arrayGetMinMax, G$normalizeWithColors, G$setMtoKm } from "@gis/util";
+import { getEnvLandCoverDatas } from "@common/axios/envi";
 
 /**
  * 환경 수변피복 레이어 변화탐지

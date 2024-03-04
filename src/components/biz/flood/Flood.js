@@ -1,6 +1,6 @@
-import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FLOOD_RESET, FLOOD_SELECT_WATER_LEVEL } from "@redux/actions";
+import { FLOOD_RESET } from "@redux/actions";
 import { G$addWidget, G$flyToPoint, G$paramWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import WaterLevelOverlay from "@gis/util/overlay/WaterLevelOverlay";
 import BaseEntityCollection from "@gis/layers/BaseEntityCollection";

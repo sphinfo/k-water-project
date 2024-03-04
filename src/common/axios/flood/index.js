@@ -10,8 +10,8 @@ const getFloodL3Search = async (props) =>{
         const { request } = createAxios()
         const {location, type, from, to, geoSearch, left, bottom, right, top } = props
         const floodL3SearchPromises = []
-        floodL3SearchPromises.push(request({url: geoSearch ? CommonConfig.GET_L3_GEO_LAYERS : CommonConfig.GET_L3_LAYERS, params: geoSearch ? {from, to, left, type, bottom, right, top } : props, method: 'GET'}))
-        floodL3SearchPromises.push(request({url: FloodConfig.GET_FLOOD_OBS,  params: {location, from, to}, method: 'GET'}))
+        floodL3SearchPromises.push(request({url: geoSearch ? CommonConfig.GET_L3_GEO_LAYERS : CommonConfig.GET_L3_LAYERS, params: geoSearch ? {from, to, type, left, bottom, right, top } : props, method: 'GET'}))
+        floodL3SearchPromises.push(request({url: geoSearch ? FloodConfig.GET_FLOOD_OBS_GEO : FloodConfig.GET_FLOOD_OBS,  params: geoSearch ? {left, bottom, right, top, from, to} : {location, from, to}, method: 'GET'}))
         return await Promise.all(floodL3SearchPromises)
     }catch(error){
         return {message:'error', result:{data:[]}}

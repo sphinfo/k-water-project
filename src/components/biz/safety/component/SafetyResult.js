@@ -7,7 +7,6 @@ import List from '@mui/material/List';
 import { G$BaseSelectBoxArray, G$getDateType, G$getKoreanName, G$sortArrayObject, G$getMapExtentParam,  } from "@gis/util";
 import Button from "@mui/material/Button";
 import { getL3Layers } from "@common/axios/common";
-import dayjs from "dayjs";
 import BaseResultCntTooltip from "@components/biz/common/BaseResultCntTooltip";
 import { Checkbox, CircularProgress, FormControlLabel } from "@mui/material";
 
@@ -24,7 +23,7 @@ const SafetyResult = () => {
     const [resultInfos, setResultInfos] = useState({})
 
     //debouncing timer
-    const [timer, setTimer] = useState(null)
+    //const [timer, setTimer] = useState(null)
 
     const [multiSelect, setMultiSelect] = useState(false)
 

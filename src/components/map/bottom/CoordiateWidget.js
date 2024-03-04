@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EventBus from '@common/eventBus/eventBus';
 import MapEvents from '@common/eventBus/MapEvents';
 import { G$GetPointToDetail, G$covertKm } from '@gis/util';
