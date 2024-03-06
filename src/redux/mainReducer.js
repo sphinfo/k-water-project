@@ -49,7 +49,7 @@ const initialState = {
   mainSearchOn: 0,
   mainSearchEnd: 0,
 
-  geoSearch: false,
+  geoSearch: true,
 
 };
 

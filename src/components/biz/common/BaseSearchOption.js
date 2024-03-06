@@ -116,6 +116,7 @@ const BaseSearchOption = () => {
                                 onChange={(e) => {
                                     dispatch({type: GEO_SEARCH, geoSearch: e.target.checked})
                                 }}
+                                checked={geoSearch}
                                 tabIndex={-1}
                                 disableRipple
                                 className={'check-box'}
