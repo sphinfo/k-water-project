@@ -26,9 +26,9 @@ const FloodWaterLevelStationDataConfig=[
     {"type": "WLEVEL", "name": "HWANGGANG",  "title": "황강댐"},
     {"type": "WLEVEL", "name": "IMNAM", "title": "임남댐"},
     {"type": "WLEVEL", "name": "NAESEONGCHEON", "title": "내성천"},
-    {"type": "WLEVEL", "name": "SAYEON",  "title": "사연댐"},
+    {"type": "WLEVEL", "name": "SAYEON", "obscd":"2201625",  "title": "사연댐"},
     {"type": "WLEVEL", "name": "NAMCHEON", "title": "위천"},  
-    {"type": "WLEVEL", "name": "YEONGCHEON",  "title": "영천댐"},
+    {"type": "WLEVEL", "name": "YEONGCHEON", "obscd":"2012615" ,  "title": "영천댐"},
     
 
     
