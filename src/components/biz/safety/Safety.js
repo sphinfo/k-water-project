@@ -1,6 +1,6 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_CLICK_MODE, SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
+import { SAFETY_SELETE_FEATURE, SAFETY_DETAIL_RESET, SAFETY_CLICK_MODE, SAFETY_SELECT_DISPLACE_LEVEL, SAFETY_CLICK_OBS } from "@redux/actions";
 import { G$addWidget, G$removeLayer, G$removeWidget } from "@gis/util";
 import BaseWmsImageLayer from "@gis/layers/BaseWmsImageLayer";
 import SafetyResult from "./component/SafetyResult";
@@ -10,7 +10,12 @@ import SafetyOverlay from "@gis/util/overlay/SafetyOverlay";
 import BaseLegendgGradientWidget from "@components/legend/BaseLegendgGradientWidget";
 import BaseLegendWidget from "@components/legend/BaseLegendWidget";
 import LegendSafety from "@components/legend/LegendSafety";
-
+import BaseEntityCollection from "@gis/layers/BaseEntityCollection";
+import SafetyObsConfig from "@gis/config/SafetyObsConfig";
+import { getSafetyDisplace } from "@common/axios/safety";
+import SafetyObsOverlay from "@gis/util/overlay/SafetyObsOverlay";
+import pin1 from "@images/map-icon-safety.svg";
+import pin2 from "@images/map-icon-safety-clicked.svg";
 /**
  *  안전 메인 페이지
  */
@@ -26,7 +31,7 @@ const Safety = () => {
      * select4Level : 표출데이터 선택
      * displaceLevel : 변위등릅 레이어 선택
      */
-    const {bizName, select4Level, displaceLevel, compLayerClick, selectFeature, layers, mainSearchEnd} = useSelector(state => state.safety)
+    const {bizName, select4Level, displaceLevel, compLayerClick, obsClick, selectFeature, layers, mainSearchEnd} = useSelector(state => state.safety)
 
     //안전 4레벨 레이어 생성
     const safety4LevelLayerRef = useRef()
@@ -35,28 +40,41 @@ const Safety = () => {
 
     const overlayRef = useRef(new SafetyOverlay())
 
+    const obsRef = useRef()
+
     /* 레이어 선택 callback Ref */
     const layerSelectRef = useRef();
     useImperativeHandle(layerSelectRef, ()=>({
         getFeatures(features){
+            /* 지점비교분석 (L3 / 변위등급) 하나일때만 클릭이벤트 실행 */
             if(layerIdx === 1){
-                if(compLayerClick){
+                features.map((feature)=>{
+                    if(feature?.id === 'SafetyObsLayer'){
+                        
+                        obsPinRest()
+                        if(!compLayerClick && !displaceLevel){
+                            G$addWidget('SafetyL4LevelObsWidget')
+                            feature.entity.billboard.image = pin2
+                            dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: feature})
+                        }
+                    }else{
+                        //지점비교분석 ON
+                        if(compLayerClick){
+                            if(feature?.id?.indexOf('L4DC') === -1){
+                                const featureInfo = {...feature, ...layers[feature?.id]}
+                                dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: featureInfo})
+                            }
+                        }
 
-                    //변위탐지가 아닐시
-                    if(features[0]?.id?.indexOf('L4DC') === -1){
-                        const featureInfo = {...features[0], ...layers[features[0]?.id]}
-                        dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: featureInfo})
+                        //변위등급 ON
+                        if(displaceLevel){
+                            G$addWidget('SafetyL4LevelDataWidget')
+                            const {clickPosition, properties} = feature
+                            dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: feature})
+                            overlayRef.current._addOverlay(clickPosition.longitude, clickPosition.latitude, properties)
+                        }
                     }
-
-                }
-
-                //변위등급이 켜져 있는 경우 ovelay
-                if(displaceLevel){
-                    G$addWidget('SafetyL4LevelDataWidget')
-                    const {clickPosition, properties} = features[0]
-                    dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: features[0]})
-                    overlayRef.current._addOverlay(clickPosition.longitude, clickPosition.latitude, properties)
-                }
+                })
             }
         }
     }));
@@ -66,18 +84,22 @@ const Safety = () => {
         //안전 4레벨 레이어 생성 wms로 될거같음
         safety4LevelLayerRef.current = new BaseWmsImageLayer({store:'Safety',layerId:''})
         //안전 4레벨 관측소 기반 데이터
-        //safety4LevelObsLayerRef.current = new BaseEntityCollection({name:'SafetyObsLayer', image: pin, overlay: new DroughtOverlay()})
+        safety4LevelObsLayerRef.current = new BaseEntityCollection({name:'SafetyObsLayer', image: pin1,  overlay: new SafetyObsOverlay()})
         //레이어 클릭 callback 등록
         GisLayerClickTool.addBiz(bizName, layerSelectRef, [])
         //레이어 클릭 callback 활성화
         GisLayerClickTool.enable(bizName)
 
-        //G$addWidget('BaseAddLegendWidget')
+        //초기에 UD/EW API 가져오기
+        obsRef.current = SafetyObsConfig
+        
+
 
         return()=>{
 
             //안전 4레벨 레이어 삭제
             G$removeLayer(safety4LevelLayerRef.current.layer)
+            G$removeLayer(safety4LevelObsLayerRef.current.layer)
             GisLayerClickTool.destroyBiz(bizName)
 
             //조건 리셋
@@ -88,6 +110,7 @@ const Safety = () => {
             //범례 삭제
             G$removeWidget('BaseAddLegendWidget')
             G$removeWidget('SafetyL4LevelDataWidget')
+            G$removeWidget('SafetyL4LevelObsWidget')
 
 
         }
@@ -95,12 +118,18 @@ const Safety = () => {
     },[])
 
     useEffect(()=>{
-
         if(!selectFeature){
             overlayRef.current.removeAll()
+            obsPinRest()
         }
 
     },[selectFeature])
+
+    const obsPinRest = () =>{
+        if(safety4LevelObsLayerRef.current?.entities?.values?.length > 0){
+            safety4LevelObsLayerRef.current?.entities?.values.map((obj)=>{ obj.billboard.image = pin1 })
+        }
+    }
 
     const [layerIdx, setLayerIdx] = useState(0)
     const [mainLayer, setMainLayer] = useState(false)
@@ -116,6 +145,7 @@ const Safety = () => {
         //하나만 선택되었을때 레이어 클릭이벤트 활성화
         if(layerCnt === 1){
             Object.keys(layers).map((layerId, i)=>{
+                
                 const { store, layer, ...other } = layers[layerId]?.props
                 if(i === 0){
                     //클릭이벤트 등록
@@ -124,7 +154,6 @@ const Safety = () => {
                     legendSetting()
                     //변위등급이 켜졌을경우 변위등급 widget open ( L4DC 변위등급 )
                     if(layer.indexOf('L4DC') > -1){
-                        dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: true})
                         G$addWidget('SafetyL4LevelDataWidget')
                     }else{
                         G$removeWidget('BaseLegendWidget')
@@ -180,9 +209,12 @@ const Safety = () => {
     //4레벨 레이어 선택되었을시
     useEffect(()=>{
         GisLayerClickTool.resetLayer(bizName)
+        G$removeWidget('SafetyL4LevelObsWidget')
+        safety4LevelObsLayerRef.current?.entities.removeAll()
         if(select4Level){
-            const {store, layer, category} = select4Level
+            const {store, layer, id, name} = select4Level
             safety4LevelLayerRef.current.changeParameters({store:store, layerId:layer})
+            getL4ObsInfo(name)
             GisLayerClickTool.addLayer(bizName, [`${store ? store.toLowerCase() : ''}:${layer}`])
             legendVisible(['L4TD'])
         }else{
@@ -206,18 +238,47 @@ const Safety = () => {
         }
     },[select4Level])
 
+    const getL4ObsInfo = (name) =>{
+        /** api L4 지점 리스트 가져오기 L4 ID 를 통해서 예상 */
+        GisLayerClickTool.addLayer(bizName, ['SafetyObsLayer'])
+
+        let direction = name === 'UP-DOWN' ? 'U-D' : name === 'EAST-WEST' ? 'E-W' : false
+
+        if(direction){
+            getSafetyDisplace({direction: direction}).then((response)=>{
+                if(response?.result?.data?.data?.length > 0){
+                    
+                    const uniqueDisplace = response?.result?.data?.data.reduce((accumulator, currentValue) => {
+                        const existingItem = accumulator.find(item => item.displacement === currentValue.displacement)
+                            if (existingItem) {
+                                existingItem.data.push(currentValue);
+                            } else {
+                                accumulator.push({
+                                    ...currentValue,
+                                    data: [currentValue],
+                                })
+                            }
+
+                            return accumulator;
+                    }, [])
+
+                    if(uniqueDisplace.length > 0){
+                        uniqueDisplace.map((obsObj)=>{
+                            const {longitude, latitude} = obsObj
+                            safety4LevelObsLayerRef.current._addFeature({lng:longitude, lat:latitude, properties:obsObj, hover: true})
+                        })
+                    }
+                }
+            })
+        }
+    }
 
     return (
         <>
-            {/* 검색조건 영역   ex) 공토영역이 될듯 ? ( 검색 TEXT, 기간 설정 등.. )*/}
-            {/* <SafetyOptions /> */}
-
-            {/* 결과결과 영역 */}
-            
+            {/* 결과결과 영역 */}            
             <div className="panel panel-left">
                 <SafetyResult />
             </div>
-
             {/* 4레벨 결과 영역 ( 3레벨이 레이어가 1개 선택되었을시 / 여러개 선택이 되면 레이어 보는 기능 )*/}
             {layerIdx === 1 &&
                 (
@@ -226,7 +287,6 @@ const Safety = () => {
                     </div>
                 )
             }
-
         </>
     )
 }

@@ -429,6 +429,9 @@ const G$headingChange= (heading) =>{
     MapManager.headingChange(heading)
 }
 
+const G$openWid = (wId) =>{
+    return MainWidgetManager.openWid(wId)
+}
 
 /* 위젯 추가 */
 const G$addWidget = (wId,props, config) =>{
@@ -674,6 +677,7 @@ export {
     G$Transfrom,
     G$GetPointToDetail,
 
+    G$openWid,
     G$addWidget,
     G$removeWidget,
     G$paramWidget,

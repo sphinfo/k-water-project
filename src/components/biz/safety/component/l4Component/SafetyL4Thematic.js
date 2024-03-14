@@ -10,7 +10,7 @@ import { getL4Layers } from "@common/axios/common"
 const SafetyL4Thematic = () => {
 
     const dispatch = useDispatch()
-    const {detailSearchTabType, select3Level, layers} = useSelector(state => state.safety)
+    const {select3Level, layers} = useSelector(state => state.safety)
 
     //레벨 4 리스트
     const [level4List, setLevel4List] = useState([])

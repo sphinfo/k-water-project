@@ -6,6 +6,7 @@ import {
   SAFETY_END_DATE,
   SAFETY_TEXT_SAFETY,
   SAFETY_CLICK_MODE,
+  SAFETY_CLICK_OBS,
   SAFETY_DETAIL_SEARCH_TAB_TYPE,
   SAFETY_DETAIL_RESET,
   SAFETY_SELECT_RESULT,
@@ -32,6 +33,8 @@ const initialState = {
 
   /* 비교 탭 선택시 레이어 클릭 이벤트 활성화 */
   compLayerClick: false, //4레벨 진행시 true ( 해당 플레그 값으로 비교 클릭 이벤트 및 기타 기능 활성화)
+
+  obsClick: false,
   
   //4레벨 탭 
   detailSearchTabType: false,
@@ -53,7 +56,9 @@ const initialState = {
   
   layers: {},
 
-  searchOn: false
+  searchOn: false,
+
+  obsWidget: false,
 };
 
 function safetyReducer(state = initialState, action) {
@@ -72,7 +77,8 @@ function safetyReducer(state = initialState, action) {
 
     case SAFETY_CLICK_MODE:
       return { ...state, compLayerClick: action.compLayerClick }
-    
+    case SAFETY_CLICK_OBS:
+      return { ...state, obsClick: action.obsClick }
     case SAFETY_DETAIL_SEARCH_TAB_TYPE:
 
       let value = false
@@ -105,7 +111,7 @@ function safetyReducer(state = initialState, action) {
     //대상지역 selectbox 
     case SAFETY_SELECT_BOX:
       return { ...state, selectBox: action.selectBox}
-
+      
     case SAFETY_SEARCH_ON:
       return { ...state, searchOn: action.searchOn}
 

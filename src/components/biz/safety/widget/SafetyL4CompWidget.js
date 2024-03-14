@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import pin1 from "@images/point-icon-1.svg"
 import pin2 from "@images/point-icon-2.svg"
 import { G$RandomId, G$getDateType, G$removeLayer } from "@gis/util";
-import { LOADING, SAFETY_CLICK_MODE, SAFETY_SELETE_FEATURE } from "@redux/actions";
+import { SAFETY_CLICK_MODE, SAFETY_SELETE_FEATURE } from "@redux/actions";
 import BaseGrid from "@common/grid/BaseGrid";
 import { getSafetyCompResult } from "@common/axios/safety";
 import { CircularProgress } from "@mui/material";
@@ -18,7 +18,7 @@ const SafetyL4CompWidget = () => {
      * select4Level : 4레벨 선택정보
      * displaceLevel : 변위성분
      */
-    const { selectFeature, select3Level, select4Level, displaceLevel } = useSelector(state => state.safety)
+    const { selectFeature, select4Level } = useSelector(state => state.safety)
     const dispatch = useDispatch()
 
     //Chart Ref
@@ -49,6 +49,7 @@ const SafetyL4CompWidget = () => {
 
     //초기 옵션 추가
     useEffect(()=>{
+
         safetyPinLayer.current = new BaseEntityCollection({name:'safetyPinLayer', image: pin1})
         /** example 옵션 생성 */
         chartRef.current.updateOptions = {
@@ -106,9 +107,7 @@ const SafetyL4CompWidget = () => {
             G$removeLayer(safetyPinLayer.current.layer)
             dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: false})
             dispatch({type:SAFETY_CLICK_MODE, compLayerClick: false})
-
         }
-
     },[])
 
     //차트데이터 기반 gtid 데이터 변환
@@ -130,7 +129,7 @@ const SafetyL4CompWidget = () => {
 
     //grid 레이어가 선택이 되면 pinlayer 추가
     useEffect(()=>{
-        if(selectFeature){
+        if(selectFeature && selectFeature?.id !== "SafetyObsLayer"){
             const { props, clickPosition } = selectFeature
 
             let id = select4Level ? select4Level.id : props.id

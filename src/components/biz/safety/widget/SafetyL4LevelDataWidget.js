@@ -15,10 +15,7 @@ const SafetyL4LevelDataWidget = () => {
 
     //click mode가 on 되면 비교 widget 띄우기
     useEffect(()=>{
-
-        if(selectFeature){
-        }
-
+        dispatch({type:SAFETY_SELECT_DISPLACE_LEVEL, displaceLevel: true})
         return()=>{
             dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: false})    
         }

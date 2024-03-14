@@ -10,7 +10,7 @@ import { G$addWidget, G$removeWidget } from "@gis/util";
 const SafetyL4CompBtn = () => {
 
     const dispatch = useDispatch()
-    const {compLayerClick, displaceLevel} = useSelector(state => state.safety)
+    const { compLayerClick } = useSelector(state => state.safety)
 
     //종료될때 click모드 off  / widget 닫기
     useEffect(()=>{
@@ -31,7 +31,6 @@ const SafetyL4CompBtn = () => {
 
     return (
         <>
-            
             <button className="btn btn-float"
                     style={{display: compLayerClick ? 'none' : ''}}
                     onClick={()=>{

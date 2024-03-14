@@ -113,6 +113,9 @@ class WidgetManager {
         }
     }
 
+    openWid(widgetId){
+        return this._hasInstance(widgetId)
+    }
 
     changeParam(widgetId, props = {}) {
         const instance = this._hasInstance(widgetId);
