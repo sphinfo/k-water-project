@@ -87,11 +87,11 @@ const EnvironmentLandCover = (props) => {
 
     const setBarData = (datas, change=0) =>{
 
-        let data = [G$setMtoKm(datas.class1),
-            G$setMtoKm(datas.class2).toFixed(2),
-            G$setMtoKm(datas.class3).toFixed(2),
-            G$setMtoKm(datas.class4).toFixed(2),
-            G$setMtoKm(datas.class5).toFixed(2),
+        let data = [Number(G$setMtoKm(datas.class1).toFixed(2)),
+            Number(G$setMtoKm(datas.class2).toFixed(2)),
+            Number(G$setMtoKm(datas.class3).toFixed(2)),
+            Number(G$setMtoKm(datas.class4).toFixed(2)),
+            Number(G$setMtoKm(datas.class5).toFixed(2)),
             G$setMtoKm(change).toFixed(2)]
 
         let area = 0
