@@ -24,7 +24,7 @@ const EnvironmentThematic = (props) => {
                 if(response?.result?.data?.length > 0){
                     let store = response.result.data[0].dataType
                     let layer = response.result.data[0].name
-                    thematics.push({...response.result.data[0], store, layer})
+                    thematics.push({...response.result.data[0], store, layer, checked: false})
                 }
                 //주제도 등록
                 setThematicList(thematics)

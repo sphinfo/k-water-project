@@ -59,7 +59,7 @@ const Environment = () => {
       }else{
         setMainLayer(false)
       }
-  },[layers, mainSearchEnd])
+  },[layers])
 
 
   useEffect(()=>{

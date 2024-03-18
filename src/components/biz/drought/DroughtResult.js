@@ -66,16 +66,22 @@ const DroughtResult = () => {
             let groupNm = '토양수분'
             let categoryNm = obj.category.indexOf('A1') > 0 ? '물리모형' : obj.category.indexOf('A2') > 0 ? '강우자료' : obj.category.indexOf('A3') > 0 ? '토양특성' : ''
             let locationKr = G$getKoreanName(obj.testLocation.split('-'))
-            resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
+
+            if(obj.level === 'L3'){
+              resultList.push({...obj, store, layer, group, categoryNm, groupNm, locationKr})
+            }
+            
           })
 
           resultList.map((obj)=>{
-            if(obj.group === 'A1'){
-              setA1Cnt(prevCount => prevCount + 1)
-            }else if(obj.group === 'A2'){
-              setA2Cnt(prevCount => prevCount + 1)
-            }else if(obj.group === 'A3'){
-              setA3Cnt(prevCount => prevCount + 1)
+            if(obj.level === 'L3'){
+              if(obj.group === 'A1'){
+                setA1Cnt(prevCount => prevCount + 1)
+              }else if(obj.group === 'A2'){
+                setA2Cnt(prevCount => prevCount + 1)
+              }else if(obj.group === 'A3'){
+                setA3Cnt(prevCount => prevCount + 1)
+              }
             }
           })
 

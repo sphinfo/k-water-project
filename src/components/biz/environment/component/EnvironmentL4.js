@@ -26,6 +26,7 @@ const EnvironmentL4 = ({ mainLayer, ...props}) => {
 
     useEffect(()=>{
         G$removeWidget('EnvironmentAraeWidget')
+        console.info(mainLayer)
         if(mainLayer.group === 'Garbage'){
             G$addWidget('EnvironmentAraeWidget', {params:mainLayer}, {title: '부유물 정보'})
         }else{

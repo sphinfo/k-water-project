@@ -155,17 +155,18 @@ const EnvironmentLandCover = (props) => {
 
         //#6A58A1
         let heatArray = []
-        datas.map((data)=>{
-            heatArray.push(data.class1)
-            heatArray.push(data.class2)
-            heatArray.push(data.class3)
-            heatArray.push(data.class4)
-            heatArray.push(data.class5)
-        })
-
-        setColorGrid(heatArray)
-        let total = heatArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
+        if(datas.length > 0){
+            datas.map((data)=>{
+                heatArray.push(data.class1)
+                heatArray.push(data.class2)
+                heatArray.push(data.class3)
+                heatArray.push(data.class4)
+                heatArray.push(data.class5)
+            })
+            setColorGrid(heatArray)
+        }
+        
+        let total = heatArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
         setBarData(barDatas, total)
     }
 
