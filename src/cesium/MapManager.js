@@ -6,7 +6,7 @@ class MapManager {
     _map = null
     _baseMapLayer = null
     _baseMapType = 'Satellite'
-    _vworld_key = 'FEFA1490-75ED-32A7-9038-456C0505BDCB'//
+    _vworld_key = 'FEFA1490-75ED-32A7-9038-456C0505BDCB'
     _vwroldLayer = { Base:{layer : 'Base', tileType : 'png'}, 
                      gray: {layer : 'gray', tileType : 'png'},
                      midnight: {layer : 'midnight', tileType : 'png'},
@@ -33,9 +33,6 @@ class MapManager {
             infoBox: false,
             skyAtmosphere : false
         });
-
-        
-        //this._map.imageryLayers.addImageryProvider(vworld2)
 
         const targetLongitude = 127.61790470489117
         const targetLatitude = 36.52505158669595
@@ -103,12 +100,14 @@ class MapManager {
 
             this._baseMapLayer = this.addImageLayer(
                 new WebMapTileServiceImageryProvider({
-                    url : `http://api.vworld.kr/req/wmts/1.0.0/${this._vworld_key}/${option.layer}/{TileMatrix}/{TileRow}/{TileCol}.${option.tileType}`,
-                    layer : 'Base',
+                    url : type !== 'Satellite' 
+                        ? `http://api.vworld.kr/req/wmts/1.0.0/${this._vworld_key}/${option.layer}/{TileMatrix}/{TileRow}/{TileCol}.${option.tileType}`
+                        : 'https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer',
+                    layer : type !== 'Satellite' ? 'Base' : 'World_Imagery',
                     style : 'default',
                     tileMatrixSetID: 'EPSG:900913',
                     maximumLevel: 19,
-                    credit : new Credit('VWorld Korea')
+                    credit : type !== 'Satellite' ? new Credit('VWorld Korea') : 'ArcGIS Online'
             }))
             this._baseMapLayer.id = 'baseMap'
             this._baseMapType = type
