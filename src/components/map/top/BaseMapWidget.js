@@ -23,10 +23,10 @@ const BaseMapWidget = () => {
         G$changeMapLabelLayer(mapLabel)
 
     },[mapLabel])
-    
+
     return (
-        <div className="map-view-tab-wrap">
-             <div className="map-view-tab-header">
+        <div className="map-view-box">
+             <div className="map-view-box-header">
                  <h4 className="map-view-tab-title">배경지도</h4>
 
                  <FormControlLabel
@@ -42,23 +42,26 @@ const BaseMapWidget = () => {
                      }
                  />
              </div>
-            <div className="map-view-tab">
-                <button className={mapType === 'Base' ? "view-tab-item on map-basic-style" : "view-tab-item map-basic-style"} onClick={()=>{setMapType('Base')}}>
-                    <span>일반</span>
-                    <img src={mapBasic} alt="일반지도"/>
-                </button>
-                <button className={mapType === 'Satellite' || mapType === 'SatelliteArc' ? "view-tab-item on map-basic-style" : "view-tab-item map-basic-style"} onClick={()=>{setMapType(sateMapType)}}>
-                    <span>위성</span>
-                    <img src={mapSatellite} alt="위성지도"/>
-                </button>
-            </div>
-            <div className="map-view-tab" style={{display: mapType === 'Satellite' || mapType === 'SatelliteArc' ? '' : 'none', marginTop: 5}}>
-                <button className={`btn ${ mapType === 'Satellite' ?  "view-tab-item on map-basic-style" : ''}`}  onClick={()=>{setSateMapType('Satellite'); setMapType('Satellite')}}>
-                    <span>VWROLD</span>
-                </button>
-                <button className={`btn ${ mapType === 'SatelliteArc' ?  "view-tab-item on map-basic-style" : ''}`} onClick={()=>{setSateMapType('SatelliteArc'); setMapType('SatelliteArc')}}>
-                    <span>ARC</span>
-                </button>
+
+            <div className="map-view-box-body">
+                <div className="map-view-tab">
+                    <button className={`view-tab-item ${mapType === 'Base' ? "on" : ""}`} onClick={()=>{setMapType('Base')}}>
+                        <span>일반</span>
+                        <img src={mapBasic} alt="일반지도"/>
+                    </button>
+                    <button className={`view-tab-item ${mapType === 'Satellite' || mapType === 'SatelliteArc' ? "on" : ""}`} onClick={()=>{setMapType(sateMapType)}}>
+                        <span>위성</span>
+                        <img src={mapSatellite} alt="위성지도"/>
+                    </button>
+                </div>
+                <div className="map-view-btns" style={{display: mapType === 'Satellite' || mapType === 'SatelliteArc' ? '' : 'none'}}>
+                    <button className={`btn btn-sm map-view-btn ${ mapType === 'Satellite' ?  "on" : ''}`}  onClick={()=>{setSateMapType('Satellite'); setMapType('Satellite')}}>
+                        <span>VWROLD</span>
+                    </button>
+                    <button className={`btn btn-sm map-view-btn ${ mapType === 'SatelliteArc' ?  "on" : ''}`} onClick={()=>{setSateMapType('SatelliteArc'); setMapType('SatelliteArc')}}>
+                        <span>ARC</span>
+                    </button>
+                </div>
             </div>
         </div>
     )
