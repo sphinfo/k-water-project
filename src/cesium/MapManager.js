@@ -100,14 +100,14 @@ class MapManager {
 
             this._baseMapLayer = this.addImageLayer(
                 new WebMapTileServiceImageryProvider({
-                    url : type !== 'Satellite' 
+                    url : type !== 'SatelliteArc' 
                         ? `http://api.vworld.kr/req/wmts/1.0.0/${this._vworld_key}/${option.layer}/{TileMatrix}/{TileRow}/{TileCol}.${option.tileType}`
                         : 'https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer',
-                    layer : type !== 'Satellite' ? 'Base' : 'World_Imagery',
+                    layer : type !== 'SatelliteArc' ? 'Base' : 'World_Imagery',
                     style : 'default',
                     tileMatrixSetID: 'EPSG:900913',
                     maximumLevel: 19,
-                    credit : type !== 'Satellite' ? new Credit('VWorld Korea') : 'ArcGIS Online'
+                    credit : type !== 'SatelliteArc' ? new Credit('VWorld Korea') : 'ArcGIS Online'
             }))
             this._baseMapLayer.id = 'baseMap'
             this._baseMapType = type

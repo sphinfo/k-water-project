@@ -7,7 +7,8 @@ import {Checkbox, FormControlLabel} from "@mui/material";
 
 const BaseMapWidget = () => {
 
-    const [mapType, setMapType] = useState('Satellite')
+    const [mapType, setMapType] = useState('SatelliteArc')
+    const [sateMapType, setSateMapType] = useState('SatelliteArc')
     const [mapLabel, setMapLabel] = useState(false)
 
 
@@ -46,10 +47,18 @@ const BaseMapWidget = () => {
                     <span>일반</span>
                     <img src={mapBasic} alt="일반지도"/>
                 </button>
-                <button className={mapType === 'Satellite' ? "view-tab-item on map-basic-style" : "view-tab-item map-basic-style"} onClick={()=>{setMapType('Satellite')}}>
+                <button className={mapType === 'Satellite' || mapType === 'SatelliteArc' ? "view-tab-item on map-basic-style" : "view-tab-item map-basic-style"} onClick={()=>{setMapType(sateMapType)}}>
                     <span>위성</span>
                     <img src={mapSatellite} alt="위성지도"/>
-                    </button>
+                </button>
+            </div>
+            <div className="map-view-tab" style={{display: mapType === 'Satellite' || mapType === 'SatelliteArc' ? '' : 'none', marginTop: 5}}>
+                <button className={`btn ${ mapType === 'Satellite' ?  "view-tab-item on map-basic-style" : ''}`}  onClick={()=>{setSateMapType('Satellite'); setMapType('Satellite')}}>
+                    <span>VWROLD</span>
+                </button>
+                <button className={`btn ${ mapType === 'SatelliteArc' ?  "view-tab-item on map-basic-style" : ''}`} onClick={()=>{setSateMapType('SatelliteArc'); setMapType('SatelliteArc')}}>
+                    <span>ARC</span>
+                </button>
             </div>
         </div>
     )
