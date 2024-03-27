@@ -4,6 +4,7 @@ import BaseGrid from "@common/grid/BaseGrid";
 import { Radio, RadioGroup } from "@mui/material";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import Tooltip from "@mui/material/Tooltip";
 
 /**
  * 가뭄 표출단위선택 팝업
@@ -383,7 +384,20 @@ const DroughtExpUntDatas = (props) => {
                 <div className="content-row">
                     <div className="panel-box">
                         <div className="radio-list-wrap">
-                            <h4 className="radio-title">차트 데이터</h4>
+                            <h4 className="radio-title">차트 데이터
+                                <Tooltip placement="bottom-start" title={
+                                    <React.Fragment>
+                                        <div className="tooltip-content-wrap">
+                                            <p className="tooltip-content">
+                                                위성 토양수분, 가뭄지수,  가뭄 해갈  <br/>
+                                                "L3SMA3" 토양수분 산출물을 기준으로 산정됨
+                                            </p>
+                                        </div>
+                                    </React.Fragment>
+                                }>
+                                    <span className="tooltip-icon"></span>
+                                </Tooltip>
+                            </h4>
                             <div className="radio-list">
                                 {radioList.map((item)=>renderRadio(item))}
                             </div>
@@ -409,7 +423,7 @@ const DroughtExpUntDatas = (props) => {
                     </div>
                 </div>
             </div>
-            
+
         </>
     )
 }
