@@ -61,7 +61,7 @@ const WidgetConfig = {
      * 가뭄
      */
     'DroughtObsrvWidget': {
-        title: '토양 수분 분석',
+        title: '토양수분 분석',
         instance: widgets.DroughtObsrvWidget
     },
 

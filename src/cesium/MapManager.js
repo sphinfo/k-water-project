@@ -46,6 +46,8 @@ class MapManager {
             duration: 3, // 애니메이션 지속 시간 (초)
         });
 
+        this.map.scene.screenSpaceCameraController.minimumZoomDistance = 500
+
 
         this._changeBaseMap('Satellite')
         

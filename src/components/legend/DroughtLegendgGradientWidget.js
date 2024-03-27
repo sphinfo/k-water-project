@@ -74,7 +74,7 @@ const DroughtLegendgGradientWidget = (props) => {
                 title === '가뭄해갈' &&
                 <dl className="widget-box">
                     <dt className="widget-header">
-                        <h4 className="widget-title">가뭄해갈강우량(mm/day)</h4>
+                        <h4 className="widget-title">가뭄 해갈 강우량 (mm/day)</h4>
                         {tooltip}
                     </dt>
                     <dd className="widget-body">

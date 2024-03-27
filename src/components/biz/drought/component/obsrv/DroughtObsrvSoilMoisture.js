@@ -31,8 +31,8 @@ const DroughtObsrv = () => {
     const rows = useMemo(()=>{ return [  ] },[])
     const columns = [
         {accessor: 'date', Header: '관측 일자', width: 120, align: 'center'},
-        {accessor: 'simGrid', Header: '위성 토양 수분 (vol.%)', width: 200, align: 'center'},
-        {accessor: 'obs', Header: '실측 토양 수분 (vol.%)', width: 200, align: 'center'},
+        {accessor: 'simGrid', Header: '위성 토양수분 (vol.%)', width: 200, align: 'center'},
+        {accessor: 'obs', Header: '실측 토양수분 (vol.%)', width: 200, align: 'center'},
     ]
 
     const [loading, setLoading] = useState(false)
@@ -181,7 +181,7 @@ const DroughtObsrv = () => {
                     
                     
                     chartInfoRef.current.datasets.push({
-                        label: '위성 토양 수분',
+                        label: '위성 토양수분',
                         type: 'line',
                         yAxisID: 'y1',
                         pointRadius: 2,
@@ -192,7 +192,7 @@ const DroughtObsrv = () => {
                     })
 
                     chartInfoRef.current.datasets.push({
-                        label: '실측 토양 수분',
+                        label: '실측 토양수분',
                         type: 'line',
                         yAxisID: 'y1',
                         pointRadius: 1,
@@ -224,7 +224,7 @@ const DroughtObsrv = () => {
     return (
         <>
             <div className="content-col">
-                <div className="content-row">
+                {/*<div className="content-row">
                     <div className="panel-box">
                         <div className="number-dashboard">
                             <div className="nd-item">
@@ -237,15 +237,15 @@ const DroughtObsrv = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*/}
 
                 <div className="content-row">
                     <div className="panel-box">
                         <div className="chart-unit-warp">
-                            <span className="chart-unit">토양 수분(vol.%)</span>
+                            <span className="chart-unit">토양수분(vol.%)</span>
                             <span className="chart-unit">강우량(mm)</span>
                         </div>
-                        <BaseChart width={420} height={260} ref={chartRef} chartType={'Line'} title={''}/>
+                        <BaseChart width={420} height={370} ref={chartRef} chartType={'Line'} title={''}/>
                     </div>
                 </div>
             </div>
@@ -254,7 +254,7 @@ const DroughtObsrv = () => {
                 <div className="content-row height-100">
                     <div className="panel-box height-100">
                         <div className="panel-box-header">
-                            <h4 className="panel-box-title">토양 수분 자료</h4>
+                            <h4 className="panel-box-title">토양수분 자료</h4>
                         </div>
                         <div className="table-wrap" style={{height: 360, overflowY: 'auto'}}>
                             <BaseGrid ref={gridRef} columns={columns} provider={rows} className={'table-basic'}/>

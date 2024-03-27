@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
  * 가뭄 표출단위선택 팝업
  */
 
-const radioList = [{name:'위성토양수분',value:'gl3sm'},{name:'가뭄지수',value:'gl4d4'},{name:'가뭄 해갈 강우량',value:'gl4dr'}]
+const radioList = [{name:'위성 토양수분',value:'gl3sm'},{name:'가뭄지수',value:'gl4dr'},{name:'가뭄 해갈 강우량',value:'gl4d4'}]
 
 const charTL4DrOption = {
     plugins: {
@@ -242,9 +242,9 @@ const DroughtExpUntDatas = (props) => {
     const columns = [
         {accessor: 'date', Header: '관측일자', width: 120, align: 'center'},
         {accessor: 'gpcp', Header: '강수량', width: 200, align: 'center'},
-        {accessor: 'gl3sm', Header: '위성토양수분', width: 200, align: 'center'},
-        {accessor: 'gl4d4', Header: '가뭄지수', width: 200, align: 'center'},
-        {accessor: 'gl4dr', Header: '가뭄 해갈 강우량', width: 200, align: 'center'},
+        {accessor: 'gl3sm', Header: '위성 토양수분', width: 200, align: 'center'},
+        {accessor: 'gl4dr', Header: '가뭄지수', width: 200, align: 'center'},
+        {accessor: 'gl4d4', Header: '가뭄 해갈 강우량', width: 200, align: 'center'},
     ]
 
     //테이블 ref
@@ -367,7 +367,7 @@ const DroughtExpUntDatas = (props) => {
 
             chartInfoRef.current.labels = labels
             chartInfoRef.current.datasets.push({
-                label: radioValue === 'gl3sm' ? '위성토양수분' : radioValue === 'gl4d4' ? '가뭄지수(vol.%)' : radioValue === 'gl4dr' ? '가뭄해갈강우량(mm/day)' : radioValue,
+                label: radioValue === 'gl3sm' ? '위성 토양수분' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄해갈강우량(mm/day)' : radioValue,
                 type: 'line',
                 pointRadius: 1,
                 borderWidth: 1,
@@ -394,7 +394,7 @@ const DroughtExpUntDatas = (props) => {
                 <div className="content-row">
                     <div className="panel-box">
                         <div className="chart-unit-warp">
-                            <span className="chart-unit">{radioValue === 'gl3sm' ? '위성토양수분' : radioValue === 'gl4d4' ? '가뭄지수(vol.%)' : radioValue === 'gl4dr' ? '가뭄해갈강우량(mm/day)' : radioValue}</span>
+                            <span className="chart-unit">{radioValue === 'gl3sm' ? '위성 토양수분(vol.%)' : radioValue === 'gl4dr' ? '가뭄지수(vol.%)' : radioValue === 'gl4d4' ? '가뭄해갈강우량(mm/day)' : radioValue}</span>
                         </div>
                         <BaseChart width={'100%'} height={260} ref={chartRef} chartType={'Line'} title={''}/>
                     </div>
