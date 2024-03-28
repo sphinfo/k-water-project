@@ -10,7 +10,7 @@ class BaseWmsImageLayer {
 
 	constructor(params) {
 
-		let {store, layerId, cqlFIlter=null, fly=true, visible=true, info={}, overlay=null, subId='', col=null} = params
+		let {store, layerId, cqlFIlter=null, fly=true, visible=true, info={}, overlay=null, subId='', col=null, styles=''} = params
 
 		//지도이동
 		this.fly = fly
