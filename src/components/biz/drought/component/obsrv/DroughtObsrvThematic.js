@@ -17,7 +17,7 @@ const DroughtObsrvThematic = (props) => {
      */
     const { selectObs, obsrvTab } = useSelector(state => state.drought)
 
-    const [level4List, setLevel4List] = useState([{name:'가뭄지수',value:'index',checked: false},{name:'가뭄해갈',value:'appease',checked: false}])
+    const [level4List, setLevel4List] = useState([{name:'가뭄지수',value:'index',checked: false},{name:'가뭄 해갈 강우량',value:'appease',checked: false}])
 
     //닫힐때 침수피해 레이어 초기화
     useEffect(()=>{
@@ -27,7 +27,7 @@ const DroughtObsrvThematic = (props) => {
     },[])
 
     useEffect(()=>{
-        setLevel4List([{name:'가뭄지수',value:'index',checked: false},{name:'가뭄해갈',value:'appease',checked: false}])
+        setLevel4List([{name:'가뭄지수',value:'index',checked: false},{name:'가뭄 해갈 강우량',value:'appease',checked: false}])
         dispatch({type: DROUGHT_OBSRV_TAB, obsrvTab: 'soilMoisture'})
     },[mainLayer])
 

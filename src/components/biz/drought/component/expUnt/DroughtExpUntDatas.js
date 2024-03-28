@@ -389,7 +389,7 @@ const DroughtExpUntDatas = (props) => {
                                     <React.Fragment>
                                         <div className="tooltip-content-wrap">
                                             <p className="tooltip-content">
-                                                위성 토양수분, 가뭄지수,  가뭄 해갈  <br/>
+                                                위성 토양수분, 가뭄지수,  가뭄 해갈, 강우량은  <br/>
                                                 "L3SMA3" 토양수분 산출물을 기준으로 산정됨
                                             </p>
                                         </div>
@@ -408,7 +408,7 @@ const DroughtExpUntDatas = (props) => {
                 <div className="content-row">
                     <div className="panel-box">
                         <div className="chart-unit-warp">
-                            <span className="chart-unit">{radioValue === 'gl3sm' ? '위성 토양수분(vol.%)' : radioValue === 'gl4dr' ? '가뭄지수(vol.%)' : radioValue === 'gl4d4' ? '가뭄해갈강우량(mm/day)' : radioValue}</span>
+                            <span className="chart-unit">{radioValue === 'gl3sm' ? '토양수분(vol.%)' : radioValue === 'gl4dr' ? '가뭄지수(vol.%)' : radioValue === 'gl4d4' ? '가뭄해갈강우량(mm/day)' : radioValue}</span>
                         </div>
                         <BaseChart width={'100%'} height={260} ref={chartRef} chartType={'Line'} title={''}/>
                     </div>
