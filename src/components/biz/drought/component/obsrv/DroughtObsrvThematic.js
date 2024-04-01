@@ -33,15 +33,20 @@ const DroughtObsrvThematic = (props) => {
 
     useEffect(()=>{
         if(selectObs){
-            if(obsrvTab !== 'appease'){
-                if(MainWidgetManager._hasInstance('DroughtObsrvWidget') ){
-                    G$paramWidget('DroughtObsrvWidget',{subTitle: `${selectObs?.properties?.name}`})
-                }else{
-                    G$addWidget('DroughtObsrvWidget',{},{subTitle: `${selectObs?.properties?.name}`})
-                }
+            if(MainWidgetManager._hasInstance('DroughtObsrvWidget') ){
+                G$paramWidget('DroughtObsrvWidget',{subTitle: `${selectObs?.properties?.name}`})
             }else{
-                G$removeWidget('DroughtObsrvWidget')    
+                G$addWidget('DroughtObsrvWidget',{},{subTitle: `${selectObs?.properties?.name}`})
             }
+            // if(obsrvTab !== 'appease'){
+            //     if(MainWidgetManager._hasInstance('DroughtObsrvWidget') ){
+            //         G$paramWidget('DroughtObsrvWidget',{subTitle: `${selectObs?.properties?.name}`})
+            //     }else{
+            //         G$addWidget('DroughtObsrvWidget',{},{subTitle: `${selectObs?.properties?.name}`})
+            //     }
+            // }else{
+            //     G$removeWidget('DroughtObsrvWidget')    
+            // }
         }else{
             G$removeWidget('DroughtObsrvWidget')
         }

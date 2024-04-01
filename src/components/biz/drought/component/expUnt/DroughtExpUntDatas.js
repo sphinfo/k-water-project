@@ -368,7 +368,7 @@ const DroughtExpUntDatas = (props) => {
 
             chartInfoRef.current.labels = labels
             chartInfoRef.current.datasets.push({
-                label: radioValue === 'gl3sm' ? '위성 토양수분' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄해갈강우량(mm/day)' : radioValue,
+                label: radioValue === 'gl3sm' ? '위성 토양수분' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄 해갈 강우량(mm/day)' : radioValue,
                 type: 'line',
                 pointRadius: 1,
                 borderWidth: 1,
@@ -408,7 +408,7 @@ const DroughtExpUntDatas = (props) => {
                 <div className="content-row">
                     <div className="panel-box">
                         <div className="chart-unit-warp">
-                            <span className="chart-unit">{radioValue === 'gl3sm' ? '토양수분(vol.%)' : radioValue === 'gl4dr' ? '가뭄지수(vol.%)' : radioValue === 'gl4d4' ? '가뭄해갈강우량(mm/day)' : radioValue}</span>
+                            <span className="chart-unit">{radioValue === 'gl3sm' ? '토양수분(vol.%)' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄 해갈 강우량(mm/day)' : radioValue}</span>
                         </div>
                         <BaseChart width={'100%'} height={260} ref={chartRef} chartType={'Line'} title={''}/>
                     </div>

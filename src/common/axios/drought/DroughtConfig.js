@@ -4,5 +4,5 @@ export default {
     GET_DROUHGT_OBS_MOISTURE: `/api/drought/getSoilStatistics`,
     GET_DROUHGT_OBS_INDEX: `/api/drought/getSoilSWDIStatistics`,
     GET_DROUGHT_STATISTICS: `/api/drought/getDroughtStatistics`,
-
+    GET_DROUGHT_SOIL_STATISTICS: `/api/drought/getSoilStationStatistics`,
 };

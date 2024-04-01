@@ -24,7 +24,8 @@ const EnvironmentThematic = (props) => {
                 if(response?.result?.data?.length > 0){
                     let store = response.result.data[0].dataType
                     let layer = response.result.data[0].name
-                    thematics.push({...response.result.data[0], store, layer, checked: false})
+                    thematics.push({...response.result.data[0], store, layer, checked: false, name: '전체 영역 피복 탐지'})
+                    thematics.push({...response.result.data[0], store, layer, styles: 'L4LC_changes_style', checked: false, name: '변화 영역 피복 탐지'})
                 }
                 //주제도 등록
                 setThematicList(thematics)
@@ -65,7 +66,7 @@ const EnvironmentThematic = (props) => {
     const renderResult = (item, i) =>{
         return (
             <div className="switch-list-item" key={`item-${i}`}>
-                <span className="switch-label" key={`label-${i}`}>{"변화 탐지"}</span>
+                <span className="switch-label" key={`label-${i}`}>{item.name}</span>
                 <Switch
                     checked={item.checked}
                     onClick={(e) => handleSwitchChange(item, i)}

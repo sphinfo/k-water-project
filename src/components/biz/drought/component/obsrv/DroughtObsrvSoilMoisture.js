@@ -149,7 +149,7 @@ const DroughtObsrv = () => {
 
                         label.push(obj.date)
                         precipitation.push(obj.precipitation  === '' ? NaN : Number(obj.precipitation))
-                        obs.push(obj.obs  === '' ? NaN : Number(obj.obs).toFixed(2))
+                        obs.push(obj.obs  === 0 ? NaN : Number(obj.obs).toFixed(2))
                         sim.push(obj.sim  === 0 ? NaN : Number(obj.sim).toFixed(2))
                         obj.simGrid = obj.sim === 0 ? '-' : Number(obj.sim).toFixed(2)
 

@@ -112,12 +112,20 @@ const Environment = () => {
   useEffect(()=>{
     legendSetting()
     if(landCoverDetection){
-      const { store, layer, id } = landCoverDetection
-      landCoverDetectionLayer.current.changeParameters({store:store, layerId:layer})
+      const { store, layer, id, styles='' } = landCoverDetection
+      landCoverDetectionLayer.current.changeParameters({store:store, layerId:layer, styles:styles})
       G$addWidget('EnvironmentLandCoverWidget', {params:{id:id}} )
     }else{
       landCoverDetectionLayer.current.remove()
       G$removeWidget('EnvironmentLandCoverWidget')
+    }
+
+    if(layerIdx > 0){
+        Object.keys(layers).map((layerId, i)=>{
+            const { store, layer, ...other } = layers[layerId]?.props
+            //4레벨 레이어가 선택이 되면 기존 레이어들은 hide
+            layers[layerId].layer.show = landCoverDetection ? false : true
+        })
     }
 
   },[landCoverDetection])

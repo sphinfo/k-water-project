@@ -27,6 +27,7 @@ class BaseWmsImageLayer {
 			,wmsParameters: {
 				format: 'image/png',
 				transparent: true, //투명도
+				styles: styles,
 			}
 			,subId
 			,col
@@ -97,7 +98,9 @@ class BaseWmsImageLayer {
 
 	//wms 레이어 변경
 	changeParameters(other) {
-		this.props = {...this.props, ...other}
+		const {styles='', ...others} = other
+		this.props.wmsParameters.styles  = styles 
+		this.props = {...this.props, ...others}
 		this._createImageryLayer()
 	}
 

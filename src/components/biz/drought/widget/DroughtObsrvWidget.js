@@ -4,6 +4,7 @@ import { DROUGHT_SELECT_FEATURE } from "@redux/actions";
 import DroughtObsrvSoilMoisture from "../component/obsrv/DroughtObsrvSoilMoisture";
 import DroughtObsrvIndex from "../component/obsrv/DroughtObsrvIndex";
 import pin from "@images/map-icon-dr.svg"
+import DroughtObsrvAppease from "../component/obsrv/DroughtObsrvAppease";
 
 
 /**
@@ -37,6 +38,12 @@ const DroughtObsrvWidget = () => {
                     obsrvTab === 'index' &&
                     <div className="content-col-group">
                         <DroughtObsrvIndex />
+                    </div>
+                }
+                {
+                    obsrvTab === 'appease' &&
+                    <div className="content-col-group">
+                        <DroughtObsrvAppease />
                     </div>
                 }
             </div>

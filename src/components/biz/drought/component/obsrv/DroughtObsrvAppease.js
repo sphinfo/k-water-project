@@ -6,9 +6,9 @@ import { getDroughtObsIndex, getDroughtSoilStatistics } from "@common/axios/drou
 import { G$getDateType } from "@gis/util";
 
 /**
- * 가뭄 활용주제도 - 가뭄지수
+ * 가뭄 활용주제도 - 가뭄 해갈 강우량
  */
-const DroughtObsrvIndex = () => {
+const DroughtObsrvAppease = () => {
 
     /**
      * selectObs : 선택된 관측소
@@ -28,7 +28,7 @@ const DroughtObsrvIndex = () => {
     const columns2 = [
         {accessor: 'date', Header: '관측 일자', width: 120, align: 'center'},
         {accessor: 'pcp', Header: '강우량', width: 120, align: 'center'},
-        {accessor: 'l4drA1', Header: '가뭄지수', width: 200, align: 'center'},
+        {accessor: 'l4drA2', Header: '가뭄 해갈 강우량 (mm/day)', width: 200, align: 'center'},
     ]
 
     //테이블 ref
@@ -75,7 +75,7 @@ const DroughtObsrvIndex = () => {
                     },
                     title: {
                         display: false,
-                        text: "가뭄지수",
+                        text: "가뭄 해갈 강우량",
                         font: {
                           size: 10,
                         },
@@ -130,22 +130,22 @@ const DroughtObsrvIndex = () => {
                     chartInfoRef.current.datasets = []
 
                     let label = []  //날짜 x 축
-                    let l4drA1 = [] // 가뭄지수
+                    let l4drA2 = [] // 가뭄 해갈 강우량
                     let pcp = [] // 강우량
 
                     response.result.data.map((obj, i)=>{
                         
                         obj.date = G$getDateType(obj.createdAt.substring(0,10)) 
-                        if(obj.l4drA1 !== 0){
+                        if(obj.l4drA2 !== 0){
                             if(obj.createdAt){
                                 label.push(obj.date)
                             }
                             
-                            l4drA1.push(obj.l4drA1 === 0 ? NaN : Number(obj.l4drA1))
+                            l4drA2.push(obj.l4drA2 === 0 ? NaN : Number(obj.l4drA2))
                             pcp.push(obj.pcp  === 0 ? NaN : Number(obj.pcp))
                             
                         }
-                        obj.l4drA1 = obj.l4drA1 === 0 ? '-' : Number(obj.l4drA1).toFixed(2)
+                        obj.l4drA2 = obj.l4drA2 === 0 ? '-' : Number(obj.l4drA2).toFixed(2)
                         obj.pcp = obj.pcp === 0 ? '-' : Number(obj.pcp).toFixed(2)    
                         
                     })
@@ -153,14 +153,14 @@ const DroughtObsrvIndex = () => {
                     chartInfoRef.current.labels = label
     
                     chartInfoRef.current.datasets.push({
-                        label: '가뭄지수',
+                        label: '가뭄 해갈 강우량',
                         type: 'line',
                         yAxisID: 'y1',
                         pointRadius: 1,
                         borderWidth: 1,
                         borderColor: '#54A6E7',
                         backgroundColor: '#54A6E7',
-                        data:l4drA1,
+                        data:l4drA2,
                     })
 
                     chartInfoRef.current.datasets.push({
@@ -192,7 +192,7 @@ const DroughtObsrvIndex = () => {
                 <div className="content-row">
                     <div className="panel-box">
                         <div className="chart-unit-warp">
-                            <span className="chart-unit">가뭄지수</span>
+                            <span className="chart-unit">가뭄 해갈 강우량</span>
                             <span className="chart-unit">강수량(mm)</span>
                         </div>
                         <BaseChart width={'100%'} height={360} ref={chartRef} chartType={'Line'} title={''}/>
@@ -204,7 +204,7 @@ const DroughtObsrvIndex = () => {
                 <div className="content-row height-100">
                     <div className="panel-box height-100">
                         <div className="panel-box-header">
-                            <h4 className="panel-box-title">가뭄지수 자료</h4>
+                            <h4 className="panel-box-title">가뭄 해갈 강우량 자료</h4>
                         </div>
                         <div className="table-wrap" style={{height: 360, overflowY: 'auto'}}>
                             <BaseGrid ref={grid2Ref} columns={columns2} provider={rows2} className={'table-basic'}/>
@@ -219,4 +219,4 @@ const DroughtObsrvIndex = () => {
     )
 }
 
-export default React.memo(DroughtObsrvIndex);
+export default React.memo(DroughtObsrvAppease);
