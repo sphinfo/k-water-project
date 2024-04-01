@@ -197,7 +197,7 @@ const DroughtObsrvIndex = () => {
                             <span className="chart-unit">가뭄지수</span>
                             <span className="chart-unit">강수량(mm)</span>
                         </div>
-                        <BaseChart width={'100%'} height={360} ref={chartRef} chartType={'Line'} title={''}/>
+                        <BaseChart width={420} height={370} ref={chartRef} chartType={'Line'} title={''}/>
                     </div>
                 </div>
             </div>

@@ -56,10 +56,10 @@ const BaseMapWidget = () => {
                 </div>
                 <div className="map-view-btns" style={{display: mapType === 'Satellite' || mapType === 'SatelliteArc' ? '' : 'none'}}>
                     <button className={`btn btn-sm map-view-btn ${ mapType === 'Satellite' ?  "on" : ''}`}  onClick={()=>{setSateMapType('Satellite'); setMapType('Satellite')}}>
-                        <span>VWROLD</span>
+                        <span>VWORLD</span>
                     </button>
                     <button className={`btn btn-sm map-view-btn ${ mapType === 'SatelliteArc' ?  "on" : ''}`} onClick={()=>{setSateMapType('SatelliteArc'); setMapType('SatelliteArc')}}>
-                        <span>ARC</span>
+                        <span>Esri</span>
                     </button>
                 </div>
             </div>

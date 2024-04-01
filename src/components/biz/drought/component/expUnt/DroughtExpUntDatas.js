@@ -360,9 +360,13 @@ const DroughtExpUntDatas = (props) => {
 
                 const minValue = Math.min(...datas)
                 const maxValue = Math.max(...datas)
-                const percentage = 50
-                chartDefaultOption.scales.y.min = (minValue - (minValue * (percentage / 100)))
-                chartDefaultOption.scales.y.max = (maxValue + (maxValue * (percentage / 100)))
+                const percentage = 20
+
+                let min = radioValue !== 'gl4dr' ? (minValue - (minValue * (percentage / 100))) : minValue 
+                let max = radioValue !== 'gl4dr' ? (maxValue + (maxValue * (percentage / 100))) : maxValue 
+                
+                chartDefaultOption.scales.y.min = min
+                chartDefaultOption.scales.y.max = max
                 chartRef.current.updateOptions = chartDefaultOption
             }
 
