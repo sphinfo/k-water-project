@@ -38,7 +38,7 @@ const DroughtObsrvAppease = () => {
 
     useEffect(()=>{
 
-        G$paramWidget('DroughtObsrvWidget',{title: '가뭄해갈'})
+        G$paramWidget('DroughtObsrvWidget',{title: '가뭄 해갈 강우량'})
 
         chartRef.current.updateOptions = {
             plugins: {

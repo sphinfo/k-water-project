@@ -10,7 +10,66 @@ import Tooltip from "@mui/material/Tooltip";
  * 가뭄 표출단위선택 팝업
  */
 
-const radioList = [{name:'위성 토양수분',value:'gl3sm'},{name:'가뭄지수',value:'gl4dr'},{name:'가뭄 해갈 강우량',value:'gl4d4'}]
+const radioList = [{name:'위성 토양수분',value:'gl3sm'},{name:'가뭄지수',value:'gl4dr'},{name:'가뭄 해갈 강수량',value:'gl4d4'}]
+
+const chartAnotation = {annotations: {
+    1: {
+        type: 'line',
+        borderColor: '#FFAA01',
+        borderWidth: 2,
+        yMin: -10,
+        yMax: -10,
+        label: {
+            display: true,
+            backgroundColor: '#00ff0000',
+            borderRadius: 5,
+            rotation: 'auto',
+            position: 'end',
+            content: '경계( -5 ~ -10 )',
+            font: {
+                size: 12,
+            }
+        },
+    },
+    /**주의 */
+    2: {
+        type: 'line',
+        borderColor: '#FFFF00',
+        yMin: -5,
+        yMax: -5,
+        borderWidth: 2,
+        label: {
+            display: true,
+            backgroundColor: '#00ff0000',
+            borderRadius: 5,
+            rotation: 'auto',
+            position: 'end',
+            content: '주의 ( -2 ~ -5 )',
+            font: {
+                size: 12,
+            }
+        },
+    },
+    /**관심 */
+    3: {
+        type: 'line',
+        borderColor: '#3A60FB',
+        yMin: -2,
+        yMax: -2,
+        borderWidth: 2,
+        label: {
+            display: true,
+            backgroundColor: '#00ff0000',
+            borderRadius: 5,
+            rotation: 'auto',
+            position: 'end',
+            content: '관심 ( 0 ~ -2 )',
+            font: {
+                size: 12,
+            }
+        },
+    },
+}}
 
 const charTL4DrOption = {
     plugins: {
@@ -41,32 +100,12 @@ const charTL4DrOption = {
         },
         annotation: {
             annotations: {
-                /**심각 */
-                0: {
-                    type: 'line',
-                    borderColor: '#FF0000',
-                    yMin: -10,
-                    yMax: -10,
-                    borderWidth: 2,
-                    label: {
-                        display: true,
-                        backgroundColor: '#00ff0000',
-                        borderRadius: 5,
-                        rotation: 'auto',
-                        position: 'end',
-                        content: '심각( -10 ~ )',
-                        font: {
-                            size: 12,
-                        }
-                    },
-                },
-                /**경계 */
                 1: {
                     type: 'line',
                     borderColor: '#FFAA01',
                     borderWidth: 2,
-                    yMin: -5,
-                    yMax: -5,
+                    yMin: -10,
+                    yMax: -10,
                     label: {
                         display: true,
                         backgroundColor: '#00ff0000',
@@ -83,8 +122,8 @@ const charTL4DrOption = {
                 2: {
                     type: 'line',
                     borderColor: '#FFFF00',
-                    yMin: -2,
-                    yMax: -2,
+                    yMin: -5,
+                    yMax: -5,
                     borderWidth: 2,
                     label: {
                         display: true,
@@ -102,8 +141,8 @@ const charTL4DrOption = {
                 3: {
                     type: 'line',
                     borderColor: '#3A60FB',
-                    yMin: 0,
-                    yMax: 0,
+                    yMin: -2,
+                    yMax: -2,
                     borderWidth: 2,
                     label: {
                         display: true,
@@ -131,6 +170,23 @@ const charTL4DrOption = {
             max: 5,
             ticks: {
                 stack: true,
+            },
+        },
+        'y2': {
+            type: 'linear',
+            position: 'right',
+            reverse: true ,
+            grid: {
+                display: false//격자 제거
+            },
+            min: 0,
+            max: 600,
+            title: {
+                display: false,
+                text: "강우량(mm)",
+                font: {
+                  size: 10,
+                },
             },
         },
         x: {
@@ -183,13 +239,29 @@ const chartDefaultOption = {
             },
             title: {
                 display: false,
-                text: "SWDI",
                 font: {
                   size: 10,
                 },
             },
             ticks: {
                 stack: true,
+            },
+        },
+        'y2': {
+            type: 'linear',
+            position: 'right',
+            reverse: true ,
+            grid: {
+                display: false//격자 제거
+            },
+            min: 0,
+            max: 600,
+            title: {
+                display: false,
+                text: "강우량(mm)",
+                font: {
+                  size: 10,
+                },
             },
         },
         x: {
@@ -242,10 +314,10 @@ const DroughtExpUntDatas = (props) => {
 
     const columns = [
         {accessor: 'date', Header: '관측일자', width: 120, align: 'center'},
-        {accessor: 'gpcp', Header: '강수량', width: 200, align: 'center'},
+        {accessor: 'gpcp', Header: '강우량', width: 200, align: 'center'},
         {accessor: 'gl3sm', Header: '위성 토양수분', width: 200, align: 'center'},
         {accessor: 'gl4dr', Header: '가뭄지수', width: 200, align: 'center'},
-        {accessor: 'gl4d4', Header: '가뭄 해갈 강우량', width: 200, align: 'center'},
+        {accessor: 'gl4d4', Header: '가뭄 해갈 강수량', width: 200, align: 'center'},
     ]
 
     //테이블 ref
@@ -303,6 +375,23 @@ const DroughtExpUntDatas = (props) => {
                         stack: true,
                     },
                 },
+                'y2': {
+                    type: 'linear',
+                    position: 'right',
+                    reverse: true ,
+                    grid: {
+                        display: false//격자 제거
+                    },
+                    min: 0,
+                    max: 600,
+                    title: {
+                        display: false,
+                        text: "강우량(mm)",
+                        font: {
+                          size: 10,
+                        },
+                    },
+                },
                 x: {
                     grid: {
                         display: false//격자 제거
@@ -349,35 +438,54 @@ const DroughtExpUntDatas = (props) => {
         if(dataset.length > 0){
             let labels = []
             let datas = []
+            let pcp = []
             dataset.map((obj)=>{
                 labels.push(obj.date)
                 datas.push(obj[radioValue] === 0 ? NaN : obj[radioValue])
+                pcp.push(obj.pcp)
             })
 
-            if(radioValue === 'l4d4'){
+            let min, max = 0
+            
+            
+            if(radioValue === 'gl4d4'){ //가뭄 해갈 강수량
+                chartDefaultOption.scales.y.min = 0
+                chartDefaultOption.scales.y.max = 50
+                chartRef.current.updateOptions = chartDefaultOption
+            }else if(radioValue === 'gl4dr'){ //가뭄 지수
+                charTL4DrOption.scales.y.min = -15
+                charTL4DrOption.scales.y.max = 5
                 chartRef.current.updateOptions = charTL4DrOption
             }else{
-
-                const minValue = Math.min(...datas)
-                const maxValue = Math.max(...datas)
-                const percentage = 20
-
-                let min = radioValue !== 'gl4dr' ? (minValue - (minValue * (percentage / 100))) : minValue 
-                let max = radioValue !== 'gl4dr' ? (maxValue + (maxValue * (percentage / 100))) : maxValue 
-                
-                chartDefaultOption.scales.y.min = min
-                chartDefaultOption.scales.y.max = max
+                chartDefaultOption.scales.y.min = 0
+                chartDefaultOption.scales.y.max = 60
                 chartRef.current.updateOptions = chartDefaultOption
             }
 
+            
+
             chartInfoRef.current.labels = labels
             chartInfoRef.current.datasets.push({
-                label: radioValue === 'gl3sm' ? '위성 토양수분' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄 해갈 강우량(mm/day)' : radioValue,
+                label: radioValue === 'gl3sm' ? '위성 토양수분' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄 해갈 강수량(mm/day)' : radioValue,
                 type: 'line',
-                pointRadius: 1,
-                borderWidth: 1,
+                pointRadius: 2,
+                borderWidth: 0,
+                borderColor: 'RED',
+                backgroundColor: 'RED',
                 data:datas,
             })
+
+            chartInfoRef.current.datasets.push({
+                label: '강우량',
+                type: 'bar',    
+                barThickness: 6,  // number (pixels) or 'flex'
+                maxBarThickness: 8, // number (pixels)
+                yAxisID: 'y2', 
+                borderColor: 'white',
+                backgroundColor: 'white',
+                data: pcp,
+            })
+
             chartRef.current.provider = chartInfoRef.current
         }
     }
@@ -393,7 +501,7 @@ const DroughtExpUntDatas = (props) => {
                                     <React.Fragment>
                                         <div className="tooltip-content-wrap">
                                             <p className="tooltip-content">
-                                                위성 토양수분, 가뭄지수,  가뭄 해갈, 강우량은  <br/>
+                                                위성 토양수분, 가뭄지수,  가뭄 해갈, 강수량은  <br/>
                                                 "L3SMA3" 토양수분 산출물을 기준으로 산정됨
                                             </p>
                                         </div>
@@ -412,9 +520,16 @@ const DroughtExpUntDatas = (props) => {
                 <div className="content-row">
                     <div className="panel-box">
                         <div className="chart-unit-warp">
-                            <span className="chart-unit">{radioValue === 'gl3sm' ? '토양수분(vol.%)' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄 해갈 강우량(mm/day)' : radioValue}</span>
+                            <span className="chart-unit" onClick={()=>{
+                                // charTL4DrOption.plugins.annotation = chartAnotation
+                                // chartRef.current.updateOptions = charTL4DrOption
+                            }}>{radioValue === 'gl3sm' ? '토양수분(vol.%)' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄 해갈 강수량(mm/day)' : radioValue}</span>
+                            <span className="chart-unit" onClick={()=>{
+                                // charTL4DrOption.plugins.annotation = null
+                                // chartRef.current.updateOptions = charTL4DrOption
+                            }}>강우량(mm)</span>
                         </div>
-                        <BaseChart width={'100%'} height={260} ref={chartRef} chartType={'Line'} title={''}/>
+                        <BaseChart width={'100%'} height={300} ref={chartRef} chartType={'Line'} title={''}/>
                     </div>
                 </div>
             </div>

@@ -61,8 +61,10 @@ const Safety = () => {
                         //지점비교분석 ON
                         if(compLayerClick){
                             if(feature?.id?.indexOf('L4DC') === -1){
-                                const featureInfo = {...feature, ...layers[feature?.id]}
-                                dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: featureInfo})
+                                if(feature.properties.GRAY_INDEX !== null){
+                                    const featureInfo = {...feature, ...layers[feature?.id]}
+                                    dispatch({type:SAFETY_SELETE_FEATURE, selectFeature: featureInfo})
+                                }
                             }
                         }
 
