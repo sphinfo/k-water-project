@@ -66,7 +66,7 @@ const WidgetConfig = {
     },
 
     'DroughtExpUntWidget': {
-        title: '종합 토양 분석',
+        title: '표출 단위별 분석',
         instance: widgets.DroughtExpUntWidget
     },
     

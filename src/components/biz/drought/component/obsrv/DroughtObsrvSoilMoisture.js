@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import BaseGrid from "@common/grid/BaseGrid";
 import { getDroughtObsMoisture } from "@common/axios/drought";
-import { G$getDateType } from "@gis/util";
+import { G$getDateType, G$paramWidget } from "@gis/util";
 /**
  * 가뭄 활용주제도 - 토양수분
  */
@@ -38,6 +38,8 @@ const DroughtObsrv = () => {
     const [loading, setLoading] = useState(false)
 
     useEffect(()=>{
+
+        G$paramWidget('DroughtObsrvWidget',{title: '토양수분 분석'})
 
         chartRef.current.updateOptions = {
             plugins: {

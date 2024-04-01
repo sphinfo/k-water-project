@@ -3,7 +3,7 @@ import BaseGrid from "@common/grid/BaseGrid";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
 import { getDroughtObsIndex, getDroughtSoilStatistics } from "@common/axios/drought";
-import { G$getDateType } from "@gis/util";
+import { G$getDateType, G$paramWidget } from "@gis/util";
 
 /**
  * 가뭄 활용주제도 - 가뭄지수
@@ -37,6 +37,8 @@ const DroughtObsrvIndex = () => {
     const rows2 = useMemo(()=>{ return [  ] },[])
 
     useEffect(()=>{
+
+        G$paramWidget('DroughtObsrvWidget',{title: '가뭄지수'})
 
         chartRef.current.updateOptions = {
             plugins: {
