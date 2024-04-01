@@ -222,7 +222,7 @@ const SafetyResult = () => {
                   <p className="list-info">{obj.groupNm}</p>
                   <p className="list-info">{`${obj.category} | ${obj.category === 'L3TDA1' ? '고정산란체' : obj.category === 'L3TDA2' ? '분산산란체' : ''}`}</p>
                   <p className="list-info">{`${obj.satellite === 'S1A' ? 'sentinel 1' :  obj.satellite === 'S2A' ? 'sentinel 2' : obj.satellite} ${obj.udew ? ' | '+obj.udew : obj.udew}`}</p>
-                  <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
+                  <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? ' ~ '+G$getDateType(obj.endedAt) : ''}`}</p>
                 </div>
               </div>
             </ListItemButton>

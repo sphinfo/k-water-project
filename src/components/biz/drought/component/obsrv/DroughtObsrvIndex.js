@@ -94,6 +94,8 @@ const DroughtObsrvIndex = () => {
                     grid: {
                         display: false//격자 제거
                     },
+                    min:0,
+                    max:600,
                     title: {
                         display: false,
                         text: "강우량(mm)",
