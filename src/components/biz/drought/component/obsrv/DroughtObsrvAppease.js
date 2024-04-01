@@ -82,6 +82,8 @@ const DroughtObsrvAppease = () => {
                           size: 10,
                         },
                     },
+                    min:0,
+                    max: 50,
                     ticks: {
                         stack: true,
                     }

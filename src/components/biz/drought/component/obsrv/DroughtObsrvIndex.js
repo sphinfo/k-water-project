@@ -82,6 +82,8 @@ const DroughtObsrvIndex = () => {
                           size: 10,
                         },
                     },
+                    min:-15,
+                    max: 5,
                     ticks: {
                         stack: true,
                     }
