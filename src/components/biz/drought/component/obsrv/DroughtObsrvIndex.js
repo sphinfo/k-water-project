@@ -54,6 +54,11 @@ const DroughtObsrvIndex = () => {
                 tooltip: {
                     mode: 'index', // 인덱스별로 툴팁 보이기
                     intersect: false, // 마우스 포인터와 각 선의 교차점에 툴팁 표시
+                    callbacks:{
+                        label: function(context) {
+                            return context.datasetIndex === 0 && context.formattedValue === '5' ? '5 초과' : context.formattedValue
+                        }
+                    }
                 },
                 zoom: {
                     pan: {
