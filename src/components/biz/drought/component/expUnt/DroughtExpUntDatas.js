@@ -10,7 +10,7 @@ import Tooltip from "@mui/material/Tooltip";
  * 가뭄 표출단위선택 팝업
  */
 
-const radioList = [{name:'위성 토양수분',value:'gl3sm'},{name:'가뭄지수',value:'gl4dr'},{name:'가뭄 해갈 강수량',value:'gl4d4'}]
+const radioList = [{name:'위성 토양수분',value:'gl3sm'},{name:'가뭄지수',value:'gl4dr'},{name:'가뭄 해갈 강우량',value:'gl4d4'}]
 
 const chartAnotation = {annotations: {
     1: {
@@ -314,10 +314,10 @@ const DroughtExpUntDatas = (props) => {
 
     const columns = [
         {accessor: 'date', Header: '관측일자', width: 120, align: 'center'},
-        {accessor: 'gpcp', Header: '강우량', width: 200, align: 'center'},
+        {accessor: 'gpcp', Header: '강수량', width: 200, align: 'center'},
         {accessor: 'gl3sm', Header: '위성 토양수분', width: 200, align: 'center'},
         {accessor: 'gl4dr', Header: '가뭄지수', width: 200, align: 'center'},
-        {accessor: 'gl4d4', Header: '가뭄 해갈 강수량', width: 200, align: 'center'},
+        {accessor: 'gl4d4', Header: '가뭄 해갈 강우량', width: 200, align: 'center'},
     ]
 
     //테이블 ref
@@ -448,7 +448,7 @@ const DroughtExpUntDatas = (props) => {
             let min, max = 0
             
             
-            if(radioValue === 'gl4d4'){ //가뭄 해갈 강수량
+            if(radioValue === 'gl4d4'){ //가뭄 해갈 강우량
                 chartDefaultOption.scales.y.min = 0
                 chartDefaultOption.scales.y.max = 50
                 chartRef.current.updateOptions = chartDefaultOption
@@ -466,7 +466,7 @@ const DroughtExpUntDatas = (props) => {
 
             chartInfoRef.current.labels = labels
             chartInfoRef.current.datasets.push({
-                label: radioValue === 'gl3sm' ? '위성 토양수분' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄 해갈 강수량(mm/day)' : radioValue,
+                label: radioValue === 'gl3sm' ? '위성 토양수분' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄 해갈 강우량(mm/day)' : radioValue,
                 type: 'line',
                 pointRadius: 2,
                 borderWidth: 0,
@@ -476,7 +476,7 @@ const DroughtExpUntDatas = (props) => {
             })
 
             chartInfoRef.current.datasets.push({
-                label: '강우량',
+                label: '강수량',
                 type: 'bar',    
                 barThickness: 6,  // number (pixels) or 'flex'
                 maxBarThickness: 8, // number (pixels)
@@ -523,7 +523,7 @@ const DroughtExpUntDatas = (props) => {
                             <span className="chart-unit" onClick={()=>{
                                 // charTL4DrOption.plugins.annotation = chartAnotation
                                 // chartRef.current.updateOptions = charTL4DrOption
-                            }}>{radioValue === 'gl3sm' ? '토양수분(vol.%)' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄 해갈 강수량(mm/day)' : radioValue}</span>
+                            }}>{radioValue === 'gl3sm' ? '토양수분(vol.%)' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄 해갈 강우량(mm/day)' : radioValue}</span>
                             <span className="chart-unit" onClick={()=>{
                                 // charTL4DrOption.plugins.annotation = null
                                 // chartRef.current.updateOptions = charTL4DrOption

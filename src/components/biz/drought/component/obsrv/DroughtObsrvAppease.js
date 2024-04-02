@@ -27,7 +27,7 @@ const DroughtObsrvAppease = () => {
 
     const columns2 = [
         {accessor: 'date', Header: '관측 일자', width: 120, align: 'center'},
-        {accessor: 'pcp', Header: '강우량', width: 120, align: 'center'},
+        {accessor: 'pcp', Header: '강수량', width: 120, align: 'center'},
         {accessor: 'l4drA2', Header: '가뭄 해갈 강우량 (mm/day)', width: 200, align: 'center'},
     ]
 
@@ -147,7 +147,7 @@ const DroughtObsrvAppease = () => {
                                 label.push(obj.date)
                             }
                             
-                            l4drA2.push(obj.l4drA2 === 0 ? NaN : Number(obj.l4drA2))
+                            l4drA2.push(obj.l4drA2 === 0 ? NaN : Number(obj.l4drA2) > 50 ? 50 : Number(obj.l4drA2))
                             pcp.push(obj.pcp  === 0 ? NaN : Number(obj.pcp))
                             
                         }
@@ -170,7 +170,7 @@ const DroughtObsrvAppease = () => {
                     })
 
                     chartInfoRef.current.datasets.push({
-                        label: '강우량',
+                        label: '강수량',
                         type: 'bar',
                         yAxisID: 'y2', 
                         borderColor: 'white',

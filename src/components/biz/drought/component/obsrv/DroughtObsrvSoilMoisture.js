@@ -173,7 +173,7 @@ const DroughtObsrv = () => {
                     chartInfoRef.current.labels = label
 
                     chartInfoRef.current.datasets.push({
-                        label: '강우량',
+                        label: '강수량',
                         type: 'bar',
                         yAxisID: 'y2', 
                         borderColor: 'white',

@@ -78,7 +78,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                 resObj.data.data.map((obj)=>{
                   let group = 'WaterLevel'
                   let groupNm = '지점수위'
-                  let satellite= 'Sentinel 1'
+                  let satellite= 'Sentinel-1'
                   let krNm = G$findEngNmFilter(obj.name)[0]?.options[0]?.name
                   let startedAt = dayjs(obj.date).format('YYYYMMDD')
                   resultList.push({group, krNm, groupNm, satellite, startedAt, ...obj})
@@ -198,10 +198,10 @@ const FloodResult = ({waterObsList=[], ...props}) => {
             <p className="list-info">{obj.locationKr}</p>
             <p className="list-info">{obj.groupNm}</p>
             <p className="list-info">{`${obj.category} | ${obj.categoryNm}`}</p>
-            <p className="list-info">{obj.satellite === 'S1A' ? 'Sentinel 1'
-              : obj.satellite === 'S1B' ? 'Sentinel 1'
-              :  obj.satellite === 'S2A' ? 'Sentinel 2'
-              :  obj.satellite === 'S2B' ? 'Sentinel 2'
+            <p className="list-info">{obj.satellite === 'S1A' ? 'Sentinel-1'
+              : obj.satellite === 'S1B' ? 'Sentinel-1'
+              :  obj.satellite === 'S2A' ? 'Sentinel-2'
+              :  obj.satellite === 'S2B' ? 'Sentinel-2'
               : obj.satellite}</p>
             <p className="list-info">{`${G$getDateType(obj.startedAt)}${obj.endedAt ? '~'+G$getDateType(obj.endedAt) : ''}`}</p>
           </div>

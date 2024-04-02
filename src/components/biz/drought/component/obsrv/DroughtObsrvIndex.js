@@ -27,7 +27,7 @@ const DroughtObsrvIndex = () => {
 
     const columns2 = [
         {accessor: 'date', Header: '관측 일자', width: 120, align: 'center'},
-        {accessor: 'pcp', Header: '강우량', width: 120, align: 'center'},
+        {accessor: 'pcp', Header: '강수량', width: 120, align: 'center'},
         {accessor: 'l4drA1', Header: '가뭄지수', width: 200, align: 'center'},
     ]
 
@@ -75,6 +75,7 @@ const DroughtObsrvIndex = () => {
                     grid: {
                         display: false //격자 제거
                     },
+                    suggestedMax: 5,
                     title: {
                         display: false,
                         text: "가뭄지수",
@@ -147,7 +148,7 @@ const DroughtObsrvIndex = () => {
                                 label.push(obj.date)
                             }
                             
-                            l4drA1.push(obj.l4drA1 === 0 ? NaN : Number(obj.l4drA1))
+                            l4drA1.push(obj.l4drA1 === 0 ? NaN : Number(obj.l4drA1) > 5 ? 5 : Number(obj.l4drA1))
                             pcp.push(obj.pcp  === 0 ? NaN : Number(obj.pcp))
                             
                         }
@@ -170,7 +171,7 @@ const DroughtObsrvIndex = () => {
                     })
 
                     chartInfoRef.current.datasets.push({
-                        label: '강우량',
+                        label: '강수량',
                         type: 'bar',
                         yAxisID: 'y2', 
                         borderColor: 'white',
