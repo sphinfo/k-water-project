@@ -501,7 +501,7 @@ const DroughtExpUntDatas = (props) => {
                                     <React.Fragment>
                                         <div className="tooltip-content-wrap">
                                             <p className="tooltip-content">
-                                                위성 토양수분, 가뭄지수,  가뭄 해갈, 강수량은  <br/>
+                                                위성 토양수분, 가뭄지수,  가뭄 해갈 강우량은  <br/>
                                                 "L3SMA3" 토양수분 산출물을 기준으로 산정됨
                                             </p>
                                         </div>
