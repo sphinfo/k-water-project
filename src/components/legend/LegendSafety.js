@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Tooltip from '@mui/material/Tooltip';
-import img01 from "@images/legend-img-drought01.png"
-import img02 from "@images/legend-img-drought02.png"
 import img03 from "@images/legend-img-drought03.png"
 
 const LegendSafety = ({props, ...other}) => {
@@ -207,7 +205,7 @@ const LegendSafety = ({props, ...other}) => {
 
                         {/*안전 06*/}
                         {
-                            infoType === 'undefined' && 
+                            infoType === 'undefined_undefined' && 
                             <div className="tooltip-info">
                                 <div className="tooltip-info-box">
                                     <h5>2차원 변위 속도(cm/year)</h5>
