@@ -1,8 +1,5 @@
-import BaseChart from "@common/chart/BaseChart";
-import { Accordion, AccordionDetails, AccordionSummary, SvgIcon, Switch } from "@mui/material";
-import { ENV_LANDCOVER_DETECTION } from "@redux/actions";
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import img from "@images/image 51.png"
 import { getAreaInfo } from "@common/axios/envi";
@@ -13,7 +10,6 @@ import { G$setNumberFixedKomma } from "@gis/util";
  */
 const EnvironmentAraeWidget = (props) => {
 
-    const dispatch = useDispatch()
     const {params, ...other} = props
 
     const [allArea, setAllArea] = useState('-')

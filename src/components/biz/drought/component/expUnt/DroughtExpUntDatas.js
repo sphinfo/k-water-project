@@ -289,10 +289,10 @@ const DroughtExpUntDatas = (props) => {
                     let datas = response?.result?.data.map((obj)=>{
                         return {...obj
                             , date:obj.createdAt.substring(0,10)
-                            , gpcp: obj.pcp === 0 ? '-' : obj.pcp.toFixed(2)
-                            , gl3sm: obj.l3sm === 0 ? '-' : obj.l3sm.toFixed(2)
-                            , gl4dr: obj.l4dr === 0 ? '-' : obj.l4dr.toFixed(2)
-                            , gl4d4: obj.l4d4 === 0 ? '-' : obj.l4d4.toFixed(2)
+                            , gpcp: obj.pcp === 0 ? '-' : obj.pcp.toFixed(1)
+                            , gl3sm: obj.l3sm === 0 ? '-' : obj.l3sm.toFixed(1)
+                            , gl4dr: obj.l4dr === 0 ? '-' : obj.l4dr.toFixed(1)
+                            , gl4d4: obj.l4d4 === 0 ? '-' : obj.l4dr > -5 ? 0 : obj.l4d4.toFixed(1)
                         }
                     })
                     gridRef.current.provider = datas
@@ -466,7 +466,7 @@ const DroughtExpUntDatas = (props) => {
 
             chartInfoRef.current.labels = labels
             chartInfoRef.current.datasets.push({
-                label: radioValue === 'gl3sm' ? '위성 토양수분' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄 해갈 강우량(mm/day)' : radioValue,
+                label: radioValue === 'gl3sm' ? '위성 토양수분' : radioValue === 'gl4dr' ? '가뭄지수' : radioValue === 'gl4d4' ? '가뭄 해갈 강우량' : radioValue,
                 type: 'line',
                 pointRadius: 2,
                 borderWidth: 0,

@@ -153,12 +153,12 @@ const DroughtObsrvAppease = () => {
                                 label.push(obj.date)
                             }
                             
-                            l4drA2.push(obj.l4drA2 === 0 ? NaN : Number(obj.l4drA2) > 50 ? 50 : Number(obj.l4drA2))
-                            pcp.push(obj.pcp  === 0 ? NaN : Number(obj.pcp))
+                            l4drA2.push(obj.l4drA2 === 0 ? NaN : Number(obj.l4drA2) > 50 ? 50 : Number(obj.l4drA2).toFixed(1))
+                            pcp.push(obj.pcp  === 0 ? NaN : Number(obj.pcp).toFixed(1))
                             
                         }
-                        obj.l4drA2 = obj.l4drA2 === 0 ? '-' : Number(obj.l4drA2).toFixed(2)
-                        obj.pcp = obj.pcp === 0 ? '-' : Number(obj.pcp).toFixed(2)    
+                        obj.l4drA2 = obj.l4drA2 === 0 ? '-' : Number(obj.l4drA2).toFixed(1)
+                        obj.pcp = obj.pcp === 0 ? '-' : Number(obj.pcp).toFixed(1)    
                         
                     })
 

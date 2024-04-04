@@ -66,6 +66,7 @@ class BaseGeoserverAxios {
             var cartographic = Cartographic.fromCartesian(position)
             longitude = MathC.toDegrees(cartographic.longitude)
             latitude = MathC.toDegrees(cartographic.latitude)
+            //let ln = G$4326to3857(longitude, latitude)
 
             let url = layerUrl ? layerUrl : this.serviceUrl + store +'/ows?';
             let params = {
@@ -74,6 +75,7 @@ class BaseGeoserverAxios {
                 request: 'GetFeatureInfo',
                 layers: layer,
                 bbox: `${(longitude - 0.0001)},${(latitude - 0.0001)},${(longitude + 0.0001)},${(latitude + 0.0001)}`,
+                //bbox: `${(ln.x - 0.0001)},${(ln.y - 0.0001)},${(ln.x + 0.0001)},${(ln.y + 0.0001)}`,
                 width: scene.canvas.clientWidth,
                 height: scene.canvas.clientHeight,
                 srs: 'EPSG:4326',

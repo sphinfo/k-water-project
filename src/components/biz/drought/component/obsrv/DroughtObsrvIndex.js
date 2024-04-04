@@ -72,7 +72,68 @@ const DroughtObsrvIndex = () => {
                       mode: 'x', // x축만 확대/축소 가능하도록 설정
                     },
                 },
+                annotation: {
+                    annotations: {
+                        1: {
+                            type: 'line',
+                            borderColor: '#FFAA01',
+                            borderWidth: 2,
+                            yMin: -10,
+                            yMax: -10,
+                            label: {
+                                display: true,
+                                backgroundColor: '#00ff0000',
+                                borderRadius: 5,
+                                rotation: 'auto',
+                                position: 'end',
+                                content: '경계( -5 ~ -10 )',
+                                font: {
+                                    size: 12,
+                                }
+                            },
+                        },
+                        /**주의 */
+                        2: {
+                            type: 'line',
+                            borderColor: '#FFFF00',
+                            yMin: -5,
+                            yMax: -5,
+                            borderWidth: 2,
+                            label: {
+                                display: true,
+                                backgroundColor: '#00ff0000',
+                                borderRadius: 5,
+                                rotation: 'auto',
+                                position: 'end',
+                                content: '주의 ( -2 ~ -5 )',
+                                font: {
+                                    size: 12,
+                                }
+                            },
+                        },
+                        /**관심 */
+                        3: {
+                            type: 'line',
+                            borderColor: '#3A60FB',
+                            yMin: -2,
+                            yMax: -2,
+                            borderWidth: 2,
+                            label: {
+                                display: true,
+                                backgroundColor: '#00ff0000',
+                                borderRadius: 5,
+                                rotation: 'auto',
+                                position: 'end',
+                                content: '관심 ( 0 ~ -2 )',
+                                font: {
+                                    size: 12,
+                                }
+                            },
+                        },
+                    }
+                }
             },
+            
             scales: {
                 'y1': {
                     type: 'linear',
@@ -153,12 +214,12 @@ const DroughtObsrvIndex = () => {
                                 label.push(obj.date)
                             }
                             
-                            l4drA1.push(obj.l4drA1 === 0 ? NaN : Number(obj.l4drA1) > 5 ? 5 : Number(obj.l4drA1))
-                            pcp.push(obj.pcp  === 0 ? NaN : Number(obj.pcp))
+                            l4drA1.push(obj.l4drA1 === 0 ? NaN : Number(obj.l4drA1) > 5 ? 5 : Number(obj.l4drA1).toFixed(1))
+                            pcp.push(obj.pcp  === 0 ? NaN : Number(obj.pcp).toFixed(1))
                             
                         }
-                        obj.l4drA1 = obj.l4drA1 === 0 ? '-' : Number(obj.l4drA1).toFixed(2)
-                        obj.pcp = obj.pcp === 0 ? '-' : Number(obj.pcp).toFixed(2)    
+                        obj.l4drA1 = obj.l4drA1 === 0 ? '-' : Number(obj.l4drA1).toFixed(1)
+                        obj.pcp = obj.pcp === 0 ? '-' : Number(obj.pcp).toFixed(1)    
                         
                     })
 

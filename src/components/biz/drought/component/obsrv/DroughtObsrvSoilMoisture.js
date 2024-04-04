@@ -123,8 +123,8 @@ const DroughtObsrv = () => {
 
     }, [])
 
-    const [avg, setAvg] = useState(0)
-    const [avg2, setAvg2] = useState(0)
+    // const [avg, setAvg] = useState(0)
+    // const [avg2, setAvg2] = useState(0)
 
     //DroughtObsrvMoistureConfig
     //지점이 선택되었을시 토양수분 API로 가져온후 차트에 데이터 매핑 ( 현재 API x )
@@ -151,21 +151,21 @@ const DroughtObsrv = () => {
 
                         label.push(obj.date)
                         precipitation.push(obj.precipitation  === '' ? NaN : Number(obj.precipitation))
-                        obs.push(obj.obs  === 0 ? NaN : Number(obj.obs).toFixed(2))
-                        sim.push(obj.sim  === 0 ? NaN : Number(obj.sim).toFixed(2))
-                        obj.simGrid = obj.sim === 0 ? '-' : Number(obj.sim).toFixed(2)
+                        obs.push(obj.obs  === 0 ? NaN : Number(obj.obs).toFixed(1))
+                        sim.push(obj.sim  === 0 ? NaN : Number(obj.sim).toFixed(1))
+                        obj.simGrid = obj.sim === 0 ? '-' : Number(obj.sim).toFixed(1)
 
-                        obj.obs = Number(obj.obs).toFixed(2)
-                        obj.precipitation = Number(obj.precipitation).toFixed(2)
-                        obj.sim = Number(obj.sim).toFixed(2)
+                        obj.obs = Number(obj.obs).toFixed(1)
+                        obj.precipitation = Number(obj.precipitation).toFixed(1)
+                        obj.sim = Number(obj.sim).toFixed(1)
 
-                        avg += Number(obj.obs)
-                        avg2 += (Number(obj.obs) - Number(obj.sim))
+                        //avg += Number(obj.obs)
+                        //avg2 += (Number(obj.obs) - Number(obj.sim))
 
                     })
 
-                    setAvg(avg / (response?.result?.data?.length))
-                    setAvg2(avg2 / (response?.result?.data?.length))
+                    //setAvg(avg / (response?.result?.data?.length))
+                    //setAvg2(avg2 / (response?.result?.data?.length))
 
                     //강우(bar)        /실측토양수분/모의토양수분
                     //precipitation   /obs        /sim
@@ -231,11 +231,11 @@ const DroughtObsrv = () => {
                         <div className="number-dashboard">
                             <div className="nd-item">
                                 <h4 className="nd-item-title">관측소 평균 토양 수분(vol.%)</h4>
-                                <div className="nd-item-body">{avg.toFixed(2)} </div>
+                                <div className="nd-item-body">{avg.toFixed(1)} </div>
                             </div>
                             <div className="nd-item">
                                 <h4 className="nd-item-title">실측/모의 잔차 평균(vol.%)</h4>
-                                <div className="nd-item-body">{avg2.toFixed(2)}</div>
+                                <div className="nd-item-body">{avg2.toFixed(1)}</div>
                             </div>
                         </div>
                     </div>
