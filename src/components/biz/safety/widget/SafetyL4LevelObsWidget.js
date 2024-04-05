@@ -32,7 +32,9 @@ const SafetyL4LevelObsWidget = () => {
     const rows = useMemo(()=>{ return [  ] },[])
     const columns = [
         {accessor: 'createdAt', Header: '관측 일자', width: 120, align: 'center'},
-        {accessor: 'value', Header: '변위 (cm)', width: 200, align: 'center'},
+        //{accessor: 'value', Header: '변위 (cm)', width: 200, align: 'center'},
+        {accessor: 'obsValue', Header: '관측소 변위 (cm)', width: 200, align: 'center'},
+        {accessor: 'pointValue', Header: '지점 변위 (cm)', width: 200, align: 'center'},
     ]
 
     //테이블 ref
@@ -145,6 +147,8 @@ const SafetyL4LevelObsWidget = () => {
         gridRef2.current.provider = []
         if(selectFeature){
 
+            let obsArray = []
+            let pointArray = []
             /* 관측소 변위 */
             if(selectFeature?.properties?.data?.length > 0){
                 let labels = []
@@ -156,21 +160,22 @@ const SafetyL4LevelObsWidget = () => {
                     labels.push(createdAt)
                     datas.push(value)
                     obsGridDatas.push({value, createdAt})
+                    obsArray.push({obsValue:value, createdAt})
                 })
 
-                chartInfoRef.current.labels = labels
-                chartInfoRef.current.datasets.push({
-                    tension: 0.4,
-                    data: datas,
-                    pointRadius: 1,
-                    borderWidth: 1,
-                    label: '관측소 변위',
-                    borderColor: '#FF0000',
-                    backgroundColor: '#FF0000',
-                })
-                chartRef.current.provider = chartInfoRef.current
-                //grid
-                gridRef.current.provider = obsGridDatas.sort((a, b) => (a.createdAt < b.createdAt) ? 1 : -1)
+                // chartInfoRef.current.labels = labels
+                // chartInfoRef.current.datasets.push({
+                //     tension: 0.4,
+                //     data: datas,
+                //     pointRadius: 1,
+                //     borderWidth: 1,
+                //     label: '관측소 변위',
+                //     borderColor: '#FF0000',
+                //     backgroundColor: '#FF0000',
+                // })
+                // chartRef.current.provider = chartInfoRef.current
+                // //grid
+                // gridRef.current.provider = obsGridDatas.sort((a, b) => (a.createdAt < b.createdAt) ? 1 : -1)
             }
 
             /* 지점변위 */
@@ -185,21 +190,69 @@ const SafetyL4LevelObsWidget = () => {
                         datas.push(value)
                         pointLables.push(createdAt)
                         gridDatas.push({value, createdAt})
+                        pointArray.push({pointValue: value, createdAt})
                     })
                 }
-                chartInfoRef2.current.labels = pointLables
-                chartInfoRef2.current.datasets.push({
+
+                //let mergeArray = obsArray.filter(oa => pointArray.some(pa => oa.createdAt === pa.createdAt))
+                let mergeArray = []
+                obsArray.forEach(obj1 => {
+                    let obj2 = pointArray.find(obj => obj.createdAt === obj1.createdAt)
+                    if (obj2) {
+                        mergeArray.push({...obj1, ...obj2})
+                    }
+                    // else{
+                    //     mergeArray.push({...obj1, ...obj2})
+                    // }
+                });
+
+                let pointChart = []
+                let obsChart = []
+                let labelChart = []
+                mergeArray.map((obj)=>{
+                    pointChart.push(obj.pointValue)
+                    obsChart.push(obj.obsValue)
+                    labelChart.push(obj.createdAt)
+                })
+
+                chartInfoRef.current.labels = labelChart
+                chartInfoRef.current.datasets.push({
                     tension: 0.4,
-                    data: datas,
+                    data: obsChart,
+                    pointRadius: 1,
+                    borderWidth: 1,
+                    label: '관측소 변위',
+                    borderColor: '#FF0000',
+                    backgroundColor: '#FF0000',
+                })
+                chartInfoRef.current.datasets.push({
+                    tension: 0.4,
+                    data: pointChart,
                     pointRadius: 1,
                     borderWidth: 1,
                     label: '지점 변위',
                     borderColor: '#00B2FF',
                     backgroundColor: '#00B2FF',
                 })
-                chartRef2.current.provider = chartInfoRef2.current
+
+                chartRef.current.provider = chartInfoRef.current
                 //grid
-                gridRef2.current.provider = gridDatas.sort((a, b) => (a.createdAt < b.createdAt) ? 1 : -1)
+                gridRef.current.provider = mergeArray.sort((a, b) => (a.createdAt < b.createdAt) ? 1 : -1)
+
+
+                // chartInfoRef2.current.labels = pointLables
+                // chartInfoRef2.current.datasets.push({
+                //     tension: 0.4,
+                //     data: datas,
+                //     pointRadius: 1,
+                //     borderWidth: 1,
+                //     label: '지점 변위',
+                //     borderColor: '#00B2FF',
+                //     backgroundColor: '#00B2FF',
+                // })
+                // chartRef2.current.provider = chartInfoRef2.current
+                // //grid
+                // gridRef2.current.provider = gridDatas.sort((a, b) => (a.createdAt < b.createdAt) ? 1 : -1)
 
             })
         }
@@ -235,7 +288,7 @@ const SafetyL4LevelObsWidget = () => {
                     </div>
                 </div>
             </div>
-            <div className="content-col-group">
+            {/* <div className="content-col-group">
                 <div className="content-col">
                     <div className="content-row height-100">
                         <div className="panel-box height-100">
@@ -262,7 +315,7 @@ const SafetyL4LevelObsWidget = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
