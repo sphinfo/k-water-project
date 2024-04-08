@@ -74,6 +74,8 @@ const SafetyL4LevelObsWidget = () => {
                     grid: {
                         display: false
                     },
+                    min:-3,
+                    max:3,
                 },
                 x: {
                     grid: {
