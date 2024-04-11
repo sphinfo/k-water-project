@@ -73,7 +73,7 @@ const FloodL4WaterLevel = () => {
     //데이터 ref
     const rows = useMemo(()=>{ return [  ] },[])
     const columns = [
-        {accessor: 'createdAt', Header: '관측 일자', width: 120, align: 'center'},
+        {accessor: 'createdAt', Header: '관측 일자', width: 120, align: 'center', title: 'gridAt'},
         {accessor: 'estimatedElev', Header: '실제 계측 수위', width: 200, align: 'center'},
         {accessor: 'referenceElev', Header: '위성 계측 수위', width: 200, align: 'center'},
     ]
@@ -129,8 +129,7 @@ const FloodL4WaterLevel = () => {
                     
                     datas.map((obj)=>{
 
-                        obj.gridAt = dayjs(obj.createdAt).format('YYYY-MM-DD:HH:MM:ss')
-
+                        obj.gridAt = dayjs(obj.createdAt).format('YYYY-MM-DD HH:MM:ss')
                         obj.createdAt = obj.createdAt.substring(0,8)
                         obj.createdAt = G$getDateType(obj.createdAt)
                         obj.formatDate = dayjs(obj.createdAt).format('YYYYMMDD')                        
