@@ -1,22 +1,62 @@
 import React, {useEffect, useMemo, useRef, useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import BaseChart from "@common/chart/BaseChart";
 import "chartjs-plugin-annotation";
-import SafetyChartConfig from "@gis/config/SafetyChartConfig";
-import FloodChangeDataConfig from "@gis/config/FloodChangeDataConfig";
-import FloodADD from "@gis/config/flood/FloodWaterLevelChartDatas";
-import FloodWaterLevelChartDatas from "@gis/config/flood/FloodWaterLevelChartDatas";
 import BaseGrid from "@common/grid/BaseGrid";
 import { G$getDateType, G$sortArrayObject } from "@gis/util";
-import { getFloodWaterLevelChart, getObsWl, getObsWls } from "@common/axios/flood";
+import { getFloodWaterLevelChart, getObsWls } from "@common/axios/flood";
 import dayjs from "dayjs";
 import FloodWaterLevelStationDataConfig from "@gis/config/FloodWaterLevelStationDataConfig";
-import createAxios from "@common/axios/creatAxios";
 
+const chartOption = {
+    plugins: {
+        legend: {
+            position: 'bottom',
+            labels: {
+                boxWidth: 18,
+                boxHeight: 3,
+                useBorderRadius: true,
+                borderRadius: 1.5
+            }
+        },
+        tooltip: {
+            mode: 'index', // 인덱스별로 툴팁 보이기
+            intersect: false, // 마우스 포인터와 각 선의 교차점에 툴팁 표시
+        },
+        zoom: {
+            pan: {
+                enabled: true, // 이동 가능하도록 설정
+                mode: 'x', // x축으로만 이동할 수 있도록 설정
+            },
+            zoom: {
+              wheel: {
+                enabled: true,
+              },
+              mode: 'x', // x축만 확대/축소 가능하도록 설정
+            },
+        },
+    },
+    scales: {
+        y: {
+            grid: {
+                display: false
+            },
+        },
+        x: {
+            grid: {
+                display: false
+            },
+            ticks: {
+                autoSkip: true,
+                maxTicksLimit: 4
+            }
+        }
+    }
+}
 
 const FloodL4WaterLevel = () => {
 
-    const { text, selectWaterLevel } = useSelector(state => state.flood)
+    const { selectWaterLevel } = useSelector(state => state.flood)
 
     //차트 ref
     const chartRef = useRef({})
@@ -38,58 +78,18 @@ const FloodL4WaterLevel = () => {
         {accessor: 'referenceElev', Header: '위성 계측 수위', width: 200, align: 'center'},
     ]
 
+    
+
     /** 초기설정 **/
     useEffect(()=>{
 
         /** example 옵션 생성 */
-        chartRef.current.updateOptions = {
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        boxWidth: 18,
-                        boxHeight: 3,
-                        useBorderRadius: true,
-                        borderRadius: 1.5
-                    }
-                },
-                tooltip: {
-                    mode: 'index', // 인덱스별로 툴팁 보이기
-                    intersect: false, // 마우스 포인터와 각 선의 교차점에 툴팁 표시
-                },
-                zoom: {
-                    pan: {
-                        enabled: true, // 이동 가능하도록 설정
-                        mode: 'x', // x축으로만 이동할 수 있도록 설정
-                    },
-                    zoom: {
-                      wheel: {
-                        enabled: true,
-                      },
-                      mode: 'x', // x축만 확대/축소 가능하도록 설정
-                    },
-                },
-            },
-            scales: {
-                y: {
-                    grid: {
-                        display: false
-                    }
-                },
-                x: {
-                    grid: {
-                        display: false
-                    },
-                    ticks: {
-                        autoSkip: true,
-                        maxTicksLimit: 4
-                    }
-                }
-            }
-        }
+        chartRef.current.updateOptions = chartOption
 
         return()=>{
-
+            chartInfoRef.current.labels = []
+            chartInfoRef.current.datasets = []
+            gridRef.current.provider = []
         }
 
     }, [])
@@ -108,7 +108,7 @@ const FloodL4WaterLevel = () => {
         //*******API*************/
         //수위 지점 select get Feature
         if(selectWaterLevel){
-            const {name, date} = selectWaterLevel
+            const {name} = selectWaterLevel
             let params = {name:name}
             getFloodWaterLevelChart(params).then((response)=>{
                 if(response?.result?.data?.length > 0){
@@ -128,9 +128,13 @@ const FloodL4WaterLevel = () => {
                     let paramDates = []
                     
                     datas.map((obj)=>{
+
+                        obj.gridAt = dayjs(obj.createdAt).format('YYYY-MM-DD:HH:MM:ss')
+
                         obj.createdAt = obj.createdAt.substring(0,8)
                         obj.createdAt = G$getDateType(obj.createdAt)
-                        obj.formatDate = dayjs(obj.createdAt).format('YYYYMMDD')
+                        obj.formatDate = dayjs(obj.createdAt).format('YYYYMMDD')                        
+
                         paramDates.push(obj.formatDate)
                     })
 
@@ -155,12 +159,16 @@ const FloodL4WaterLevel = () => {
                                     if(wamisDatas.length > 0){
 
                                         wamisDatas.forEach((waimsItem) => {
-                                            let matchingB = sortDatas.find((sortItem) => sortItem.formatDate === waimsItem.ymd);
-                                            if (matchingB) {
-                                              matchingB.estimatedElev = waimsItem.wl
-                                            }
+                                            let matchingBs = sortDatas.filter((sortItem) => sortItem.formatDate === waimsItem.ymd);
+                                            matchingBs.forEach((matchingB) => {
+                                                matchingB.estimatedElev = waimsItem.wl;
+                                            })
                                         })
                                     }
+
+
+                                    
+
 
                                     sortDatas.map((sortObj)=>{
                                         dates.push(G$getDateType(sortObj.createdAt))
@@ -187,7 +195,17 @@ const FloodL4WaterLevel = () => {
     
                                     setAvg(avg / datas.length)
                                     setAvg2(avg2 / (datas.length-zeros))
+
+                                    const dataArray = [...estWl, ...obsWl].map(val => Number(val)).filter(value => !isNaN(value))
+                                    const minValue = Math.min(...dataArray)
+                                    const maxValue = Math.max(...dataArray)
+                                    const percentage = 25
+                                    chartOption.scales.y.min = minValue < 0 ? minValue : Math.ceil((minValue - (minValue * (percentage / 100))))
+                                    chartOption.scales.y.max = Math.ceil((maxValue + (maxValue * (percentage / 100))))
+                                    chartRef.current.updateOptions = chartOption
     
+                                    chartInfoRef.current.datasets = []
+                                    chartInfoRef.current.labels = []
                                     chartInfoRef.current.datasets.push({
                                         tension: 0.4,
                                         data:estWl,

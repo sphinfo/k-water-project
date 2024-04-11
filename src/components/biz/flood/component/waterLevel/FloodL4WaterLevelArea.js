@@ -37,9 +37,13 @@ const FloodL4WaterLevelArea = () => {
                     let paramDate = dayjs(date).format('YYYYMMDD')
                     let params = {obscd:obj.obscd, startdt: paramDate, enddt: paramDate, output: 'json'}
                     getObsWl(params).then((response)=>{
+                        let value = 0
                         if(response?.result?.list?.length > 0){
-                            setRealWl(Number(response?.result?.list[0].wl)?.toFixed(2))
+                            value = Number(response?.result?.list[0].wl)?.toFixed(2)
                         }
+                        setRealWl(value)
+                    }).catch((e)=>{
+                        setRealWl(0)
                     })
                 }
             })
@@ -108,8 +112,8 @@ const FloodL4WaterLevelArea = () => {
                         minLine: {
                             type: 'line',
                             borderColor: '#FF9E2B',
-                            yMin: satationInfo.c5,
-                            yMax: satationInfo.c5,
+                            yMin: satationInfo?.c5 ? satationInfo?.c5 : 0,
+                            yMax: satationInfo?.c5 ? satationInfo?.c5 : 0,
                             borderWidth: 2,
                             label: {
                                 display: true,
@@ -128,8 +132,8 @@ const FloodL4WaterLevelArea = () => {
                             type: 'line',
                             borderColor: '#DD4747',
                             borderWidth: 2,
-                            yMin: satationInfo.c2,
-                            yMax: satationInfo.c2,
+                            yMin: satationInfo?.c2 ? satationInfo?.c2 : 0,
+                            yMax: satationInfo?.c2 ? satationInfo?.c2 : 0,
                             label: {
                                 display: true,
                                 backgroundColor: '#DD4747',
