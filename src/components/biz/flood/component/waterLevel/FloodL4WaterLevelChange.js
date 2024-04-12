@@ -185,6 +185,7 @@ const FloodL4WaterLevel = () => {
                                             avg2 += (Number(sortObj.estimatedElev) - Number(sortObj.referenceElev)) < 0 ? Math.abs(Number(sortObj.estimatedElev) - Number(sortObj.referenceElev)) : +(Number(sortObj.estimatedElev) - Number(sortObj.referenceElev)).toFixed(12)
                                         }
     
+                                        if(Number(sortObj.estimatedElev) === 0){ sortObj.estimatedElev = '-' }
                                     })
     
                                     if(gridRef.current.provider){
