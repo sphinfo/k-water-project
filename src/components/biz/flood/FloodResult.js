@@ -81,7 +81,7 @@ const FloodResult = ({waterObsList=[], ...props}) => {
                   let satellite= 'Sentinel-1'
                   let krNm = G$findEngNmFilter(obj.name)[0]?.options[0]?.name
                   let startedAt = dayjs(obj.date).format('YYYYMMDD')
-                  resultList.push({group, krNm, groupNm, satellite, startedAt, ...obj})
+                  resultList.push({group, krNm, groupNm, satellite, startedAt, category:'L3WL', ...obj})
                 })
               }
             }

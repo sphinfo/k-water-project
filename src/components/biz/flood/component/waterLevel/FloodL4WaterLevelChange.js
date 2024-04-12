@@ -89,7 +89,10 @@ const FloodL4WaterLevel = () => {
         return()=>{
             chartInfoRef.current.labels = []
             chartInfoRef.current.datasets = []
-            gridRef.current.provider = []
+            if(gridRef.current){
+                gridRef.current.provider = []
+            }
+            
         }
 
     }, [])
@@ -123,6 +126,7 @@ const FloodL4WaterLevel = () => {
                     let avg = 0
                     let avg2 = 0
                     
+                    let realCnt = 0
                     let zeros = 0
 
                     let paramDates = []
@@ -177,7 +181,11 @@ const FloodL4WaterLevel = () => {
                                         sortObj.estimatedElev = Number(sortObj.estimatedElev).toFixed(2)
                                         sortObj.referenceElev = Number(sortObj.referenceElev).toFixed(2)
                 
-                                        avg += Number(sortObj.estimatedElev)
+                                        if(Number(sortObj.estimatedElev) !== 0){
+                                            realCnt++
+                                            avg += Number(sortObj.estimatedElev)
+                                        }
+                                        
                 
                                         if(Number(sortObj.referenceElev) === 0 || Number(sortObj.estimatedElev) === 0){
                                             zeros++
@@ -188,12 +196,12 @@ const FloodL4WaterLevel = () => {
                                         if(Number(sortObj.estimatedElev) === 0){ sortObj.estimatedElev = '-' }
                                     })
     
-                                    if(gridRef.current.provider){
+                                    if(gridRef.current?.provider){
                                         gridRef.current.provider = G$sortArrayObject(sortDatas, 'formatDate', true)
                                     }
                                     
     
-                                    setAvg(avg / datas.length)
+                                    setAvg(avg / realCnt)
                                     setAvg2(avg2 / (datas.length-zeros))
 
                                     const dataArray = [...estWl, ...obsWl].map(val => Number(val)).filter(value => !isNaN(value))
@@ -202,7 +210,10 @@ const FloodL4WaterLevel = () => {
                                     const percentage = 25
                                     chartOption.scales.y.min = minValue < 0 ? minValue : Math.ceil((minValue - (minValue * (percentage / 100))))
                                     chartOption.scales.y.max = Math.ceil((maxValue + (maxValue * (percentage / 100))))
-                                    chartRef.current.updateOptions = chartOption
+                                    if(chartRef.current){
+                                        chartRef.current.updateOptions = chartOption
+                                    }
+                                    
     
                                     chartInfoRef.current.datasets = []
                                     chartInfoRef.current.labels = []
