@@ -241,7 +241,9 @@ const FloodL4WaterLevel = () => {
                                     chartInfoRef.current.labels = dates
     
                                     //chart
-                                    chartRef.current.provider = chartInfoRef.current
+                                    if(chartRef.current?.provider){
+                                        chartRef.current.provider = chartInfoRef.current
+                                    }
                                 }
                             })
                         }
