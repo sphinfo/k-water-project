@@ -66,9 +66,27 @@ const getBarData = async (props={}) => {
     }
 }
 
+
+const getEnviL4Layers = async (props={}) => {
+    try{
+        const { request } = createAxios();
+        const result = await request({
+            url: EnviConfig.GET_ENVI_L4,
+            params: props,
+            method: 'GET',
+        })
+        
+        props = { ...props, result: result.data };
+        return props;
+    }catch(error){
+        return {message:'error', result:{data:[]}}
+    }   
+}
+
 export {
     getAreaInfo,
     getEnvLandCoverDatas,
     getHeatmapData,
-    getBarData
+    getBarData,
+    getEnviL4Layers
 }

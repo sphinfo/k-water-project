@@ -1,9 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
-import { Switch, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { ENV_LANDCOVER_DETECTION, FLOOD_DAMAGE_LAYER, SAFETY_SELECT_4_LEVEL, SAFETY_SELECT_4_LEVEL_RESET, SAFETY_SELECT_DISPLACE_LEVEL } from "@redux/actions";
+import { Switch, } from "@mui/material";
+import { ENV_LANDCOVER_DETECTION, } from "@redux/actions";
+import { G$getMapExtentParam } from "@gis/util";
 import { useDispatch, useSelector } from "react-redux";
 import { G$removeWidget } from "@gis/util";
-import { getL4Layers } from "@common/axios/common";
+import { getL3Layers, getL4Layers } from "@common/axios/common";
+import { getEnviL4Layers } from "@common/axios/envi";
 /**
  * 안전 - 4LEVEL 활용주제도
  */
@@ -12,15 +14,20 @@ const EnvironmentThematic = (props) => {
     const dispatch = useDispatch()
     const [thematicList, setThematicList] = useState([])
     const {mainLayer} = props
+    const { mainOptions, startDate, endDate, geoSearch } = useSelector(state => state.main)
     
     useEffect(()=>{
-
+        const {id, startedAt} = mainLayer
         
-        const {id} = mainLayer
+
+        //let location = mainOptions.map(item => item.code).join(',')
+        let param = {type:'environment', level: 'L4', from: startedAt, to: startedAt }
+        //const params = geoSearch ? { ...param, ...G$getMapExtentParam() } : { ...param, location }
 
         let thematics = []
         if(id){
-            getL4Layers({id:id}).then((response)=>{
+            //getL4Layers({id:id}).then((response)=>{
+            getEnviL4Layers(param).then((response)=>{
                 if(response?.result?.data?.length > 0){
                     let store = response.result.data[0].dataType
                     let layer = response.result.data[0].name
